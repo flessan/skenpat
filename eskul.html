@@ -8,40 +8,43 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     :root {
-      --bg: #ffffff;
-      --fg: #2d3436;
-      --primary: #0984e3;
-      --secondary: #00cec9;
-      --light: #f5f6fa;
-      --hover: #0767b1;
-      --today: #00b894;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      --radius: 12px;
-      --transition: all 0.3s ease;
-    }
-    [data-theme="dark"] {
-      --bg: #2d3436;
-      --fg: #f5f6fa;
-      --primary: #74b9ff;
-      --secondary: #55efc4;
-      --light: #3d4849;
-      --hover: #a5d8ff;
-      --today: #00b894;
-      --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: var(--light);
-      color: var(--fg);
-      transition: var(--transition);
-      line-height: 1.6;
-      padding: 20px;
-    }
+  --bg: rgba(255,255,255,0.7);
+  --fg: #2d3436;
+  --primary: #0984e3;
+  --secondary: #00cec9;
+  --light: #f5f6fa;
+  --hover: #0767b1;
+  --today: #00b894;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+  --transition: all 0.3s ease;
+}
+[data-theme="dark"] {
+  --bg: rgba(45,52,54,0.7);
+  --fg: #f5f6fa;
+  --primary: #74b9ff;
+  --secondary: #55efc4;
+  --light: #3d4849;
+  --hover: #a5d8ff;
+  --today: #00b894;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-image: url('https://smkn4bjm.sch.id/wp-content/uploads/2023/11/WhatsApp-Image-2023-11-21-at-09.37.38-600x600.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--fg);
+  transition: var(--transition);
+  line-height: 1.6;
+  padding: 20px;
+}
     .container {
       max-width: 900px;
       margin: 20px auto;
