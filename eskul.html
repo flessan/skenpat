@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jadwal Ekstrakurikuler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #2d3436;
+      --primary: #0984e3;
+      --secondary: #00cec9;
+      --light: #f5f6fa;
+      --hover: #0767b1;
+      --today: #00b894;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    [data-theme="dark"] {
+      --bg: #2d3436;
+      --fg: #f5f6fa;
+      --primary: #74b9ff;
+      --secondary: #55efc4;
+      --light: #3d4849;
+      --hover: #a5d8ff;
+      --today: #00b894;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--light);
+      color: var(--fg);
+      transition: var(--transition);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 30px;
+      background: var(--bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: var(--primary);
+      font-weight: 700;
+      position: relative;
+      padding-bottom: 10px;
+    }
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: var(--secondary);
+      border-radius: 3px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 25px;
+      align-items: center;
+    }
+    .search-container {
+      flex: 1 1 300px;
+      position: relative;
+      max-width: 500px;
+    }
+    .search-container i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary);
+    }
+    .toolbar input {
+      width: 100%;
+      padding: 12px 20px 12px 45px;
+      border: 2px solid var(--primary);
+      border-radius: 30px;
+      font-size: 1em;
+      background: var(--bg);
+      color: var(--fg);
+      transition: var(--transition);
+    }
+    .toolbar input:focus {
+      outline: none;
+      border-color: var(--secondary);
+      box-shadow: 0 0 0 3px rgba(0, 206, 201, 0.2);
+    }
+    .toolbar .btn-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .toolbar button {
+      padding: 12px 20px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .toolbar button:hover {
+      background: var(--hover);
+      transform: translateY(-2px);
+    }
+    .toolbar button.secondary {
+      background: var(--secondary);
+    }
+    .toolbar button.secondary:hover {
+      background: #00a8a3;
+    }
+    .schedule {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .day {
+      background: var(--light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    .day.animate {
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .day.today {
+      border-top: 4px solid var(--today);
+      box-shadow: 0 4px 15px rgba(0, 184, 148, 0.2);
+    }
+    .day-header {
+      padding: 15px 20px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .day-header:hover {
+      background: var(--hover);
+    }
+    .day-header .toggle.collapsed {
+      transform: rotate(-90deg);
+    }
+    .activities {
+      padding: 15px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .activity {
+      background-color: var(--bg);
+      color: var(--fg);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-size: 0.95em;
+      transition: var(--transition);
+      border-left: 4px solid var(--secondary);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .activity i {
+      color: var(--primary);
+    }
+    .activity.hidden {
+      opacity: 0.3;
+      transform: scale(0.95);
+    }
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 30px;
+      color: var(--fg);
+      opacity: 0.7;
+    }
+    @media (max-width: 768px) {
+      .schedule {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-calendar-alt"></i> Jadwal Ekstrakurikuler</h1>
+
+    <div class="toolbar">
+      <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input type="text" id="search" placeholder="Cari kegiatan..." oninput="filterActivities()" />
+      </div>
+      <div class="btn-group">
+        <button onclick="toggleDarkMode()">
+          <i class="fas fa-moon"></i> Mode Gelap
+        </button>
+        <button class="secondary" onclick="toggleAllDays()">
+          <i class="fas fa-angle-double-down"></i> Expand Semua
+        </button>
+      </div>
+    </div>
+
+    <div class="schedule" id="schedule">
+      <!-- Contoh hari-hari (copy blok berikut untuk hari lain) -->
+      <div class="day" data-day="Senin">
+        <div class="day-header" onclick="toggleDay(this)">
+          <h2><i class="fas fa-calendar-day"></i> Senin</h2>
+          <span class="toggle">▾</span>
+        </div>
+        <div class="activities">
+          <div class="activity"><i class="fas fa-basketball-ball"></i> Basket</div>
+          <div class="activity"><i class="fas fa-music"></i> Dance</div>
+        </div>
+      </div>
+
+      <!-- Tambahkan hari lainnya di sini (Selasa, Rabu, dll) dengan struktur yang sama -->
+      <!-- Selasa -->
+      <div class="day" data-day="Selasa">
+        <div class="day-header" onclick="toggleDay(this)">
+          <h2><i class="fas fa-calendar-day"></i> Selasa</h2>
+          <span class="toggle">▾</span>
+        </div>
+        <div class="activities">
+          <div class="activity"><i class="fas fa-campground"></i> Pramuka</div>
+          <div class="activity"><i class="fas fa-flag"></i> Paskibra</div>
+          <div class="activity"><i class="fas fa-futbol"></i> Futsal</div>
+          <div class="activity"><i class="fas fa-theater-masks"></i> Teater</div>
+        </div>
+      </div>
+<!-- Rabu -->
+      <div class="day" data-day="Rabu">
+        <div class="day-header" onclick="toggleDay(this)">
+          <h2><i class="fas fa-calendar-day"></i> Rabu</h2>
+          <span class="toggle">▾</span>
+        </div>
+        <div class="activities">
+          <div class="activity"><i class="fas fa-microphone-alt"></i> Habsyi</div>
+          <div class="activity"><i class="fas fa-basketball-ball"></i> Basket</div>
+          <div class="activity"><i class="fas fa-language"></i> Bahasa Jepang</div>
+          <div class="activity"><i class="fas fa-vest"></i> Tari Tradisional</div>
+          <div class="activity"><i class="fas fa-music"></i> Dance/Tari Modern</div>
+        </div>
+      </div>
+
+      <!-- Kamis -->
+      <div class="day" data-day="Kamis">
+        <div class="day-header" onclick="toggleDay(this)">
+          <h2><i class="fas fa-calendar-day"></i> Kamis</h2>
+          <span class="toggle">▾</span>
+        </div>
+        <div class="activities">
+          <div class="activity"><i class="fas fa-horse"></i> Ekupat</div>
+          <div class="activity"><i class="fas fa-flag"></i> Paskibra</div>
+          <div class="activity"><i class="fas fa-futbol"></i> Futsal</div>
+        </div>
+      </div>
+
+      <!-- Jumat -->
+      <div class="day" data-day="Jumat">
+        <div class="day-header" onclick="toggleDay(this)">
+          <h2><i class="fas fa-calendar-day"></i> Jumat</h2>
+          <span class="toggle">▾</span>
+        </div>
+        <div class="activities">
+          <div class="activity"><i class="fas fa-campground"></i> Pramuka</div>
+        </div>
+      </div>
+
+      <!-- Sabtu -->
+      <div class="day" data-day="Sabtu">
+        <div class="day-header" onclick="toggleDay(this)">
+          <h2><i class="fas fa-calendar-day"></i> Sabtu</h2>
+          <span class="toggle">▾</span>
+        </div>
+        <div class="activities">
+          <div class="activity"><i class="fas fa-user-tie"></i> Modeling</div>
+        </div>
+      </div>
+    </div> <!-- selesai .schedule -->
+    </div>
+  </div>
+
+  <script>
+    // Dark mode toggle
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? '' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+
+      const btn = document.querySelector('.toolbar button:first-child');
+      const icon = btn.querySelector('i');
+      icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      btn.innerHTML = icon.outerHTML + (isDark ? ' Mode Gelap' : ' Mode Terang');
+    }
+
+    // Expand / Collapse All
+    let allExpanded = false;
+    function toggleAllDays() {
+      document.querySelectorAll('.day').forEach(day => {
+        const act = day.querySelector('.activities');
+        const icon = day.querySelector('.toggle');
+        act.style.display = allExpanded ? 'none' : 'grid';
+        icon.classList.toggle('collapsed', allExpanded);
+      });
+      const btn = document.querySelector('button[onclick="toggleAllDays()"]');
+      btn.innerHTML = allExpanded
+        ? '<i class="fas fa-angle-double-down"></i> Expand Semua'
+        : '<i class="fas fa-angle-double-up"></i> Collapse Semua';
+      allExpanded = !allExpanded;
+    }
+
+    // Toggle per hari
+    function toggleDay(header) {
+      const activities = header.nextElementSibling;
+      const icon = header.querySelector('.toggle');
+      const visible = activities.style.display !== 'none';
+      activities.style.display = visible ? 'none' : 'grid';
+      icon.classList.toggle('collapsed', visible);
+    }
+
+    // Highlight today
+    (function highlightToday() {
+      const hari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][ new Date().getDay() ];
+      const todayEl = document.querySelector(`.day[data-day="${hari}"]`);
+      if (todayEl) {
+        todayEl.classList.add('today');
+        todayEl.querySelector('.activities').style.display = 'grid';
+      }
+      document.querySelectorAll('.day:not(.today) .activities').forEach(el => {
+        el.style.display = 'none';
+        el.previousElementSibling.querySelector('.toggle').classList.add('collapsed');
+      });
+    })();
+
+    // Filter
+    function filterActivities() {
+      const q = document.getElementById('search').value.toLowerCase();
+      let any = false;
+      document.querySelectorAll('.day').forEach(day => {
+        let visible = false;
+        day.querySelectorAll('.activity').forEach(act => {
+          const match = act.textContent.toLowerCase().includes(q);
+          act.classList.toggle('hidden', !match);
+          if (match) visible = true;
+        });
+        day.style.display = visible ? '' : 'none';
+        if (visible) any = true;
+      });
+      const msg = document.getElementById('no-results');
+      if (!any) {
+        if (!msg) {
+          const div = document.createElement('div');
+          div.className = 'no-results';
+          div.id = 'no-results';
+          div.innerHTML = '<i class="fas fa-search"></i><p>Tidak ditemukan kegiatan yang sesuai</p>';
+          document.getElementById('schedule').appendChild(div);
+        }
+      } else if (msg) {
+        msg.remove();
+      }
+    }
+
+    // Animasi saat load
+    document.addEventListener('DOMContentLoaded', () => {
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = document.querySelector('.toolbar button:first-child');
+        const icon = btn.querySelector('i');
+        icon.className = 'fas fa-sun';
+        btn.innerHTML = icon.outerHTML + ' Mode Terang';
+      }
+
+      document.querySelectorAll('.day').forEach((day, i) => {
+        day.classList.add('animate');
+        setTimeout(() => {
+          day.style.opacity = '1';
+          day.style.transform = 'translateY(0)';
+        }, i * 100);
+      });
+    });
+  </script>
+</body>
+</html>
