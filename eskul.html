@@ -22,11 +22,11 @@
 [data-theme="dark"] {
   --bg: rgba(45,52,54,0.7);
   --fg: #f5f6fa;
-  --primary: #0E324E;
-  --secondary: #55efc4;
+  --primary: #045B72;
+  --secondary: #297B64;
   --light: #3d4849;
-  --hover: #a5d8ff;
-  --today: #00b894;
+  --hover: #346482;
+  --today: #FFD900;
   --shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 * {
@@ -365,7 +365,7 @@ body {
       const btn = document.querySelector('.toolbar button:first-child');
       const icon = btn.querySelector('i');
       icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
-      btn.innerHTML = icon.outerHTML + (isDark ? ' Mode Gelap' : ' Mode Terang');
+      btn.innerHTML = icon.outerHTML + (isDark ? ' Mode Gelap' : ' Mode Pagii');
     }
 
     // Expand / Collapse All
@@ -443,7 +443,7 @@ body {
         const btn = document.querySelector('.toolbar button:first-child');
         const icon = btn.querySelector('i');
         icon.className = 'fas fa-sun';
-        btn.innerHTML = icon.outerHTML + ' Mode Terang';
+        btn.innerHTML = icon.outerHTML + ' Mode Pagii';
       }
 
       document.querySelectorAll('.day').forEach((day, i) => {
