@@ -4,202 +4,367 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Skenpat (Unofficial) Main Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     /* Reset & font */
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+    }
+    
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #121212;
       color: #fff;
-      line-height: 1.4;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    a { text-decoration: none; color: inherit; }
+    
+    a { 
+      text-decoration: none; 
+      color: inherit; 
+    }
 
     /* Container */
     .app {
       max-width: 480px;
       margin: 0 auto;
       padding: 1rem;
+      min-height: 100vh;
     }
 
     /* Balance Card */
     .card-balance {
-      background: #1E1E1E;
-      border-radius: 12px;
-      padding: 1rem;
+      background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
+      border-radius: 16px;
+      padding: 1.5rem;
       position: relative;
       overflow: hidden;
       margin-bottom: 1.5rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     }
+    
     .card-balance::before {
       content: '';
       position: absolute;
-      top: -20px; right: -20px;
-      width: 120px; height: 120px;
+      top: -20px; 
+      right: -20px;
+      width: 120px; 
+      height: 120px;
       background: rgba(255,255,255,0.05);
       border-radius: 50%;
     }
+    
     .card-balance h2 {
-      font-size: 1.6rem;
-      margin-bottom: 0.2rem;
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #fff;
     }
+    
     .card-balance .coins {
-      font-size: 0.9rem;
-      opacity: 0.7;
-      margin-bottom: 1rem;
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-bottom: 1.5rem;
+      color: #ccc;
     }
+    
     .card-balance .actions {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.8rem;
     }
+    
     .card-balance .actions a {
       flex: 1;
       display: inline-block;
       text-align: center;
-      background: #2A2A2A;
-      border-radius: 8px;
-      padding: 0.6rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 0.8rem;
       color: #fff;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .card-balance .actions a:first-child {
+      background: linear-gradient(135deg, #DE6805, #F46900);
+    }
+    
+    .card-balance .actions a:last-child {
+      background: linear-gradient(135deg, #DE6805, #F46900);
+    }
+    
+    .card-balance .actions a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(110, 185, 255, 0.3);
     }
 
     /* Section blocks */
     .section {
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
     }
+    
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
     }
+    
     .section-header h3 {
-      font-size: 1.1rem;
-      opacity: 0.9;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #f0f0f0;
     }
+    
     .section-header a {
-      font-size: 0.85rem;
-      color: #4EA8DE;
+      font-size: 0.9rem;
+      color: #EF5C17;
+      transition: all 0.3s;
+      font-weight: 500;
+    }
+    
+    .section-header a:hover {
+      color: #6FB9FF;
+      text-decoration: underline;
     }
 
     /* Grid of buttons */
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 0.8rem;
+      gap: 1rem;
     }
+    
     .grid .btn {
-      background: #1E1E1E;
-      border-radius: 10px;
-      padding: 0.8rem 0.4rem;
+      background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
+      border-radius: 12px;
+      padding: 1rem 0.5rem;
       text-align: center;
-      font-size: 0.75rem;
+      font-size: 0.85rem;
       cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.05);
     }
+    
+    .grid .btn:hover {
+      background: linear-gradient(135deg, #2A2A2A, #363636);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
     .grid .btn .icon {
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       display: block;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.5rem;
+      color: #C7C7C7;
+      transition: all 0.3s;
     }
+    
+    .grid .btn:hover .icon {
+      transform: scale(1.2);
+      color: #6FB9FF;
+    }
+    
     .grid .btn a {
       display: block;
-      color: #fff;
-      font-size: 0.75rem;
+      color: #f0f0f0;
+      font-size: 0.85rem;
+      font-weight: 500;
     }
 
+    /* Bounce keyframes */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Visi & Misi */
     .visi-misi {
-      background: #1E1E1E;
+      background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    }
+    
+    .visi-misi iframe {
+      width: 100%;
+      height: 240px;
+      margin-bottom: 1.5rem;
       border-radius: 12px;
-      padding: 1rem;
-      margin-bottom: 5rem;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    
+    .visi-misi h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #fff;
+      font-weight: 600;
       text-align: center;
     }
-    .visi-misi iframe {
-  margin-bottom: 1rem; /* Atur jarak sesuai selera, bisa 2rem untuk lebih lebar */
-}
-    .visi-misi h3 {
-      font-size: 1.2rem;
-      margin-bottom: 0.5rem;
-      color: #4EA8DE;
-    }
+    
     .visi-misi p, .visi-misi li {
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 0.5rem;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
       color: #ddd;
     }
+    
     .visi-misi ul {
       list-style: none;
       padding: 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    .visi-misi li {
+      position: relative;
+      padding-left: 1.5rem;
+    }
+    
+    .visi-misi li::before {
+      content: "�";
+      color: #EF5C17;
+      font-size: 1.5rem;
+      position: absolute;
+      left: 0;
+      top: -0.3rem;
+    }
+    
+    .visi-misi h6 {
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: #777;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 1.5rem 0;
+      color: #777;
+      font-size: 0.85rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .card-balance h2 {
+        font-size: 1.5rem;
+      }
+      
+      .visi-misi h3 {
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app">
     <div class="card-balance">
-      <h2>Skenpat (Unofficial) Main Page</h2>
-      <div class="coins">Available:</div>
+      <h2>Skenpat (Unofficial)</h2>
+      <div class="coins">Landing Pages</div>
       <div class="actions">
         <a href="/eskul">Ekstrakurikuler</a>
-        <a href="#">Jadwal Mapel</a>
+        <a href="/mapel">Jadwal Mapel</a>
       </div>
     </div>
 
     <div class="section">
-      <div class="section-header">
-        <h3>Kumpulan Link Terkait</h3>
-        <a href="https://smkn4bjm.sch.id">Lihat semua </a>
+  <div class="section-header">
+    <h3>Kumpulan Link Terkait</h3>
+    <a href="https://smkn4bjm.sch.id">Lihat semua </a>
+  </div>
+  <div class="grid">
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-newspaper icon"></i>
       </div>
-      <div class="grid">
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/berita">Berita</a>
-        </div>
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/perpustakaan-sekolah">Perpus</a>
-        </div>
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/prestasi">Prestasi</a>
-        </div>
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/sejarah-sekolah">Sejarah</a>
-        </div>
-      </div>
+      <a href="https://smkn4bjm.sch.id/berita">Berita</a>
     </div>
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-book icon"></i>
+      </div>
+      <a href="https://smkn4bjm.sch.id/perpustakaan-sekolah">Perpus</a>
+    </div>
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-trophy icon"></i>
+      </div>
+      <a href="https://smkn4bjm.sch.id/prestasi">Prestasi</a>
+    </div>
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-history icon"></i>
+      </div>
+      <a href="https://smkn4bjm.sch.id/sejarah-sekolah">Sejarah</a>
+    </div>
+  </div>
+</div>
 
-    <div class="section">
-      <div class="section-header">
-        <h3>Skenpat Team</h3>
-        <a href="https://smkn4bjm.sch.id">Lihat semua </a>
+<div class="section">
+  <div class="section-header">
+    <h3>Skenpat Team</h3>
+    <a href="https://smkn4bjm.sch.id">Lihat semua </a>
+  </div>
+  <div class="grid">
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-users icon"></i>
       </div>
-      <div class="grid">
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/tim-manajemen">Tim Inti</a>
-        </div>
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-pendidik">Pendidik</a>
-        </div>
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-kependidikan">Kependidikan</a>
-        </div>
-        <div class="btn">
-          <span class="icon"></span>
-          <a href="https://smkn4bjm.sch.id/wp-content/uploads/2024/12/Struktur-Sekolah-2024-november.jpg">Struktur</a>
-        </div>
-      </div>
+      <a href="https://smkn4bjm.sch.id/tim-manajemen">Tim Inti</a>
     </div>
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-chalkboard-user icon"></i>
+      </div>
+      <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-pendidik">Pendidik</a>
+    </div>
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-user-tie icon"></i>
+      </div>
+      <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-kependidikan">Kependidikan</a>
+    </div>
+    <div class="btn">
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-layer-group icon"></i>
+      </div>
+      <a href="https://smkn4bjm.sch.id/wp-content/uploads/2024/12/Struktur-Sekolah-2024-november.jpg">Struktur</a>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Add this CSS to ensure icons display properly */
+  .icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    height: 2rem;
+  }
+</style>
 
     <div class="visi-misi">
       <h3>Profil SMK Negeri 4 Banjarmasin</h3>
-      <iframe width="100%" height="240" src="https://www.youtube.com/embed/XQKoNTQTrkM?autoplay=1&mute=1" name="SMKN4BJM" scrolling="no" style="border:3px solid #000;" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/XQKoNTQTrkM?autoplay=1&mute=1" allowfullscreen></iframe>
+      
       <h3>Visi</h3>
       <p>Menghasilkan lulusan yang kompeten berlandaskan nilai-nilai luhur Pancasila</p>
+      
       <h3>Misi</h3>
       <ul>
         <li>Menerapkan Profil Pelajar Pancasila dan Budaya Kerja</li>
@@ -209,8 +374,12 @@
         <li>Memperkuat Kemitraan dengan Dunia Kerja dan Stakeholder</li>
         <li>Meningkatkan Wawasan Lingkungan Hidup</li>
       </ul>
-      <br>
+      
       <h6>- This website is not the school's official website.</h6>
+    </div>
+
+    <div class="footer">
+      &copy; 2025 Unofficial Skenpat Pages | SMKN 4 Banjarmasin
     </div>
   </div>
 </body>
