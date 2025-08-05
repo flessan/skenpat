@@ -3,100 +3,204 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="google-site-verification" content="LLRTvgE6Hv0v2j79WKysj9p2CQdyWPLxIgvkjRpy2sM" />
-  <link rel="icon" href="https://smkn4bjm.sch.id/wp-content/uploads/2022/01/cropped-logo-icon-1-32x32.png" type="image/png">
-  <title>Daftar Kelas SMK X</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>WalletApp Mockup</title>
   <style>
+    /* Reset & font */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin:0;
-      font-family: 'Poppins', sans-serif;
-      background: #f0f2f5;
-      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+      background: #121212;
+      color: #fff;
+      line-height: 1.4;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* Container */
+    .app {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Balance Card */
+    .card-balance {
+      background: #1E1E1E;
+      border-radius: 12px;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .card-balance::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 120px; height: 120px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 50%;
+    }
+    .card-balance h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.2rem;
+    }
+    .card-balance .coins {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+    .card-balance .actions {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 20px;
+      gap: 0.5rem;
     }
-    h1 {
-      margin-bottom: 30px;
-      font-size: 2rem;
-      color: #444;
+    .card-balance .actions button {
+      flex: 1;
+      background: #2A2A2A;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem;
+      color: #fff;
+      font-size: 0.9rem;
+      cursor: pointer;
     }
+
+    /* Section blocks */
     .section {
-      width: 100%;
-      max-width: 600px;
-      margin-bottom: 30px;
+      margin-bottom: 1.5rem;
     }
-    .section h2 {
-      font-size: 1.4rem;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #ddd;
-      padding-bottom: 5px;
-      color: #555;
+    .section-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 10px;
+      margin-bottom: 0.5rem;
     }
-    .section h2 i {
-      font-size: 1.2rem;
-      color: #4361ee;
+    .section-header h3 {
+      font-size: 1.1rem;
+      opacity: 0.9;
     }
-    .list {
-      list-style: none;
-      padding: 0;
+    .section-header a {
+      font-size: 0.85rem;
+      color: #4EA8DE;
     }
-    .list li {
-      margin: 8px 0;
+
+    /* Grid of buttons */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
     }
-    .list a {
+    .grid .btn {
+      background: #1E1E1E;
+      border-radius: 10px;
+      padding: 0.8rem 0.4rem;
+      text-align: center;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .grid .btn .icon {
+      font-size: 1.5rem;
       display: block;
-      padding: 12px 16px;
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      text-decoration: none;
-      color: #333;
-      transition: background .2s, box-shadow .2s;
+      margin-bottom: 0.3rem;
     }
-    .list a:hover {
-      background: #e9ecef;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+    .visi-misi {
+  background: #1E1E1E;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 5rem; /* beri ruang untuk tombol QR */
+  text-align: center;
+}
+.visi-misi h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #4EA8DE;
+}
+.visi-misi p, .visi-misi li {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  color: #ddd;
+}
+.visi-misi ul {
+  list-style: none;
+  padding: 0;
+}
   </style>
 </head>
 <body>
+  <div class="app">
+    <div class="card-balance">
+      <h2>Skenpat (Unofficial) Main Page</h2>
+      <div class="coins">Available:</div>
+      <div class="actions">
+        <button><a href="/eskul">Ekstrakurikuler</a></button>
+        <button>Jadwal Mapel</button>
+      </div>
+    </div>
 
-  <h1>Daftar Mapel Kelas X</h1>
+    <!-- Kirim & Terima -->
+    <div class="section">
+      <div class="section-header">
+        <h3>Kumpulan Link Terkait</h3>
+        <a href="https://smkn4bjm.sch.id">Lihat semua </a>
+      </div>
+      <div class="grid">
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/berita">Berita</a>
+        </div>
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/perpustakaan-sekolah">Perpus</a>
+        </div>
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/prestasi">Prestasi</a>
+        </div>
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/sejarah-sekolah">Sejarah</a>
+        </div>
+      </div>
+    </div>
 
-  <div class="section">
-    <h2><i class="fas fa-laptop-code"></i> RPL (Rekayasa Perangkat Lunak)</h2>
-    <ul class="list">
-      <li><a href="/xrplone">X RPL 1 &raquo;</a></li>
-      <li><a href="/xrpltwo">X RPL 2 &raquo;</a></li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2><i class="fas fa-umbrella-beach"></i> ULW (Usaha Layanan Wisata)</h2>
-    <ul class="list">
-      <li><a href="/xulw">X ULW &raquo;</a></li>
-    </ul>
-  </div>
-  
-  <div class="section">
-    <h2><i class="fas fa-magic"></i> KCT (Kecantikan)</h2>
-    <ul class="list">
-      <li><a href="/xkct">X KCT &raquo;</a></li>
-    </ul>
-  </div>
-  
-  <div class="section">
-    <h2><i class="fas fa-music"></i> SM (Seni Musik)</h2>
-    <ul class="list">
-      <li><a href="/xseni">X SM &raquo;</a></li>
-    </ul>
+    <!-- Pembayaran -->
+    <div class="section">
+      <div class="section-header">
+        <h3>Skenpat Team</h3>
+        <a href="https://smkn4bjm.sch.id">Lihat semua </a>
+      </div>
+      <div class="grid">
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/tim-manajemen">Tim Inti</a>
+        </div>
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-pendidik">Pendidik</a>
+        </div>
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-kependidikan">Kependidikan</a>
+        </div>
+        <div class="btn">
+          <span class="icon"></span>
+          <a href="https://smkn4bjm.sch.id/wp-content/uploads/2024/12/Struktur-Sekolah-2024-november.jpg">Struktur</a>
+        </div>
+      </div>
+    </div>
+    <!-- Visi & Misi -->
+<div class="visi-misi">
+  <h3>Visi</h3>
+  <p>Menghasilkan lulusan yang kompeten berlandaskan nilai-nilai luhur Pancasila</p>
+  <h3>Misi</h3>
+  <ul>
+    <li>Menerapkan Profil Pelajar Pancasila dan Budaya Kerja</li>
+    <li>Melaksanakan Pembelajaran Berbasis Dunia Kerja</li>
+    <li>Menerapkan Manajemen Berbasis Digital</li>
+    <li>Menyediakan Sarana dan Prasarana Sesuai Standarisasi Dunia Kerja dan Perkembangan Teknologi</li>
+    <li>Memperkuat Kemitraan dengan Dunia Kerja dan Stakeholder</li>
+    <li>Meningkatkan Wawasan Lingkungan Hidup</li>
+  </ul>
+</div>
   </div>
 
 </body>
