@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WalletApp Mockup</title>
+  <title>Skenpat (Unofficial) Main Page</title>
   <style>
     /* Reset & font */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,15 +52,15 @@
       display: flex;
       gap: 0.5rem;
     }
-    .card-balance .actions button {
+    .card-balance .actions a {
       flex: 1;
+      display: inline-block;
+      text-align: center;
       background: #2A2A2A;
-      border: none;
       border-radius: 8px;
       padding: 0.6rem;
       color: #fff;
       font-size: 0.9rem;
-      cursor: pointer;
     }
 
     /* Section blocks */
@@ -101,28 +101,37 @@
       display: block;
       margin-bottom: 0.3rem;
     }
+    .grid .btn a {
+      display: block;
+      color: #fff;
+      font-size: 0.75rem;
+    }
+
     .visi-misi {
-  background: #1E1E1E;
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 5rem; /* beri ruang untuk tombol QR */
-  text-align: center;
+      background: #1E1E1E;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 5rem;
+      text-align: center;
+    }
+    .visi-misi iframe {
+  margin-bottom: 1rem; /* Atur jarak sesuai selera, bisa 2rem untuk lebih lebar */
 }
-.visi-misi h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: #4EA8DE;
-}
-.visi-misi p, .visi-misi li {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  margin-bottom: 0.5rem;
-  color: #ddd;
-}
-.visi-misi ul {
-  list-style: none;
-  padding: 0;
-}
+    .visi-misi h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      color: #4EA8DE;
+    }
+    .visi-misi p, .visi-misi li {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 0.5rem;
+      color: #ddd;
+    }
+    .visi-misi ul {
+      list-style: none;
+      padding: 0;
+    }
   </style>
 </head>
 <body>
@@ -131,12 +140,11 @@
       <h2>Skenpat (Unofficial) Main Page</h2>
       <div class="coins">Available:</div>
       <div class="actions">
-        <button><a href="/eskul">Ekstrakurikuler</a></button>
-        <button>Jadwal Mapel</button>
+        <a href="/eskul">Ekstrakurikuler</a>
+        <a href="#">Jadwal Mapel</a>
       </div>
     </div>
 
-    <!-- Kirim & Terima -->
     <div class="section">
       <div class="section-header">
         <h3>Kumpulan Link Terkait</h3>
@@ -162,7 +170,6 @@
       </div>
     </div>
 
-    <!-- Pembayaran -->
     <div class="section">
       <div class="section-header">
         <h3>Skenpat Team</h3>
@@ -187,21 +194,24 @@
         </div>
       </div>
     </div>
-    <!-- Visi & Misi -->
-<div class="visi-misi">
-  <h3>Visi</h3>
-  <p>Menghasilkan lulusan yang kompeten berlandaskan nilai-nilai luhur Pancasila</p>
-  <h3>Misi</h3>
-  <ul>
-    <li>Menerapkan Profil Pelajar Pancasila dan Budaya Kerja</li>
-    <li>Melaksanakan Pembelajaran Berbasis Dunia Kerja</li>
-    <li>Menerapkan Manajemen Berbasis Digital</li>
-    <li>Menyediakan Sarana dan Prasarana Sesuai Standarisasi Dunia Kerja dan Perkembangan Teknologi</li>
-    <li>Memperkuat Kemitraan dengan Dunia Kerja dan Stakeholder</li>
-    <li>Meningkatkan Wawasan Lingkungan Hidup</li>
-  </ul>
-</div>
-  </div>
 
+    <div class="visi-misi">
+      <h3>Profil SMK Negeri 4 Banjarmasin</h3>
+      <iframe width="100%" height="240" src="https://www.youtube.com/embed/XQKoNTQTrkM?autoplay=1&mute=1" name="SMKN4BJM" scrolling="no" style="border:3px solid #000;" allowfullscreen></iframe>
+      <h3>Visi</h3>
+      <p>Menghasilkan lulusan yang kompeten berlandaskan nilai-nilai luhur Pancasila</p>
+      <h3>Misi</h3>
+      <ul>
+        <li>Menerapkan Profil Pelajar Pancasila dan Budaya Kerja</li>
+        <li>Melaksanakan Pembelajaran Berbasis Dunia Kerja</li>
+        <li>Menerapkan Manajemen Berbasis Digital</li>
+        <li>Menyediakan Sarana dan Prasarana Sesuai Standarisasi Dunia Kerja dan Perkembangan Teknologi</li>
+        <li>Memperkuat Kemitraan dengan Dunia Kerja dan Stakeholder</li>
+        <li>Meningkatkan Wawasan Lingkungan Hidup</li>
+      </ul>
+      <br>
+      <h6>- This website is not the school's official website.</h6>
+    </div>
+  </div>
 </body>
 </html>
