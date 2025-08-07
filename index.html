@@ -15,11 +15,13 @@
     }
     
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #121212;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
       color: #fff;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      padding: 1rem;
     }
     
     a { 
@@ -31,29 +33,52 @@
     .app {
       max-width: 480px;
       margin: 0 auto;
-      padding: 1rem;
       min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin: 1.5rem 0;
+    }
+    
+    .header h1 {
+      font-size: 2.2rem;
+      background: linear-gradient(135deg, #DE6805, #F46900);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .header p {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      color: #ccc;
     }
 
     /* Balance Card */
     .card-balance {
       background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 1.8rem 1.5rem;
       position: relative;
       overflow: hidden;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      margin-bottom: 1.8rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255,255,255,0.05);
     }
     
     .card-balance::before {
       content: '';
       position: absolute;
-      top: -20px; 
-      right: -20px;
-      width: 120px; 
-      height: 120px;
-      background: rgba(255,255,255,0.05);
+      top: -30px; 
+      right: -30px;
+      width: 150px; 
+      height: 150px;
+      background: rgba(222, 104, 5, 0.1);
       border-radius: 50%;
     }
     
@@ -67,7 +92,7 @@
     .card-balance .coins {
       font-size: 1rem;
       opacity: 0.8;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
       color: #ccc;
     }
     
@@ -78,17 +103,19 @@
     
     .card-balance .actions a {
       flex: 1;
-      display: inline-block;
-      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      padding: 0.8rem;
+      border-radius: 12px;
+      padding: 1rem;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 500;
       transition: all 0.3s ease;
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
     }
     
     .card-balance .actions a:first-child {
@@ -100,26 +127,31 @@
     }
     
     .card-balance .actions a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(110, 185, 255, 0.3);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(222, 104, 5, 0.4);
     }
 
     /* Section blocks */
     .section {
-      margin-bottom: 2rem;
+      margin-bottom: 2.2rem;
     }
     
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 1.2rem;
+      padding: 0 0.5rem;
     }
     
     .section-header h3 {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 600;
       color: #f0f0f0;
+      background: linear-gradient(90deg, #F46900, #DE6805);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     
     .section-header a {
@@ -127,11 +159,14 @@
       color: #EF5C17;
       transition: all 0.3s;
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
     }
     
     .section-header a:hover {
       color: #6FB9FF;
-      text-decoration: underline;
+      transform: translateX(3px);
     }
 
     /* Grid of buttons */
@@ -143,137 +178,192 @@
     
     .grid .btn {
       background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
-      border-radius: 12px;
-      padding: 1rem 0.5rem;
+      border-radius: 16px;
+      padding: 1.2rem 0.5rem;
       text-align: center;
       font-size: 0.85rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
       border: 1px solid rgba(255, 255, 255, 0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
     }
     
     .grid .btn:hover {
       background: linear-gradient(135deg, #2A2A2A, #363636);
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      transform: translateY(-8px);
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
     }
     
     .grid .btn .icon {
-      font-size: 1.8rem;
+      font-size: 2rem;
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.8rem;
       color: #C7C7C7;
       transition: all 0.3s;
     }
     
     .grid .btn:hover .icon {
-      transform: scale(1.2);
+      transform: scale(1.3);
       color: #FF5400;
     }
     
-    .grid .btn a {
+    .grid .btn span {
       display: block;
       color: #f0f0f0;
       font-size: 0.85rem;
       font-weight: 500;
+      padding: 0 0.5rem;
     }
 
     /* Bounce keyframes */
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
+      50% { transform: translateY(-8px); }
     }
     
     .visi-misi {
       background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
       border-radius: 16px;
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+      padding: 1.8rem 1.5rem;
+      margin-bottom: 2.2rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255,255,255,0.05);
     }
     
-    .visi-misi iframe {
-      width: 100%;
-      height: 240px;
-      margin-bottom: 1.5rem;
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      margin-bottom: 1.8rem;
       border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+    
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
     
     .visi-misi h3 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
       color: #fff;
       font-weight: 600;
       text-align: center;
+      background: linear-gradient(90deg, #F46900, #DE6805);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
     
     .visi-misi p, .visi-misi li {
       font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 0.8rem;
+      line-height: 1.7;
+      margin-bottom: 0.9rem;
       color: #ddd;
     }
     
     .visi-misi ul {
       list-style: none;
       padding: 0;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
     }
     
     .visi-misi li {
       position: relative;
-      padding-left: 1.5rem;
+      padding-left: 1.8rem;
+      margin-bottom: 0.8rem;
     }
     
     .visi-misi li::before {
-      content: ">";
+      content: "»";
       color: #EF5C17;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       position: absolute;
       left: 0;
       top: -0.3rem;
     }
     
     .visi-misi h6 {
-      margin-top: 1.5rem;
+      margin-top: 1.8rem;
       font-size: 0.8rem;
       color: #777;
       text-align: center;
       font-style: italic;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
 
     /* Footer */
     .footer {
       text-align: center;
-      padding: 1.5rem 0;
+      padding: 1.8rem 0;
       color: #777;
       font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      margin-top: 1rem;
+    }
+    
+    .footer a {
+      color: #EF5C17;
+      text-decoration: underline;
     }
 
     /* Responsive adjustments */
     @media (max-width: 480px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
       }
       
       .card-balance h2 {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
       }
       
       .visi-misi h3 {
+        font-size: 1.3rem;
+      }
+      
+      .section-header h3 {
         font-size: 1.2rem;
+      }
+      
+      .grid .btn {
+        padding: 1rem 0.5rem;
+      }
+    }
+    
+    @media (max-width: 360px) {
+      .card-balance .actions {
+        flex-direction: column;
+      }
+      
+      .grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
 <body>
   <div class="app">
+    <div class="header">
+      <h1>Skenpat</h1>
+      <p>(Unofficial) Landing Pages</p>
+    </div>
+
     <div class="card-balance">
-      <h2>Skenpat</h2>
-      <div class="coins">(Unofficial) Landing Pages</div>
+      <h2>Portal Utama</h2>
+      <div class="coins">Akses cepat ke informasi penting</div>
       <div class="actions">
         <a href="/eskul">Ekstrakurikuler</a>
         <a href="/mapel">Jadwal Mapel</a>
@@ -281,85 +371,64 @@
     </div>
 
     <div class="section">
-  <div class="section-header">
-    <h3>Kumpulan Link Terkait</h3>
-    <a href="https://smkn4bjm.sch.id">Lihat semua </a>
-  </div>
-  <div class="grid">
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-newspaper icon"></i>
+      <div class="section-header">
+        <h3>Kumpulan Link Terkait</h3>
+        <a href="https://smkn4bjm.sch.id">
+          Lihat semua <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
-      <a href="https://smkn4bjm.sch.id/berita">Berita</a>
-    </div>
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-book icon"></i>
+      <div class="grid">
+        <a href="https://smkn4bjm.sch.id/berita" class="btn">
+          <i class="fa-solid fa-newspaper icon"></i>
+          <span>Berita</span>
+        </a>
+        <a href="https://smkn4bjm.sch.id/perpustakaan-sekolah" class="btn">
+          <i class="fa-solid fa-book icon"></i>
+          <span>Perpus</span>
+        </a>
+        <a href="https://smkn4bjm.sch.id/prestasi" class="btn">
+          <i class="fa-solid fa-trophy icon"></i>
+          <span>Prestasi</span>
+        </a>
+        <a href="https://smkn4bjm.sch.id/sejarah-sekolah" class="btn">
+          <i class="fa-solid fa-history icon"></i>
+          <span>Sejarah</span>
+        </a>
       </div>
-      <a href="https://smkn4bjm.sch.id/perpustakaan-sekolah">Perpus</a>
     </div>
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-trophy icon"></i>
-      </div>
-      <a href="https://smkn4bjm.sch.id/prestasi">Prestasi</a>
-    </div>
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-history icon"></i>
-      </div>
-      <a href="https://smkn4bjm.sch.id/sejarah-sekolah">Sejarah</a>
-    </div>
-  </div>
-</div>
 
-<div class="section">
-  <div class="section-header">
-    <h3>Skenpat Team</h3>
-    <a href="https://smkn4bjm.sch.id">Lihat semua </a>
-  </div>
-  <div class="grid">
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-users icon"></i>
+    <div class="section">
+      <div class="section-header">
+        <h3>Skenpat Team</h3>
+        <a href="https://smkn4bjm.sch.id">
+          Lihat semua <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
-      <a href="https://smkn4bjm.sch.id/tim-manajemen">Tim Inti</a>
-    </div>
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-chalkboard-user icon"></i>
+      <div class="grid">
+        <a href="https://smkn4bjm.sch.id/tim-manajemen" class="btn">
+          <i class="fa-solid fa-users icon"></i>
+          <span>Tim Inti</span>
+        </a>
+        <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-pendidik" class="btn">
+          <i class="fa-solid fa-chalkboard-user icon"></i>
+          <span>Pendidik</span>
+        </a>
+        <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-kependidikan" class="btn">
+          <i class="fa-solid fa-user-tie icon"></i>
+          <span>Kependidikan</span>
+        </a>
+        <a href="https://smkn4bjm.sch.id/wp-content/uploads/2024/12/Struktur-Sekolah-2024-november.jpg" class="btn">
+          <i class="fa-solid fa-layer-group icon"></i>
+          <span>Struktur</span>
+        </a>
       </div>
-      <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-pendidik">Pendidik</a>
     </div>
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-user-tie icon"></i>
-      </div>
-      <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-kependidikan">Kependidikan</a>
-    </div>
-    <div class="btn">
-      <div class="icon-wrapper">
-        <i class="fa-solid fa-layer-group icon"></i>
-      </div>
-      <a href="https://smkn4bjm.sch.id/wp-content/uploads/2024/12/Struktur-Sekolah-2024-november.jpg">Struktur</a>
-    </div>
-  </div>
-</div>
-
-<style>
-  /* Add this CSS to ensure icons display properly */
-  .icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 0.5rem;
-    height: 2rem;
-  }
-</style>
 
     <div class="visi-misi">
       <h3>Profil SMK Negeri 4 Banjarmasin</h3>
-      <iframe src="https://www.youtube.com/embed/XQKoNTQTrkM?autoplay=1&mute=1" allowfullscreen></iframe>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/XQKoNTQTrkM?autoplay=1&mute=1" allowfullscreen></iframe>
+      </div>
       
       <h3>Visi</h3>
       <p>Menghasilkan lulusan yang kompeten berlandaskan nilai-nilai luhur Pancasila</p>
@@ -378,8 +447,38 @@
     </div>
 
     <div class="footer">
-      &copy; 2025 Unofficial Skenpat Pages | SMKN 4 Banjarmasin
+      &copy; 2025 <a href="#">Unofficial Skenpat Pages</a> | SMKN 4 Banjarmasin
     </div>
   </div>
+  
+  <script>
+    // Animasi tombol saat dihover
+    document.querySelectorAll('.btn').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px)';
+      });
+      
+      btn.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+      });
+    });
+    
+    // Animasi saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+      const elements = document.querySelectorAll('.card-balance, .section, .visi-misi');
+      
+      elements.forEach((el, index) => {
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, index * 200);
+        
+        // Set initial state for animation
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      });
+    });
+  </script>
 </body>
 </html>
