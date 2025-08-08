@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jadwal Kelas X 🔘</title>
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --accent: #4895ef;
+      --light: #f0f7ff;
+      --dark: #2b2d42;
+      --success: #4cc9f0;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+      color: var(--dark);
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 20px;
+      scroll-behavior: smooth;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding: 30px 0;
+    }
+    
+    h1 {
+      font-size: 2.8rem;
+      color: var(--secondary);
+      margin-bottom: 15px;
+      position: relative;
+      display: inline-block;
+    }
+    
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+    
+    .subtitle {
+      font-size: 1.2rem;
+      color: #5a5a72;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .days-container {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 50px;
+    }
+    
+    .day-btn {
+      padding: 14px 30px;
+      border-radius: 12px;
+      background: var(--card-bg);
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+    
+    .day-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.5s ease;
+      z-index: -1;
+    }
+    
+    .day-btn:hover::before {
+      width: 100%;
+    }
+    
+    .day-btn:hover {
+      color: white;
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(67, 97, 238, 0.3);
+    }
+    
+    .day-btn.active {
+      background: var(--primary);
+      color: white;
+      box-shadow: 0 12px 25px rgba(67, 97, 238, 0.3);
+    }
+    
+    .day-btn .emoji {
+      font-size: 1.4rem;
+    }
+    
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .jurusan-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      position: relative;
+    }
+    
+    .jurusan-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    
+    .jurusan-header {
+      background: var(--primary);
+      color: white;
+      padding: 20px;
+      position: relative;
+    }
+    
+    .jurusan-header h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .jurusan-header h2 .emoji {
+      font-size: 1.8rem;
+    }
+    
+    .jurusan-content {
+      padding: 25px;
+    }
+    
+    .link-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .mapel-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--dark);
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--light);
+      transition: var(--transition);
+      border-left: 4px solid var(--accent);
+    }
+    
+    .mapel-link:hover {
+      background: #e3f2fd;
+      transform: translateX(5px);
+      border-left: 4px solid var(--secondary);
+    }
+    
+    .mapel-link .mapel-icon {
+      font-size: 1.4rem;
+      margin-right: 15px;
+      width: 35px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: rgba(67, 97, 238, 0.1);
+      color: var(--primary);
+    }
+    
+    .mapel-name {
+      flex-grow: 1;
+      font-weight: 500;
+    }
+    
+    .mapel-link:hover .mapel-name {
+      color: var(--secondary);
+    }
+    
+    .footer-note {
+      text-align: center;
+      padding: 25px;
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+      color: #5a5a72;
+    }
+    
+    .footer-note a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    
+    .footer-note a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Responsiveness */
+    @media (max-width: 768px) {
+      .days-container {
+        gap: 10px;
+      }
+      
+      .day-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+      
+      .schedule-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .day-btn {
+        flex: 1;
+        min-width: 120px;
+        justify-content: center;
+      }
+      
+      .day-btn .day-text {
+        display: none;
+      }
+      
+      .day-btn .emoji {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Jadwal Kelas X 🔘</h1>
+      <p class="subtitle">Pilih hari untuk melihat jadwal mata pelajaran masing-masing jurusan</p>
+    </header>
+    
+    <div class="days-container">
+      <button class="day-btn active" data-day="senin">
+        <span class="emoji">📅</span>
+        <span class="day-text">Senin</span>
+      </button>
+      <button class="day-btn" data-day="selasa">
+        <span class="emoji">📚</span>
+        <span class="day-text">Selasa</span>
+      </button>
+      <button class="day-btn" data-day="rabu">
+        <span class="emoji">🧪</span>
+        <span class="day-text">Rabu</span>
+      </button>
+      <button class="day-btn" data-day="kamis">
+        <span class="emoji">💻</span>
+        <span class="day-text">Kamis</span>
+      </button>
+      <button class="day-btn" data-day="jumat">
+        <span class="emoji">🎉</span>
+        <span class="day-text">Jumat</span>
+      </button>
+    </div>
+    
+    <div id="schedule-content">
+      <div class="schedule-grid">
+        <div class="jurusan-card">
+          <div class="jurusan-header">
+            <h2><span class="emoji">👨‍💻</span> Rekayasa Perangkat Lunak</h2>
+          </div>
+          <div class="jurusan-content">
+            <div class="link-list">
+              <a href="/xrplone" class="mapel-link">
+                <div class="mapel-icon">💻</div>
+                <span class="mapel-name">Rekayasa Perangkat Lunak 1</span>
+              </a>
+              <a href="/xrpltwo" class="mapel-link">
+                <div class="mapel-icon">📱</div>
+                <span class="mapel-name">Rekayasa Perangkat Lunak 2</span>
+              </a>
+              <a href="/xrplthree" class="mapel-link">
+                <div class="mapel-icon">🔌</div>
+                <span class="mapel-name">Pemrograman Dasar</span>
+              </a>
+              <a href="/xrplfour" class="mapel-link">
+                <div class="mapel-icon">📊</div>
+                <span class="mapel-name">Basis Data</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="jurusan-card">
+          <div class="jurusan-header">
+            <h2><span class="emoji">🎨</span> Seni & Kreativitas</h2>
+          </div>
+          <div class="jurusan-content">
+            <div class="link-list">
+              <a href="/xseni" class="mapel-link">
+                <div class="mapel-icon">🖌️</div>
+                <span class="mapel-name">Seni Lukis</span>
+              </a>
+              <a href="/xdesain" class="mapel-link">
+                <div class="mapel-icon">🎭</div>
+                <span class="mapel-name">Teater & Drama</span>
+              </a>
+              <a href="/xmusik" class="mapel-link">
+                <div class="mapel-icon">🎵</div>
+                <span class="mapel-name">Musik</span>
+              </a>
+              <a href="/xtari" class="mapel-link">
+                <div class="mapel-icon">💃</div>
+                <span class="mapel-name">Tari Tradisional</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="jurusan-card">
+          <div class="jurusan-header">
+            <h2><span class="emoji">💄</span> Kecantikan</h2>
+          </div>
+          <div class="jurusan-content">
+            <div class="link-list">
+              <a href="/xkct" class="mapel-link">
+                <div class="mapel-icon">💇‍♀️</div>
+                <span class="mapel-name">Tata Rias Wajah</span>
+              </a>
+              <a href="/xrambut" class="mapel-link">
+                <div class="mapel-icon">💇‍♂️</div>
+                <span class="mapel-name">Tata Rambut</span>
+              </a>
+              <a href="/xkulit" class="mapel-link">
+                <div class="mapel-icon">🧖‍♀️</div>
+                <span class="mapel-name">Perawatan Kulit</span>
+              </a>
+              <a href="/xspa" class="mapel-link">
+                <div class="mapel-icon">💆‍♀️</div>
+                <span class="mapel-name">Spa & Relaksasi</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="jurusan-card">
+          <div class="jurusan-header">
+            <h2><span class="emoji">🏨</span> Usaha Layanan Wisata</h2>
+          </div>
+          <div class="jurusan-content">
+            <div class="link-list">
+              <a href="/xulw" class="mapel-link">
+                <div class="mapel-icon">🏨</div>
+                <span class="mapel-name">Manajemen Hotel</span>
+              </a>
+              <a href="/xwisata" class="mapel-link">
+                <div class="mapel-icon">✈️</div>
+                <span class="mapel-name">Pemanduan Wisata</span>
+              </a>
+              <a href="/xkuliner" class="mapel-link">
+                <div class="mapel-icon">🍽️</div>
+                <span class="mapel-name">Kuliner Wisata</span>
+              </a>
+              <a href="/xevent" class="mapel-link">
+                <div class="mapel-icon">🎪</div>
+                <span class="mapel-name">Manajemen Event</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="footer-note">
+      <p>Jadwal dapat berubah sewaktu-waktu. Untuk informasi terbaru, silakan hubungi bagian administrasi sekolah.</p>
+      <p>© 2023 SMK Negeri 1 Terbaik • <a href="#">Kebijakan Privasi</a> | <a href="#">Syarat Penggunaan</a></p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const dayButtons = document.querySelectorAll('.day-btn');
+      
+      dayButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          dayButtons.forEach(btn => btn.classList.remove('active'));
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+          
+          // In a real app, this would load the schedule for the selected day
+          const day = this.getAttribute('data-day');
+          console.log(`Loading schedule for ${day}...`);
+          
+          // Show a notification
+          const days = {
+            senin: 'Senin',
+            selasa: 'Selasa',
+            rabu: 'Rabu',
+            kamis: 'Kamis',
+            jumat: 'Jumat'
+          };
+          
+          alert(`Menampilkan jadwal untuk hari ${days[day]}`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
