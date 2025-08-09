@@ -3,82 +3,75 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mapel Kelas X 🔘</title>
+  <title>Mapel Kelas X</title>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
   <style>
     :root {
-      --primary: #EE6A43;
-      --secondary: #C95B37;
-      --accent: #EF7B48;
-      --light: #f0f7ff;
-      --dark: #2b2d42;
-      --success: #4cc9f0;
-      --card-bg: rgba(255, 255, 255, 0.95);
-      --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      --primary: #ff8c42; /* Oranye */
+      --secondary: #e67e22;
+      --accent: #ffa559;
+      --dark: #1e1e2f;
+      --darker: #12121b;
+      --light: #2a2a40;
+      --text-light: #d1d1e0;
+      --shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
       --transition: all 0.3s ease;
-      --gradient-start: #f5f7fa;
-      --gradient-end: #e4edf5;
     }
-    
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
-      color: var(--dark);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--darker);
+      color: var(--text-light);
       line-height: 1.6;
       min-height: 100vh;
       padding: 20px;
-      scroll-behavior: smooth;
     }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 20px;
     }
-    
+
     header {
       text-align: center;
       margin-bottom: 30px;
-      padding: 20px 0;
     }
-    
+
     h1 {
       font-size: 2.5rem;
-      color: var(--secondary);
-      margin-bottom: 15px;
-      position: relative;
-      display: inline-block;
       background: linear-gradient(90deg, var(--primary), var(--accent));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       animation: fadeIn 1s ease;
     }
-    
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: #aaa;
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
-    .subtitle {
-      font-size: 1.15rem;
-      color: #5a5a72;
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 0 15px;
-    }
-    
+
     .days-container {
       display: flex;
       justify-content: center;
       margin-bottom: 40px;
     }
-    
+
     .main-menu-btn {
       padding: 14px 30px;
       border-radius: 12px;
@@ -91,66 +84,40 @@
       gap: 10px;
       box-shadow: var(--shadow);
       transition: var(--transition);
-      cursor: pointer;
       border: none;
-      position: relative;
-      overflow: hidden;
-      z-index: 1;
       text-decoration: none;
-      justify-content: center;
     }
-    
+
     .main-menu-btn:hover {
       background: var(--secondary);
       transform: translateY(-5px);
-      box-shadow: 0 12px 25px rgba(67, 97, 238, 0.3);
     }
-    
-    .main-menu-btn .emoji {
-      font-size: 1.4rem;
-    }
-    
+
     .schedule-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 25px;
-      margin-bottom: 40px;
     }
-    
+
     .jurusan-card {
-      background: var(--card-bg);
+      background: var(--light);
       border-radius: 16px;
       overflow: hidden;
       box-shadow: var(--shadow);
       transition: var(--transition);
-      position: relative;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      animation: cardAppear 0.6s ease-out;
-      animation-fill-mode: backwards;
     }
-    
-    @keyframes cardAppear {
-      0% { opacity: 0; transform: scale(0.95); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-    
-    .jurusan-card:nth-child(1) { animation-delay: 0.1s; }
-    .jurusan-card:nth-child(2) { animation-delay: 0.2s; }
-    .jurusan-card:nth-child(3) { animation-delay: 0.3s; }
-    .jurusan-card:nth-child(4) { animation-delay: 0.4s; }
-    
+
     .jurusan-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     }
-    
+
     .jurusan-header {
-      background: linear-gradient(90deg, var(--primary), var(--accent));
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
       color: white;
       padding: 20px;
-      position: relative;
     }
-    
+
     .jurusan-header h2 {
       margin: 0;
       font-size: 1.5rem;
@@ -158,41 +125,36 @@
       align-items: center;
       gap: 10px;
     }
-    
-    .jurusan-header h2 .emoji {
-      font-size: 1.7rem;
-      filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
-    }
-    
+
     .jurusan-content {
       padding: 20px;
     }
-    
+
     .link-list {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
-    
+
     .mapel-link {
       display: flex;
       align-items: center;
       text-decoration: none;
-      color: var(--dark);
+      color: var(--text-light);
       padding: 12px 15px;
       border-radius: 10px;
-      background: var(--light);
+      background: var(--dark);
       transition: var(--transition);
-      border-left: 4px solid var(--accent);
+      border-left: 4px solid var(--primary);
     }
-    
+
     .mapel-link:hover {
-      background: #e3f2fd;
+      background: #2f2f4f;
       transform: translateX(5px);
       border-left: 4px solid var(--secondary);
     }
-    
-    .mapel-link .mapel-icon {
+
+    .mapel-icon {
       font-size: 1.3rem;
       margin-right: 12px;
       width: 32px;
@@ -201,99 +163,36 @@
       align-items: center;
       justify-content: center;
       border-radius: 8px;
-      background: rgba(67, 97, 238, 0.1);
+      background: rgba(255, 140, 66, 0.15);
       color: var(--primary);
       flex-shrink: 0;
     }
-    
-    .mapel-name {
-      flex-grow: 1;
-      font-weight: 500;
-      font-size: 0.95rem;
-    }
-    
-    .mapel-link:hover .mapel-name {
-      color: var(--secondary);
-    }
-    
+
     .footer-note {
       text-align: center;
       padding: 20px;
-      background: var(--card-bg);
+      background: var(--light);
       border-radius: 16px;
       box-shadow: var(--shadow);
       max-width: 800px;
-      margin: 0 auto;
+      margin: 40px auto 0;
       font-size: 0.9rem;
-      color: #5a5a72;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      color: #aaa;
     }
-    
-    .footer-note p {
-      margin: 5px 0;
-    }
-    
+
     .footer-note a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 500;
-      transition: color 0.2s;
     }
-    
+
     .footer-note a:hover {
       color: var(--secondary);
-      text-decoration: underline;
     }
-    
-    .footer-links {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-    
-    /* Responsiveness */
+
     @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-      
-      .subtitle {
-        font-size: 1rem;
-      }
-      
-      .main-menu-btn {
-        padding: 12px 25px;
-        font-size: 1rem;
-      }
-      
-      .schedule-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-      
-      .jurusan-header h2 {
-        font-size: 1.4rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      .container {
-        padding: 15px;
-      }
-      
-      header {
-        padding: 15px 0;
-      }
-      
-      h1 {
-        font-size: 1.8rem;
-      }
-      
-      .main-menu-btn {
-        width: 100%;
-        max-width: 300px;
-      }
+      h1 { font-size: 2rem; }
+      .schedule-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -303,85 +202,87 @@
       <h1>Mapel Untuk Kelas X</h1>
       <p class="subtitle">Pilih jurusan untuk melihat jadwal mata pelajaran</p>
     </header>
-    
+
     <div class="days-container">
       <a href="/" class="main-menu-btn">
-        <span class="emoji">🏠</span>
-        <span class="day-text">Menu Utama</span>
+        <i class="fa-solid fa-house"></i>
+        Menu Utama
       </a>
     </div>
-    
-    <div id="schedule-content">
-      <div class="schedule-grid">
-        <div class="jurusan-card">
-          <div class="jurusan-header">
-            <h2><span class="emoji">👨‍💻</span> Rekayasa Perangkat Lunak</h2>
-          </div>
-          <div class="jurusan-content">
-            <div class="link-list">
-              <a href="/xrplone" class="mapel-link">
-                <div class="mapel-icon">💻</div>
-                <span class="mapel-name">Rekayasa Perangkat Lunak 1</span>
-              </a>
-              <a href="/xrpltwo" class="mapel-link">
-                <div class="mapel-icon">📱</div>
-                <span class="mapel-name">Rekayasa Perangkat Lunak 2</span>
-              </a>
-            </div>
+
+    <div class="schedule-grid">
+      <div class="jurusan-card">
+        <div class="jurusan-header">
+          <h2><i class="fa-solid fa-laptop-code"></i> Rekayasa Perangkat Lunak</h2>
+        </div>
+        <div class="jurusan-content">
+          <div class="link-list">
+            <a href="/xrplone" class="mapel-link">
+              <div class="mapel-icon"><i class="fa-solid fa-computer"></i></div>
+              <span>Rekayasa Perangkat Lunak 1</span>
+            </a>
+            <a href="/xrpltwo" class="mapel-link">
+              <div class="mapel-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+              <span>Rekayasa Perangkat Lunak 2</span>
+            </a>
           </div>
         </div>
-        
-        <div class="jurusan-card">
-          <div class="jurusan-header">
-            <h2><span class="emoji">🎨</span> Seni</h2>
-          </div>
-          <div class="jurusan-content">
-            <div class="link-list">
-              <a href="/xseni" class="mapel-link">
-                <div class="mapel-icon">🎵</div>
-                <span class="mapel-name">Seni Musik</span>
-              </a>
-            </div>
+      </div>
+
+      <div class="jurusan-card">
+        <div class="jurusan-header">
+          <h2><i class="fa-solid fa-palette"></i> Seni</h2>
+        </div>
+        <div class="jurusan-content">
+          <div class="link-list">
+            <a href="/xseni" class="mapel-link">
+              <div class="mapel-icon"><i class="fa-solid fa-music"></i></div>
+              <span>Seni Musik</span>
+            </a>
           </div>
         </div>
-        
-        <div class="jurusan-card">
-          <div class="jurusan-header">
-            <h2><span class="emoji">💄</span> Kecantikan</h2>
-          </div>
-          <div class="jurusan-content">
-            <div class="link-list">
-              <a href="/xkct" class="mapel-link">
-                <div class="mapel-icon">💅</div>
-                <span class="mapel-name">Kecantikan</span>
-              </a>
-            </div>
+      </div>
+
+      <div class="jurusan-card">
+        <div class="jurusan-header">
+          <h2><i class="fa-solid fa-face-smile"></i> Kecantikan</h2>
+        </div>
+        <div class="jurusan-content">
+          <div class="link-list">
+            <a href="/xkct" class="mapel-link">
+              <div class="mapel-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
+              <span>Kecantikan</span>
+            </a>
           </div>
         </div>
-        
-        <div class="jurusan-card">
-          <div class="jurusan-header">
-            <h2><span class="emoji">🏨</span> Usaha Pelayanan Wisata</h2>
-          </div>
-          <div class="jurusan-content">
-            <div class="link-list">
-              <a href="/xulw" class="mapel-link">
-                <div class="mapel-icon">🏨</div>
-                <span class="mapel-name">Usaha Layanan Wisata</span>
-              </a>
-            </div>
+      </div>
+
+      <div class="jurusan-card">
+        <div class="jurusan-header">
+          <h2><i class="fa-solid fa-hotel"></i> Usaha Pelayanan Wisata</h2>
+        </div>
+        <div class="jurusan-content">
+          <div class="link-list">
+            <a href="/xulw" class="mapel-link">
+              <div class="mapel-icon"><i class="fa-solid fa-building"></i></div>
+              <span>Usaha Layanan Wisata</span>
+            </a>
+            <a href="/xptwo" class="mapel-link">
+              <div class="mapel-icon"><i class="fa-solid fa-building"></i></div>
+              <span>Perhotelan</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
-    
+
     <div class="footer-note">
       <p>Jadwal dapat berubah sewaktu-waktu. Silakan periksa secara berkala.</p>
-      <div class="footer-links">
+      <div>
         <a href="/inf">Kebijakan Privasi</a> | 
         <a href="https://flessan.pages.dev">Sebuah Portofolio</a>
       </div>
-      <p>© 2025 Unofficial Pages for SMKN4BJM</p>
+      <p>� 2025 Unofficial Pages for SMKN4BJM</p>
     </div>
   </div>
 </body>
