@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OSIS SMK Negeri 4 Banjarmasin</title>
+  <meta name="description" content="Portofolio OSIS SMK Negeri 4 Banjarmasin (diambil dari Instagram @osissmkn4bjm)." />
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#94a3b8;
+      --accent:#06b6d4;
+      --text:#e6eef5;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,#071028 0%, #071722 100%);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+      padding:24px;
+    }
+    .container{max-width:1100px;margin:0 auto;}
+    header.card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+      border-radius:14px;
+      padding:18px;
+      display:flex;
+      gap:16px;
+      align-items:center;
+      margin-bottom:20px;
+      box-shadow: 0 6px 24px rgba(2,6,23,0.6);
+    }
+    .avatar{
+      width:104px;height:104px;border-radius:12px;flex:0 0 104px;object-fit:cover;border:2px solid rgba(255,255,255,0.06);
+      background:linear-gradient(90deg,#0a2540,#082d35);
+      display:inline-block;
+    }
+    .profile-info h1{margin:0;font-size:20px;letter-spacing:0.2px;}
+    .profile-info p{margin:6px 0;color:var(--muted);}
+    .profile-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+    .btn{
+      display:inline-block;padding:8px 12px;border-radius:10px;background:var(--accent);color:#76220C;text-decoration:none;font-weight:600;
+      box-shadow: 0 6px 14px rgba(6,182,212,0.12);
+    }
+    .bton{
+      display:inline-block;padding:8px 12px;border-radius:10px;background:var(--accent);color:#7BFF1A;text-decoration:none;font-weight:600;
+      box-shadow: 0 6px 14px rgba(6,182,212,0.12);
+    }
+
+    /* layout */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:18px}
+    .photo{
+      background:var(--card);border-radius:10px;overflow:hidden;position:relative;cursor:pointer;
+      display:flex;align-items:center;justify-content:center;height:180px;
+    }
+    .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
+    .photo:hover img{transform:scale(1.05)}
+    .caption{
+      position:absolute;left:10px;right:10px;bottom:10px;background:linear-gradient(180deg, transparent, rgba(0,0,0,0.45));
+      color:#fff;padding:6px 8px;border-radius:8px;font-size:13px;backdrop-filter: blur(4px);
+    }
+
+    /* struktur osis */
+    .card-section{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:12px;margin-top:20px}
+    .org-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+    .org-item{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
+    .org-item h3{margin:0;font-size:15px}
+    .org-item p{margin:6px 0 0;color:var(--muted);font-size:14px}
+
+    /* modal lightbox */
+    .modal{
+      position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.66);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .18s ease;
+    }
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal-content{max-width:95%;max-height:90%;border-radius:10px;overflow:hidden;background:#000}
+    .modal-content img{display:block;max-width:100%;max-height:90vh;width:auto;height:auto;object-fit:contain}
+    .close-btn{position:absolute;right:18px;top:18px;background:rgba(0,0,0,0.5);color:#fff;border:0;padding:8px;border-radius:8px;cursor:pointer}
+    footer{margin-top:28px;color:var(--muted);text-align:center;font-size:13px}
+    @media (max-width:520px){ .avatar{width:82px;height:82px} .photo{height:140px} }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER PROFILE -->
+    <header class="card" aria-label="Profil OSIS SMK Negeri 4 Banjarmasin">
+      <!-- Ganti src avatar dengan file profil (images/profile.jpg) -->
+      <img class="avatar" id="profileAvatar" src="https://i.ibb.co.com/VcHbcNz1/20250822-192702.jpg" alt="Avatar OSIS SMK Negeri 4 Banjarmasin" />
+      <div class="profile-info">
+        <!-- Ganti teks sesuai bio / nama di Instagram -->
+        <h1 id="profileName">OSIS SMK Negeri 4 Banjarmasin</h1>
+        <p id="profileBio">Akun resmi OSIS SMK Negeri 4 Banjarmasin</br>dokumentasi kegiatan, pengumuman, dan struktur organisasi.</p>
+        <div class="profile-meta">
+          <a id="igLink" class="btn" href="https://www.instagram.com/osissmkn4bjm" target="_blank" rel="noopener noreferrer">Buka IG OSIS</a>
+          <a id="downloadDataButton" class="bton" href="/timgg" target="_blank" rel="noopener">Portofolio Tim GG</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- GALERI -->
+    <section aria-label="Galeri Foto">
+      <h2 style="margin:0 0 8px 0">Galeri Foto</h2>
+      <div class="grid" id="gallery">
+        <!-- Foto akan di-render oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- STRUKTUR ORGANISASI OSIS -->
+    <section class="card-section" aria-label="Struktur OSIS">
+      <h2 style="margin-top:0">Struktur Organisasi OSIS</h2>
+      <p style="color:var(--muted);margin-top:6px">Isi data struktur berikut (posisi & nama). Kamu bisa mengedit langsung di bagian <code>orgData</code> di bawah.</p>
+      <div class="org-list" id="orgList"></div>
+    </section>
+
+    <footer>
+      Dibuat otomatis dari profil Instagram — untuk menampilkan foto: simpan foto ke folder <code>images/</code> dan sesuaikan array <code>photos</code> di bawah. Profil ditemukan: <a style="color:var(--accent)" href="https://www.instagram.com/osissmkn4bjm" target="_blank" rel="noopener">@osissmkn4bjm</a>.
+    </footer>
+  </div>
+
+  <!-- LIGHTBOX / MODAL -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true">
+    <button id="closeModal" class="close-btn" aria-label="Tutup">Tutup ✕</button>
+    <div class="modal-content" id="modalContent">
+      <img id="modalImg" alt="Foto besar" src="" />
+    </div>
+  </div>
+
+  <script>
+    /* ======= EDIT DI SINI =======
+       1) photos[]: daftar gambar dari folder "images/" (contoh: 'img1.jpg')
+       2) Untuk setiap item kamu bisa mengisi caption (opsional)
+       3) orgData: daftar struktur OSIS (posisi + nama). Ganti sesuai info di Instagram.
+    */
+    const photos = [
+      { file: "images/img1.jpg", caption: "Pelantikan pengurus OSIS 2024/2025" },
+      { file: "images/img2.jpg", caption: "Dokumentasi MPLS" },
+      { file: "images/img3.jpg", caption: "Kegiatan lomba antar kelas" },
+      // tambah/kurangi sesuai jumlah foto
+    ];
+
+    const orgData = [
+      // contoh format: {posisi: "Ketua OSIS", nama: "Nama Lengkap"}
+      { posisi: "Pembina OSIS", nama: "Nama Pembina" },
+      { posisi: "Ketua OSIS", nama: "Nama Ketua" },
+      { posisi: "Wakil Ketua", nama: "Nama Wakil" },
+      { posisi: "Sekretaris", nama: "Nama Sekretaris" },
+      { posisi: "Bendahara", nama: "Nama Bendahara" },
+      // tambahkan anggota lainnya sesuai struktur di Instagram
+    ];
+
+    /* ======= jangan ubah bagian bawah jika tidak perlu ======= */
+    const gallery = document.getElementById('gallery');
+    const orgList = document.getElementById('orgList');
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modalImg');
+    const closeModal = document.getElementById('closeModal');
+
+    function renderGallery(){
+      if(!photos || photos.length === 0){
+        gallery.innerHTML = '<div style="color:var(--muted)">Belum ada foto. Masukkan file foto ke folder <code>images/</code> lalu tambahkan nama file ke variabel <code>photos</code> di script.</div>';
+        return;
+      }
+      gallery.innerHTML = '';
+      photos.forEach((p, i) => {
+        const el = document.createElement('div');
+        el.className = 'photo';
+        el.setAttribute('tabindex','0');
+        el.innerHTML = `
+          <img src="${p.file}" alt="${(p.caption||'Foto OSIS')}">
+          ${p.caption ? `<div class="caption">${p.caption}</div>` : ''}
+        `;
+        el.addEventListener('click', ()=> openModal(p.file, p.caption));
+        el.addEventListener('keypress', (e)=> { if(e.key === 'Enter') openModal(p.file, p.caption) });
+        gallery.appendChild(el);
+      });
+    }
+
+    function renderOrg(){
+      if(!orgData || orgData.length === 0){
+        orgList.innerHTML = '<div style="color:var(--muted)">Struktur organisasi belum diisi. Edit variabel <code>orgData</code> di script.</div>';
+        return;
+      }
+      orgList.innerHTML = '';
+      orgData.forEach(o => {
+        const item = document.createElement('div');
+        item.className = 'org-item';
+        item.innerHTML = `<h3>${o.posisi}</h3><p>${o.nama}</p>`;
+        orgList.appendChild(item);
+      });
+    }
+
+    function openModal(src, caption){
+      modalImg.src = src;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+    function closeModalFn(){
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+      modalImg.src = '';
+    }
+
+    closeModal.addEventListener('click', closeModalFn);
+    modal.addEventListener('click', (e)=> { if(e.target === modal) closeModalFn(); });
+
+    // inisialisasi rendering
+    renderGallery();
+    renderOrg();
+
+    // fallback: cek gambar hilang -> ganti ke placeholder
+    window.addEventListener('error', function(ev){
+      if(ev.target && ev.target.tagName === 'IMG'){
+        ev.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%230b1220"/><text x="50%" y="50%" font-size="20" fill="%2394a3b8" text-anchor="middle">GAMBAR TIDAK DITEMUKAN</text></svg>';
+      }
+    }, true);
+  </script>
+</body>
+</html>
