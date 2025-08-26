@@ -3,220 +3,281 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OSIS SMK Negeri 4 Banjarmasin</title>
-  <meta name="description" content="Portofolio OSIS SMK Negeri 4 Banjarmasin (diambil dari Instagram @osissmkn4bjm)." />
+  <title>Struktur Organisasi OSIS — SMK Negeri 4 Banjarmasin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --muted:#94a3b8;
-      --accent:#06b6d4;
-      --text:#e6eef5;
+      --primary:#EB5609; --secondary:#A53C0E; --muted:#64748b; --bg:#f8fafc; --card:#fff; --line:#e6eef8; --dark:#0f172a; --radius:12px; --gap:12px; --max:1100px; --shadow:0 8px 24px rgba(2,6,23,0.06); --gradient:linear-gradient(135deg,var(--primary),var(--secondary));
+      --tap-size:44px; /* recommended touch target */
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#071028 0%, #071722 100%);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.45;
-      padding:24px;
+    [data-theme="dark"]{--primary:#60a5fa;--secondary:#34d399;--bg:#071229;--card:#071229;--muted:#9aa6b2;--line:rgba(255,255,255,0.06);--dark:#e6eef8}
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:'Poppins',system-ui,Arial,sans-serif;background:var(--bg);color:var(--dark);padding:16px}
+
+    .container{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:16px}
+
+    header{grid-column:1/-1;display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--gradient);color:white;padding:12px;border-radius:12px;box-shadow:var(--shadow)}
+    .title{display:flex;flex-direction:column}
+    h1{font-size:1.05rem;font-weight:700}
+    .subtitle{opacity:0.95;font-size:0.88rem}
+
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:rgba(255,255,255,0.12);border:none;color:white;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;min-height:var(--tap-size)}
+
+    main{background:var(--card);padding:12px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
+    .toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .left-tool{display:flex;gap:12px;align-items:center}
+    .search{padding:10px 12px;border-radius:10px;border:1px solid var(--line);min-width:160px;font-size:0.95rem}
+    .muted{color:var(--muted);font-size:0.92rem}
+
+    .org-chart{padding:8px}
+    .chart-header{display:flex;align-items:center;gap:10px;color:var(--primary);font-weight:700;margin-bottom:8px}
+    .levels{display:flex;flex-direction:column;gap:10px;align-items:center}
+    .level{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .card-top{padding:10px;border-radius:10px;border:1px solid var(--line);min-width:140px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,0.6),transparent)}
+    .role{color:var(--primary);font-weight:700}
+    .name{color:var(--muted);margin-top:6px}
+
+    aside{background:var(--card);padding:12px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow);height:min-content}
+    .stats{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+    .stat{display:flex;justify-content:space-between;align-items:center}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .ghost{background:transparent;border:1px solid var(--line);padding:8px 10px;border-radius:8px;cursor:pointer;min-height:var(--tap-size)}
+
+    .sekbid-section{margin-top:8px}
+    .section-title{display:flex;align-items:center;gap:10px;font-size:1rem;color:var(--primary);font-weight:700;margin-bottom:8px}
+    .sekbid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+    .sekbid-card{background:var(--card);border-radius:10px;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
+    .sekbid-header{display:flex;align-items:center;justify-content:space-between;padding:10px;background:linear-gradient(90deg,var(--primary),var(--secondary));color:white}
+    .sekbid-header h3{margin:0;font-size:0.95rem}
+    .sekbid-actions{display:flex;gap:6px}
+    .icon-btn{background:transparent;border:none;color:white;padding:6px;border-radius:6px;cursor:pointer}
+    .sekbid-content{padding:10px}
+    table{width:100%;border-collapse:collapse;font-size:0.95rem}
+    th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left}
+    th{font-weight:700;color:var(--primary)}
+    tr:hover{background:rgba(37,99,235,0.02)}
+    .collapsed .sekbid-content{display:none}
+
+    footer{grid-column:1/-1;margin-top:8px;text-align:center;color:var(--muted);font-size:0.88rem}
+
+    /* Mobile friendly tweaks */
+    @media(max-width:980px){
+      .container{grid-template-columns:1fr;padding:12px}
+      aside{order:2}
+      main{order:1}
+      .controls{gap:6px}
     }
-    .container{max-width:1100px;margin:0 auto;}
-    header.card{
-      background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-      border-radius:14px;
-      padding:18px;
-      display:flex;
-      gap:16px;
-      align-items:center;
-      margin-bottom:20px;
-      box-shadow: 0 6px 24px rgba(2,6,23,0.6);
-    }
-    .avatar{
-      width:104px;height:104px;border-radius:12px;flex:0 0 104px;object-fit:cover;border:2px solid rgba(255,255,255,0.06);
-      background:linear-gradient(90deg,#0a2540,#082d35);
-      display:inline-block;
-    }
-    .profile-info h1{margin:0;font-size:20px;letter-spacing:0.2px;}
-    .profile-info p{margin:6px 0;color:var(--muted);}
-    .profile-meta{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
-    .btn{
-      display:inline-block;padding:8px 12px;border-radius:10px;background:var(--accent);color:#76220C;text-decoration:none;font-weight:600;
-      box-shadow: 0 6px 14px rgba(6,182,212,0.12);
-    }
-    .bton{
-      display:inline-block;padding:8px 12px;border-radius:10px;background:var(--accent);color:#7BFF1A;text-decoration:none;font-weight:600;
-      box-shadow: 0 6px 14px rgba(6,182,212,0.12);
+    @media(max-width:520px){
+      header{flex-direction:column;align-items:flex-start;gap:8px}
+      .search{min-width:120px}
+      .btn{padding:10px;border-radius:10px}
+      .sekbid-grid{grid-template-columns:1fr}
+      .card-top{min-width:120px}
     }
 
-    /* layout */
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:18px}
-    .photo{
-      background:var(--card);border-radius:10px;overflow:hidden;position:relative;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;height:180px;
-    }
-    .photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s ease}
-    .photo:hover img{transform:scale(1.05)}
-    .caption{
-      position:absolute;left:10px;right:10px;bottom:10px;background:linear-gradient(180deg, transparent, rgba(0,0,0,0.45));
-      color:#fff;padding:6px 8px;border-radius:8px;font-size:13px;backdrop-filter: blur(4px);
-    }
-
-    /* struktur osis */
-    .card-section{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:16px;border-radius:12px;margin-top:20px}
-    .org-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
-    .org-item{background:rgba(255,255,255,0.02);padding:10px;border-radius:8px}
-    .org-item h3{margin:0;font-size:15px}
-    .org-item p{margin:6px 0 0;color:var(--muted);font-size:14px}
-
-    /* modal lightbox */
-    .modal{
-      position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.66);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;pointer-events:none;transition:opacity .18s ease;
-    }
-    .modal.open{opacity:1;pointer-events:auto}
-    .modal-content{max-width:95%;max-height:90%;border-radius:10px;overflow:hidden;background:#000}
-    .modal-content img{display:block;max-width:100%;max-height:90vh;width:auto;height:auto;object-fit:contain}
-    .close-btn{position:absolute;right:18px;top:18px;background:rgba(0,0,0,0.5);color:#fff;border:0;padding:8px;border-radius:8px;cursor:pointer}
-    footer{margin-top:28px;color:var(--muted);text-align:center;font-size:13px}
-    @media (max-width:520px){ .avatar{width:82px;height:82px} .photo{height:140px} }
+    /* Make touch targets larger */
+    button, input{touch-action:manipulation}
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- HEADER PROFILE -->
-    <header class="card" aria-label="Profil OSIS SMK Negeri 4 Banjarmasin">
-      <!-- Ganti src avatar dengan file profil (images/profile.jpg) -->
-      <img class="avatar" id="profileAvatar" src="https://i.ibb.co.com/VcHbcNz1/20250822-192702.jpg" alt="Avatar OSIS SMK Negeri 4 Banjarmasin" />
-      <div class="profile-info">
-        <!-- Ganti teks sesuai bio / nama di Instagram -->
-        <h1 id="profileName">OSIS SMK Negeri 4 Banjarmasin</h1>
-        <p id="profileBio">Akun resmi OSIS SMK Negeri 4 Banjarmasin</br>dokumentasi kegiatan, pengumuman, dan struktur organisasi.</p>
-        <div class="profile-meta">
-          <a id="igLink" class="btn" href="https://www.instagram.com/osissmkn4bjm" target="_blank" rel="noopener noreferrer">Buka IG OSIS</a>
-          <a id="downloadDataButton" class="bton" href="/timgg" target="_blank" rel="noopener">Portofolio Tim GG</a>
-        </div>
+  <div class="container" id="app">
+    <header>
+      <div class="title">
+        <h1>Struktur Organisasi OSIS</h1>
+        <div class="subtitle">SMK Negeri 4 Banjarmasin · Tahun Ajaran 2024/2025</div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="themeToggle" aria-label="Mode gelap/terang"><i class="fas fa-moon"></i></button>
+        <button class="btn" id="expandAll">Buka Semua</button>
+        <button class="btn" id="collapseAll">Tutup Semua</button>
       </div>
     </header>
 
-    <!-- GALERI -->
-    <section aria-label="Galeri Foto">
-      <h2 style="margin:0 0 8px 0">Galeri Foto</h2>
-      <div class="grid" id="gallery">
-        <!-- Foto akan di-render oleh JavaScript -->
+    <main>
+      <div class="toolbar">
+        <div class="left-tool">
+          <input id="search" class="search" type="search" placeholder="Cari nama atau seksi..." aria-label="Cari" />
+        </div>
+        <div class="muted">Total seksi: <strong id="totalSekbid">0</strong> · Total anggota: <strong id="totalAnggota">0</strong></div>
       </div>
-    </section>
 
-    <!-- STRUKTUR ORGANISASI OSIS -->
-    <section class="card-section" aria-label="Struktur OSIS">
-      <h2 style="margin-top:0">Struktur Organisasi OSIS</h2>
-      <p style="color:var(--muted);margin-top:6px">Isi data struktur berikut (posisi & nama). Kamu bisa mengedit langsung di bagian <code>orgData</code> di bawah.</p>
-      <div class="org-list" id="orgList"></div>
-    </section>
+      <div class="org-chart" aria-label="Bagan organisasi atas">
+        <div class="chart-header"><i class="fas fa-sitemap"></i><span>Struktur Kepengurusan</span></div>
+        <div class="levels">
+          <div class="level"><div class="card-top"><div class="role">Pembina OSIS</div><div class="name">Ade Fitriyadi S.Pd.</div></div></div>
+          <div class="level"><div class="card-top"><div class="role">Ketua OSIS</div><div class="name">Muhammad Reno Helmawan</div></div><div class="card-top"><div class="role">Wakil Ketua</div><div class="name">Corry Laura Beuty Pakpahan</div></div></div>
+          <div class="level"><div class="card-top"><div class="role">Sekretaris 1</div><div class="name">Amalia Rahmania</div></div><div class="card-top"><div class="role">Sekretaris 2</div><div class="name">Nur Almira Putri</div></div><div class="card-top"><div class="role">Bendahara 1</div><div class="name">Arya Tri Nugraha</div></div><div class="card-top"><div class="role">Bendahara 2</div><div class="name">Muhammad Dede Riyadhi</div></div></div>
+        </div>
+        <div style="text-align:center;margin-top:12px;color:var(--muted);font-size:0.95rem"><i class="fas fa-arrow-down"></i> Daftar seksi bidang di bawah <i class="fas fa-arrow-down"></i></div>
+      </div>
+
+      <section class="sekbid-section">
+        <div class="section-title"><i class="fas fa-users"></i><span>Seksi Bidang</span></div>
+        <div class="sekbid-grid" id="sekbidGrid" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <aside>
+      <div class="stats">
+        <div class="stat"><span class="muted">Total Sekbid</span><strong id="asideTotalSekbid">0</strong></div>
+        <div class="stat"><span class="muted">Total Anggota</span><strong id="asideTotalAnggota">0</strong></div>
+        <div class="stat"><span class="muted">Sekolah</span><strong>SMK Negeri 4 Banjarmasin</strong></div>
+      </div>
+
+      <div style="margin-top:8px" class="muted">Aksi cepat</div>
+      <div class="actions" style="margin-top:8px">
+        <button class="ghost" id="copyAll">Salin Semua Nama</button>
+        <button class="ghost" id="expandVisible">Buka Tampilan</button>
+        <button class="ghost" id="collapseVisible">Tutup Tampilan</button>
+      </div>
+
+      <div style="margin-top:12px" class="muted">Petunjuk: gunakan kotak cari untuk menyaring seksi atau nama. Tombol atur tampilan untuk cepat membuka atau menutup.</div>
+    </aside>
 
     <footer>
-      Dibuat otomatis dari profil Instagram — untuk menampilkan foto: simpan foto ke folder <code>images/</code> dan sesuaikan array <code>photos</code> di bawah. Profil ditemukan: <a style="color:var(--accent)" href="https://www.instagram.com/osissmkn4bjm" target="_blank" rel="noopener">@osissmkn4bjm</a>.
+      <p>© 2025 Organisasi Siswa Intra Sekolah | SMK Negeri 4 Banjarmasin</p>
     </footer>
   </div>
 
-  <!-- LIGHTBOX / MODAL -->
-  <div id="modal" class="modal" role="dialog" aria-hidden="true">
-    <button id="closeModal" class="close-btn" aria-label="Tutup">Tutup ✕</button>
-    <div class="modal-content" id="modalContent">
-      <img id="modalImg" alt="Foto besar" src="" />
-    </div>
-  </div>
-
   <script>
-    /* ======= EDIT DI SINI =======
-       1) photos[]: daftar gambar dari folder "images/" (contoh: 'img1.jpg')
-       2) Untuk setiap item kamu bisa mengisi caption (opsional)
-       3) orgData: daftar struktur OSIS (posisi + nama). Ganti sesuai info di Instagram.
-    */
-    const photos = [
-      { file: "images/img1.jpg", caption: "Pelantikan pengurus OSIS 2024/2025" },
-      { file: "images/img2.jpg", caption: "Dokumentasi MPLS" },
-      { file: "images/img3.jpg", caption: "Kegiatan lomba antar kelas" },
-      // tambah/kurangi sesuai jumlah foto
-    ];
+    // Data driven rendering + mobile-friendly interactions
+    (function(){
+      const data = [
+        {title:'Sekbid Wirausaha', icon:'fa-store', members:[{role:'Ketua Sekbid',name:'Farraz Ibnu Fadli'},{role:'Anggota',name:'Salsabila Azzahra'},{role:'Anggota',name:'Maskanah'},{role:'Anggota',name:'Muhammad Naufal'}]},
+        {title:'Sekbid Humas', icon:'fa-handshake', members:[{role:'Ketua Sekbid',name:'Muhammad Iqbal'},{role:'Anggota',name:'Akhmad Fitrianoor'},{role:'Anggota',name:'Adinda Azrelia H.'},{role:'Anggota',name:'Sarah Naila Humaira'},{role:'Anggota',name:'Kamila Jamil'},{role:'Anggota',name:'Nur Rumaisya Adzkiya'}]},
+        {title:'Sekbid Lingkungan Hidup', icon:'fa-leaf', members:[{role:'Ketua Sekbid',name:'Muhammad Rasya Azizi'},{role:'Anggota',name:'Dara Puspita Rahayu'},{role:'Anggota',name:'Salsabila Salma'},{role:'Anggota',name:'Erika Purnama Saputri'},{role:'Anggota',name:'Nur Amaliah'}]},
+        {title:'Sekbid Olahraga', icon:'fa-running', members:[{role:'Ketua Sekbid',name:'Muhammad Rayhan'},{role:'Anggota',name:'Latifatul Azkiya'}]},
+        {title:'Sekbid Keagamaan', icon:'fa-pray', members:[{role:'Ketua Sekbid',name:'Humaira Faizatun Husna'},{role:'Anggota',name:'Julia Azzahra'},{role:'Anggota',name:'Zahratussita'},{role:'Anggota',name:'Maulida Rizki Ardiani'},{role:'Anggota',name:'Muhammad Syahrul'}]},
+        {title:'Sekbid Bela Negara', icon:'fa-shield-alt', members:[{role:'Ketua Sekbid',name:'Gusti Cynthia Anggraini R.'},{role:'Anggota',name:'Ebira Hasanatina'},{role:'Anggota',name:'Siti Maimunah Fadilla'},{role:'Anggota',name:'Helma Nazulla'},{role:'Anggota',name:'Muhammad Iqbal'}]},
+        {title:'Sekbid Kepemimpinan', icon:'fa-crown', members:[{role:'Ketua Sekbid',name:'Shireen Nur Aura Rizqy'},{role:'Anggota',name:'Muhammad Farhan R.'},{role:'Anggota',name:'Muhammad Haffi Tasmin'},{role:'Anggota',name:'Muhammad Nazril Ilham'},{role:'Anggota',name:'Rizkya Nur Aulia'},{role:'Anggota',name:'Yeni Agustine'}]}
+      ];
 
-    const orgData = [
-      // contoh format: {posisi: "Ketua OSIS", nama: "Nama Lengkap"}
-      { posisi: "Pembina OSIS", nama: "Nama Pembina" },
-      { posisi: "Ketua OSIS", nama: "Nama Ketua" },
-      { posisi: "Wakil Ketua", nama: "Nama Wakil" },
-      { posisi: "Sekretaris", nama: "Nama Sekretaris" },
-      { posisi: "Bendahara", nama: "Nama Bendahara" },
-      // tambahkan anggota lainnya sesuai struktur di Instagram
-    ];
+      // Elements
+      const sekbidGrid = document.getElementById('sekbidGrid');
+      const totalSekbidEl = document.getElementById('totalSekbid');
+      const totalAnggotaEl = document.getElementById('totalAnggota');
+      const asideTotalSekbid = document.getElementById('asideTotalSekbid');
+      const asideTotalAnggota = document.getElementById('asideTotalAnggota');
 
-    /* ======= jangan ubah bagian bawah jika tidak perlu ======= */
-    const gallery = document.getElementById('gallery');
-    const orgList = document.getElementById('orgList');
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modalImg');
-    const closeModal = document.getElementById('closeModal');
-
-    function renderGallery(){
-      if(!photos || photos.length === 0){
-        gallery.innerHTML = '<div style="color:var(--muted)">Belum ada foto. Masukkan file foto ke folder <code>images/</code> lalu tambahkan nama file ke variabel <code>photos</code> di script.</div>';
-        return;
+      // render cards from data
+      function renderSekbids(list){
+        sekbidGrid.innerHTML = '';
+        list.forEach((s, idx)=>{
+          const card = document.createElement('article');
+          card.className = 'sekbid-card';
+          card.setAttribute('data-title', s.title);
+          card.innerHTML = `
+            <header class="sekbid-header">
+              <h3><i class="fas ${s.icon}"></i> ${escapeHtml(s.title)}</h3>
+              <div class="sekbid-actions">
+                <button class="icon-btn" data-copy aria-label="Salin anggota"><i class="fas fa-copy"></i></button>
+                <button class="icon-btn" data-toggle aria-label="Tutup/Buka"><i class="fas fa-chevron-up"></i></button>
+              </div>
+            </header>
+            <div class="sekbid-content">
+              <table aria-describedby="${'cap-'+idx}">
+                <caption id="${'cap-'+idx}">Koordinator dan anggota</caption>
+                <thead><tr><th>Jabatan</th><th>Nama</th></tr></thead>
+                <tbody>
+                  ${s.members.map(m=>`<tr><td>${escapeHtml(m.role)}</td><td>${escapeHtml(m.name)}</td></tr>`).join('')}
+                </tbody>
+              </table>
+            </div>
+          `;
+          sekbidGrid.appendChild(card);
+        });
       }
-      gallery.innerHTML = '';
-      photos.forEach((p, i) => {
-        const el = document.createElement('div');
-        el.className = 'photo';
-        el.setAttribute('tabindex','0');
-        el.innerHTML = `
-          <img src="${p.file}" alt="${(p.caption||'Foto OSIS')}">
-          ${p.caption ? `<div class="caption">${p.caption}</div>` : ''}
-        `;
-        el.addEventListener('click', ()=> openModal(p.file, p.caption));
-        el.addEventListener('keypress', (e)=> { if(e.key === 'Enter') openModal(p.file, p.caption) });
-        gallery.appendChild(el);
+
+      // helpers
+      function escapeHtml(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+      function updateCounts(){
+        const cards = Array.from(sekbidGrid.querySelectorAll('.sekbid-card'));
+        const totalSekbid = cards.length;
+        let totalAnggota = 0;
+        cards.forEach(c=> totalAnggota += c.querySelectorAll('tbody tr').length);
+        totalSekbidEl.textContent = totalSekbid;
+        totalAnggotaEl.textContent = totalAnggota;
+        asideTotalSekbid.textContent = totalSekbid;
+        asideTotalAnggota.textContent = totalAnggota;
+      }
+
+      // delegation for toggle & copy
+      sekbidGrid.addEventListener('click', e => {
+        const toggle = e.target.closest('[data-toggle]');
+        if(toggle){
+          const card = toggle.closest('.sekbid-card');
+          card.classList.toggle('collapsed');
+          const icon = toggle.querySelector('i');
+          icon.className = card.classList.contains('collapsed') ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+          return;
+        }
+
+        const copyBtn = e.target.closest('[data-copy]');
+        if(copyBtn){
+          const card = copyBtn.closest('.sekbid-card');
+          const text = Array.from(card.querySelectorAll('tbody tr td:last-child')).map(td=>td.textContent.trim()).join('
+');
+          navigator.clipboard.writeText(text).then(()=>{
+            copyBtn.setAttribute('aria-label','Tersalin');
+            copyBtn.blur();
+            setTimeout(()=>copyBtn.setAttribute('aria-label','Salin anggota'),900);
+          }).catch(()=>alert('Gagal menyalin'));
+        }
       });
-    }
 
-    function renderOrg(){
-      if(!orgData || orgData.length === 0){
-        orgList.innerHTML = '<div style="color:var(--muted)">Struktur organisasi belum diisi. Edit variabel <code>orgData</code> di script.</div>';
-        return;
+      // search
+      const searchEl = document.getElementById('search');
+      function applyFilter(q){
+        q = q.trim().toLowerCase();
+        const cards = sekbidGrid.querySelectorAll('.sekbid-card');
+        cards.forEach(card=>{
+          const title = card.getAttribute('data-title').toLowerCase();
+          const rows = Array.from(card.querySelectorAll('tbody tr td:last-child')).map(td=>td.textContent.toLowerCase());
+          const match = !q || title.includes(q) || rows.some(r=>r.includes(q));
+          card.style.display = match ? '' : 'none';
+        });
+        updateCounts();
       }
-      orgList.innerHTML = '';
-      orgData.forEach(o => {
-        const item = document.createElement('div');
-        item.className = 'org-item';
-        item.innerHTML = `<h3>${o.posisi}</h3><p>${o.nama}</p>`;
-        orgList.appendChild(item);
-      });
-    }
+      searchEl.addEventListener('input', e=>applyFilter(e.target.value));
+      searchEl.addEventListener('keydown', e=>{ if(e.key==='Escape'){searchEl.value='';applyFilter('');searchEl.blur();} if(e.key==='Enter'){applyFilter(searchEl.value);} });
 
-    function openModal(src, caption){
-      modalImg.src = src;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden','false');
-    }
-    function closeModalFn(){
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden','true');
-      modalImg.src = '';
-    }
+      // actions
+      document.getElementById('expandAll').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>c.classList.remove('collapsed')); sekbidGrid.querySelectorAll('[data-toggle] i').forEach(i=>i.className='fas fa-chevron-up'); });
+      document.getElementById('collapseAll').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>c.classList.add('collapsed')); sekbidGrid.querySelectorAll('[data-toggle] i').forEach(i=>i.className='fas fa-chevron-down'); });
+      document.getElementById('copyAll').addEventListener('click', ()=>{ const names = Array.from(sekbidGrid.querySelectorAll('tbody tr td:last-child')).map(td=>td.textContent.trim()).join('
+'); navigator.clipboard.writeText(names).then(()=>{ const b = document.getElementById('copyAll'); b.textContent='Tersalin'; setTimeout(()=>b.textContent='Salin Semua Nama',900); }).catch(()=>alert('Gagal menyalin')) });
+      document.getElementById('expandVisible').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.classList.remove('collapsed'); }); sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.querySelector('[data-toggle] i').className='fas fa-chevron-up'; }); });
+      document.getElementById('collapseVisible').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.classList.add('collapsed'); }); sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.querySelector('[data-toggle] i').className='fas fa-chevron-down'; }); });
 
-    closeModal.addEventListener('click', closeModalFn);
-    modal.addEventListener('click', (e)=> { if(e.target === modal) closeModalFn(); });
+      // theme with localStorage
+      const themeToggle = document.getElementById('themeToggle');
+      function setTheme(dark){ if(dark){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.querySelector('i').className='fas fa-sun'; localStorage.setItem('osis-theme','dark'); } else { document.documentElement.removeAttribute('data-theme'); themeToggle.querySelector('i').className='fas fa-moon'; localStorage.removeItem('osis-theme'); } }
+      themeToggle.addEventListener('click', ()=> setTheme(!document.documentElement.hasAttribute('data-theme')) );
+      if(localStorage.getItem('osis-theme')==='dark') setTheme(true);
 
-    // inisialisasi rendering
-    renderGallery();
-    renderOrg();
+      // keyboard accessibility
+      document.addEventListener('keydown', e=>{ if(e.altKey && e.key.toLowerCase()==='f'){ e.preventDefault(); searchEl.focus(); } });
 
-    // fallback: cek gambar hilang -> ganti ke placeholder
-    window.addEventListener('error', function(ev){
-      if(ev.target && ev.target.tagName === 'IMG'){
-        ev.target.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400"><rect width="100%" height="100%" fill="%230b1220"/><text x="50%" y="50%" font-size="20" fill="%2394a3b8" text-anchor="middle">GAMBAR TIDAK DITEMUKAN</text></svg>';
-      }
-    }, true);
+      // initial render
+      renderSekbids(data);
+      updateCounts();
+
+      // observe for dynamic changes
+      new MutationObserver(()=>updateCounts()).observe(sekbidGrid,{childList:true,subtree:true,attributes:true});
+
+      // expose applyFilter for debugging
+      window.__osis = {applyFilter};
+
+    })();
   </script>
 </body>
 </html>
