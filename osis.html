@@ -4,86 +4,459 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Struktur Organisasi OSIS — SMK Negeri 4 Banjarmasin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root{
-      --primary:#EB5609; --secondary:#A53C0E; --muted:#64748b; --bg:#f8fafc; --card:#fff; --line:#e6eef8; --dark:#0f172a; --radius:12px; --gap:12px; --max:1100px; --shadow:0 8px 24px rgba(2,6,23,0.06); --gradient:linear-gradient(135deg,var(--primary),var(--secondary));
-      --tap-size:44px; /* recommended touch target */
+      --primary:#EB3B09; 
+      --secondary:#F34915; 
+      --muted:#64748b; 
+      --bg:#f8fafc; 
+      --card:#fff; 
+      --line:#e6eef8; 
+      --dark:#0f172a; 
+      --radius:12px; 
+      --gap:12px; 
+      --max:1100px; 
+      --shadow:0 8px 24px rgba(2,6,23,0.06); 
+      --gradient:linear-gradient(135deg,var(--primary),var(--secondary));
+      --tap-size:44px;
+      --transition: all 0.3s ease;
     }
-    [data-theme="dark"]{--primary:#60a5fa;--secondary:#34d399;--bg:#071229;--card:#071229;--muted:#9aa6b2;--line:rgba(255,255,255,0.06);--dark:#e6eef8}
-
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{font-family:'Poppins',system-ui,Arial,sans-serif;background:var(--bg);color:var(--dark);padding:16px}
-
-    .container{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 320px;gap:16px}
-
-    header{grid-column:1/-1;display:flex;gap:12px;align-items:center;justify-content:space-between;background:var(--gradient);color:white;padding:12px;border-radius:12px;box-shadow:var(--shadow)}
-    .title{display:flex;flex-direction:column}
-    h1{font-size:1.05rem;font-weight:700}
-    .subtitle{opacity:0.95;font-size:0.88rem}
-
-    .controls{display:flex;gap:8px;align-items:center}
-    .btn{background:rgba(255,255,255,0.12);border:none;color:white;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;min-height:var(--tap-size)}
-
-    main{background:var(--card);padding:12px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow);overflow:hidden}
-    .toolbar{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-bottom:12px}
-    .left-tool{display:flex;gap:12px;align-items:center}
-    .search{padding:10px 12px;border-radius:10px;border:1px solid var(--line);min-width:160px;font-size:0.95rem}
-    .muted{color:var(--muted);font-size:0.92rem}
-
-    .org-chart{padding:8px}
-    .chart-header{display:flex;align-items:center;gap:10px;color:var(--primary);font-weight:700;margin-bottom:8px}
-    .levels{display:flex;flex-direction:column;gap:10px;align-items:center}
-    .level{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    .card-top{padding:10px;border-radius:10px;border:1px solid var(--line);min-width:140px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,0.6),transparent)}
-    .role{color:var(--primary);font-weight:700}
-    .name{color:var(--muted);margin-top:6px}
-
-    aside{background:var(--card);padding:12px;border-radius:12px;border:1px solid var(--line);box-shadow:var(--shadow);height:min-content}
-    .stats{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
-    .stat{display:flex;justify-content:space-between;align-items:center}
-    .actions{display:flex;gap:8px;flex-wrap:wrap}
-    .ghost{background:transparent;border:1px solid var(--line);padding:8px 10px;border-radius:8px;cursor:pointer;min-height:var(--tap-size)}
-
-    .sekbid-section{margin-top:8px}
-    .section-title{display:flex;align-items:center;gap:10px;font-size:1rem;color:var(--primary);font-weight:700;margin-bottom:8px}
-    .sekbid-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
-    .sekbid-card{background:var(--card);border-radius:10px;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
-    .sekbid-header{display:flex;align-items:center;justify-content:space-between;padding:10px;background:linear-gradient(90deg,var(--primary),var(--secondary));color:white}
-    .sekbid-header h3{margin:0;font-size:0.95rem}
-    .sekbid-actions{display:flex;gap:6px}
-    .icon-btn{background:transparent;border:none;color:white;padding:6px;border-radius:6px;cursor:pointer}
-    .sekbid-content{padding:10px}
-    table{width:100%;border-collapse:collapse;font-size:0.95rem}
-    th,td{padding:8px;border-bottom:1px solid var(--line);text-align:left}
-    th{font-weight:700;color:var(--primary)}
-    tr:hover{background:rgba(37,99,235,0.02)}
-    .collapsed .sekbid-content{display:none}
-
-    footer{grid-column:1/-1;margin-top:8px;text-align:center;color:var(--muted);font-size:0.88rem}
-
-    /* Mobile friendly tweaks */
-    @media(max-width:980px){
-      .container{grid-template-columns:1fr;padding:12px}
-      aside{order:2}
-      main{order:1}
-      .controls{gap:6px}
+    
+    [data-theme="dark"]{
+      --primary:#EB3B09; 
+      --secondary:#F34915; 
+      --bg:#071229;
+      --card:#0f172a;
+      --muted:#9aa6b2;
+      --line:rgba(255,255,255,0.06);
+      --dark:#e6eef8
     }
-    @media(max-width:520px){
-      header{flex-direction:column;align-items:flex-start;gap:8px}
-      .search{min-width:120px}
-      .btn{padding:10px;border-radius:10px}
-      .sekbid-grid{grid-template-columns:1fr}
-      .card-top{min-width:120px}
+    
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0
     }
-
-    /* Make touch targets larger */
-    button, input{touch-action:manipulation}
+    
+    html,body{
+      height:100%
+    }
+    
+    body{
+      font-family:'Poppins',system-ui,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--dark);
+      padding:16px;
+      line-height:1.6;
+    }
+    
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+      grid-template-areas: 
+        "header header"
+        "main aside"
+        "footer footer";
+    }
+    
+    /* Header Styles */
+    header {
+      grid-area: header;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .title {
+      flex: 1;
+    }
+    
+    .title h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+    
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+    
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+    
+    /* Button Styles */
+    .btn {
+      padding: 8px 16px;
+      background: var(--gradient);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+    
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(235, 86, 9, 0.3);
+    }
+    
+    .btn:active {
+      transform: translateY(0);
+    }
+    
+    .ghost {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      width: 100%;
+      text-align: left;
+    }
+    
+    .ghost:hover {
+      background: var(--primary);
+      color: white;
+    }
+    
+    .icon-btn {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    
+    .icon-btn:hover {
+      background: var(--line);
+      color: var(--primary);
+    }
+    
+    /* Main Content */
+    main {
+      grid-area: main;
+    }
+    
+    /* Toolbar Styles */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    
+    .search {
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      width: 250px;
+      font-family: inherit;
+      transition: var(--transition);
+    }
+    
+    .search:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(235, 86, 9, 0.1);
+    }
+    
+    .muted {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    /* Org Chart Styles */
+    .org-chart {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .chart-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .levels {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .level {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .card-top {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      min-width: 180px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+    }
+    
+    .card-top:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .role {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+    
+    .name {
+      font-weight: 600;
+    }
+    
+    /* Sekbid Section */
+    .sekbid-section {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    
+    .sekbid-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 15px;
+    }
+    
+    .sekbid-card {
+      background: var(--bg);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: var(--transition);
+    }
+    
+    .sekbid-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    .sekbid-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: var(--gradient);
+      color: white;
+    }
+    
+    .sekbid-header h3 {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    
+    .sekbid-actions {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .sekbid-actions .icon-btn {
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .sekbid-actions .icon-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+    
+    .sekbid-content {
+      padding: 15px;
+      max-height: 300px;
+      overflow: hidden;
+      transition: var(--transition);
+    }
+    
+    .sekbid-card.collapsed .sekbid-content {
+      max-height: 0;
+      padding: 0 15px;
+    }
+    
+    .sekbid-content table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    .sekbid-content th {
+      text-align: left;
+      padding: 8px 5px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    
+    .sekbid-content td {
+      padding: 8px 5px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+    
+    .sekbid-content tr:last-child td {
+      border-bottom: none;
+    }
+    
+    /* Sidebar */
+    aside {
+      grid-area: aside;
+    }
+    
+    .stats {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .stat {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    
+    .stat:last-child {
+      border-bottom: none;
+    }
+    
+    .stat strong {
+      color: var(--primary);
+    }
+    
+    .actions {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .hint {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    
+    /* Footer */
+    footer {
+      grid-area: footer;
+      text-align: center;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 968px) {
+      .container {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+          "header"
+          "main"
+          "aside"
+          "footer";
+      }
+      
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .search {
+        width: 100%;
+      }
+      
+      .sekbid-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+      
+      .level {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .card-top {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -91,16 +464,14 @@
     <header>
       <div class="title">
         <h1>Struktur Organisasi OSIS</h1>
-        <div class="subtitle">SMK Negeri 4 Banjarmasin · Tahun Ajaran 2024/2025</div>
+        <div class="subtitle">SMK Negeri 4 Banjarmasin · Periode 2024/2025</div>
       </div>
-
       <div class="controls">
         <button class="btn" id="themeToggle" aria-label="Mode gelap/terang"><i class="fas fa-moon"></i></button>
         <button class="btn" id="expandAll">Buka Semua</button>
         <button class="btn" id="collapseAll">Tutup Semua</button>
       </div>
     </header>
-
     <main>
       <div class="toolbar">
         <div class="left-tool">
@@ -108,7 +479,6 @@
         </div>
         <div class="muted">Total seksi: <strong id="totalSekbid">0</strong> · Total anggota: <strong id="totalAnggota">0</strong></div>
       </div>
-
       <div class="org-chart" aria-label="Bagan organisasi atas">
         <div class="chart-header"><i class="fas fa-sitemap"></i><span>Struktur Kepengurusan</span></div>
         <div class="levels">
@@ -118,37 +488,33 @@
         </div>
         <div style="text-align:center;margin-top:12px;color:var(--muted);font-size:0.95rem"><i class="fas fa-arrow-down"></i> Daftar seksi bidang di bawah <i class="fas fa-arrow-down"></i></div>
       </div>
-
       <section class="sekbid-section">
         <div class="section-title"><i class="fas fa-users"></i><span>Seksi Bidang</span></div>
         <div class="sekbid-grid" id="sekbidGrid" aria-live="polite"></div>
       </section>
     </main>
-
     <aside>
       <div class="stats">
         <div class="stat"><span class="muted">Total Sekbid</span><strong id="asideTotalSekbid">0</strong></div>
         <div class="stat"><span class="muted">Total Anggota</span><strong id="asideTotalAnggota">0</strong></div>
         <div class="stat"><span class="muted">Sekolah</span><strong>SMK Negeri 4 Banjarmasin</strong></div>
       </div>
-
-      <div style="margin-top:8px" class="muted">Aksi cepat</div>
-      <div class="actions" style="margin-top:8px">
+      <div class="actions">
+        <div style="margin-bottom: 8px; color: var(--muted); font-weight: 500;">Aksi cepat</div>
         <button class="ghost" id="copyAll">Salin Semua Nama</button>
         <button class="ghost" id="expandVisible">Buka Tampilan</button>
         <button class="ghost" id="collapseVisible">Tutup Tampilan</button>
       </div>
-
-      <div style="margin-top:12px" class="muted">Petunjuk: gunakan kotak cari untuk menyaring seksi atau nama. Tombol atur tampilan untuk cepat membuka atau menutup.</div>
+      <div class="hint">
+        <strong>Petunjuk:</strong> gunakan kotak cari untuk menyaring seksi atau nama. Tombol atur tampilan untuk cepat membuka atau menutup.
+      </div>
     </aside>
-
     <footer>
       <p>© 2025 Organisasi Siswa Intra Sekolah | SMK Negeri 4 Banjarmasin</p>
     </footer>
   </div>
-
   <script>
-    // Data driven rendering + mobile-friendly interactions
+    // Data dan fungsi rendering
     (function(){
       const data = [
         {title:'Sekbid Wirausaha', icon:'fa-store', members:[{role:'Ketua Sekbid',name:'Farraz Ibnu Fadli'},{role:'Anggota',name:'Salsabila Azzahra'},{role:'Anggota',name:'Maskanah'},{role:'Anggota',name:'Muhammad Naufal'}]},
@@ -159,18 +525,15 @@
         {title:'Sekbid Bela Negara', icon:'fa-shield-alt', members:[{role:'Ketua Sekbid',name:'Gusti Cynthia Anggraini R.'},{role:'Anggota',name:'Ebira Hasanatina'},{role:'Anggota',name:'Siti Maimunah Fadilla'},{role:'Anggota',name:'Helma Nazulla'},{role:'Anggota',name:'Muhammad Iqbal'}]},
         {title:'Sekbid Kepemimpinan', icon:'fa-crown', members:[{role:'Ketua Sekbid',name:'Shireen Nur Aura Rizqy'},{role:'Anggota',name:'Muhammad Farhan R.'},{role:'Anggota',name:'Muhammad Haffi Tasmin'},{role:'Anggota',name:'Muhammad Nazril Ilham'},{role:'Anggota',name:'Rizkya Nur Aulia'},{role:'Anggota',name:'Yeni Agustine'}]}
       ];
-
-      // Elements
       const sekbidGrid = document.getElementById('sekbidGrid');
       const totalSekbidEl = document.getElementById('totalSekbid');
       const totalAnggotaEl = document.getElementById('totalAnggota');
       const asideTotalSekbid = document.getElementById('asideTotalSekbid');
       const asideTotalAnggota = document.getElementById('asideTotalAnggota');
-
-      // render cards from data
+      
       function renderSekbids(list){
         sekbidGrid.innerHTML = '';
-        list.forEach((s, idx)=>{
+        list.forEach((s, idx) => {
           const card = document.createElement('article');
           card.className = 'sekbid-card';
           card.setAttribute('data-title', s.title);
@@ -187,7 +550,7 @@
                 <caption id="${'cap-'+idx}">Koordinator dan anggota</caption>
                 <thead><tr><th>Jabatan</th><th>Nama</th></tr></thead>
                 <tbody>
-                  ${s.members.map(m=>`<tr><td>${escapeHtml(m.role)}</td><td>${escapeHtml(m.name)}</td></tr>`).join('')}
+                  ${s.members.map(m => `<tr><td>${escapeHtml(m.role)}</td><td>${escapeHtml(m.name)}</td></tr>`).join('')}
                 </tbody>
               </table>
             </div>
@@ -195,22 +558,22 @@
           sekbidGrid.appendChild(card);
         });
       }
-
-      // helpers
-      function escapeHtml(str){ return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
+      
+      function escapeHtml(str){ 
+        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); 
+      }
+      
       function updateCounts(){
         const cards = Array.from(sekbidGrid.querySelectorAll('.sekbid-card'));
         const totalSekbid = cards.length;
         let totalAnggota = 0;
-        cards.forEach(c=> totalAnggota += c.querySelectorAll('tbody tr').length);
+        cards.forEach(c => totalAnggota += c.querySelectorAll('tbody tr').length);
         totalSekbidEl.textContent = totalSekbid;
         totalAnggotaEl.textContent = totalAnggota;
         asideTotalSekbid.textContent = totalSekbid;
         asideTotalAnggota.textContent = totalAnggota;
       }
-
-      // delegation for toggle & copy
+      
       sekbidGrid.addEventListener('click', e => {
         const toggle = e.target.closest('[data-toggle]');
         if(toggle){
@@ -220,12 +583,11 @@
           icon.className = card.classList.contains('collapsed') ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
           return;
         }
-
+        
         const copyBtn = e.target.closest('[data-copy]');
         if(copyBtn){
           const card = copyBtn.closest('.sekbid-card');
-          const text = Array.from(card.querySelectorAll('tbody tr td:last-child')).map(td=>td.textContent.trim()).join('
-');
+          const text = Array.from(card.querySelectorAll('tbody tr td:last-child')).map(td => td.textContent.trim()).join('\n');
           navigator.clipboard.writeText(text).then(()=>{
             copyBtn.setAttribute('aria-label','Tersalin');
             copyBtn.blur();
@@ -233,51 +595,121 @@
           }).catch(()=>alert('Gagal menyalin'));
         }
       });
-
-      // search
+      
       const searchEl = document.getElementById('search');
       function applyFilter(q){
         q = q.trim().toLowerCase();
         const cards = sekbidGrid.querySelectorAll('.sekbid-card');
-        cards.forEach(card=>{
+        cards.forEach(card => {
           const title = card.getAttribute('data-title').toLowerCase();
-          const rows = Array.from(card.querySelectorAll('tbody tr td:last-child')).map(td=>td.textContent.toLowerCase());
-          const match = !q || title.includes(q) || rows.some(r=>r.includes(q));
+          const rows = Array.from(card.querySelectorAll('tbody tr td:last-child')).map(td => td.textContent.toLowerCase());
+          const match = !q || title.includes(q) || rows.some(r => r.includes(q));
           card.style.display = match ? '' : 'none';
         });
         updateCounts();
       }
-      searchEl.addEventListener('input', e=>applyFilter(e.target.value));
-      searchEl.addEventListener('keydown', e=>{ if(e.key==='Escape'){searchEl.value='';applyFilter('');searchEl.blur();} if(e.key==='Enter'){applyFilter(searchEl.value);} });
-
-      // actions
-      document.getElementById('expandAll').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>c.classList.remove('collapsed')); sekbidGrid.querySelectorAll('[data-toggle] i').forEach(i=>i.className='fas fa-chevron-up'); });
-      document.getElementById('collapseAll').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>c.classList.add('collapsed')); sekbidGrid.querySelectorAll('[data-toggle] i').forEach(i=>i.className='fas fa-chevron-down'); });
-      document.getElementById('copyAll').addEventListener('click', ()=>{ const names = Array.from(sekbidGrid.querySelectorAll('tbody tr td:last-child')).map(td=>td.textContent.trim()).join('
-'); navigator.clipboard.writeText(names).then(()=>{ const b = document.getElementById('copyAll'); b.textContent='Tersalin'; setTimeout(()=>b.textContent='Salin Semua Nama',900); }).catch(()=>alert('Gagal menyalin')) });
-      document.getElementById('expandVisible').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.classList.remove('collapsed'); }); sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.querySelector('[data-toggle] i').className='fas fa-chevron-up'; }); });
-      document.getElementById('collapseVisible').addEventListener('click', ()=>{ sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.classList.add('collapsed'); }); sekbidGrid.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display!=='none') c.querySelector('[data-toggle] i').className='fas fa-chevron-down'; }); });
-
-      // theme with localStorage
+      
+      searchEl.addEventListener('input', e => applyFilter(e.target.value));
+      searchEl.addEventListener('keydown', e => {
+        if(e.key==='Escape'){ 
+          searchEl.value=''; 
+          applyFilter(''); 
+          searchEl.blur(); 
+        }
+        if(e.key==='Enter'){ 
+          applyFilter(searchEl.value); 
+        }
+      });
+      
+      // Button actions
+      document.getElementById('expandAll').addEventListener('click', () => {
+        sekbidGrid.querySelectorAll('.sekbid-card').forEach(c => {
+          c.classList.remove('collapsed');
+        });
+        sekbidGrid.querySelectorAll('[data-toggle] i').forEach(i => {
+          i.className='fas fa-chevron-up';
+        });
+      });
+      
+      document.getElementById('collapseAll').addEventListener('click', () => {
+        sekbidGrid.querySelectorAll('.sekbid-card').forEach(c => {
+          c.classList.add('collapsed');
+        });
+        sekbidGrid.querySelectorAll('[data-toggle] i').forEach(i => {
+          i.className='fas fa-chevron-down';
+        });
+      });
+      
+      document.getElementById('copyAll').addEventListener('click', () => {
+        const names = Array.from(sekbidGrid.querySelectorAll('tbody tr td:last-child')).map(td => td.textContent.trim()).join('\n');
+        navigator.clipboard.writeText(names).then(()=>{
+          const b = document.getElementById('copyAll');
+          b.textContent='Tersalin';
+          setTimeout(()=>b.textContent='Salin Semua Nama',900);
+        }).catch(()=>alert('Gagal menyalin'));
+      });
+      
+      document.getElementById('expandVisible').addEventListener('click', () => {
+        sekbidGrid.querySelectorAll('.sekbid-card').forEach(c => {
+          if(c.style.display!=='none') c.classList.remove('collapsed');
+        });
+        sekbidGrid.querySelectorAll('.sekbid-card').forEach(c => {
+          if(c.style.display!=='none') c.querySelector('[data-toggle] i').className='fas fa-chevron-up';
+        });
+      });
+      
+      document.getElementById('collapseVisible').addEventListener('click', () => {
+        sekbidGrid.querySelectorAll('.sekbid-card').forEach(c => {
+          if(c.style.display!=='none') c.classList.add('collapsed');
+        });
+        sekbidGrid.querySelectorAll('.sekbid-card').forEach(c => {
+          if(c.style.display!=='none') c.querySelector('[data-toggle] i').className='fas fa-chevron-down';
+        });
+      });
+      
+      // Theme toggle
       const themeToggle = document.getElementById('themeToggle');
-      function setTheme(dark){ if(dark){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.querySelector('i').className='fas fa-sun'; localStorage.setItem('osis-theme','dark'); } else { document.documentElement.removeAttribute('data-theme'); themeToggle.querySelector('i').className='fas fa-moon'; localStorage.removeItem('osis-theme'); } }
+      function setTheme(dark){
+        if(dark){
+          document.documentElement.setAttribute('data-theme','dark');
+          themeToggle.querySelector('i').className='fas fa-sun';
+          localStorage.setItem('osis-theme','dark');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          themeToggle.querySelector('i').className='fas fa-moon';
+          localStorage.removeItem('osis-theme');
+        }
+      }
+      
       themeToggle.addEventListener('click', ()=> setTheme(!document.documentElement.hasAttribute('data-theme')) );
       if(localStorage.getItem('osis-theme')==='dark') setTheme(true);
-
-      // keyboard accessibility
-      document.addEventListener('keydown', e=>{ if(e.altKey && e.key.toLowerCase()==='f'){ e.preventDefault(); searchEl.focus(); } });
-
-      // initial render
+      
+      // Keyboard shortcut
+      document.addEventListener('keydown', e => {
+        if(e.altKey && e.key.toLowerCase()==='f'){
+          e.preventDefault();
+          searchEl.focus();
+        }
+      });
+      
+      // Initial render
       renderSekbids(data);
       updateCounts();
-
-      // observe for dynamic changes
+      
+      // Observe changes
       new MutationObserver(()=>updateCounts()).observe(sekbidGrid,{childList:true,subtree:true,attributes:true});
-
-      // expose applyFilter for debugging
+      
+      // Expose for debugging
       window.__osis = {applyFilter};
-
     })();
+    
+    // Pastikan fungsi ini tersedia secara global
+    function applyFilter(q){
+      const event = new Event('input');
+      document.getElementById('search').value = q;
+      document.getElementById('search').dispatchEvent(event);
+    }
+    window.applyFilter = applyFilter; // agar bisa dipanggil dari console
   </script>
 </body>
 </html>
