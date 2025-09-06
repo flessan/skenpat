@@ -1,172 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OSIS Showcase — Galeri Anggota (GDrive direct URLs)</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <title>Struktur Organisasi OSIS — SMK Negeri 4 Banjarmasin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <style>
     :root{
-      --bg: #0f1724;
-      --card: #0b1220;
-      --muted: #93a3b8;
-      --text: #e6f0f6;
-      --accent: #22c55e;
-      --radius: 12px;
+      --primary:#EB3B09;
+      --secondary:#F34915;
+      --muted:#64748b;
+      --bg:#f8fafc;
+      --card:#fff;
+      --line:#e6eef8;
+      --dark:#0f172a;
+      --radius:12px;
+      --gap:12px;
+      --max:1100px;
+      --shadow:0 8px 24px rgba(2,6,23,0.06);
+      --gradient:linear-gradient(135deg,var(--primary),var(--secondary));
+      --tap-size:44px;
+      --transition: all 0.3s ease;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      background: linear-gradient(180deg,#061021 0%, #071426 100%);
-      color:var(--text);
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
-
-    header{
-      padding:20px 28px;
-      display:flex;
-      align-items:center;
-      gap:20px;
-      border-bottom:1px solid rgba(255,255,255,0.04);
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), transparent);
-      position:sticky; top:0; z-index:60;
-    }
-    .brand { display:flex; gap:12px; align-items:center; }
-    .logo{ width:44px; height:44px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; font-weight:800; background:linear-gradient(135deg,#16a34a,#0ea5a9); color:white; box-shadow: 0 8px 24px rgba(2,6,23,0.6); }
-    h1{ font-size:18px; margin:0; letter-spacing:0.4px }
-    header .right { margin-left:auto; display:flex; gap:10px; align-items:center; }
-
-    /* Search / filter */
-    .search {
-      display:flex; align-items:center; gap:8px; background: rgba(255,255,255,0.02);
-      padding:8px 10px; border-radius:999px; border:1px solid rgba(255,255,255,0.02);
-    }
-    .search input{
-      background:transparent; border:0; outline:none; color:var(--text); width:220px;
-    }
-    .btn {
-      background:var(--card); color:var(--text); padding:8px 12px; border-radius:10px; border:1px solid rgba(255,255,255,0.03); cursor:pointer;
-    }
-    .btn.primary { background:var(--accent); color:#04120b; font-weight:700; border: none; }
-
-    main { padding:22px; max-width:1200px; margin:0 auto; }
-
-    .grid {
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap:18px;
-      margin-top:18px;
+    [data-theme="dark"]{
+      --primary:#EB3B09;
+      --secondary:#F34915;
+      --bg:#071229;
+      --card:#0f172a;
+      --muted:#9aa6b2;
+      --line:rgba(255,255,255,0.06);
+      --dark:#e6eef8
     }
 
-    .member-card {
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-      border-radius:12px;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,0.03);
-      transition: transform .18s ease, box-shadow .18s ease;
-      cursor:pointer;
-      display:flex;
-      flex-direction:column;
-      min-height: 320px;
-    }
-    .member-card:hover { transform: translateY(-6px); box-shadow: 0 18px 42px rgba(2,6,23,0.6); }
-    .member-card img {
-      width:100%; height:240px; object-fit:cover; display:block; background:#0b1220;
-    }
-    .member-info {
-      padding:12px;
-      display:flex; flex-direction:column; gap:6px; align-items:center; text-align:center;
-    }
-    .member-info h3 { margin:0; font-size:15px; color:var(--text); }
-    .member-info p { margin:0; font-size:13px; color:var(--muted) }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:'Poppins',system-ui,Arial,sans-serif;background:var(--bg);color:var(--dark);padding:16px;line-height:1.6}
 
-    .card-actions { display:flex; gap:8px; margin-top:8px; }
-    .card-actions a, .card-actions button { font-size:13px; padding:8px 10px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:var(--text); text-decoration:none; cursor:pointer; display:inline-flex; gap:8px; align-items:center; }
+    .container {max-width: var(--max);margin: 0 auto;display: grid;grid-template-columns: 1fr 280px;grid-template-rows: auto 1fr auto;gap: 20px;grid-template-areas: "header header" "main aside" "footer footer";}
 
-    /* modal */
-    #photoModal {
-      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
-      background: rgba(1,3,6,0.75); z-index:200;
-    }
-    #photoModal.active { display:flex; }
-    #photoModal .modal-inner { width: min(1100px, 96%); max-height: 92%; background:transparent; position:relative; display:flex; gap:12px; }
-    #photoModal img { width:100%; height:auto; border-radius:10px; box-shadow: 0 30px 80px rgba(0,0,0,0.6); object-fit:contain; }
-    #photoModal .meta { min-width:260px; max-width:320px; padding:12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-radius:10px; color:var(--muted); }
-    #photoModal button.close {
-      position:absolute; right:8px; top:8px; background:rgba(0,0,0,0.45); color:#fff; border:0; font-size:22px; width:44px; height:44px; border-radius:10px; cursor:pointer;
-    }
+/* Header Styles */
+    header {grid-area: header;display: flex;justify-content: space-between;align-items: center;padding: 20px;background: var(--card);border-radius: var(--radius);box-shadow: var(--shadow);flex-wrap: wrap;gap: 15px;}
+    .title {flex: 1;}
+    .title h1 {font-size: 1.8rem;font-weight: 700;color: var(--primary);margin-bottom: 5px;}
+    .subtitle {font-size: 0.95rem;color: var(--muted);}
+    .controls {display: flex;gap: 10px;}
+/* Button Styles */
+    .btn {padding: 8px 16px;background: var(--gradient);color: white;border: none;border-radius: 8px;cursor: pointer;font-weight: 500;display: flex;align-items: center;gap: 6px;transition: var(--transition);}
+    .btn:hover {transform: translateY(-2px);box-shadow: 0 4px 12px rgba(235, 86, 9, 0.3);}
+    .btn:active {transform: translateY(0);}
+    .ghost {background: transparent;color: var(--primary);border: 1px solid var(--primary);padding: 8px 16px;border-radius: 8px;cursor: pointer;font-weight: 500;transition: var(--transition);width: 100%;text-align: left;}
+    .ghost:hover {background: var(--primary);color: white;}
+    .icon-btn {background: transparent;border: none;color: var(--muted);cursor: pointer;width: 32px;height: 32px;border-radius: 50%;display: flex;align-items: center;justify-content: center;transition: var(--transition);}
+    .icon-btn:hover {background: var(--line);color: var(--primary);}
 
-    /* responsive tweaks */
-    @media (max-width:880px){
-      .member-card { min-height: 300px; }
-      header { padding:12px 14px; }
-      .search input{ width: 140px; }
+/* Main Content */
+    main {grid-area: main;}
+/* Toolbar Styles */
+    .toolbar {display: flex;justify-content: space-between;align-items: center;margin-bottom: 20px;padding: 15px;background: var(--card);border-radius: var(--radius);box-shadow: var(--shadow);flex-wrap: wrap;gap: 15px;}
+    .search {padding: 10px 15px;border: 1px solid var(--line);border-radius: 8px;width: 250px;font-family: inherit;transition: var(--transition);}
+    .search:focus {outline: none;border-color: var(--primary);box-shadow: 0 0 0 3px rgba(235, 86, 9, 0.1);}
+    .muted {color: var(--muted);font-size: 0.9rem;}
+/* Org Chart Styles */
+    .org-chart {background: var(--card);border-radius: var(--radius);box-shadow: var(--shadow);padding: 20px;margin-bottom: 20px;}
+    .chart-header {display: flex;align-items: center;gap: 10px;margin-bottom: 20px;font-weight: 600;color: var(--primary);}
+    .levels {display: flex;flex-direction: column;gap: 15px;}
+    .level {display: flex;justify-content: center;gap: 20px;flex-wrap: wrap;}
+    .card-top {background: var(--bg);border-radius: 8px;padding: 15px;text-align: center;min-width: 180px;box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);transition: var(--transition);}
+    .card-top:hover {transform: translateY(-3px);box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);}
+    .role {font-size: 0.85rem;color: var(--muted);margin-bottom: 5px;}
+    .name {font-weight: 600;}
+/* Sekbid Section */
+    .sekbid-section {background: var(--card);border-radius: var(--radius);box-shadow: var(--shadow);padding: 20px;}
+    .section-title {display: flex;align-items: center;gap: 10px;margin-bottom: 20px;font-weight: 600;color: var(--primary);}
+    .sekbid-grid {display: grid;grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));gap: 15px;}
+    .sekbid-card {background: var(--bg);border-radius: 8px;overflow: hidden;box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);transition: var(--transition);}
+    .sekbid-card:hover {box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);}
+    .sekbid-header {display: flex;justify-content: space-between;align-items: center;padding: 15px;background: var(--gradient);color: white;}
+    .sekbid-header h3 {font-size: 1rem;font-weight: 600;}
+    .sekbid-actions {display: flex;gap: 5px;}
+    .sekbid-actions .icon-btn {color: rgba(255,255,255,0.8);}
+    .sekbid-actions .icon-btn:hover {background: rgba(255,255,255,0.2);color: white;}
+    .sekbid-content {padding: 15px;max-height: 300px;overflow: hidden;transition: var(--transition);}
+    .sekbid-card.collapsed .sekbid-content {max-height: 0;padding: 0 15px;}
+    .sekbid-content table {width: 100%;border-collapse: collapse;}
+    .sekbid-content th {text-align: left;padding: 8px 5px;border-bottom: 1px solid var(--line);font-weight: 600;color: var(--muted);font-size: 0.85rem;}
+    .sekbid-content td {padding: 8px 5px;border-bottom: 1px solid var(--line);font-size: 0.9rem;}
+    .sekbid-content tr:last-child td {border-bottom: none;}
+/* Sidebar */
+    aside {grid-area: aside;}
+    .stats {background: var(--card);border-radius: var(--radius);box-shadow: var(--shadow);padding: 20px;margin-bottom: 20px;}
+    .stat {display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);}
+    .stat:last-child {border-bottom: none;}
+    .stat strong {color: var(--primary);}
+    .actions {background: var(--card);border-radius: var(--radius);box-shadow: var(--shadow);padding: 20px;margin-bottom: 20px;}
+    .hint {background: var(--card);border-radius: var(--radius);box-shadow: var(--shadow);padding: 20px;font-size: 0.85rem;line-height: 1.5;}
+/* Footer */
+    footer {grid-area: footer;text-align: center;padding: 20px;color: var(--muted);font-size: 0.9rem;}
+/* Responsive Design */
+    @media (max-width: 968px) {.container {grid-template-columns: 1fr;grid-template-areas: "header" "main" "aside" "footer";}.toolbar {flex-direction: column;align-items: stretch;}.search {width: 100%;}.sekbid-grid {grid-template-columns: 1fr;}}
+    @media (max-width: 480px) {header {flex-direction: column;align-items: flex-start;} .controls {width: 100%;justify-content: space-between;} .level {flex-direction: column;align-items: center;} .card-top {width: 100%;max-width: 300px;}}
+    /* --- tambahan CSS untuk fitur search (saran, highlight) --- */
+    .search-wrap{position:relative;display:inline-block;width:100%;max-width:640px}
+    .search-clear{position:absolute;right:6px;top:6px;width:36px;height:36px;border-radius:8px;border:0;background:transparent;color:var(--muted);display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .suggestions{position:absolute;left:0;right:0;top:calc(100% + 8px);background:var(--card);border-radius:8px;box-shadow:0 12px 30px rgba(2,6,23,0.08);max-height:240px;overflow:auto;border:1px solid var(--line);z-index:40;display:none}
+    .suggest-item{padding:8px 10px;border-bottom:1px solid rgba(0,0,0,0.03);cursor:pointer}
+    .suggest-item:last-child{border-bottom:none}
+    .suggest-item:hover,.suggest-item.active{background:rgba(37,99,235,0.06)}
+    mark{background:rgba(250,215,130,0.9);padding:0 2px;border-radius:2px}
+
+    /* small button for image */
+    .foto-btn {
+      padding: 4px 8px;
+      font-size: 0.78rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.02);
+      color: white;
+      cursor: pointer;
+      margin-left: 8px;
     }
-    @media (max-width:520px){
-      .grid { grid-template-columns: repeat(2, 1fr); gap:10px; }
-      .member-card img { height:160px; }
-      #photoModal .modal-inner { flex-direction:column; }
-      #photoModal .meta { max-width:100%; width:100%; }
-    }
+    [data-theme="dark"] .foto-btn { border-color: rgba(255,255,255,0.12); }
+    .foto-btn:hover { transform: translateY(-2px); opacity: 0.95; }
   </style>
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <span class="logo">FG</span>
-      <div>
-        <h1>OSIS Showcase</h1>
-        <div style="font-size:12px;color:var(--muted)">Galeri foto anggota — klik untuk lihat besar</div>
+  <div class="container" id="app">
+    <header>
+      <div class="title">
+        <h1>Struktur Organisasi OSIS</h1>
+        <div class="subtitle">SMK Negeri 4 Banjarmasin · Periode 2024/2025</div>
       </div>
-    </div>
-
-    <div class="right">
-      <div class="search" title="Cari nama atau sekbid">
-        <i class="fas fa-search" style="color:var(--muted)"></i>
-        <input id="searchInput" placeholder="Cari nama, sekbid..." />
-        <button id="clearSearch" class="btn" title="Bersihkan" style="display:none"><i class="fas fa-xmark"></i></button>
+      <div class="controls">
+        <button class="btn" id="themeToggle" aria-label="Mode gelap/terang"><i class="fas fa-moon"></i></button>
+        <button class="btn" id="expandAll">Buka Semua</button>
+        <button class="btn" id="collapseAll">Tutup Semua</button>
       </div>
-      <button id="refreshBtn" class="btn" title="Refresh data"><i class="fas fa-sync-alt"></i></button>
-    </div>
-  </header>
-
-  <main>
-    <section>
-      <div id="stats" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"></div>
-      <div class="grid" id="grid" aria-live="polite"></div>
-    </section>
-  </main>
-
-  <!-- modal photo -->
-  <div id="photoModal" aria-hidden="true">
-    <div class="modal-inner" role="dialog" aria-modal="true">
-      <img id="modalImg" alt="Preview Foto">
-      <div class="meta">
-        <h3 id="metaName" style="color:var(--text); margin-top:0">Nama</h3>
-        <p id="metaSekbid" style="margin:6px 0 12px">Sekbid</p>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <a id="openDrive" class="btn" target="_blank" rel="noopener" style="text-decoration:none"><i class="fas fa-external-link-alt"></i> Buka di Drive</a>
-          <button id="downloadBtn" class="btn primary"><i class="fas fa-download"></i> Download</button>
+    </header>
+    <main>
+      <div class="toolbar">
+        <div class="left-tool" style="flex:1;max-width:640px">
+          <div class="search-wrap">
+            <input id="search" class="search" type="search" placeholder="Cari nama, jabatan, atau seksi..." aria-label="Cari" autocomplete="off" />
+            <button id="searchClear" class="search-clear" title="Bersihkan" aria-label="Bersihkan">✕</button>
+            <div id="suggestions" class="suggestions" role="listbox" aria-label="Saran pencarian"></div>
+          </div>
         </div>
+        <div class="muted" id="searchStats">Total seksi: <strong id="totalSekbid">0</strong> · Total anggota: <strong id="totalAnggota">0</strong></div>
       </div>
-      <button class="close" id="closeModal" aria-label="Tutup">&times;</button>
-    </div>
+      <div class="org-chart" aria-label="Bagan organisasi atas">
+        <div class="chart-header"><i class="fas fa-sitemap"></i><span>Struktur Kepengurusan</span></div>
+        <div class="levels">
+          <div class="level"><div class="card-top"><div class="role">Pembina OSIS</div><div class="name">Ade Fitriyadi S.Pd.</div></div></div>
+          <div class="level"><div class="card-top"><div class="role">Ketua OSIS</div><div class="name">Muhammad Reno Helmawan</div></div><div class="card-top"><div class="role">Wakil Ketua</div><div class="name">Corry Laura Beuty Pakpahan</div></div></div>
+          <div class="level"><div class="card-top"><div class="role">Sekretaris 1</div><div class="name">Amalia Rahmania</div></div><div class="card-top"><div class="role">Sekretaris 2</div><div class="name">Nur Almira Putri</div></div><div class="card-top"><div class="role">Bendahara 1</div><div class="name">Arya Tri Nugraha</div></div><div class="card-top"><div class="role">Bendahara 2</div><div class="name">Muhammad Dede Riyadhi</div></div></div>
+        </div>
+        <div style="text-align:center;margin-top:12px;color:var(--muted);font-size:0.95rem"><i class="fas fa-arrow-down"></i> Daftar seksi bidang di bawah <i class="fas fa-arrow-down"></i></div>
+      </div>
+      <section class="sekbid-section">
+        <div class="section-title"><i class="fas fa-users"></i><span>Seksi Bidang</span></div>
+        <div class="sekbid-grid" id="sekbidGrid" aria-live="polite"></div>
+      </section>
+    </main>
+    <aside>
+      <div class="stats">
+        <div class="stat"><span class="muted">Total Sekbid</span><strong id="asideTotalSekbid">0</strong></div>
+        <div class="stat"><span class="muted">Total Anggota</span><strong id="asideTotalAnggota">0</strong></div>
+        <div class="stat"><span class="muted">Sekolah</span><strong>SMK Negeri 4 Banjarmasin</strong></div>
+      </div>
+      <div class="actions">
+        <div style="margin-bottom: 8px; color: var(--muted); font-weight: 500;">Aksi cepat</div>
+        <button class="ghost" id="copyAll">Salin Semua Nama</button>
+        <button class="ghost" id="expandVisible">Buka Tampilan</button>
+        <button class="ghost" id="collapseVisible">Tutup Tampilan</button>
+      </div>
+      <div class="hint">
+        <strong>Petunjuk:</strong> gunakan kotak cari untuk menyaring seksi atau nama. Gunakan panah atas/bawah dan Enter pada daftar saran.
+      </div>
+    </aside>
+    <footer>
+      <p>© 2025 Organisasi Siswa Intra Sekolah | SMK Negeri 4 Banjarmasin</p>
+    </footer>
   </div>
 
   <script>
-    // fallback placeholder image (CDN)
-    const PLACEHOLDER = "https://via.placeholder.com/800x520?text=No+Photo";
+  (function(){
+    /* ---------- data ---------- */
+    const data = [
+      {title:'Sekbid Wirausaha', icon:'fa-store', members:[{role:'Ketua Sekbid',name:'Farraz Ibnu Fadli'},{role:'Anggota',name:'Salsabila Azzahra'},{role:'Anggota',name:'Maskanah'},{role:'Anggota',name:'Muhammad Naufal'}]},
+      {title:'Sekbid Humas', icon:'fa-handshake', members:[{role:'Ketua Sekbid',name:'Muhammad Iqbal'},{role:'Anggota',name:'Akhmad Fitrianoor'},{role:'Anggota',name:'Adinda Azrelia H.'},{role:'Anggota',name:'Sarah Naila Humaira'},{role:'Anggota',name:'Kamila Jamil'},{role:'Anggota',name:'Nur Rumaisya Adzkiya'}]},
+      {title:'Sekbid Lingkungan Hidup', icon:'fa-leaf', members:[{role:'Ketua Sekbid',name:'Muhammad Rasya Azizi'},{role:'Anggota',name:'Dara Puspita Rahayu'},{role:'Anggota',name:'Salsabila Salma'},{role:'Anggota',name:'Erika Purnama Saputri'},{role:'Anggota',name:'Nur Amaliah'}]},
+      {title:'Sekbid Olahraga', icon:'fa-running', members:[{role:'Ketua Sekbid',name:'Muhammad Rayhan'},{role:'Anggota',name:'Latifatul Azkiya'}]},
+      {title:'Sekbid Keagamaan', icon:'fa-pray', members:[{role:'Ketua Sekbid',name:'Humaira Faizatun Husna'},{role:'Anggota',name:'Julia Azzahra'},{role:'Anggota',name:'Zahratussita'},{role:'Anggota',name:'Maulida Rizki Ardiani'},{role:'Anggota',name:'Muhammad Syahrul'}]},
+      {title:'Sekbid Bela Negara', icon:'fa-shield-alt', members:[{role:'Ketua Sekbid',name:'Gusti Cynthia Anggraini Rinanda'},{role:'Anggota',name:'Ebira Hasanatina'},{role:'Anggota',name:'Siti Maimunah Fadilla'},{role:'Anggota',name:'Helma Nazulla'},{role:'Anggota',name:'Muhammad Iqbal'}]},
+      {title:'Sekbid Kepemimpinan', icon:'fa-crown', members:[{role:'Ketua Sekbid',name:'Shireen Nur Aura Rizqy'},{role:'Anggota',name:'Muhammad Farhan R.'},{role:'Anggota',name:'Muhammad Haffi Tasmin'},{role:'Anggota',name:'Muhammad Nazril Ilham'},{role:'Anggota',name:'Rizkya Nur Aulia'},{role:'Anggota',name:'Yeni Agustine'}]}
+    ];
 
-    function escapeHtml(s){
-      if(!s) return "";
-      return String(s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[ch]));
-    }
-
-    // ---------- Foto direct URLs (drive.usercontent) ----------
-    // I use full URLs that work as <img> sources.
-    const fotoUrls = {
+    /* ---------- FOTO MAP (direct drive.usercontent urls) ---------- */
+    const fotoMap = {
       "Muhammad Reno Helmawan": "https://drive.usercontent.google.com/download?id=1qqyR4UQyh1mectQRTsXPKDia63KqwtTK&export=view&authuser=0",
       "Corry Laura Beuty Pakpahan": "https://drive.usercontent.google.com/download?id=19VLZ2yoG0MUVnQkk1bqCHFGe61-sDhvx&export=view&authuser=0",
       "Amalia Rahmania": "https://drive.usercontent.google.com/download?id=1Q3gY0djwi9W32DrQZE-dwVdBS1qj8NfN&export=view&authuser=0",
@@ -195,7 +228,7 @@
       "Zahratussita": "https://drive.usercontent.google.com/download?id=1XugVGaccTc0q0BVEu7qlyAZILqi&export=view&authuser=0",
       "Maulida Rizki Ardiani": "https://drive.usercontent.google.com/download?id=1-425RR8U9Me9Lo9r66cK86lCb4lfDnvN&export=view&authuser=0",
       "Muhammad Syahrul": "https://drive.usercontent.google.com/download?id=1iMDOJdgjL7N-tLI4pXZWVes8N7H60yxz&export=view&authuser=0",
-      "Gusti Cynthia Anggraini R.": "https://drive.usercontent.google.com/download?id=1dVYoPPVIN&export=view&authuser=0",
+      "Gusti Cynthia Anggraini Rinanda": "https://drive.usercontent.google.com/download?id=1dVYoPPVIN&export=view&authuser=0",
       "Ebira Hasanatina": "https://drive.usercontent.google.com/download?id=1WiCjcBMQNSlmVOymjOW7nTulnsYrWbM1&export=view&authuser=0",
       "Siti Maimunah Fadilla": "https://drive.usercontent.google.com/download?id=17r9r&export=view&authuser=0",
       "Helma Nazulla": "https://drive.usercontent.google.com/download?id=1Rxloa5uVG1zq3LhFqBkkfqxvhzNgL8kR&export=view&authuser=0",
@@ -207,239 +240,333 @@
       "Yeni Agustine": "https://drive.usercontent.google.com/download?id=1rk0ynoj0QouqwkHq1G6ZiHieLUoUC7qR&export=view&authuser=0"
     };
 
-    // ---------- Sekbid data ----------
-    const sekbids = [
-      { title: "Sekbid 1", icon: "fa-users", members: [
-          { name: "Muhammad Reno Helmawan", role: "Ketua" },
-          { name: "Corry Laura Beuty Pakpahan", role: "Wakil" },
-          { name: "Amalia Rahmania", role: "Anggota" },
-          { name: "Nur Almira Putri", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 2", icon: "fa-lightbulb", members: [
-          { name: "Arya Tri Nugraha", role: "Ketua" },
-          { name: "Muhammad Dede Riyadhi", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 3", icon: "fa-pen-nib", members: [
-          { name: "Farraz Ibnu Fadli", role: "Ketua" },
-          { name: "Salsabila Azzahra", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 4", icon: "fa-handshake", members: [
-          { name: "Maskanah", role: "Ketua" },
-          { name: "Muhammad Naufal", role: "Wakil" }
-        ]
-      },
-      { title: "Sekbid 5", icon: "fa-graduation-cap", members: [
-          { name: "Muhammad Iqbal", role: "Ketua" },
-          { name: "Akhmad Fitrianoor", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 6", icon: "fa-star", members: [
-          { name: "Adinda Azrelia H.", role: "Ketua" },
-          { name: "Sarah Naila Humaira", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 7", icon: "fa-heart", members: [
-          { name: "Kamila Jamil", role: "Ketua" },
-          { name: "Nur Rumaisya Adzkiya", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 8", icon: "fa-music", members: [
-          { name: "Muhammad Rasya Azizi", role: "Ketua" },
-          { name: "Dara Puspita Rahayu", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 9", icon: "fa-globe", members: [
-          { name: "Salsabila Salma", role: "Ketua" },
-          { name: "Erika Purnama Saputri", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 10", icon: "fa-lightbulb", members: [
-          { name: "Nur Amaliah", role: "Ketua" },
-          { name: "Muhammad Rayhan", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 11", icon: "fa-users", members: [
-          { name: "Latifatul Azkiya", role: "Ketua" },
-          { name: "Humaira Faizatun Husna", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 12", icon: "fa-leaf", members: [
-          { name: "Julia Azzahra", role: "Ketua" },
-          { name: "Zahratussita", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 13", icon: "fa-thumbs-up", members: [
-          { name: "Maulida Rizki Ardiani", role: "Ketua" },
-          { name: "Muhammad Syahrul", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 14", icon: "fa-palette", members: [
-          { name: "Gusti Cynthia Anggraini R.", role: "Ketua" },
-          { name: "Ebira Hasanatina", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 15", icon: "fa-handshake", members: [
-          { name: "Siti Maimunah Fadilla", role: "Ketua" },
-          { name: "Helma Nazulla", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 16", icon: "fa-graduation-cap", members: [
-          { name: "Muhammad Iqbal 2", role: "Ketua" },
-          { name: "Shireen Nur Aura Rizqy", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 17", icon: "fa-flag", members: [
-          { name: "Muhammad Haffi Tasmin", role: "Ketua" },
-          { name: "Muhammad Nazril Ilham", role: "Anggota" }
-        ]
-      },
-      { title: "Sekbid 18", icon: "fa-rocket", members: [
-          { name: "Rizkya Nur Aulia", role: "Ketua" },
-          { name: "Yeni Agustine", role: "Anggota" }
-        ]
-      }
-    ];
+    /* ---------- DOM ---------- */
+    const sekbidGrid = document.getElementById('sekbidGrid');
+    const totalSekbidEl = document.getElementById('totalSekbid');
+    const totalAnggotaEl = document.getElementById('totalAnggota');
+    const asideTotalSekbid = document.getElementById('asideTotalSekbid');
+    const asideTotalAnggota = document.getElementById('asideTotalAnggota');
+    const searchEl = document.getElementById('search');
+    const suggestionsEl = document.getElementById('suggestions');
+    const searchClear = document.getElementById('searchClear');
 
-    // ---------- render ----------
-    const grid = document.getElementById("grid");
-    const stats = document.getElementById("stats");
+    /* ---------- helpers ---------- */
+    function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function normalize(s){ if(!s) return ''; try{ return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }catch(e){ return s.toLowerCase(); } }
+    function escapeRegExp(s){ return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+    function debounce(fn, wait=220){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), wait); }; }
 
-    function buildCard(member, sekbidTitle){
-      const imgUrl = fotoUrls[member.name] || PLACEHOLDER;
-      // extract id from url for drive view/download if possible
-      // try to find id parameter in the drive.usercontent url:
-      let id = null;
-      try {
-        const u = new URL(imgUrl);
-        id = u.searchParams.get('id') || null;
-      } catch(e){}
-      const driveView = id ? `https://drive.google.com/file/d/${encodeURIComponent(id)}/view` : "";
-
-      const card = document.createElement('article');
-      card.className = "member-card";
-      card.tabIndex = 0;
-
-      card.innerHTML = `
-        <img loading="lazy" decoding="async" src="${imgUrl}" alt="${escapeHtml(member.name)}"
-             onerror="this.onerror=null;this.src='${PLACEHOLDER}';">
-        <div class="member-info">
-          <h3>${escapeHtml(member.name)}</h3>
-          <p>${escapeHtml(member.role)} — ${escapeHtml(sekbidTitle)}</p>
-          <div class="card-actions" style="margin-top:10px">
-            <button class="openModal btn"><i class="fas fa-expand"></i> Preview</button>
-            ${driveView ? `<a class="btn" href="${driveView}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Open Drive</a>` : ""}
-          </div>
-        </div>
-      `;
-
-      const openBtn = card.querySelector('.openModal');
-      if(openBtn){
-        openBtn.addEventListener('click', (e)=>{
-          e.stopPropagation();
-          openModal(imgUrl, member.name, `${member.role} — ${sekbidTitle}`, id);
-        });
-      }
-
-      card.addEventListener('click', ()=> openModal(imgUrl, member.name, `${member.role} — ${sekbidTitle}`, id));
-      card.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') openModal(imgUrl, member.name, `${member.role} — ${sekbidTitle}`, id); });
-
-      return card;
-    }
-
-    function renderAll(){
-      grid.innerHTML = "";
-      let total = 0;
-      sekbids.forEach(section => {
-        section.members.forEach(member => {
-          const card = buildCard(member, section.title);
-          grid.appendChild(card);
-          total++;
+    /* suggestion pool: unique sekbid titles, names, roles */
+    const suggestionPool = (() => {
+      const m = new Map();
+      data.forEach(s=>{
+        const t = normalize(s.title);
+        if(!m.has(t)) m.set(t, {type:'seksi', text:s.title});
+        s.members.forEach(mem=>{
+          const n = normalize(mem.name);
+          if(!m.has(n)) m.set(n, {type:'nama', text:mem.name});
+          const r = normalize(mem.role);
+          if(!m.has(r)) m.set(r, {type:'jabatan', text:mem.role});
         });
       });
+      return Array.from(m.values());
+    })();
 
-      // stats
-      stats.innerHTML = `
-        <div style="padding:8px 12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-radius:10px; border:1px solid rgba(255,255,255,0.03)">
-          <strong>Total Anggota:</strong> ${total}
-        </div>
-        <div style="padding:8px 12px; background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); border-radius:10px; border:1px solid rgba(255,255,255,0.03)">
-          <strong>Sekbid Terdaftar:</strong> ${sekbids.length}
-        </div>
-      `;
+    /* ---------- render sekbids (programmatic so buttons persist) ---------- */
+    function renderSekbids(list){
+      sekbidGrid.innerHTML = '';
+      list.forEach((s, idx) => {
+        const card = document.createElement('article');
+        card.className = 'sekbid-card';
+        card.setAttribute('data-title', s.title);
+
+        // precompute searchable text
+        const membersText = s.members.map(m=>`${m.role} ${m.name}`).join(' | ');
+        card.dataset.search = normalize(s.title + ' ' + membersText);
+
+        // header (use innerHTML for header; actions attach via delegation)
+        const header = document.createElement('header');
+        header.className = 'sekbid-header';
+        header.innerHTML = `<h3><i class="fas ${s.icon}"></i> ${escapeHtml(s.title)}</h3>
+            <div class="sekbid-actions">
+              <button class="icon-btn" data-copy aria-label="Salin anggota"><i class="fas fa-copy"></i></button>
+              <button class="icon-btn" data-toggle aria-label="Tutup/Buka"><i class="fas fa-chevron-up"></i></button>
+            </div>`;
+        card.appendChild(header);
+
+        // content
+        const content = document.createElement('div');
+        content.className = 'sekbid-content';
+
+        const table = document.createElement('table');
+        table.setAttribute('aria-describedby', 'cap-' + idx);
+        const caption = document.createElement('caption');
+        caption.id = 'cap-' + idx;
+        caption.textContent = 'Koordinator dan anggota';
+        table.appendChild(caption);
+
+        const thead = document.createElement('thead');
+        thead.innerHTML = '<tr><th>Jabatan</th><th>Nama</th></tr>';
+        table.appendChild(thead);
+
+        const tbody = document.createElement('tbody');
+
+        // build rows with buttons (so button nodes remain stable)
+        s.members.forEach(m => {
+          const tr = document.createElement('tr');
+
+          const tdRole = document.createElement('td');
+          tdRole.className = 'cell-role';
+          tdRole.textContent = m.role;
+          tdRole.dataset.raw = m.role; // for highlight
+          tr.appendChild(tdRole);
+
+          const tdName = document.createElement('td');
+          tdName.className = 'cell-name';
+          tdName.dataset.raw = m.name; // raw text for highlight
+
+          // span for name text
+          const nameSpan = document.createElement('span');
+          nameSpan.className = 'name-text';
+          nameSpan.textContent = m.name;
+          tdName.appendChild(nameSpan);
+
+          // if foto exists, add the small button
+          const url = fotoMap[m.name];
+          if(url){
+            const btn = document.createElement('button');
+            btn.className = 'foto-btn';
+            btn.type = 'button';
+            btn.dataset.url = url;
+            btn.title = 'Lihat Foto';
+            btn.innerHTML = '<i class="fas fa-image" style="margin-right:6px"></i>Lihat Foto';
+            // click handler opens new tab; stop propagation so it doesn't trigger other actions
+            btn.addEventListener('click', (ev) => {
+              ev.stopPropagation();
+              window.open(btn.dataset.url, '_blank', 'noopener');
+            });
+            tdName.appendChild(btn);
+          }
+
+          tr.appendChild(tdName);
+          tbody.appendChild(tr);
+        });
+
+        table.appendChild(tbody);
+        content.appendChild(table);
+        card.appendChild(content);
+        sekbidGrid.appendChild(card);
+      });
     }
 
-    // ---------- modal ----------
-    const photoModal = document.getElementById('photoModal');
-    const modalImg = document.getElementById('modalImg');
-    const metaName = document.getElementById('metaName');
-    const metaSekbid = document.getElementById('metaSekbid');
-    const openDriveBtn = document.getElementById('openDrive');
-    const downloadBtn = document.getElementById('downloadBtn');
-    const closeModal = document.getElementById('closeModal');
-
-    function openModal(imgUrl, name, sekbidText, id){
-      modalImg.src = imgUrl || PLACEHOLDER;
-      metaName.textContent = name || "—";
-      metaSekbid.textContent = sekbidText || "—";
-      if(id){
-        openDriveBtn.style.display = "";
-        const driveView = `https://drive.google.com/file/d/${encodeURIComponent(id)}/view`;
-        const driveDownload = `https://drive.usercontent.google.com/download?id=${encodeURIComponent(id)}&export=view&authuser=0`;
-        openDriveBtn.href = driveView;
-        downloadBtn.onclick = ()=> { window.open(driveDownload, "_blank"); };
-      } else {
-        openDriveBtn.style.display = "none";
-        downloadBtn.onclick = null;
-      }
-      photoModal.classList.add('active');
-      photoModal.setAttribute('aria-hidden','false');
-      document.body.style.overflow = 'hidden';
+    function updateCounts(){
+      const cards = Array.from(sekbidGrid.querySelectorAll('.sekbid-card'));
+      const totalSekbid = cards.length;
+      let totalAnggota = 0;
+      cards.forEach(c => totalAnggota += c.querySelectorAll('tbody tr').length);
+      totalSekbidEl.textContent = totalSekbid;
+      totalAnggotaEl.textContent = totalAnggota;
+      asideTotalSekbid.textContent = totalSekbid;
+      asideTotalAnggota.textContent = totalAnggota;
     }
 
-    function closeModalFn(){
-      photoModal.classList.remove('active');
-      photoModal.setAttribute('aria-hidden','true');
-      modalImg.src = "";
-      document.body.style.overflow = '';
+    /* ---------- search core (highlight aware of name-text + button) ---------- */
+    function tokenize(q){ return normalize(q).split(/\s+/).filter(Boolean); }
+
+    function highlightCells(card, tokens){
+      // highlight only text nodes inside .cell-role and .name-text (not the button)
+      card.querySelectorAll('.cell-role, .name-text').forEach(el=>{
+        const raw = el.dataset.raw || el.textContent;
+        let txt = escapeHtml(raw);
+        if(tokens.length){
+          tokens.forEach(t=>{
+            if(!t) return;
+            try{ const re = new RegExp('(' + escapeRegExp(t) + ')', 'ig'); txt = txt.replace(re, '<mark>$1</mark>'); }catch(e){}
+          });
+        }
+        el.innerHTML = txt;
+      });
     }
 
-    closeModal.addEventListener('click', closeModalFn);
-    photoModal.addEventListener('click', (e)=> { if(e.target === photoModal) closeModalFn(); });
-    document.addEventListener('keydown', (e)=> { if(e.key === 'Escape' && photoModal.classList.contains('active')) closeModalFn(); });
+    function performSearch(q){
+      const tokens = tokenize(q);
+      const cards = Array.from(sekbidGrid.querySelectorAll('.sekbid-card'));
+      let matchSekbid = 0;
+      let matchMembers = 0;
 
-    // ---------- search / filter ----------
-    const searchInput = document.getElementById('searchInput');
-    const clearSearch = document.getElementById('clearSearch');
-    const refreshBtn = document.getElementById('refreshBtn');
-
-    function filterGrid(q){
-      q = (q||"").trim().toLowerCase();
-      const cards = Array.from(document.querySelectorAll('.member-card'));
-      if(!q){ cards.forEach(c=> c.style.display = "flex"); clearSearch.style.display = "none"; return; }
-      clearSearch.style.display = "";
       cards.forEach(card=>{
-        const name = card.querySelector('.member-info h3').textContent.toLowerCase();
-        const meta = card.querySelector('.member-info p').textContent.toLowerCase();
-        const matches = name.includes(q) || meta.includes(q);
-        card.style.display = matches ? "flex" : "none";
+        const hay = card.dataset.search || '';
+        const sekbidMatch = tokens.length === 0 ? true : tokens.every(t => hay.includes(t));
+        if(sekbidMatch){
+          card.style.display = '';
+          card.classList.remove('collapsed');
+          matchSekbid++;
+          highlightCells(card, tokens);
+          const rows = Array.from(card.querySelectorAll('tbody tr'));
+          rows.forEach(tr=>{
+            const nameRaw = (tr.querySelector('.name-text') && (tr.querySelector('.name-text').dataset.raw || tr.querySelector('.name-text').textContent)) || '';
+            const roleRaw = (tr.querySelector('.cell-role') && (tr.querySelector('.cell-role').dataset.raw || tr.querySelector('.cell-role').textContent)) || '';
+            const name = normalize(nameRaw);
+            const role = normalize(roleRaw);
+            const rowOk = tokens.length === 0 ? true : tokens.some(t => name.includes(t) || role.includes(t));
+            tr.style.display = rowOk ? '' : 'none';
+            if(rowOk) matchMembers++;
+          });
+        } else {
+          card.style.display = 'none';
+        }
       });
+
+      const statsEl = document.getElementById('searchStats');
+      if(tokens.length){
+        statsEl.textContent = `Hasil: ${matchMembers} anggota di ${matchSekbid} seksi (scroll kebawah)`;
+      } else {
+        statsEl.textContent = `Total seksi: ${document.querySelectorAll('.sekbid-card').length} · Total anggota: ${Array.from(document.querySelectorAll('.sekbid-card')).reduce((acc,c)=> acc + c.querySelectorAll('tbody tr').length,0)}`;
+        // restore original text from dataset.raw
+        document.querySelectorAll('.cell-role').forEach(c=>{ if(c.dataset.raw) c.innerHTML = escapeHtml(c.dataset.raw); });
+        document.querySelectorAll('.name-text').forEach(c=>{ if(c.dataset.raw) c.innerHTML = escapeHtml(c.dataset.raw); });
+        document.querySelectorAll('tbody tr').forEach(tr=>tr.style.display='');
+      }
+
+      return {matchMembers, matchSekbid};
     }
 
-    searchInput.addEventListener('input', (e)=> filterGrid(e.target.value));
-    clearSearch.addEventListener('click', ()=> { searchInput.value=''; filterGrid(''); searchInput.focus(); });
+    /* ---------- suggestions UI ---------- */
+    let suggestIndex = -1;
+    function showSuggestions(q){
+      const qn = normalize(q);
+      if(!qn){ suggestionsEl.style.display = 'none'; suggestionsEl.innerHTML = ''; suggestIndex = -1; return; }
+      const hits = suggestionPool
+        .map(s => ({...s, score: s.text.toLowerCase().includes(q.toLowerCase()) ? 3 : normalize(s.text).includes(qn) ? 2 : 0}))
+        .filter(s => s.score>0)
+        .sort((a,b)=> b.score - a.score)
+        .slice(0,8);
+      if(!hits.length){ suggestionsEl.style.display = 'none'; suggestionsEl.innerHTML = ''; suggestIndex = -1; return; }
+      suggestionsEl.innerHTML = hits.map((h,i)=> `<div class="suggest-item" data-i="${i}" data-text="${escapeHtml(h.text)}">${escapeHtml(h.text)} <span style="color:var(--muted);font-size:0.82rem">(${h.type})</span></div>`).join('');
+      suggestionsEl.style.display = '';
+      suggestIndex = -1;
+    }
 
-    refreshBtn.addEventListener('click', ()=> {
-      renderAll();
-      filterGrid(searchInput.value);
+    function pickSuggestion(i){
+      const node = suggestionsEl.querySelector(`.suggest-item[data-i="${i}"]`);
+      if(!node) return;
+      searchEl.value = node.dataset.text;
+      runSearchImmediate();
+      suggestionsEl.style.display = 'none';
+    }
+
+    function clearSuggestions(){
+      suggestionsEl.style.display = 'none';
+      suggestionsEl.innerHTML = '';
+      suggestIndex = -1;
+    }
+
+    /* ---------- events ---------- */
+    const runSearch = debounce(q => { performSearch(q); showSuggestions(q); }, 160);
+    const runSearchImmediate = () => { performSearch(searchEl.value); showSuggestions(searchEl.value); };
+
+    searchEl.addEventListener('input', e=>{
+      const q = e.target.value;
+      if(!q){
+        clearSuggestions();
+        performSearch('');
+        updateCounts();
+        return;
+      }
+      runSearch(q);
     });
 
-    // ---------- init ----------
-    renderAll();
-    // expose for quick debug in console
-    window._OSIS = { sekbids, fotoUrls, renderAll };
+    searchEl.addEventListener('keydown', e=>{
+      const items = Array.from(suggestionsEl.querySelectorAll('.suggest-item'));
+      if(suggestionsEl.style.display === 'none') {
+        if(e.key === 'Enter'){ e.preventDefault(); runSearchImmediate(); }
+        return;
+      }
+      if(e.key === 'ArrowDown'){ e.preventDefault(); suggestIndex = Math.min(suggestIndex+1, items.length-1); updateSuggestActive(items); }
+      else if(e.key === 'ArrowUp'){ e.preventDefault(); suggestIndex = Math.max(suggestIndex-1, 0); updateSuggestActive(items); }
+      else if(e.key === 'Enter'){ if(suggestIndex>=0){ e.preventDefault(); pickSuggestion(suggestIndex); } else { runSearchImmediate(); } }
+      else if(e.key === 'Escape'){ clearSuggestions(); }
+    });
+
+    function updateSuggestActive(items){
+      items.forEach(it => it.classList.remove('active'));
+      if(suggestIndex>=0 && items[suggestIndex]) items[suggestIndex].classList.add('active');
+    }
+
+    suggestionsEl.addEventListener('click', e=>{
+      const it = e.target.closest('.suggest-item');
+      if(!it) return;
+      pickSuggestion(it.dataset.i);
+    });
+
+    // clear button
+    searchClear.addEventListener('click', ()=>{
+      searchEl.value = '';
+      const ev = new Event('input');
+      searchEl.dispatchEvent(ev);
+      searchEl.focus();
+    });
+
+    // delegation for sekbid actions (copy / toggle)
+    sekbidGrid.addEventListener('click', e=>{
+      const toggle = e.target.closest('[data-toggle]');
+      if(toggle){
+        const card = toggle.closest('.sekbid-card');
+        card.classList.toggle('collapsed');
+        const icon = toggle.querySelector('i');
+        icon.className = card.classList.contains('collapsed') ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+        return;
+      }
+      const copyBtn = e.target.closest('[data-copy]');
+      if(copyBtn){
+        const card = copyBtn.closest('.sekbid-card');
+        const text = Array.from(card.querySelectorAll('tbody tr td:last-child .name-text')).map(el => el.textContent.trim()).join('\n');
+        navigator.clipboard.writeText(text).then(()=>{ copyBtn.setAttribute('aria-label','Tersalin'); setTimeout(()=>copyBtn.setAttribute('aria-label','Salin anggota'),900); }).catch(()=>alert('Gagal menyalin'));
+      }
+    });
+
+    // utility buttons
+    document.getElementById('expandAll').addEventListener('click', ()=> {
+      document.querySelectorAll('.sekbid-card').forEach(c=>{ c.classList.remove('collapsed'); c.style.display = ''; c.querySelectorAll('tbody tr').forEach(r=>r.style.display=''); });
+      document.querySelectorAll('[data-toggle] i').forEach(i=>i.className='fas fa-chevron-up');
+    });
+    document.getElementById('collapseAll').addEventListener('click', ()=> {
+      document.querySelectorAll('.sekbid-card').forEach(c=>c.classList.add('collapsed'));
+      document.querySelectorAll('[data-toggle] i').forEach(i=>i.className='fas fa-chevron-down');
+    });
+    document.getElementById('copyAll').addEventListener('click', ()=> {
+      const names = Array.from(document.querySelectorAll('tbody tr td:last-child .name-text')).map(td=>td.textContent.trim()).join('\n');
+      navigator.clipboard.writeText(names).then(()=>{ const b=document.getElementById('copyAll'); b.textContent='Tersalin'; setTimeout(()=>b.textContent='Salin Semua Nama',900); }).catch(()=>alert('Gagal menyalin'));
+    });
+    document.getElementById('expandVisible').addEventListener('click', ()=> {
+      document.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display !== 'none') c.classList.remove('collapsed'); });
+      document.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display !== 'none') c.querySelector('[data-toggle] i').className='fas fa-chevron-up'; });
+    });
+    document.getElementById('collapseVisible').addEventListener('click', ()=> {
+      document.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display !== 'none') c.classList.add('collapsed'); });
+      document.querySelectorAll('.sekbid-card').forEach(c=>{ if(c.style.display !== 'none') c.querySelector('[data-toggle] i').className='fas fa-chevron-down'; });
+    });
+
+    // theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    function setTheme(dark){ if(dark){ document.documentElement.setAttribute('data-theme','dark'); themeToggle.querySelector('i').className='fas fa-sun'; localStorage.setItem('osis-theme','dark'); } else { document.documentElement.removeAttribute('data-theme'); themeToggle.querySelector('i').className='fas fa-moon'; localStorage.removeItem('osis-theme'); } }
+    themeToggle.addEventListener('click', ()=> setTheme(!document.documentElement.hasAttribute('data-theme')));
+    if(localStorage.getItem('osis-theme')==='dark') setTheme(true);
+
+    // alt+f focus
+    document.addEventListener('keydown', e=> { if(e.altKey && e.key.toLowerCase()==='f'){ e.preventDefault(); searchEl.focus(); } });
+
+    // initial render
+    renderSekbids(data);
+    updateCounts();
+    document.getElementById('searchStats').textContent = `Total seksi: ${document.querySelectorAll('.sekbid-card').length} · Total anggota: ${Array.from(document.querySelectorAll('.sekbid-card')).reduce((acc,c)=> acc + c.querySelectorAll('tbody tr').length,0)}`;
+
+    // observe changes
+    new MutationObserver(()=>updateCounts()).observe(sekbidGrid,{childList:true,subtree:true,attributes:true});
+
+    // expose for debugging
+    window.__osis = {performSearch: (q)=>performSearch(q), tokenize};
+  })();
   </script>
 </body>
 </html>
