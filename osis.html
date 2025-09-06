@@ -871,10 +871,7 @@
                   </div>
                   <div class="member-actions">
                     ${photoUrls[member.name] ? `
-                      <button class="photo-btn" onclick="viewPhoto('${photoUrls[member.name]}', '${escapeHtml(member.name)}')">
-                        <i class="fas fa-image"></i>
-                        Foto
-                      </button>
+                      <a class="photo-btn" href="${photoUrls[member.name]}" target="_blank" rel="noopener">   <i class="fas fa-image"></i>   Foto</a>
                     ` : ''}
                   </div>
                 </li>
