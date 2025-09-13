@@ -174,14 +174,23 @@
     }
 
     .search-input {
-      width: 100%;
-      padding: 1rem 1rem 1rem 3rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      font-size: 1rem;
-      background: var(--bg);
-      transition: var(--transition);
-    }
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  background: var(--bg);
+  transition: var(--transition);
+  color: var(--text);
+}
+
+[data-theme="dark"] .search-input {
+  color: var(--gray-100); /* Putih saat dark mode */
+}
+
+[data-theme="dark"] .search-input::placeholder {
+  color: var(--gray-400);
+}
 
     .search-input:focus {
       outline: none;
