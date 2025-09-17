@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-	<!-- kode berikut dari @thio2009_ ft. artificial intelligence -->
+<!-- kode berikut dari @thio2009_ ft. artificial intelligence -->
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -55,7 +55,7 @@
 
         /* Mini button section */
         .mini-section-buttons {
-            display: flex;
+            display: none; /* Sembunyikan di desktop */
             justify-content: center;
             flex-wrap: wrap;
             gap: 8px;
@@ -90,7 +90,7 @@
         
         .schedule-container {
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr; /* Ubah menjadi 1 kolom seperti di mobile */
             gap: 20px;
         }
         
@@ -193,7 +193,7 @@
         }
 
         .mobile-nav {
-            display: none;
+            display: block; /* Tampilkan di desktop */
             position: fixed;
             bottom: 0;
             left: 0;
@@ -258,7 +258,7 @@
         }
 
 .hamburger-menu {
-    display: none;
+    display: flex; /* Tampilkan di desktop */
     position: fixed;
     top: 15px;
     left: 15px;
@@ -422,9 +422,34 @@
             }
         }
         
+        /* Perubahan untuk desktop - membuat tampilan desktop sama seperti mobile */
         @media (min-width: 769px) {
             .schedule-container {
-                grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+                grid-template-columns: 1fr; /* Tetap 1 kolom seperti di mobile */
+                max-width: 600px; /* Batasi lebar konten */
+                margin: 0 auto; /* Pusatkan konten */
+            }
+            
+            .container {
+                max-width: 800px; /* Sesuaikan lebar container */
+                padding: 30px 20px;
+            }
+            
+            .mini-section-buttons {
+                display: none; /* Sembunyikan tombol mini navigasi */
+            }
+            
+            .mobile-nav {
+                display: block; /* Tampilkan navigasi mobile di desktop */
+            }
+            
+            .hamburger-menu {
+                display: flex; /* Tampilkan hamburger menu di desktop */
+            }
+            
+            /* Sesuaikan jarak bottom untuk back to top button */
+            #backToTopBtn {
+                bottom: 70px;
             }
         }
     </style>
