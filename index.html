@@ -4,24 +4,25 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- Primary Meta Tags -->
-<title>Skenpat (Unofficial) Main Page</title>
-<meta name="title" content="Skenpat (Unofficial) Main Page" />
-<meta name="description" content="Website Kecil Tentang Sekolah Menengah Kejuruan Negeri 4 Banjarmasin." />
+  <title>Skenpat (Unofficial) Main Page</title>
+  <meta name="title" content="Skenpat (Unofficial) Main Page" />
+  <meta name="description" content="Website Kecil Tentang Sekolah Menengah Kejuruan Negeri 4 Banjarmasin." />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://skenpat.pages.dev/" />
-<meta property="og:title" content="Skenpat (Unofficial) Main Page" />
-<meta property="og:description" content="Website Kecil Tentang Sekolah Menengah Kejuruan Negeri 4 Banjarmasin." />
-<meta property="og:image" content="https://skenpat.pages.dev/g.png" />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://skenpat.pages.dev/" />
+  <meta property="og:title" content="Skenpat (Unofficial) Main Page" />
+  <meta property="og:description" content="Website Kecil Tentang Sekolah Menengah Kejuruan Negeri 4 Banjarmasin." />
+  <meta property="og:image" content="https://skenpat.pages.dev/g.png" />
 
-<!-- X (Twitter) -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content="https://skenpat.pages.dev/" />
-<meta property="twitter:title" content="Skenpat (Unofficial) Main Page" />
-<meta property="twitter:description" content="Website Kecil Tentang Sekolah Menengah Kejuruan Negeri 4 Banjarmasin." />
-<meta property="twitter:image" content="https://skenpat.pages.dev/g.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <!-- X (Twitter) -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://skenpat.pages.dev/" />
+  <meta property="twitter:title" content="Skenpat (Unofficial) Main Page" />
+  <meta property="twitter:description" content="Website Kecil Tentang Sekolah Menengah Kejuruan Negeri 4 Banjarmasin." />
+  <meta property="twitter:image" content="https://skenpat.pages.dev/g.png" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     /* Reset & font */
@@ -31,19 +32,50 @@
       padding: 0; 
     }
     
+    :root {
+      --primary-color: #F46900;
+      --secondary-color: #DE6805;
+      --dark-color: #0a0a0a;
+      --darker-color: #050505;
+      --light-dark: #1a1a1a;
+      --card-dark: #1E1E1E;
+      --card-light: #2A2A2A;
+      --text-light: #f0f0f0;
+      --text-muted: #aaa;
+      --accent-color: #6FB9FF;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
     body {
       font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
-      color: #fff;
+      background: var(--dark-color);
+      color: var(--text-light);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       min-height: 100vh;
-      padding: 1rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(222, 104, 5, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(111, 185, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(222, 104, 5, 0.05) 0%, transparent 50%);
+      z-index: -1;
     }
     
     a { 
       text-decoration: none; 
       color: inherit; 
+      transition: var(--transition);
     }
 
     /* Container */
@@ -51,71 +83,173 @@
       max-width: 480px;
       margin: 0 auto;
       min-height: 100vh;
+      position: relative;
+      padding: 1rem;
     }
-
+    
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      background: var(--primary-color);
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.1;
+      }
+      90% {
+        opacity: 0.1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) scale(1);
+        opacity: 0;
+      }
+    }
+    
     /* Header */
     .header {
       text-align: center;
-      margin: 1.5rem 0;
+      margin: 2rem 0 3rem;
+      position: relative;
+    }
+    
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 2px;
     }
     
     .header h1 {
-      font-size: 2.2rem;
-      background: linear-gradient(135deg, #DE6805, #F46900);
+      font-size: 3rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       margin-bottom: 0.5rem;
-      font-weight: 700;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(222, 104, 5, 0.3);
+      letter-spacing: -1px;
+      animation: glow 3s infinite alternate;
+    }
+    
+    @keyframes glow {
+      from {
+        filter: drop-shadow(0 0 5px rgba(222, 104, 5, 0.5));
+      }
+      to {
+        filter: drop-shadow(0 0 15px rgba(222, 104, 5, 0.8));
+      }
     }
     
     .header p {
-      font-size: 0.9rem;
+      font-size: 1rem;
       opacity: 0.8;
-      color: #ccc;
+      color: var(--text-muted);
+      font-weight: 300;
+      letter-spacing: 1px;
     }
 
-    /* Balance Card */
+    /* Balance Card - Enhanced */
     .card-balance {
-      background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
-      border-radius: 16px;
-      padding: 1.8rem 1.5rem;
+      background: linear-gradient(135deg, var(--card-dark), var(--card-light));
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
       position: relative;
       overflow: hidden;
-      margin-bottom: 1.8rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      margin-bottom: 2.5rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 5px 15px rgba(222, 104, 5, 0.2);
       border: 1px solid rgba(255,255,255,0.05);
+      backdrop-filter: blur(10px);
+      transform: translateY(0);
+      transition: var(--transition);
+    }
+    
+    .card-balance:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 10px 20px rgba(222, 104, 5, 0.3);
     }
     
     .card-balance::before {
       content: '';
       position: absolute;
-      top: -30px; 
-      right: -30px;
+      top: -50px; 
+      right: -50px;
+      width: 200px; 
+      height: 200px;
+      background: radial-gradient(circle, rgba(222, 104, 5, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: pulse 4s infinite alternate;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.2;
+      }
+      100% {
+        transform: scale(1.1);
+        opacity: 0.3;
+      }
+    }
+    
+    .card-balance::after {
+      content: '';
+      position: absolute;
+      bottom: -30px; 
+      left: -30px;
       width: 150px; 
       height: 150px;
-      background: rgba(222, 104, 5, 0.1);
+      background: radial-gradient(circle, rgba(111, 185, 255, 0.1) 0%, transparent 70%);
       border-radius: 50%;
+      animation: pulse 4s infinite alternate-reverse;
     }
     
     .card-balance h2 {
-      font-size: 1.8rem;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      color: #fff;
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+      color: var(--text-light);
+      position: relative;
+      z-index: 1;
     }
     
     .card-balance .coins {
-      font-size: 1rem;
+      font-size: 1.1rem;
       opacity: 0.8;
-      margin-bottom: 1.8rem;
-      color: #ccc;
+      margin-bottom: 2rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
     }
     
     .card-balance .actions {
       display: flex;
-      gap: 0.8rem;
+      gap: 1rem;
+      position: relative;
+      z-index: 1;
     }
     
     .card-balance .actions a {
@@ -123,143 +257,209 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      border-radius: 14px;
+      padding: 1.2rem;
       color: #fff;
       font-size: 1rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      backdrop-filter: blur(5px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-weight: 600;
+      transition: var(--transition);
       text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(222, 104, 5, 0.3);
     }
     
-    .card-balance .actions a:first-child {
-      background: linear-gradient(135deg, #DE6805, #F46900);
+    .card-balance .actions a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
     }
     
-    .card-balance .actions a:last-child {
-      background: linear-gradient(135deg, #DE6805, #F46900);
+    .card-balance .actions a:hover::before {
+      left: 100%;
     }
     
     .card-balance .actions a:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(222, 104, 5, 0.4);
+      box-shadow: 0 10px 20px rgba(222, 104, 5, 0.5);
     }
 
-    /* Section blocks */
+    /* Section blocks - Enhanced */
     .section {
-      margin-bottom: 2.2rem;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .section:nth-child(3) {
+      animation-delay: 0.2s;
+    }
+    
+    .section:nth-child(4) {
+      animation-delay: 0.4s;
     }
     
     .section-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.5rem;
       padding: 0 0.5rem;
     }
     
     .section-header h3 {
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: #f0f0f0;
-      background: linear-gradient(90deg, #F46900, #DE6805);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-light);
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      position: relative;
+    }
+    
+    .section-header h3::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 30px;
+      height: 3px;
+      background: var(--primary-color);
+      border-radius: 2px;
     }
     
     .section-header a {
       font-size: 0.9rem;
-      color: #EF5C17;
-      transition: all 0.3s;
+      color: var(--primary-color);
       font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.5rem;
     }
     
     .section-header a:hover {
-      color: #6FB9FF;
+      color: var(--accent-color);
+      transform: translateX(5px);
+    }
+    
+    .section-header a i {
+      transition: var(--transition);
+    }
+    
+    .section-header a:hover i {
       transform: translateX(3px);
     }
 
-    /* Grid of buttons */
+    /* Grid of buttons - Enhanced */
     .grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
+      gap: 1.2rem;
     }
     
     .grid .btn {
-      background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
+      background: linear-gradient(135deg, var(--card-dark), var(--card-light));
       border-radius: 16px;
-      padding: 1.2rem 0.5rem;
+      padding: 1.5rem 0.5rem;
       text-align: center;
       font-size: 0.85rem;
       cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+      transition: var(--transition);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
       border: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .grid .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(222, 104, 5, 0.1), rgba(111, 185, 255, 0.1));
+      opacity: 0;
+      transition: var(--transition);
     }
     
     .grid .btn:hover {
-      background: linear-gradient(135deg, #2A2A2A, #363636);
+      background: linear-gradient(135deg, var(--card-light), #333);
       transform: translateY(-8px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+    }
+    
+    .grid .btn:hover::before {
+      opacity: 1;
     }
     
     .grid .btn .icon {
-      font-size: 2rem;
+      font-size: 2.2rem;
       display: block;
       margin-bottom: 0.8rem;
-      color: #C7C7C7;
-      transition: all 0.3s;
+      color: var(--text-muted);
+      transition: var(--transition);
+      position: relative;
+      z-index: 1;
     }
     
     .grid .btn:hover .icon {
       transform: scale(1.3);
-      color: #FF5400;
+      color: var(--primary-color);
+      filter: drop-shadow(0 0 8px rgba(222, 104, 5, 0.6));
     }
     
     .grid .btn span {
       display: block;
-      color: #f0f0f0;
+      color: var(--text-light);
       font-size: 0.85rem;
       font-weight: 500;
       padding: 0 0.5rem;
+      position: relative;
+      z-index: 1;
     }
 
-    /* Bounce keyframes */
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-    
+    /* Visi Misi - Enhanced */
     .visi-misi {
-      background: linear-gradient(135deg, #1E1E1E, #2A2A2A);
-      border-radius: 16px;
-      padding: 1.8rem 1.5rem;
-      margin-bottom: 2.2rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      background: linear-gradient(135deg, var(--card-dark), var(--card-light));
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
       border: 1px solid rgba(255,255,255,0.05);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s 0.6s forwards;
     }
     
     .video-container {
       position: relative;
       padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
       height: 0;
-      margin-bottom: 1.8rem;
-      border-radius: 12px;
+      margin-bottom: 2rem;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     }
     
     .video-container iframe {
@@ -272,12 +472,12 @@
     }
     
     .visi-misi h3 {
-      font-size: 1.5rem;
-      margin-bottom: 1.2rem;
-      color: #fff;
-      font-weight: 600;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-light);
+      font-weight: 700;
       text-align: center;
-      background: linear-gradient(90deg, #F46900, #DE6805);
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -285,78 +485,206 @@
     
     .visi-misi p, .visi-misi li {
       font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 0.9rem;
-      color: #ddd;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+      color: var(--text-light);
     }
     
     .visi-misi ul {
       list-style: none;
       padding: 0;
-      margin-bottom: 1.8rem;
+      margin-bottom: 2rem;
     }
     
     .visi-misi li {
       position: relative;
-      padding-left: 1.8rem;
-      margin-bottom: 0.8rem;
+      padding-left: 2rem;
+      margin-bottom: 1rem;
+      transition: var(--transition);
+    }
+    
+    .visi-misi li:hover {
+      transform: translateX(5px);
+      color: var(--primary-color);
     }
     
     .visi-misi li::before {
-      content: "»";
-      color: #EF5C17;
-      font-size: 1.8rem;
+      content: "▶";
+      color: var(--primary-color);
+      font-size: 1.2rem;
       position: absolute;
       left: 0;
-      top: -0.3rem;
+      top: 0.2rem;
+      transition: var(--transition);
+    }
+    
+    .visi-misi li:hover::before {
+      transform: scale(1.2);
     }
     
     .visi-misi h6 {
-      margin-top: 1.8rem;
-      font-size: 0.8rem;
-      color: #777;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
       text-align: center;
       font-style: italic;
-      padding-top: 1rem;
+      padding-top: 1.5rem;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Footer */
+    /* Footer - Enhanced */
     .footer {
       text-align: center;
-      padding: 1.8rem 0;
-      color: #777;
-      font-size: 0.85rem;
+      padding: 2rem 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
       border-top: 1px solid rgba(255,255,255,0.05);
       margin-top: 1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s 0.8s forwards;
     }
     
     .footer a {
-      color: #EF5C17;
-      text-decoration: underline;
+      color: var(--primary-color);
+      text-decoration: none;
+      position: relative;
+      font-weight: 500;
+    }
+    
+    .footer a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: var(--transition);
+    }
+    
+    .footer a:hover::after {
+      width: 100%;
+    }
+
+    /* Floating action button */
+    .fab {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      box-shadow: 0 5px 15px rgba(222, 104, 5, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 100;
+      transition: var(--transition);
+    }
+    
+    .fab:hover {
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 8px 20px rgba(222, 104, 5, 0.6);
+    }
+    
+    /* Back to top button */
+    .back-to-top {
+      position: fixed;
+      bottom: 25px;
+      left: 25px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(30, 30, 30, 0.8);
+      backdrop-filter: blur(5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      background: var(--card-light);
+      transform: translateY(-5px);
+    }
+    
+    /* Loading screen */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loader-circle {
+      width: 60px;
+      height: 60px;
+      border: 5px solid rgba(222, 104, 5, 0.2);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* Responsive adjustments */
     @media (max-width: 480px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 0.8rem;
+        gap: 1rem;
       }
       
       .card-balance h2 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
       }
       
       .visi-misi h3 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
       }
       
       .section-header h3 {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
       }
       
       .grid .btn {
-        padding: 1rem 0.5rem;
+        padding: 1.2rem 0.5rem;
+      }
+      
+      .header h1 {
+        font-size: 2.5rem;
       }
     }
     
@@ -368,13 +696,37 @@
       .grid {
         grid-template-columns: 1fr;
       }
+      
+      .fab, .back-to-top {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-circle"></div>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Back to Top Button -->
+  <div class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+  </div>
+
+  <!-- Floating Action Button -->
+  <div class="fab" id="fab">
+    <i class="fas fa-plus"></i>
+  </div>
+
   <div class="app">
     <div class="header">
-      <h1>Skenpat</h1>
+      <h1>SMKN4BJM</h1>
       <p>(Unofficial) Landing Pages</p>
     </div>
 
@@ -477,34 +829,183 @@
   </div>
   
   <script>
-    // Animasi tombol saat dihover
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-8px)';
-      });
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 20;
       
-      btn.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0)';
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random size between 3px and 8px
+        const size = Math.random() * 5 + 3;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random position
+        particle.style.left = `${Math.random() * 100}%`;
+        
+        // Random animation duration between 10s and 20s
+        const duration = Math.random() * 10 + 10;
+        particle.style.animationDuration = `${duration}s`;
+        
+        // Random delay
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Hide loader when page is loaded
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 500);
+    });
+    
+    // Back to top button
+    const backToTopButton = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopButton.classList.add('visible');
+      } else {
+        backToTopButton.classList.remove('visible');
+      }
+    });
+    
+    backToTopButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
       });
     });
     
-    // Animasi saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', function() {
-      const elements = document.querySelectorAll('.card-balance, .section, .visi-misi');
+    // FAB (Floating Action Button) click event
+    const fab = document.getElementById('fab');
+    fab.addEventListener('click', () => {
+      // Create a simple notification
+      const notification = document.createElement('div');
+      notification.style.position = 'fixed';
+      notification.style.bottom = '100px';
+      notification.style.right = '25px';
+      notification.style.background = 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))';
+      notification.style.color = 'white';
+      notification.style.padding = '15px 20px';
+      notification.style.borderRadius = '10px';
+      notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+      notification.style.zIndex = '1000';
+      notification.style.transform = 'translateY(20px)';
+      notification.style.opacity = '0';
+      notification.style.transition = 'all 0.3s ease';
+      notification.textContent = 'Fitur baru akan segera hadir!';
       
-      elements.forEach((el, index) => {
-        setTimeout(() => {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        }, index * 200);
+      document.body.appendChild(notification);
+      
+      // Animate in
+      setTimeout(() => {
+        notification.style.transform = 'translateY(0)';
+        notification.style.opacity = '1';
+      }, 10);
+      
+      // Animate out and remove
+      setTimeout(() => {
+        notification.style.transform = 'translateY(20px)';
+        notification.style.opacity = '0';
         
-        // Set initial state for animation
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    });
+    
+    // Initialize particles
+    createParticles();
+    
+    // Add ripple effect to buttons
+    document.querySelectorAll('.btn, .card-balance .actions a').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.classList.add('ripple');
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
       });
     });
+    
+    // Add parallax effect to header
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const header = document.querySelector('.header');
+      header.style.transform = `translateY(${scrolled * 0.3}px)`;
+      header.style.opacity = 1 - scrolled / 300;
+    });
+    
+    // Add staggered animation to grid items
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const gridItems = entry.target.querySelectorAll('.btn');
+          gridItems.forEach((item, index) => {
+            setTimeout(() => {
+              item.style.opacity = '1';
+              item.style.transform = 'translateY(0)';
+            }, index * 100);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.grid').forEach(grid => {
+      const gridItems = grid.querySelectorAll('.btn');
+      gridItems.forEach(item => {
+        item.style.opacity = '0';
+        item.style.transform = 'translateY(20px)';
+        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      });
+      observer.observe(grid);
+    });
   </script>
+  
+  <style>
+    /* Ripple effect */
+    .btn, .card-balance .actions a {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      transform: scale(0);
+      animation: ripple-animation 0.6s ease-out;
+    }
+    
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
 </body>
-
 </html>
