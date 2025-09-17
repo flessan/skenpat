@@ -44,6 +44,8 @@
       --text-muted: #aaa;
       --accent-color: #6FB9FF;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --container-max-width: 1200px;
+      --content-max-width: 800px;
     }
     
     body {
@@ -78,13 +80,20 @@
       transition: var(--transition);
     }
 
-    /* Container */
-    .app {
-      max-width: 480px;
-      margin: 0 auto;
+    /* Container - Responsive */
+    .app-container {
+      width: 100%;
       min-height: 100vh;
-      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .app {
+      width: 100%;
+      max-width: var(--container-max-width);
       padding: 1rem;
+      margin: 0 auto;
     }
     
     /* Floating particles */
@@ -123,7 +132,7 @@
       }
     }
     
-    /* Header */
+    /* Header - Responsive */
     .header {
       text-align: center;
       margin: 2rem 0 3rem;
@@ -172,7 +181,14 @@
       letter-spacing: 1px;
     }
 
-    /* Balance Card - Enhanced */
+    /* Content wrapper for centering content on larger screens */
+    .content-wrapper {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Balance Card - Enhanced & Responsive */
     .card-balance {
       background: linear-gradient(135deg, var(--card-dark), var(--card-light));
       border-radius: 20px;
@@ -290,7 +306,7 @@
       box-shadow: 0 10px 20px rgba(222, 104, 5, 0.5);
     }
 
-    /* Section blocks - Enhanced */
+    /* Section blocks - Enhanced & Responsive */
     .section {
       margin-bottom: 2.5rem;
       opacity: 0;
@@ -365,10 +381,10 @@
       transform: translateX(3px);
     }
 
-    /* Grid of buttons - Enhanced */
+    /* Grid of buttons - Enhanced & Responsive */
     .grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
       gap: 1.2rem;
     }
     
@@ -439,7 +455,7 @@
       z-index: 1;
     }
 
-    /* Visi Misi - Enhanced */
+    /* Visi Misi - Enhanced & Responsive */
     .visi-misi {
       background: linear-gradient(135deg, var(--card-dark), var(--card-light));
       border-radius: 20px;
@@ -532,7 +548,7 @@
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Footer - Enhanced */
+    /* Footer - Enhanced & Responsive */
     .footer {
       text-align: center;
       padding: 2rem 0;
@@ -661,6 +677,37 @@
     }
 
     /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 1rem;
+      }
+      
+      .card-balance h2 {
+        font-size: 2rem;
+      }
+      
+      .visi-misi h3 {
+        font-size: 1.6rem;
+      }
+      
+      .section-header h3 {
+        font-size: 1.4rem;
+      }
+      
+      .grid .btn {
+        padding: 1.2rem 0.5rem;
+      }
+      
+      .header h1 {
+        font-size: 2.8rem;
+      }
+      
+      .content-wrapper {
+        max-width: 100%;
+      }
+    }
+    
     @media (max-width: 480px) {
       .grid {
         grid-template-columns: repeat(2, 1fr);
@@ -680,7 +727,7 @@
       }
       
       .grid .btn {
-        padding: 1.2rem 0.5rem;
+        padding: 1rem 0.5rem;
       }
       
       .header h1 {
@@ -701,6 +748,77 @@
         width: 50px;
         height: 50px;
         font-size: 1.2rem;
+      }
+    }
+    
+    /* Desktop specific styles */
+    @media (min-width: 992px) {
+      .app {
+        padding: 2rem;
+      }
+      
+      .header {
+        margin: 3rem 0 4rem;
+      }
+      
+      .header h1 {
+        font-size: 4rem;
+      }
+      
+      .card-balance {
+        padding: 3rem 2.5rem;
+      }
+      
+      .card-balance h2 {
+        font-size: 2.5rem;
+      }
+      
+      .section {
+        margin-bottom: 3rem;
+      }
+      
+      .visi-misi {
+        padding: 3rem 2.5rem;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1.5rem;
+      }
+      
+      .grid .btn {
+        padding: 2rem 1rem;
+      }
+      
+      .grid .btn .icon {
+        font-size: 2.5rem;
+      }
+      
+      .grid .btn span {
+        font-size: 1rem;
+      }
+    }
+    
+    /* Large desktop styles */
+    @media (min-width: 1200px) {
+      .header h1 {
+        font-size: 5rem;
+      }
+      
+      .card-balance h2 {
+        font-size: 3rem;
+      }
+      
+      .section-header h3 {
+        font-size: 1.8rem;
+      }
+      
+      .visi-misi h3 {
+        font-size: 2.2rem;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
       }
     }
   </style>
@@ -724,107 +842,111 @@
     <i class="fas fa-plus"></i>
   </div>
 
-  <div class="app">
-    <div class="header">
-      <h1>SMKN4BJM</h1>
-      <p>(Unofficial) Landing Pages</p>
-    </div>
+  <div class="app-container">
+    <div class="app">
+      <div class="content-wrapper">
+        <div class="header">
+          <h1>SMKN4BJM</h1>
+          <p>(Unofficial) Landing Pages</p>
+        </div>
 
-    <div class="card-balance">
-      <h2>Portal Utama</h2>
-      <div class="coins">Akses cepat ke informasi penting</div>
-      <div class="actions">
-        <a href="/eskul">Ekstrakurikuler</a>
-        <a href="/mapel">Jadwal Mapel</a>
-      </div>
-    </div>
+        <div class="card-balance">
+          <h2>Portal Utama</h2>
+          <div class="coins">Akses cepat ke informasi penting</div>
+          <div class="actions">
+            <a href="/eskul">Ekstrakurikuler</a>
+            <a href="/mapel">Jadwal Mapel</a>
+          </div>
+        </div>
 
-    <div class="section">
-      <div class="section-header">
-        <h3>Kumpulan Link Terkait</h3>
-        <a href="https://smkn4bjm.sch.id">
-          Lihat semua <i class="fas fa-arrow-right"></i>
-        </a>
-      </div>
-      <div class="grid">
-        <a href="https://smkn4bjm.sch.id/berita" class="btn">
-          <i class="fa-solid fa-newspaper icon"></i>
-          <span>Berita</span>
-        </a>
-        <a href="https://smkn4bjm.sch.id/perpustakaan-sekolah" class="btn">
-          <i class="fa-solid fa-book icon"></i>
-          <span>Perpus</span>
-        </a>
-        <a href="https://smkn4bjm.sch.id/prestasi" class="btn">
-          <i class="fa-solid fa-trophy icon"></i>
-          <span>Prestasi</span>
-        </a>
-        <a href="https://smkn4bjm.sch.id/sejarah-sekolah" class="btn">
-          <i class="fa-solid fa-history icon"></i>
-          <span>Sejarah</span>
-        </a>
-      </div>
-    </div>
+        <div class="section">
+          <div class="section-header">
+            <h3>Kumpulan Link Terkait</h3>
+            <a href="https://smkn4bjm.sch.id">
+              Lihat semua <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="grid">
+            <a href="https://smkn4bjm.sch.id/berita" class="btn">
+              <i class="fa-solid fa-newspaper icon"></i>
+              <span>Berita</span>
+            </a>
+            <a href="https://smkn4bjm.sch.id/perpustakaan-sekolah" class="btn">
+              <i class="fa-solid fa-book icon"></i>
+              <span>Perpus</span>
+            </a>
+            <a href="https://smkn4bjm.sch.id/prestasi" class="btn">
+              <i class="fa-solid fa-trophy icon"></i>
+              <span>Prestasi</span>
+            </a>
+            <a href="https://smkn4bjm.sch.id/sejarah-sekolah" class="btn">
+              <i class="fa-solid fa-history icon"></i>
+              <span>Sejarah</span>
+            </a>
+          </div>
+        </div>
 
-    <div class="section">
-      <div class="section-header">
-        <h3>Skenpat Team</h3>
-        <a href="https://smkn4bjm.sch.id">
-          Lihat semua <i class="fas fa-arrow-right"></i>
-        </a>
-      </div>
-      <div class="grid">
-        <a href="https://smkn4bjm.sch.id/tim-manajemen" class="btn">
-          <i class="fa-solid fa-users icon"></i>
-          <span>Tim Inti</span>
-        </a>
-        <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-pendidik" class="btn">
-          <i class="fa-solid fa-chalkboard-user icon"></i>
-          <span>Pendidik</span>
-        </a>
-        <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-kependidikan" class="btn">
-          <i class="fa-solid fa-user-tie icon"></i>
-          <span>Kependidikan</span>
-        </a>
-        <a href="https://smkn4bjm.sch.id/wp-content/uploads/2024/12/Struktur-Sekolah-2024-november.jpg" class="btn">
-          <i class="fa-solid fa-code-branch icon"></i>
-          <span>Struktur</span>
-        </a>
-        <a href="/osis" class="btn">
-          <i class="fa-solid fa-layer-group icon"></i>
-          <span>OSIS</span>
-        </a>
-        <a href="/green" class="btn">
-          <i class="fa-solid fa-layer-group icon"></i>
-          <span>GG</span>
-        </a>
-      </div>
-    </div>
+        <div class="section">
+          <div class="section-header">
+            <h3>Skenpat Team</h3>
+            <a href="https://smkn4bjm.sch.id">
+              Lihat semua <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+          <div class="grid">
+            <a href="https://smkn4bjm.sch.id/tim-manajemen" class="btn">
+              <i class="fa-solid fa-users icon"></i>
+              <span>Tim Inti</span>
+            </a>
+            <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-pendidik" class="btn">
+              <i class="fa-solid fa-chalkboard-user icon"></i>
+              <span>Pendidik</span>
+            </a>
+            <a href="https://smkn4bjm.sch.id/tentang-kami/tenaga-kependidikan" class="btn">
+              <i class="fa-solid fa-user-tie icon"></i>
+              <span>Kependidikan</span>
+            </a>
+            <a href="https://smkn4bjm.sch.id/wp-content/uploads/2024/12/Struktur-Sekolah-2024-november.jpg" class="btn">
+              <i class="fa-solid fa-code-branch icon"></i>
+              <span>Struktur</span>
+            </a>
+            <a href="/osis" class="btn">
+              <i class="fa-solid fa-layer-group icon"></i>
+              <span>OSIS</span>
+            </a>
+            <a href="/green" class="btn">
+              <i class="fa-solid fa-layer-group icon"></i>
+              <span>GG</span>
+            </a>
+          </div>
+        </div>
 
-    <div class="visi-misi">
-      <h3>Profil SMK Negeri 4 Banjarmasin</h3>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/XQKoNTQTrkM?autoplay=1&mute=1" allowfullscreen></iframe>
-      </div>
-      
-      <h3>Visi</h3>
-      <p>Menghasilkan lulusan yang kompeten berlandaskan nilai-nilai luhur Pancasila</p>
-      
-      <h3>Misi</h3>
-      <ul>
-        <li>Menerapkan Profil Pelajar Pancasila dan Budaya Kerja</li>
-        <li>Melaksanakan Pembelajaran Berbasis Dunia Kerja</li>
-        <li>Menerapkan Manajemen Berbasis Digital</li>
-        <li>Menyediakan Sarana dan Prasarana Sesuai Standarisasi Dunia Kerja dan Perkembangan Teknologi</li>
-        <li>Memperkuat Kemitraan dengan Dunia Kerja dan Stakeholder</li>
-        <li>Meningkatkan Wawasan Lingkungan Hidup</li>
-      </ul>
-      
-      <h6>- This website is not the school's official website.</h6>
-    </div>
+        <div class="visi-misi">
+          <h3>Profil SMK Negeri 4 Banjarmasin</h3>
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/XQKoNTQTrkM?autoplay=1&mute=1" allowfullscreen></iframe>
+          </div>
+          
+          <h3>Visi</h3>
+          <p>Menghasilkan lulusan yang kompeten berlandaskan nilai-nilai luhur Pancasila</p>
+          
+          <h3>Misi</h3>
+          <ul>
+            <li>Menerapkan Profil Pelajar Pancasila dan Budaya Kerja</li>
+            <li>Melaksanakan Pembelajaran Berbasis Dunia Kerja</li>
+            <li>Menerapkan Manajemen Berbasis Digital</li>
+            <li>Menyediakan Sarana dan Prasarana Sesuai Standarisasi Dunia Kerja dan Perkembangan Teknologi</li>
+            <li>Memperkuat Kemitraan dengan Dunia Kerja dan Stakeholder</li>
+            <li>Meningkatkan Wawasan Lingkungan Hidup</li>
+          </ul>
+          
+          <h6>- This website is not the school's official website.</h6>
+        </div>
 
-    <div class="footer">
-      &copy; 2025 <a href="https://flessan.pages.dev">Unofficial Skenpat Pages</a> | SMKN 4 Banjarmasin
+        <div class="footer">
+          &copy; 2025 <a href="https://flessan.pages.dev">Unofficial Skenpat Pages</a> | SMKN 4 Banjarmasin
+        </div>
+      </div>
     </div>
   </div>
   
