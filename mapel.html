@@ -7,18 +7,25 @@
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
-      --primary: #FF5723; /* Oranye */
-      --secondary: #E66622;
-      --accent: #ffa559;
-      --dark: #1e1e2f;
-      --darker: #12121b;
-      --light: #2a2a40;
-      --text-light: #d1d1e0;
-      --shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-      --transition: all 0.3s ease;
+      --primary-color: #F46900;
+      --secondary-color: #DE6805;
+      --dark-color: #0a0a0a;
+      --darker-color: #050505;
+      --light-dark: #1a1a1a;
+      --card-dark: #1E1E1E;
+      --card-light: #2A2A2A;
+      --text-light: #f0f0f0;
+      --text-muted: #aaa;
+      --accent-color: #6FB9FF;
+      --today-color: #FFD900;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --container-max-width: 1200px;
+      --content-max-width: 1000px;
+      --radius: 16px;
     }
 
     * {
@@ -28,44 +35,147 @@
     }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--darker);
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-color);
       color: var(--text-light);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
       min-height: 100vh;
-      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+      padding: 1rem;
     }
 
-    .container {
-      max-width: 1200px;
+    /* Animated background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(222, 104, 5, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(111, 185, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(222, 104, 5, 0.05) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    a { 
+      text-decoration: none; 
+      color: inherit; 
+      transition: var(--transition);
+    }
+
+    /* Container - Responsive */
+    .app-container {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .app {
+      width: 100%;
+      max-width: var(--container-max-width);
+      padding: 1rem;
       margin: 0 auto;
-      padding: 20px;
+    }
+    
+    /* Content wrapper for centering content on larger screens */
+    .content-wrapper {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      width: 100%;
     }
 
-    header {
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: -1;
+    }
+    
+    .particle {
+      position: absolute;
+      background: var(--primary-color);
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 15s infinite linear;
+    }
+    
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) translateX(0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.1;
+      }
+      90% {
+        opacity: 0.1;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Header - Enhanced */
+    .header {
       text-align: center;
-      margin-bottom: 30px;
+      margin: 2rem 0 3rem;
+      position: relative;
     }
-
-    h1 {
-      font-size: 2.5rem;
-      background: linear-gradient(90deg, var(--primary), var(--accent));
+    
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      border-radius: 2px;
+    }
+    
+    .header h1 {
+      font-size: 2.8rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      animation: fadeIn 1s ease;
+      margin-bottom: 0.8rem;
+      font-weight: 800;
+      text-shadow: 0 2px 10px rgba(222, 104, 5, 0.3);
+      letter-spacing: -1px;
+      animation: glow 3s infinite alternate;
     }
-
+    
+    @keyframes glow {
+      from {
+        filter: drop-shadow(0 0 5px rgba(222, 104, 5, 0.5));
+      }
+      to {
+        filter: drop-shadow(0 0 15px rgba(222, 104, 5, 0.8));
+      }
+    }
+    
     .subtitle {
       font-size: 1.15rem;
-      color: #aaa;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    /* Main Menu Button - Enhanced */
     .days-container {
       display: flex;
       justify-content: center;
@@ -73,49 +183,119 @@
     }
 
     .main-menu-btn {
-      padding: 14px 30px;
-      border-radius: 12px;
-      background: var(--primary);
+      padding: 16px 32px;
+      border-radius: 30px;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
       font-weight: 600;
       font-size: 1.1rem;
       display: flex;
       align-items: center;
-      gap: 10px;
-      box-shadow: var(--shadow);
+      gap: 12px;
+      box-shadow: 0 10px 25px rgba(222, 104, 5, 0.3);
       transition: var(--transition);
       border: none;
       text-decoration: none;
+      position: relative;
+      overflow: hidden;
     }
-
+    
+    .main-menu-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+    }
+    
+    .main-menu-btn:hover::before {
+      left: 100%;
+    }
+    
     .main-menu-btn:hover {
-      background: var(--secondary);
       transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(222, 104, 5, 0.4);
     }
 
+    /* Schedule Grid - Enhanced */
     .schedule-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 25px;
+      margin-bottom: 40px;
     }
 
     .jurusan-card {
-      background: var(--light);
-      border-radius: 16px;
+      background: linear-gradient(135deg, var(--card-dark), var(--card-light));
+      border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
       transition: var(--transition);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.6s forwards;
     }
-
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .jurusan-card:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+    
+    .jurusan-card:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .jurusan-card:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+    
+    .jurusan-card:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+    
     .jurusan-card:hover {
       transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     .jurusan-header {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       color: white;
-      padding: 20px;
+      padding: 22px 25px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .jurusan-header::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+    
+    .jurusan-header::after {
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
     }
 
     .jurusan-header h2 {
@@ -123,17 +303,23 @@
       font-size: 1.5rem;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .jurusan-header h2 i {
+      font-size: 1.4rem;
     }
 
     .jurusan-content {
-      padding: 20px;
+      padding: 25px;
     }
 
     .link-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 15px;
     }
 
     .mapel-link {
@@ -141,149 +327,457 @@
       align-items: center;
       text-decoration: none;
       color: var(--text-light);
-      padding: 12px 15px;
-      border-radius: 10px;
-      background: var(--dark);
+      padding: 16px 18px;
+      border-radius: 12px;
+      background: rgba(30, 30, 30, 0.7);
       transition: var(--transition);
-      border-left: 4px solid var(--primary);
+      border-left: 4px solid var(--primary-color);
+      backdrop-filter: blur(5px);
+      position: relative;
+      overflow: hidden;
     }
-
+    
+    .mapel-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(222, 104, 5, 0.2), transparent);
+      transition: var(--transition);
+    }
+    
+    .mapel-link:hover::before {
+      width: 100%;
+    }
+    
     .mapel-link:hover {
-      background: #2f2f4f;
-      transform: translateX(5px);
-      border-left: 4px solid var(--secondary);
+      background: rgba(42, 42, 42, 0.7);
+      transform: translateX(8px);
+      border-left: 4px solid var(--secondary-color);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     }
 
     .mapel-icon {
-      font-size: 1.3rem;
-      margin-right: 12px;
-      width: 32px;
-      height: 32px;
+      font-size: 1.4rem;
+      margin-right: 15px;
+      width: 40px;
+      height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 8px;
-      background: rgba(255, 140, 66, 0.15);
-      color: var(--primary);
+      border-radius: 10px;
+      background: rgba(222, 104, 5, 0.15);
+      color: var(--primary-color);
       flex-shrink: 0;
+      transition: var(--transition);
+    }
+    
+    .mapel-link:hover .mapel-icon {
+      background: rgba(222, 104, 5, 0.25);
+      transform: scale(1.1);
     }
 
+    /* Footer Note - Enhanced */
     .footer-note {
       text-align: center;
-      padding: 20px;
-      background: var(--light);
-      border-radius: 16px;
-      box-shadow: var(--shadow);
+      padding: 25px;
+      background: linear-gradient(135deg, var(--card-dark), var(--card-light));
+      border-radius: var(--radius);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
       max-width: 800px;
       margin: 40px auto 0;
-      font-size: 0.9rem;
-      color: #aaa;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(5px);
+    }
+    
+    .footer-note p {
+      margin-bottom: 15px;
+    }
+    
+    .footer-note p:last-child {
+      margin-bottom: 0;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .footer-note a {
-      color: var(--primary);
+      color: var(--primary-color);
       text-decoration: none;
       font-weight: 500;
+      position: relative;
+      transition: var(--transition);
     }
-
+    
+    .footer-note a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: var(--transition);
+    }
+    
+    .footer-note a:hover::after {
+      width: 100%;
+    }
+    
     .footer-note a:hover {
-      color: var(--secondary);
+      color: var(--secondary-color);
     }
 
+    /* Loading screen */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--dark-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .loader-circle {
+      width: 60px;
+      height: 60px;
+      border: 5px solid rgba(222, 104, 5, 0.2);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+      .header h1 {
+        font-size: 2.5rem;
+      }
+      
+      .schedule-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 20px;
+      }
+    }
+    
     @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .schedule-grid { grid-template-columns: 1fr; }
+      .header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .schedule-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .jurusan-header {
+        padding: 18px 20px;
+      }
+      
+      .jurusan-header h2 {
+        font-size: 1.3rem;
+      }
+      
+      .jurusan-content {
+        padding: 20px;
+      }
+      
+      .mapel-link {
+        padding: 14px 16px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .subtitle {
+        font-size: 1rem;
+      }
+      
+      .main-menu-btn {
+        padding: 14px 24px;
+        font-size: 1rem;
+      }
+      
+      .jurusan-header {
+        padding: 16px 18px;
+      }
+      
+      .jurusan-header h2 {
+        font-size: 1.2rem;
+      }
+      
+      .jurusan-content {
+        padding: 18px;
+      }
+      
+      .mapel-link {
+        padding: 12px 14px;
+      }
+      
+      .mapel-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.2rem;
+        margin-right: 12px;
+      }
+      
+      .footer-note {
+        padding: 20px;
+        font-size: 0.9rem;
+      }
+    }
+    
+    /* Desktop specific styles */
+    @media (min-width: 1200px) {
+      .app {
+        padding: 2rem;
+      }
+      
+      .header {
+        margin: 3rem 0 4rem;
+      }
+      
+      .header h1 {
+        font-size: 3.2rem;
+      }
+      
+      .schedule-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 30px;
+      }
+      
+      .jurusan-header {
+        padding: 25px 28px;
+      }
+      
+      .jurusan-header h2 {
+        font-size: 1.6rem;
+      }
+      
+      .jurusan-content {
+        padding: 28px;
+      }
+      
+      .mapel-link {
+        padding: 18px 20px;
+      }
+      
+      .mapel-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.5rem;
+        margin-right: 18px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Mapel Untuk Kelas X</h1>
-      <p class="subtitle">Pilih jurusan untuk melihat jadwal mata pelajaran</p>
-    </header>
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-circle"></div>
+  </div>
 
-    <div class="days-container">
-      <a href="/" class="main-menu-btn">
-        <i class="fa-solid fa-house"></i>
-        Menu Utama
-      </a>
-    </div>
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
 
-    <div class="schedule-grid">
-      <div class="jurusan-card">
-        <div class="jurusan-header">
-          <h2><i class="fa-solid fa-laptop-code"></i> Rekayasa Perangkat Lunak</h2>
+  <div class="app-container">
+    <div class="app">
+      <div class="content-wrapper">
+        <div class="header">
+          <h1>Mapel Untuk Kelas X</h1>
+          <p class="subtitle">Pilih jurusan untuk melihat jadwal mata pelajaran</p>
         </div>
-        <div class="jurusan-content">
-          <div class="link-list">
-            <a href="/xrplone" class="mapel-link">
-              <div class="mapel-icon"><i class="fa-solid fa-computer"></i></div>
-              <span>Rekayasa Perangkat Lunak 1</span>
-            </a>
-            <a href="/xrpltwo" class="mapel-link">
-              <div class="mapel-icon"><i class="fa-solid fa-mobile-screen"></i></div>
-              <span>Rekayasa Perangkat Lunak 2</span>
-            </a>
+
+        <div class="days-container">
+          <a href="/" class="main-menu-btn">
+            <i class="fa-solid fa-house"></i>
+            Menu Utama
+          </a>
+        </div>
+
+        <div class="schedule-grid">
+          <div class="jurusan-card">
+            <div class="jurusan-header">
+              <h2><i class="fa-solid fa-laptop-code"></i> Rekayasa Perangkat Lunak</h2>
+            </div>
+            <div class="jurusan-content">
+              <div class="link-list">
+                <a href="/xrplone" class="mapel-link">
+                  <div class="mapel-icon"><i class="fa-solid fa-computer"></i></div>
+                  <span>Rekayasa Perangkat Lunak 1</span>
+                </a>
+                <a href="/xrpltwo" class="mapel-link">
+                  <div class="mapel-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                  <span>Rekayasa Perangkat Lunak 2</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="jurusan-card">
+            <div class="jurusan-header">
+              <h2><i class="fa-solid fa-hotel"></i> Usaha Pelayanan Wisata</h2>
+            </div>
+            <div class="jurusan-content">
+              <div class="link-list">
+                <a href="/xulw" class="mapel-link">
+                  <div class="mapel-icon"><i class="fa-solid fa-building"></i></div>
+                  <span>Usaha Layanan Wisata</span>
+                </a>
+                <a href="/xptwo" class="mapel-link">
+                  <div class="mapel-icon"><i class="fa-solid fa-hotel"></i></div>
+                  <span>Perhotelan 2</span>
+                </a>
+              </div>
+            </div>
+          </div>
+      
+          <div class="jurusan-card">
+            <div class="jurusan-header">
+              <h2><i class="fa-solid fa-palette"></i> Seni</h2>
+            </div>
+            <div class="jurusan-content">
+              <div class="link-list">
+                <a href="/xseni" class="mapel-link">
+                  <div class="mapel-icon"><i class="fa-solid fa-music"></i></div>
+                  <span>Seni Musik</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="jurusan-card">
+            <div class="jurusan-header">
+              <h2><i class="fa-solid fa-face-smile"></i> Kecantikan</h2>
+            </div>
+            <div class="jurusan-content">
+              <div class="link-list">
+                <a href="/xkct" class="mapel-link">
+                  <div class="mapel-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
+                  <span>Kecantikan</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-<div class="jurusan-card">
-        <div class="jurusan-header">
-          <h2><i class="fa-solid fa-hotel"></i> Usaha Pelayanan Wisata</h2>
-        </div>
-        <div class="jurusan-content">
-          <div class="link-list">
-            <a href="/xulw" class="mapel-link">
-              <div class="mapel-icon"><i class="fa-solid fa-building"></i></div>
-              <span>Usaha Layanan Wisata</span>
-            </a>
-            <a href="/xptwo" class="mapel-link">
-              <div class="mapel-icon"><i class="fa-solid fa-hotel"></i></div>
-              <span>Perhotelan 2</span>
-            </a>
+        <div class="footer-note">
+          <p>Jadwal dapat berubah sewaktu-waktu. Silakan periksa secara berkala.</p>
+          <div>
+            <a href="/inf">Kebijakan Privasi</a> | 
+            <a href="https://flessan.pages.dev">Sebuah Portofolio</a>
           </div>
+          <p>&copy; 2025 Unofficial Pages for SMKN4BJM</p>
         </div>
       </div>
-    
-      <div class="jurusan-card">
-        <div class="jurusan-header">
-          <h2><i class="fa-solid fa-palette"></i> Seni</h2>
-        </div>
-        <div class="jurusan-content">
-          <div class="link-list">
-            <a href="/xseni" class="mapel-link">
-              <div class="mapel-icon"><i class="fa-solid fa-music"></i></div>
-              <span>Seni Musik</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="jurusan-card">
-        <div class="jurusan-header">
-          <h2><i class="fa-solid fa-face-smile"></i> Kecantikan</h2>
-        </div>
-        <div class="jurusan-content">
-          <div class="link-list">
-            <a href="/xkct" class="mapel-link">
-              <div class="mapel-icon"><i class="fa-solid fa-hand-sparkles"></i></div>
-              <span>Kecantikan</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      </div>
-
-    <div class="footer-note">
-      <p>Jadwal dapat berubah sewaktu-waktu. Silakan periksa secara berkala.</p>
-      <div>
-        <a href="/inf">Kebijakan Privasi</a> | 
-        <a href="https://flessan.pages.dev">Sebuah Portofolio</a>
-      </div>
-      <p>&copy; 2025 Unofficial Pages for SMKN4BJM</p>
     </div>
   </div>
+
+  <script>
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 20;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random size between 3px and 8px
+        const size = Math.random() * 5 + 3;
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        
+        // Random position
+        particle.style.left = `${Math.random() * 100}%`;
+        
+        // Random animation duration between 10s and 20s
+        const duration = Math.random() * 10 + 10;
+        particle.style.animationDuration = `${duration}s`;
+        
+        // Random delay
+        particle.style.animationDelay = `${Math.random() * 5}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Hide loader when page is loaded
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 500);
+    });
+    
+    // Initialize particles
+    createParticles();
+    
+    // Add ripple effect to buttons
+    document.querySelectorAll('.main-menu-btn, .mapel-link').forEach(button => {
+      button.addEventListener('click', function(e) {
+        const ripple = document.createElement('span');
+        const rect = this.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        const x = e.clientX - rect.left - size / 2;
+        const y = e.clientY - rect.top - size / 2;
+        
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.left = x + 'px';
+        ripple.style.top = y + 'px';
+        ripple.classList.add('ripple');
+        
+        this.appendChild(ripple);
+        
+        setTimeout(() => {
+          ripple.remove();
+        }, 600);
+      });
+    });
+  </script>
+  
+  <style>
+    /* Ripple effect */
+    .main-menu-btn, .mapel-link {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.5);
+      transform: scale(0);
+      animation: ripple-animation 0.6s ease-out;
+    }
+    
+    @keyframes ripple-animation {
+      to {
+        transform: scale(4);
+        opacity: 0;
+      }
+    }
+  </style>
 </body>
 </html>
