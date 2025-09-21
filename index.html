@@ -951,183 +951,252 @@
   </div>
   
   <script>
-    // Create floating particles
-    function createParticles() {
-      const particlesContainer = document.getElementById('particles');
-      const particleCount = 20;
-      
-      for (let i = 0; i < particleCount; i++) {
-        const particle = document.createElement('div');
-        particle.classList.add('particle');
-        
-        // Random size between 3px and 8px
-        const size = Math.random() * 5 + 3;
-        particle.style.width = `${size}px`;
-        particle.style.height = `${size}px`;
-        
-        // Random position
-        particle.style.left = `${Math.random() * 100}%`;
-        
-        // Random animation duration between 10s and 20s
-        const duration = Math.random() * 10 + 10;
-        particle.style.animationDuration = `${duration}s`;
-        
-        // Random delay
-        particle.style.animationDelay = `${Math.random() * 5}s`;
-        
-        particlesContainer.appendChild(particle);
-      }
+// --- FLOATING PARTICLES - 3D RANDOM & COLORFUL ---
+function createParticles() {
+  const particlesContainer = document.getElementById('particles');
+  const particleCount = 24;
+  const colors = [
+    'rgba(244,105,0,0.12)',
+    'rgba(222,104,5,0.15)',
+    'rgba(111,185,255,0.15)',
+    'rgba(80,255,163,0.12)'
+  ];
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.classList.add('particle');
+    // Random size, position, color, opacity
+    const size = Math.random() * 8 + 5;
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    // Slight blur for glowing effect
+    particle.style.filter = 'blur(0.5px)';
+    // Animate in random direction
+    const duration = Math.random() * 10 + 15;
+    const delay = Math.random() * 8;
+    particle.style.animation = `floaty ${duration}s ${delay}s infinite alternate ease-in-out`;
+    particlesContainer.appendChild(particle);
+  }
+}
+// --- FLOATY KEYFRAMES (add to style if needed) ---
+if (!document.getElementById('floaty-keyframes')) {
+  const style = document.createElement('style');
+  style.id = 'floaty-keyframes';
+  style.innerHTML = `
+    @keyframes floaty {
+      0% { transform: translateY(0) scale(1) rotate(0deg);}
+      100% { transform: translateY(-60px) scale(1.3) rotate(15deg);}
     }
-    
-    // Hide loader when page is loaded
-    window.addEventListener('load', function() {
-      setTimeout(() => {
-        document.getElementById('loader').classList.add('hidden');
-      }, 500);
-    });
-    
-    // Back to top button
-    const backToTopButton = document.getElementById('backToTop');
-    
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 300) {
-        backToTopButton.classList.add('visible');
-      } else {
-        backToTopButton.classList.remove('visible');
-      }
-    });
-    
-    backToTopButton.addEventListener('click', () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      });
-    });
-    
-    // FAB (Floating Action Button) click event
-    const fab = document.getElementById('fab');
-    fab.addEventListener('click', () => {
-      // Create a simple notification
-      const notification = document.createElement('div');
-      notification.style.position = 'fixed';
-      notification.style.bottom = '100px';
-      notification.style.right = '25px';
-      notification.style.background = 'linear-gradient(135deg, var(--primary-color), var(--secondary-color))';
-      notification.style.color = 'white';
-      notification.style.padding = '15px 20px';
-      notification.style.borderRadius = '10px';
-      notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
-      notification.style.zIndex = '1000';
-      notification.style.transform = 'translateY(20px)';
-      notification.style.opacity = '0';
-      notification.style.transition = 'all 0.3s ease';
-      notification.textContent = 'Fitur baru akan segera hadir!';
-      
-      document.body.appendChild(notification);
-      
-      // Animate in
-      setTimeout(() => {
-        notification.style.transform = 'translateY(0)';
-        notification.style.opacity = '1';
-      }, 10);
-      
-      // Animate out and remove
-      setTimeout(() => {
-        notification.style.transform = 'translateY(20px)';
-        notification.style.opacity = '0';
-        
+  `;
+  document.head.appendChild(style);
+}
+
+// --- LOADER ---
+window.addEventListener('load', function() {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 500);
+});
+
+// --- BACK TO TOP ---
+const backToTopButton = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  if (window.pageYOffset > 300) {
+    backToTopButton.classList.add('visible');
+  } else {
+    backToTopButton.classList.remove('visible');
+  }
+});
+backToTopButton.addEventListener('click', () => {
+  window.scrollTo({top: 0, behavior: 'smooth'});
+});
+
+// --- FAB NOTIFICATION (RANDOM FACT, MODERN, CLOSEABLE) ---
+const funFacts = [
+  "👾 Website ini dibuat full oleh satu orang siswa RPL 1 kelas 10.",
+  "🦄 Pemilik Subdomain & UI/UX designer adalah satu orang yang sama.",
+  "✨ Tanpa framework, cuma HTML, CSS & JS. Udahh Html Statis aja Gitu",
+  '🌱 Selalu update, kalo tidak hubungi saja <a href="https://flessan.pages.dev/#contact" target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a>',
+  "💡 Powered by Orang Baik, Siapa Lagi? Github Ama Cloudflare Lah 🤓",
+  "🤕 Si Atmin Kerja Kerja Gini Ga Bergaji Loo, Siapa Juga Yg Bayar Ama Ginian",
+  "😄 Kamu Coba Bacain Semua Fun Fact Ini?</br> (Kesempatan Mendapatkan Chat Langka Naik -1 Persen)",
+  "🔥 Support SMKN 4 Banjarmasin, spread positivity!",
+  "😎 Fitur baru akan hadir, pantau terus ya!",
+  '😄 Donasi Atmin Disini yaa <a href="https://flessan.pages.dev/donate" target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a></br> Si Atmin Belum Bergaji Nich, Bantuin Ya Orang Orang Baik :3',
+  "😄 DAMN! i Love Skenpat! </br>SMK Negeri 4 Banjarmasin!",
+  "🦧 DAMN! i Love Banjarmasin!",
+  "😓 Dulu Web Ini Ga Berloading Loo, Jadi Kutambahin Aja Bia-",
+  "🎨 Desain UI ku buat biar enak di skrol di hape."
+];
+
+function showNotificationRandom(facts) {
+  // Hapus notif sebelumnya
+  document.querySelectorAll('.custom-notification').forEach(n => n.remove());
+  // Ambil satu fact random
+  const randomFact = facts[Math.floor(Math.random() * facts.length)];
+  // Bangun notifikasi
+  const notification = document.createElement('div');
+  notification.className = 'custom-notification';
+  notification.innerHTML = `
+    <div class="notif-title">
+      <span>Fun Fact</span>
+      <span class="notif-close" title="Tutup">&times;</span>
+    </div>
+    <div class="notif-msg">${randomFact}</div>
+  `;
+  document.body.appendChild(notification);
+  // Animasi masuk
+  setTimeout(() => notification.classList.add('show'), 10);
+  // Klik close
+  notification.querySelector('.notif-close').onclick = () => {
+    notification.classList.remove('show');
+    setTimeout(()=>notification.remove(), 400);
+  };
+  // Auto hilang
+  setTimeout(() => {
+    if(document.body.contains(notification)){
+      notification.classList.remove('show');
+      setTimeout(()=>notification.remove(), 400);
+    }
+  }, 4100);
+}
+const fab = document.getElementById('fab');
+fab.addEventListener('click', () => {
+  showNotificationRandom(funFacts);
+});
+
+// --- PARTICLES INIT ---
+createParticles();
+
+// --- RIPPLE EFFECT ON BUTTONS ---
+document.querySelectorAll('.btn, .card-balance .actions a').forEach(button => {
+  button.addEventListener('click', function(e) {
+    const ripple = document.createElement('span');
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = e.clientX - rect.left - size / 2;
+    const y = e.clientY - rect.top - size / 2;
+    ripple.style.width = ripple.style.height = size + 'px';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    ripple.className = 'ripple';
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+});
+
+// --- PARALLAX EFFECT HEADER ---
+window.addEventListener('scroll', () => {
+  const scrolled = window.pageYOffset;
+  const header = document.querySelector('.header');
+  if(header) {
+    header.style.transform = `translateY(${scrolled * 0.28}px)`;
+    header.style.opacity = 1 - scrolled / 340;
+  }
+});
+
+// --- STAGGERED ANIMATION TO GRID ITEMS ---
+const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const gridItems = entry.target.querySelectorAll('.btn');
+      gridItems.forEach((item, idx) => {
         setTimeout(() => {
-          document.body.removeChild(notification);
-        }, 300);
-      }, 3000);
-    });
-    
-    // Initialize particles
-    createParticles();
-    
-    // Add ripple effect to buttons
-    document.querySelectorAll('.btn, .card-balance .actions a').forEach(button => {
-      button.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        const rect = this.getBoundingClientRect();
-        const size = Math.max(rect.width, rect.height);
-        const x = e.clientX - rect.left - size / 2;
-        const y = e.clientY - rect.top - size / 2;
-        
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = x + 'px';
-        ripple.style.top = y + 'px';
-        ripple.classList.add('ripple');
-        
-        this.appendChild(ripple);
-        
-        setTimeout(() => {
-          ripple.remove();
-        }, 600);
+          item.style.opacity = '1';
+          item.style.transform = 'translateY(0)';
+        }, idx * 80);
       });
-    });
-    
-    // Add parallax effect to header
-    window.addEventListener('scroll', () => {
-      const scrolled = window.pageYOffset;
-      const header = document.querySelector('.header');
-      header.style.transform = `translateY(${scrolled * 0.3}px)`;
-      header.style.opacity = 1 - scrolled / 300;
-    });
-    
-    // Add staggered animation to grid items
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const gridItems = entry.target.querySelectorAll('.btn');
-          gridItems.forEach((item, index) => {
-            setTimeout(() => {
-              item.style.opacity = '1';
-              item.style.transform = 'translateY(0)';
-            }, index * 100);
-          });
-          observer.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-    
-    document.querySelectorAll('.grid').forEach(grid => {
-      const gridItems = grid.querySelectorAll('.btn');
-      gridItems.forEach(item => {
-        item.style.opacity = '0';
-        item.style.transform = 'translateY(20px)';
-        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      });
-      observer.observe(grid);
-    });
-  </script>
-  
-  <style>
-    /* Ripple effect */
-    .btn, .card-balance .actions a {
-      position: relative;
-      overflow: hidden;
+      observer.unobserve(entry.target);
     }
-    
-    .ripple {
-      position: absolute;
-      border-radius: 50%;
-      background-color: rgba(255, 255, 255, 0.5);
-      transform: scale(0);
-      animation: ripple-animation 0.6s ease-out;
-    }
-    
-    @keyframes ripple-animation {
-      to {
-        transform: scale(4);
-        opacity: 0;
-      }
-    }
-  </style>
+  });
+}, observerOptions);
+document.querySelectorAll('.grid').forEach(grid => {
+  const gridItems = grid.querySelectorAll('.btn');
+  gridItems.forEach(item => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(20px)';
+    item.style.transition = 'opacity 0.5s, transform 0.5s';
+  });
+  observer.observe(grid);
+});
+</script>
+
+<style>
+/* --- NOTIFICATION STYLE (MODERN) --- */
+.custom-notification {
+  position: fixed;
+  bottom: 98px;
+  right: 24px;
+  background: linear-gradient(132deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  padding: 20px 24px 18px 20px;
+  border-radius: 14px 7px 18px 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  z-index: 1100;
+  min-width: 180px;
+  max-width: 340px;
+  font-size: 1.03rem;
+  opacity: 0;
+  transform: translateY(24px) scale(0.97);
+  transition: all 0.4s cubic-bezier(.6,.2,.4,1.1);
+  pointer-events: none;
+  user-select: none;
+  backdrop-filter: blur(2px);
+  border: 1px solid rgba(255,255,255,0.09);
+}
+.custom-notification.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: all;
+}
+.custom-notification .notif-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.08em;
+  letter-spacing: 0.04em;
+}
+.custom-notification .notif-close {
+  margin-left: 15px;
+  cursor: pointer;
+  font-size: 1.1em;
+  font-weight: 800;
+  transition: color 0.2s;
+  color: #fff;
+  opacity: 0.7;
+}
+.custom-notification .notif-close:hover { color: #ffd966; opacity:1; }
+.custom-notification .notif-msg { font-weight: 400; line-height: 1.5; }
+
+/* --- PARTICLE STYLE (make sure .particle exists) --- */
+#particles .particle {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+}
+
+/* --- RIPPLE EFFECT --- */
+.btn, .card-balance .actions a {
+  position: relative;
+  overflow: hidden;
+}
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255,255,255,0.45);
+  transform: scale(0);
+  animation: ripple-animation 0.60s cubic-bezier(.23,.7,.45,1.2);
+  pointer-events: none;
+}
+@keyframes ripple-animation {
+  to { transform: scale(4); opacity: 0; }
+}
+</style>
 </body>
 </html>
