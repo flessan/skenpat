@@ -344,19 +344,23 @@
 
     // === Sampah sesuai program GG ===
     const config = {
-      icons: [
-        "<i class='fas fa-bottle-water' aria-label='Botol plastik'></i>",     // Botol plastik
-        "<i class='fas fa-can' aria-label='Kaleng'></i>",                    // Kaleng
-        "<i class='fas fa-soap' aria-label='Sabun dari minyak jelantah'></i>" // Sabun dari minyak jelantah
-      ],
-      initialItemCount: 3,
-      redirectCountdown: 5,
-      safeZoneTop: 5,    // 5% dari atas
-      safeZoneBottom: 65, // 65% dari atas (hindari area tempat sampah)
-      safeZoneLeft: 10,   // 10% dari kiri
-      safeZoneRight: 80   // 80% dari kiri (20% dari kanan)
-    };
-
+  icons: [
+    "<i class='fas fa-bottle-water' aria-label='Botol plastik'></i>",
+    "<i class='fas fa-can' aria-label='Kaleng minuman'></i>",
+    "<i class='fas fa-soap' aria-label='Sabun dari minyak jelantah'></i>",
+    "<i class='fas fa-leaf' aria-label='Sampah organik'></i>",
+    "<i class='fas fa-box-open' aria-label='Kardus bekas'></i>",
+    "<i class='fas fa-wine-bottle' aria-label='Botol kaca'></i>",
+    "<i class='fas fa-prescription-bottle' aria-label='Botol plastik kecil'></i>",
+    "<i class='fas fa-cookie' aria-label='Bungkus makanan'></i>"
+  ],
+  initialItemCount: 3,
+  redirectCountdown: 4,
+  safeZoneTop: 5,
+  safeZoneBottom: 65,
+  safeZoneLeft: 5,
+  safeZoneRight: 90
+};
     // === Init ===
     function initGame() {
       try {
@@ -614,3 +618,4 @@
   </script>
 </body>
 </html>
+
