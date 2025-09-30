@@ -290,47 +290,45 @@
   </div>
 
   <div id="error-message" class="error-message"></div>
-
   <script>
-  // === Error Handling ===
+  // === Penanganan Error ===
   window.addEventListener('error', (e) => {
     if (e.target.tagName === 'LINK') {
-      showError("Gagal memuat sumber daya eksternal. Beberapa tampilan mungkin tidak berfungsi dengan baik.");
+      showError("Gagal memuat sumber daya eksternal. Tampilan mungkin tidak sempurna.");
     }
   }, true);
 
   function showError(message) {
-    const errorEl = document.getElementById('error-message');
-    if (errorEl) {
-      errorEl.textContent = message;
-      errorEl.style.display = 'block';
-      setTimeout(() => errorEl.style.display = 'none', 5000);
+    const el = document.getElementById('error-message');
+    if (el) {
+      el.textContent = message;
+      el.style.display = 'block';
+      setTimeout(() => el.style.display = 'none', 5000);
     }
   }
 
-  // === Time-of-Day Background ===
+  // === Latar Belakang Berdasarkan Waktu ===
   function setTimeOfDayClass() {
     const hour = new Date().getHours();
-    let timeClass = 'afternoon';
-    if (hour >= 5 && hour < 10) timeClass = 'morning';
-    else if (hour >= 10 && hour < 16) timeClass = 'afternoon';
-    else if (hour >= 16 && hour < 18.5) timeClass = 'evening';
-    else timeClass = 'night';
+    let cls = 'afternoon';
+    if (hour >= 5 && hour < 10) cls = 'morning';
+    else if (hour >= 10 && hour < 16) cls = 'afternoon';
+    else if (hour >= 16 && hour < 18.5) cls = 'evening';
+    else cls = 'night';
 
     document.body.className = document.body.className
       .replace(/\b(morning|afternoon|evening|night)\b/g, '')
       .trim();
-    document.body.classList.add(timeClass);
+    document.body.classList.add(cls);
   }
 
-  // === Game State ===
+  // === State & Elemen ===
   const gameState = {
     itemsLeft: 0,
     isRedirecting: false,
     redirectTimer: null,
     draggedItem: null,
-    isDragging: false,
-    totalItems: 0
+    isDragging: false
   };
 
   const elements = {
@@ -344,24 +342,22 @@
     quote: null
   };
 
-  // === Konfigurasi Sampah (sesuai program GG) ===
+  // === Konfigurasi (Target: 3 item) ===
   const config = {
     icons: [
-      "<i class='fas fa-bottle-water' aria-label='Botol plastik'></i>",
-      "<i class='fas fa-can' aria-label='Kaleng minuman'></i>",
-      "<i class='fas fa-soap' aria-label='Sabun dari minyak jelantah'></i>",
-      "<i class='fas fa-leaf' aria-label='Sampah organik'></i>",
-      "<i class='fas fa-box-open' aria-label='Kardus bekas'></i>",
-      "<i class='fas fa-wine-bottle' aria-label='Botol kaca'></i>",
-      "<i class='fas fa-prescription-bottle' aria-label='Botol plastik kecil'></i>",
-      "<i class='fas fa-cookie' aria-label='Bungkus makanan'></i>"
+      "<i class='fas fa-bottle-water' aria-label='Botol plastik (Bank Sampah)'></i>",
+      "<i class='fas fa-can' aria-label='Kaleng minuman (Daur Ulang)'></i>",
+      "<i class='fas fa-soap' aria-label='Sabun dari minyak jelantah (Daur Ulang)'></i>",
+      "<i class='fas fa-leaf' aria-label='Sampah organik (Kompos)'></i>",
+      "<i class='fas fa-box-open' aria-label='Kardus bekas (Bank Sampah)'></i>"
     ],
-    initialItemCount: 3, // ✅ Lebih banyak dari target awal (3 → 8)
+    initialItemCount: 3, // ✅ Target tetap 3
     redirectCountdown: 4,
-    safeZoneTop: 90,
-    safeZoneBottom: 90,
-    safeZoneLeft: 90,
-    safeZoneRight: 90
+    // Area aman: hindari tempat sampah di bawah tengah
+    safeZoneTop: 8,      // 8% dari atas
+    safeZoneBottom: 55,  // maks 55% dari atas (jauh dari tempat sampah)
+    safeZoneLeft: 10,    // 10% dari kiri
+    safeZoneRight: 90    // 90% dari kiri (10% margin kanan)
   };
 
   // === Inisialisasi Elemen DOM ===
@@ -375,15 +371,14 @@
     elements.loadingOverlay = document.getElementById("loading-overlay");
     elements.quote = document.querySelector('.environment-quote');
 
-    // Validasi elemen penting
     if (!elements.gameArea || !elements.trashBin) {
-      showError("Elemen permainan tidak ditemukan. Pastikan struktur HTML lengkap.");
+      showError("Struktur permainan tidak lengkap. Muat ulang halaman.");
       return false;
     }
     return true;
   }
 
-  // === Init Game ===
+  // === Mulai Game ===
   function initGame() {
     try {
       if (!initElements()) return;
@@ -391,15 +386,14 @@
       resetGameState();
       spawnItems();
       setupEventListeners();
-    } catch (error) {
-      console.error("Error initializing game:", error);
-      showError("Terjadi kesalahan saat memulai permainan. Silakan muat ulang halaman.");
+    } catch (err) {
+      console.error("Gagal memulai game:", err);
+      showError("Terjadi kesalahan. Silakan muat ulang halaman.");
     }
   }
 
   function resetGameState() {
     gameState.itemsLeft = config.initialItemCount;
-    gameState.totalItems = config.initialItemCount;
     gameState.isRedirecting = false;
     gameState.draggedItem = null;
     gameState.isDragging = false;
@@ -409,16 +403,16 @@
     // Hapus item lama
     document.querySelectorAll('#game-area .item').forEach(el => el.remove());
 
-    // Spawn item baru
-    for (let i = 0; i < gameState.totalItems; i++) {
+    // Buat item baru
+    for (let i = 0; i < config.initialItemCount; i++) {
       const item = createTrashItem();
       elements.gameArea.insertBefore(item, elements.trashBin);
     }
 
-    updateStatusText();
+    updateStatus();
   }
 
-  function updateStatusText() {
+  function updateStatus() {
     if (elements.statusText) {
       elements.statusText.textContent = `Sisa sampah: ${gameState.itemsLeft}`;
     }
@@ -429,35 +423,34 @@
     item.className = "item";
     item.setAttribute("role", "button");
     item.setAttribute("aria-label", "Sampah yang bisa dibuang");
+
+    // Pilih ikon acak dari daftar
     item.innerHTML = config.icons[Math.floor(Math.random() * config.icons.length)];
 
-    // ✅ Perbaiki: definisikan safeLeft & safeTop
-    const safeTop = Math.random() * (config.safeZoneBottom - config.safeZoneTop) + config.safeZoneTop;
-    const safeLeft = Math.random() * (config.safeZoneRight - config.safeZoneLeft) + config.safeZoneLeft;
+    // Hitung posisi aman
+    const top = Math.random() * (config.safeZoneBottom - config.safeZoneTop) + config.safeZoneTop;
+    const left = Math.random() * (config.safeZoneRight - config.safeZoneLeft) + config.safeZoneLeft;
 
-    item.style.left = `${safeLeft}%`;
-    item.style.top = `${safeTop}%`;
+    item.style.left = `${left}%`;
+    item.style.top = `${top}%`;
 
     return item;
   }
 
+  // === Event Listeners ===
   function setupEventListeners() {
-    // Mouse
     elements.gameArea.addEventListener("mousedown", handleStartDrag);
     document.addEventListener("mousemove", handleMoveDrag);
     document.addEventListener("mouseup", handleEndDrag);
 
-    // Touch
     elements.gameArea.addEventListener("touchstart", handleStartDrag, { passive: false });
     document.addEventListener("touchmove", handleMoveDrag, { passive: false });
     document.addEventListener("touchend", handleEndDrag);
 
-    // Tombol
     if (elements.cancelBtn) {
       elements.cancelBtn.addEventListener("click", cancelRedirect);
     }
 
-    // Cegah scroll saat drag di perangkat sentuh
     elements.gameArea.addEventListener("touchmove", (e) => {
       if (gameState.isDragging) e.preventDefault();
     }, { passive: false });
@@ -486,14 +479,14 @@
 
     const clientX = e.touches ? e.touches[0].clientX : e.clientX;
     const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    const areaRect = elements.gameArea.getBoundingClientRect();
+    const area = elements.gameArea.getBoundingClientRect();
 
-    let x = clientX - areaRect.left - gameState.offsetX;
-    let y = clientY - areaRect.top - gameState.offsetY;
+    let x = clientX - area.left - gameState.offsetX;
+    let y = clientY - area.top - gameState.offsetY;
 
-    // Batasi dalam area
-    x = Math.max(0, Math.min(x, areaRect.width - gameState.draggedItem.offsetWidth));
-    y = Math.max(0, Math.min(y, areaRect.height - gameState.draggedItem.offsetHeight));
+    // Batasi dalam area game
+    x = Math.max(0, Math.min(x, area.width - gameState.draggedItem.offsetWidth));
+    y = Math.max(0, Math.min(y, area.height - gameState.draggedItem.offsetHeight));
 
     gameState.draggedItem.style.left = `${x}px`;
     gameState.draggedItem.style.top = `${y}px`;
@@ -501,15 +494,11 @@
     checkTrashBinProximity(clientX, clientY);
   }
 
-  function checkTrashBinProximity(clientX, clientY) {
-    const binRect = elements.trashBin.getBoundingClientRect();
-    const isNear = (
-      clientX > binRect.left - 30 &&
-      clientX < binRect.right + 30 &&
-      clientY > binRect.top - 30 &&
-      clientY < binRect.bottom + 30
-    );
-    elements.trashBin.classList.toggle("highlight", isNear);
+  function checkTrashBinProximity(x, y) {
+    const bin = elements.trashBin.getBoundingClientRect();
+    const near = x > bin.left - 30 && x < bin.right + 30 &&
+                 y > bin.top - 30 && y < bin.bottom + 30;
+    elements.trashBin.classList.toggle("highlight", near);
   }
 
   function handleEndDrag() {
@@ -522,68 +511,60 @@
     item.classList.remove("dragging");
 
     if (isItemInTrashBin(item)) {
-      handleTrashCollected(item);
+      collectItem(item);
     }
 
     gameState.draggedItem = null;
   }
 
   function isItemInTrashBin(item) {
-    const itemRect = item.getBoundingClientRect();
-    const binRect = elements.trashBin.getBoundingClientRect();
+    const iRect = item.getBoundingClientRect();
+    const bRect = elements.trashBin.getBoundingClientRect();
 
-    const itemCenterX = itemRect.left + itemRect.width / 2;
-    const itemCenterY = itemRect.top + itemRect.height / 2;
+    const cx = iRect.left + iRect.width / 2;
+    const cy = iRect.top + iRect.height / 2;
 
-    return (
-      itemCenterX >= binRect.left &&
-      itemCenterX <= binRect.right &&
-      itemCenterY >= binRect.top &&
-      itemCenterY <= binRect.bottom
-    );
+    return cx >= bRect.left && cx <= bRect.right &&
+           cy >= bRect.top && cy <= bRect.bottom;
   }
 
-  function handleTrashCollected(item) {
+  function collectItem(item) {
     createParticleEffect(item);
     item.remove();
     gameState.itemsLeft--;
-    updateStatusText();
+    updateStatus();
 
-    if (gameState.itemsLeft === 0) {
-      completeGame();
-    }
+    if (gameState.itemsLeft === 0) completeGame();
   }
 
   function createParticleEffect(item) {
-    const rect = item.getBoundingClientRect();
-    const gameRect = elements.gameArea.getBoundingClientRect();
+    const iRect = item.getBoundingClientRect();
+    const gRect = elements.gameArea.getBoundingClientRect();
 
     for (let i = 0; i < 6; i++) {
-      const particle = document.createElement("div");
-      particle.innerHTML = "<i class='fas fa-star' style='color: #4CAF50;' aria-hidden='true'></i>";
-      particle.style.cssText = `
+      const p = document.createElement("div");
+      p.innerHTML = "<i class='fas fa-star' style='color:#4CAF50' aria-hidden='true'></i>";
+      p.style.cssText = `
         position: absolute;
-        left: ${rect.left - gameRect.left + rect.width / 2}px;
-        top: ${rect.top - gameRect.top + rect.height / 2}px;
+        left: ${iRect.left - gRect.left + iRect.width / 2}px;
+        top: ${iRect.top - gRect.top + iRect.height / 2}px;
         pointer-events: none;
         opacity: 0;
         z-index: 100;
         font-size: 16px;
         transition: transform 0.7s, opacity 0.7s;
       `;
-      particle.setAttribute("aria-hidden", "true");
-      elements.gameArea.appendChild(particle);
+      p.setAttribute("aria-hidden", "true");
+      elements.gameArea.appendChild(p);
 
       setTimeout(() => {
         const angle = (i / 6) * Math.PI * 2;
-        const distance = 30 + Math.random() * 20;
-        const tx = Math.cos(angle) * distance;
-        const ty = Math.sin(angle) * distance - 40;
-        particle.style.transform = `translate(${tx}px, ${ty}px) scale(0.8)`;
-        particle.style.opacity = "1";
+        const d = 30 + Math.random() * 20;
+        p.style.transform = `translate(${Math.cos(angle) * d}px, ${Math.sin(angle) * d - 40}px) scale(0.8)`;
+        p.style.opacity = "1";
       }, 10);
 
-      setTimeout(() => particle.remove(), 700);
+      setTimeout(() => p.remove(), 700);
     }
   }
 
@@ -597,13 +578,13 @@
   }
 
   function startRedirect() {
-    let seconds = config.redirectCountdown;
-    if (elements.countdownEl) elements.countdownEl.textContent = seconds;
+    let sec = config.redirectCountdown;
+    if (elements.countdownEl) elements.countdownEl.textContent = sec;
 
     gameState.redirectTimer = setInterval(() => {
-      seconds--;
-      if (elements.countdownEl) elements.countdownEl.textContent = seconds;
-      if (seconds <= 0) {
+      sec--;
+      if (elements.countdownEl) elements.countdownEl.textContent = sec;
+      if (sec <= 0) {
         clearInterval(gameState.redirectTimer);
         redirectToGreen();
       }
@@ -637,6 +618,7 @@
 </script>
 </body>
 </html>
+
 
 
 
