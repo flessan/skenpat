@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
   <style>
+    /* ===== BASE STYLES ===== */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -25,7 +26,7 @@
       overflow-x: hidden;
     }
 
-    /* Time-based backgrounds */
+    /* ===== TIME-BASED BACKGROUNDS ===== */
     body.morning {
       background: linear-gradient(to bottom, #a2d9ff 0%, #a2d9ff 40%, #b8e6a3 40%, #98d98e 100%);
     }
@@ -49,6 +50,7 @@
       background: linear-gradient(to bottom, #1a237e 0%, #1a237e 40%, #388e3c 40%, #1b5e20 100%);
     }
 
+    /* ===== HEADER STYLES ===== */
     header {
       width: 100%;
       text-align: center;
@@ -70,6 +72,7 @@
       color: #bbdefb;
     }
 
+    /* ===== MAIN CONTENT STYLES ===== */
     main {
       width: 100%;
       display: flex;
@@ -78,6 +81,7 @@
       flex-grow: 1;
     }
 
+    /* ===== GAME AREA STYLES ===== */
     #game-area {
       position: relative;
       width: min(95vw, 400px);
@@ -113,6 +117,7 @@
       color: #2c7a0b;
     }
 
+    /* ===== ITEM STYLES ===== */
     .item {
       position: absolute;
       font-size: clamp(36px, 6vw, 36px);
@@ -134,6 +139,7 @@
       z-index: 10;
     }
 
+    /* ===== STATUS & UI STYLES ===== */
     .status-container {
       margin: 0.8rem 0;
       font-weight: 600;
@@ -166,21 +172,6 @@
       color: #e0f7fa;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    #restart-btn {
-    margin-top: 0.8rem;
-    display: block; /* Ubah ke 'block' agar selalu tampil */
-  }
-    #countdown {
-      font-size: clamp(1.2rem, 4vw, 1.4rem);
-      margin: 0.5rem 0;
-      font-weight: bold;
-    }
-
     .btn {
       padding: 0.5rem 1rem;
       background: #4CAF50;
@@ -197,6 +188,17 @@
       background: #388E3C;
     }
 
+    #restart-btn {
+      margin-top: 0.8rem;
+    }
+
+    #countdown {
+      font-size: clamp(1.2rem, 4vw, 1.4rem);
+      margin: 0.5rem 0;
+      font-weight: bold;
+    }
+
+    /* ===== FOOTER STYLES ===== */
     footer {
       margin-top: auto;
       padding: 0.5rem;
@@ -213,6 +215,7 @@
       opacity: 0.9;
     }
 
+    /* ===== OVERLAY & LOADING STYLES ===== */
     #loading-overlay {
       display: none;
       position: fixed;
@@ -248,7 +251,7 @@
       to { transform: rotate(360deg); }
     }
 
-    /* Added error message styling */
+    /* ===== ERROR MESSAGE STYLES ===== */
     .error-message {
       display: none;
       position: fixed;
@@ -274,16 +277,16 @@
     </div>
 
     <div class="status-container">
-  <div id="status" aria-live="polite">Sisa sampah: 3</div>
-</div>
+      <div id="status" aria-live="polite">Sisa sampah: 3</div>
+    </div>
 
-<p style="font-size: 0.85rem; color: #555; margin: 0.5rem 0; text-align: center; max-width: min(90vw, 300px);">
-  Jika sampah tidak muncul atau jumlahnya kurang, tekan tombol di bawah.
-</p>
+    <p style="font-size: 0.85rem; color: #555; margin: 0.5rem 0; text-align: center; max-width: min(90vw, 300px);">
+      Jika sampah tidak muncul atau jumlahnya kurang, tekan tombol di bawah.
+    </p>
 
-<button id="restart-btn" class="btn" aria-label="Muat ulang permainan">
-  <i class="fas fa-sync-alt"></i> Muat Ulang Sampah
-</button>
+    <button id="restart-btn" class="btn" aria-label="Muat ulang permainan">
+      <i class="fas fa-sync-alt"></i> Muat Ulang Sampah
+    </button>
 
     <div id="complete-container">
       <div><i class="fas fa-check-circle"></i> Hutan Sekolah Bersih! <i class="fas fa-tree"></i></div>
@@ -304,318 +307,329 @@
   <div id="error-message" class="error-message"></div>
 
   <script>
-    // === Penanganan Error ===
+    // ===== MODULE PATTERN =====
+    const ForestCleanupGame = (function() {
+      // ===== PRIVATE VARIABLES =====
+      const gameState = {
+        itemsLeft: 0,
+        isRedirecting: false,
+        redirectTimer: null,
+        draggedItem: null,
+        isDragging: false
+      };
+
+      const elements = {
+        gameArea: null,
+        statusText: null,
+        completeContainer: null,
+        countdownEl: null,
+        cancelBtn: null,
+        trashBin: null,
+        loadingOverlay: null,
+        quote: null,
+        restartBtn: null
+      };
+
+      const config = {
+        icons: [
+          "<i class='fas fa-bottle-water' aria-label='Botol plastik (Bank Sampah)'></i>",
+          "<i class='fas fa-can' aria-label='Kaleng minuman (Daur Ulang)'></i>",
+          "<i class='fas fa-soap' aria-label='Sabun dari minyak jelantah (Daur Ulang)'></i>",
+          "<i class='fas fa-leaf' aria-label='Sampah organik (Kompos)'></i>",
+          "<i class='fas fa-box-open' aria-label='Kardus bekas (Bank Sampah)'></i>"
+        ],
+        initialItemCount: 3,
+        redirectCountdown: 4,
+        safeZoneTop: 8,
+        safeZoneBottom: 55,
+        safeZoneLeft: 10,
+        safeZoneRight: 90
+      };
+
+      // ===== INITIALIZATION =====
+      function init() {
+        try {
+          if (!initElements()) return;
+          setTimeOfDayClass();
+          resetGameState();
+          spawnItems();
+          setupEventListeners();
+        } catch (err) {
+          console.error("Gagal memulai game:", err);
+          showError("Terjadi kesalahan. Silakan muat ulang atau tekan 'Mulai Ulang'.");
+          elements.restartBtn.style.display = 'block';
+        }
+      }
+
+      function initElements() {
+        elements.gameArea = document.getElementById("game-area");
+        elements.statusText = document.getElementById("status");
+        elements.completeContainer = document.getElementById("complete-container");
+        elements.countdownEl = document.getElementById("countdown");
+        elements.cancelBtn = document.getElementById("cancel-redirect");
+        elements.trashBin = document.getElementById("trash-bin");
+        elements.loadingOverlay = document.getElementById("loading-overlay");
+        elements.quote = document.querySelector('.environment-quote');
+        elements.restartBtn = document.getElementById("restart-btn");
+
+        if (!elements.gameArea || !elements.trashBin) {
+          showError("Struktur permainan tidak lengkap. Muat ulang halaman.");
+          return false;
+        }
+        return true;
+      }
+
+      // ===== GAME STATE MANAGEMENT =====
+      function resetGameState() {
+        gameState.itemsLeft = config.initialItemCount;
+        gameState.isRedirecting = false;
+        gameState.draggedItem = null;
+        gameState.isDragging = false;
+      }
+
+      function updateStatus() {
+        if (elements.statusText) {
+          elements.statusText.textContent = `Sisa sampah: ${gameState.itemsLeft}`;
+        }
+      }
+
+      // ===== TIME-BASED FUNCTIONALITY =====
+      function setTimeOfDayClass() {
+        const hour = new Date().getHours();
+        let cls = 'afternoon';
+        if (hour >= 5 && hour < 10) cls = 'morning';
+        else if (hour >= 10 && hour < 16) cls = 'afternoon';
+        else if (hour >= 16 && hour < 18.5) cls = 'evening';
+        else cls = 'night';
+
+        document.body.className = document.body.className
+          .replace(/\b(morning|afternoon|evening|night)\b/g, '')
+          .trim();
+        document.body.classList.add(cls);
+      }
+
+      // ===== ITEM MANAGEMENT =====
+      function spawnItems() {
+        document.querySelectorAll('#game-area .item').forEach(el => el.remove());
+        for (let i = 0; i < config.initialItemCount; i++) {
+          const item = createTrashItem();
+          elements.gameArea.insertBefore(item, elements.trashBin);
+        }
+        updateStatus();
+      }
+
+      function createTrashItem() {
+        const item = document.createElement("div");
+        item.className = "item";
+        item.setAttribute("role", "button");
+        item.setAttribute("aria-label", "Sampah yang bisa dibuang");
+        item.innerHTML = config.icons[Math.floor(Math.random() * config.icons.length)];
+
+        const top = Math.random() * (config.safeZoneBottom - config.safeZoneTop) + config.safeZoneTop;
+        const left = Math.random() * (config.safeZoneRight - config.safeZoneLeft) + config.safeZoneLeft;
+
+        item.style.left = `${left}%`;
+        item.style.top = `${top}%`;
+        return item;
+      }
+
+      // ===== DRAG AND DROP FUNCTIONALITY =====
+      function setupEventListeners() {
+        elements.gameArea.addEventListener("mousedown", handleStartDrag);
+        document.addEventListener("mousemove", handleMoveDrag);
+        document.addEventListener("mouseup", handleEndDrag);
+
+        elements.gameArea.addEventListener("touchstart", handleStartDrag, { passive: false });
+        document.addEventListener("touchmove", handleMoveDrag, { passive: false });
+        document.addEventListener("touchend", handleEndDrag);
+
+        if (elements.cancelBtn) elements.cancelBtn.addEventListener("click", cancelRedirect);
+        if (elements.restartBtn) elements.restartBtn.addEventListener("click", restartGame);
+
+        elements.gameArea.addEventListener("touchmove", (e) => {
+          if (gameState.isDragging) e.preventDefault();
+        }, { passive: false });
+      }
+
+      function handleStartDrag(e) {
+        const target = e.target.closest('.item');
+        if (!target) return;
+        e.preventDefault();
+        gameState.draggedItem = target;
+        gameState.isDragging = true;
+        target.classList.add("dragging");
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const rect = target.getBoundingClientRect();
+        gameState.offsetX = clientX - rect.left;
+        gameState.offsetY = clientY - rect.top;
+      }
+
+      function handleMoveDrag(e) {
+        if (!gameState.isDragging || !gameState.draggedItem) return;
+        e.preventDefault();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const area = elements.gameArea.getBoundingClientRect();
+        let x = clientX - area.left - gameState.offsetX;
+        let y = clientY - area.top - gameState.offsetY;
+        x = Math.max(0, Math.min(x, area.width - gameState.draggedItem.offsetWidth));
+        y = Math.max(0, Math.min(y, area.height - gameState.draggedItem.offsetHeight));
+        gameState.draggedItem.style.left = `${x}px`;
+        gameState.draggedItem.style.top = `${y}px`;
+        checkTrashBinProximity(clientX, clientY);
+      }
+
+      function handleEndDrag() {
+        if (!gameState.isDragging || !gameState.draggedItem) return;
+        gameState.isDragging = false;
+        elements.trashBin.classList.remove("highlight");
+        const item = gameState.draggedItem;
+        item.classList.remove("dragging");
+        if (isItemInTrashBin(item)) {
+          collectItem(item);
+        }
+        gameState.draggedItem = null;
+      }
+
+      function checkTrashBinProximity(x, y) {
+        const bin = elements.trashBin.getBoundingClientRect();
+        const near = x > bin.left - 30 && x < bin.right + 30 &&
+                     y > bin.top - 30 && y < bin.bottom + 30;
+        elements.trashBin.classList.toggle("highlight", near);
+      }
+
+      function isItemInTrashBin(item) {
+        const iRect = item.getBoundingClientRect();
+        const bRect = elements.trashBin.getBoundingClientRect();
+        const cx = iRect.left + iRect.width / 2;
+        const cy = iRect.top + iRect.height / 2;
+        return cx >= bRect.left && cx <= bRect.right &&
+               cy >= bRect.top && cy <= bRect.bottom;
+      }
+
+      // ===== ITEM COLLECTION =====
+      function collectItem(item) {
+        createParticleEffect(item);
+        item.remove();
+        gameState.itemsLeft--;
+        updateStatus();
+        if (gameState.itemsLeft === 0) completeGame();
+      }
+
+      function createParticleEffect(item) {
+        const iRect = item.getBoundingClientRect();
+        const gRect = elements.gameArea.getBoundingClientRect();
+        for (let i = 0; i < 6; i++) {
+          const p = document.createElement("div");
+          p.innerHTML = "<i class='fas fa-star' style='color:#4CAF50' aria-hidden='true'></i>";
+          p.style.cssText = `
+            position: absolute;
+            left: ${iRect.left - gRect.left + iRect.width / 2}px;
+            top: ${iRect.top - gRect.top + iRect.height / 2}px;
+            pointer-events: none;
+            opacity: 0;
+            z-index: 100;
+            font-size: 16px;
+            transition: transform 0.7s, opacity 0.7s;
+          `;
+          p.setAttribute("aria-hidden", "true");
+          elements.gameArea.appendChild(p);
+          setTimeout(() => {
+            const angle = (i / 6) * Math.PI * 2;
+            const d = 30 + Math.random() * 20;
+            p.style.transform = `translate(${Math.cos(angle) * d}px, ${Math.sin(angle) * d - 40}px) scale(0.8)`;
+            p.style.opacity = "1";
+          }, 10);
+          setTimeout(() => p.remove(), 700);
+        }
+      }
+
+      // ===== GAME COMPLETION =====
+      function completeGame() {
+        document.body.classList.add("cleaned");
+        if (elements.completeContainer) elements.completeContainer.style.display = "flex";
+        if (elements.quote) {
+          elements.quote.textContent = '"Terima kasih! Kamu telah berkontribusi untuk lingkungan sekolah yang sehat dan hijau."';
+        }
+        startRedirect();
+      }
+
+      // ===== REDIRECTION =====
+      function startRedirect() {
+        let sec = config.redirectCountdown;
+        if (elements.countdownEl) elements.countdownEl.textContent = sec;
+        gameState.redirectTimer = setInterval(() => {
+          sec--;
+          if (elements.countdownEl) elements.countdownEl.textContent = sec;
+          if (sec <= 0) {
+            clearInterval(gameState.redirectTimer);
+            redirectToGreen();
+          }
+        }, 1000);
+      }
+
+      function redirectToGreen() {
+        if (gameState.isRedirecting) return;
+        gameState.isRedirecting = true;
+        if (elements.loadingOverlay) elements.loadingOverlay.style.display = "flex";
+        setTimeout(() => {
+          window.location.href = "https://green.wasmer.app/";
+        }, 1200);
+      }
+
+      function cancelRedirect() {
+        if (gameState.redirectTimer) clearInterval(gameState.redirectTimer);
+        if (elements.completeContainer) elements.completeContainer.style.display = "none";
+        resetGameState();
+        document.body.classList.remove("cleaned");
+        if (elements.quote) {
+          elements.quote.textContent = '"Menjadi pelopor pelestarian lingkungan di sekolah — Green Generation SMKN 4 Banjarmasin"';
+        }
+        setTimeout(spawnItems, 300);
+      }
+
+      // ===== RESTART FUNCTIONALITY =====
+      function restartGame() {
+        if (gameState.redirectTimer) clearInterval(gameState.redirectTimer);
+        if (elements.completeContainer) elements.completeContainer.style.display = "none";
+        document.body.classList.remove("cleaned");
+
+        resetGameState();
+        spawnItems();
+
+        // Hide restart button after use
+        if (elements.restartBtn) elements.restartBtn.style.display = 'none';
+      }
+
+      // ===== ERROR HANDLING =====
+      function showError(message) {
+        const el = document.getElementById('error-message');
+        if (el) {
+          el.textContent = message;
+          el.style.display = 'block';
+          setTimeout(() => el.style.display = 'none', 5000);
+        }
+        // Show restart button when error occurs
+        if (elements.restartBtn) elements.restartBtn.style.display = 'block';
+      }
+
+      // ===== PUBLIC API =====
+      return {
+        init,
+        restartGame
+      };
+    })();
+
+    // ===== ERROR EVENT LISTENER =====
     window.addEventListener('error', (e) => {
       if (e.target.tagName === 'LINK') {
-        showError("Gagal memuat sumber daya eksternal. Tampilan mungkin tidak sempurna.");
+        ForestCleanupGame.showError("Gagal memuat sumber daya eksternal. Tampilan mungkin tidak sempurna.");
       }
     }, true);
 
-    function showError(message) {
-      const el = document.getElementById('error-message');
-      if (el) {
-        el.textContent = message;
-        el.style.display = 'block';
-        setTimeout(() => el.style.display = 'none', 5000);
-      }
-      // Tampilkan tombol restart saat error
-      document.getElementById('restart-btn').style.display = 'block';
-    }
-
-    // === Latar Belakang Berdasarkan Waktu ===
-    function setTimeOfDayClass() {
-      const hour = new Date().getHours();
-      let cls = 'afternoon';
-      if (hour >= 5 && hour < 10) cls = 'morning';
-      else if (hour >= 10 && hour < 16) cls = 'afternoon';
-      else if (hour >= 16 && hour < 18.5) cls = 'evening';
-      else cls = 'night';
-
-      document.body.className = document.body.className
-        .replace(/\b(morning|afternoon|evening|night)\b/g, '')
-        .trim();
-      document.body.classList.add(cls);
-    }
-
-    // === State & Elemen ===
-    const gameState = {
-      itemsLeft: 0,
-      isRedirecting: false,
-      redirectTimer: null,
-      draggedItem: null,
-      isDragging: false
-    };
-
-    const elements = {
-      gameArea: null,
-      statusText: null,
-      completeContainer: null,
-      countdownEl: null,
-      cancelBtn: null,
-      trashBin: null,
-      loadingOverlay: null,
-      quote: null,
-      restartBtn: null // ✅ Tambahkan
-    };
-
-    const config = {
-      icons: [
-        "<i class='fas fa-bottle-water' aria-label='Botol plastik (Bank Sampah)'></i>",
-        "<i class='fas fa-can' aria-label='Kaleng minuman (Daur Ulang)'></i>",
-        "<i class='fas fa-soap' aria-label='Sabun dari minyak jelantah (Daur Ulang)'></i>",
-        "<i class='fas fa-leaf' aria-label='Sampah organik (Kompos)'></i>",
-        "<i class='fas fa-box-open' aria-label='Kardus bekas (Bank Sampah)'></i>"
-      ],
-      initialItemCount: 3,
-      redirectCountdown: 4,
-      safeZoneTop: 8,
-      safeZoneBottom: 55,
-      safeZoneLeft: 10,
-      safeZoneRight: 90
-    };
-
-    // === Inisialisasi Elemen DOM ===
-    function initElements() {
-      elements.gameArea = document.getElementById("game-area");
-      elements.statusText = document.getElementById("status");
-      elements.completeContainer = document.getElementById("complete-container");
-      elements.countdownEl = document.getElementById("countdown");
-      elements.cancelBtn = document.getElementById("cancel-redirect");
-      elements.trashBin = document.getElementById("trash-bin");
-      elements.loadingOverlay = document.getElementById("loading-overlay");
-      elements.quote = document.querySelector('.environment-quote');
-      elements.restartBtn = document.getElementById("restart-btn"); // ✅
-
-      if (!elements.gameArea || !elements.trashBin) {
-        showError("Struktur permainan tidak lengkap. Muat ulang halaman.");
-        return false;
-      }
-      return true;
-    }
-
-    // === Restart Game ===
-    function restartGame() {
-      if (gameState.redirectTimer) clearInterval(gameState.redirectTimer);
-      if (elements.completeContainer) elements.completeContainer.style.display = "none";
-      document.body.classList.remove("cleaned");
-
-      resetGameState();
-      spawnItems();
-
-      // Sembunyikan tombol restart setelah restart (opsional)
-      if (elements.restartBtn) elements.restartBtn.style.display = 'none';
-    }
-
-    function resetGameState() {
-      gameState.itemsLeft = config.initialItemCount;
-      gameState.isRedirecting = false;
-      gameState.draggedItem = null;
-      gameState.isDragging = false;
-    }
-
-    function spawnItems() {
-      document.querySelectorAll('#game-area .item').forEach(el => el.remove());
-      for (let i = 0; i < config.initialItemCount; i++) {
-        const item = createTrashItem();
-        elements.gameArea.insertBefore(item, elements.trashBin);
-      }
-      updateStatus();
-    }
-
-    function updateStatus() {
-      if (elements.statusText) {
-        elements.statusText.textContent = `Sisa sampah: ${gameState.itemsLeft}`;
-      }
-    }
-
-    function createTrashItem() {
-      const item = document.createElement("div");
-      item.className = "item";
-      item.setAttribute("role", "button");
-      item.setAttribute("aria-label", "Sampah yang bisa dibuang");
-      item.innerHTML = config.icons[Math.floor(Math.random() * config.icons.length)];
-
-      const top = Math.random() * (config.safeZoneBottom - config.safeZoneTop) + config.safeZoneTop;
-      const left = Math.random() * (config.safeZoneRight - config.safeZoneLeft) + config.safeZoneLeft;
-
-      item.style.left = `${left}%`;
-      item.style.top = `${top}%`;
-      return item;
-    }
-
-    function setupEventListeners() {
-      elements.gameArea.addEventListener("mousedown", handleStartDrag);
-      document.addEventListener("mousemove", handleMoveDrag);
-      document.addEventListener("mouseup", handleEndDrag);
-
-      elements.gameArea.addEventListener("touchstart", handleStartDrag, { passive: false });
-      document.addEventListener("touchmove", handleMoveDrag, { passive: false });
-      document.addEventListener("touchend", handleEndDrag);
-
-      if (elements.cancelBtn) elements.cancelBtn.addEventListener("click", cancelRedirect);
-      if (elements.restartBtn) elements.restartBtn.addEventListener("click", restartGame); // ✅
-
-      elements.gameArea.addEventListener("touchmove", (e) => {
-        if (gameState.isDragging) e.preventDefault();
-      }, { passive: false });
-    }
-
-    // ... (fungsi handleStartDrag, handleMoveDrag, handleEndDrag, dll — tetap sama) ...
-
-    function handleStartDrag(e) {
-      const target = e.target.closest('.item');
-      if (!target) return;
-      e.preventDefault();
-      gameState.draggedItem = target;
-      gameState.isDragging = true;
-      target.classList.add("dragging");
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const rect = target.getBoundingClientRect();
-      gameState.offsetX = clientX - rect.left;
-      gameState.offsetY = clientY - rect.top;
-    }
-
-    function handleMoveDrag(e) {
-      if (!gameState.isDragging || !gameState.draggedItem) return;
-      e.preventDefault();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-      const area = elements.gameArea.getBoundingClientRect();
-      let x = clientX - area.left - gameState.offsetX;
-      let y = clientY - area.top - gameState.offsetY;
-      x = Math.max(0, Math.min(x, area.width - gameState.draggedItem.offsetWidth));
-      y = Math.max(0, Math.min(y, area.height - gameState.draggedItem.offsetHeight));
-      gameState.draggedItem.style.left = `${x}px`;
-      gameState.draggedItem.style.top = `${y}px`;
-      checkTrashBinProximity(clientX, clientY);
-    }
-
-    function checkTrashBinProximity(x, y) {
-      const bin = elements.trashBin.getBoundingClientRect();
-      const near = x > bin.left - 30 && x < bin.right + 30 &&
-                   y > bin.top - 30 && y < bin.bottom + 30;
-      elements.trashBin.classList.toggle("highlight", near);
-    }
-
-    function handleEndDrag() {
-      if (!gameState.isDragging || !gameState.draggedItem) return;
-      gameState.isDragging = false;
-      elements.trashBin.classList.remove("highlight");
-      const item = gameState.draggedItem;
-      item.classList.remove("dragging");
-      if (isItemInTrashBin(item)) {
-        collectItem(item);
-      }
-      gameState.draggedItem = null;
-    }
-
-    function isItemInTrashBin(item) {
-      const iRect = item.getBoundingClientRect();
-      const bRect = elements.trashBin.getBoundingClientRect();
-      const cx = iRect.left + iRect.width / 2;
-      const cy = iRect.top + iRect.height / 2;
-      return cx >= bRect.left && cx <= bRect.right &&
-             cy >= bRect.top && cy <= bRect.bottom;
-    }
-
-    function collectItem(item) {
-      createParticleEffect(item);
-      item.remove();
-      gameState.itemsLeft--;
-      updateStatus();
-      if (gameState.itemsLeft === 0) completeGame();
-    }
-
-    function createParticleEffect(item) {
-      const iRect = item.getBoundingClientRect();
-      const gRect = elements.gameArea.getBoundingClientRect();
-      for (let i = 0; i < 6; i++) {
-        const p = document.createElement("div");
-        p.innerHTML = "<i class='fas fa-star' style='color:#4CAF50' aria-hidden='true'></i>";
-        p.style.cssText = `
-          position: absolute;
-          left: ${iRect.left - gRect.left + iRect.width / 2}px;
-          top: ${iRect.top - gRect.top + iRect.height / 2}px;
-          pointer-events: none;
-          opacity: 0;
-          z-index: 100;
-          font-size: 16px;
-          transition: transform 0.7s, opacity 0.7s;
-        `;
-        p.setAttribute("aria-hidden", "true");
-        elements.gameArea.appendChild(p);
-        setTimeout(() => {
-          const angle = (i / 6) * Math.PI * 2;
-          const d = 30 + Math.random() * 20;
-          p.style.transform = `translate(${Math.cos(angle) * d}px, ${Math.sin(angle) * d - 40}px) scale(0.8)`;
-          p.style.opacity = "1";
-        }, 10);
-        setTimeout(() => p.remove(), 700);
-      }
-    }
-
-    function completeGame() {
-      document.body.classList.add("cleaned");
-      if (elements.completeContainer) elements.completeContainer.style.display = "flex";
-      if (elements.quote) {
-        elements.quote.textContent = '"Terima kasih! Kamu telah berkontribusi untuk lingkungan sekolah yang sehat dan hijau."';
-      }
-      startRedirect();
-    }
-
-    function startRedirect() {
-      let sec = config.redirectCountdown;
-      if (elements.countdownEl) elements.countdownEl.textContent = sec;
-      gameState.redirectTimer = setInterval(() => {
-        sec--;
-        if (elements.countdownEl) elements.countdownEl.textContent = sec;
-        if (sec <= 0) {
-          clearInterval(gameState.redirectTimer);
-          redirectToGreen();
-        }
-      }, 1000);
-    }
-
-    function redirectToGreen() {
-      if (gameState.isRedirecting) return;
-      gameState.isRedirecting = true;
-      if (elements.loadingOverlay) elements.loadingOverlay.style.display = "flex";
-      setTimeout(() => {
-        window.location.href = "https://green.wasmer.app/"; // ✅ Spasi dihapus
-      }, 1200);
-    }
-
-    function cancelRedirect() {
-      if (gameState.redirectTimer) clearInterval(gameState.redirectTimer);
-      if (elements.completeContainer) elements.completeContainer.style.display = "none";
-      resetGameState();
-      document.body.classList.remove("cleaned");
-      if (elements.quote) {
-        elements.quote.textContent = '"Menjadi pelopor pelestarian lingkungan di sekolah — Green Generation SMKN 4 Banjarmasin"';
-      }
-      setTimeout(spawnItems, 300);
-    }
-
-    // Jalankan saat DOM siap
-    document.addEventListener("DOMContentLoaded", initGame);
-
-    // === Inisialisasi Game ===
-    function initGame() {
-      try {
-        if (!initElements()) return;
-        setTimeOfDayClass();
-        resetGameState();
-        spawnItems();
-        setupEventListeners();
-      } catch (err) {
-        console.error("Gagal memulai game:", err);
-        showError("Terjadi kesalahan. Silakan muat ulang atau tekan 'Mulai Ulang'.");
-        document.getElementById('restart-btn').style.display = 'block'; // Tampilkan tombol
-      }
-    }
+    // ===== INITIALIZATION =====
+    document.addEventListener("DOMContentLoaded", ForestCleanupGame.init);
   </script>
 </body>
 </html>
-
-
