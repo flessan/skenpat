@@ -2,634 +2,280 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bersihkan Hutan Sekolah – Green Generation</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Green Generation – Loading ke halaman utama aplikasi lingkungan SMKN 4 Banjarmasin" />
+  <title>Green Generation – Loading...</title>
+  <link rel="preconnect" href="https://green.wasmer.app">
   <style>
-    /* ===== BASE STYLES ===== */
-    * {
+    :root {
+      --gg-green-900: #1b5e20;
+      --gg-green-800: #2e7d32;
+      --gg-green-700: #388e3c;
+      --gg-green-500: #4caf50;
+      --gg-green-400: #81c784;
+      --gg-blue-100: #b3e5fc;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     body {
-      font-family: 'Quicksand', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin: 0;
+      padding: 0;
       min-height: 100vh;
-      color: #2d3436;
-      padding: 1rem;
-      transition: background 1s ease;
-      overflow-x: hidden;
-    }
-
-    /* ===== TIME-BASED BACKGROUNDS ===== */
-    body.morning {
-      background: linear-gradient(to bottom, #a2d9ff 0%, #a2d9ff 40%, #b8e6a3 40%, #98d98e 100%);
-    }
-    body.afternoon {
-      background: linear-gradient(to bottom, #87CEEB 0%, #87CEEB 40%, #98D98E 40%, #8bc34a 100%);
-    }
-    body.evening {
-      background: linear-gradient(to bottom, #ffcc80 0%, #ffcc80 40%, #a5d6a7 40%, #689f38 100%);
-    }
-    body.night {
-      background: linear-gradient(to bottom, #1a237e 0%, #1a237e 40%, #2e7d32 40%, #1b5e20 100%);
-      color: #e0f7fa;
-    }
-
-    body.cleaned.morning,
-    body.cleaned.afternoon,
-    body.cleaned.evening {
-      background: linear-gradient(to bottom, #a2d9ff 0%, #a2d9ff 40%, #4CAF50 40%, #2e7d32 100%);
-    }
-    body.cleaned.night {
-      background: linear-gradient(to bottom, #1a237e 0%, #1a237e 40%, #388e3c 40%, #1b5e20 100%);
-    }
-
-    /* ===== HEADER STYLES ===== */
-    header {
-      width: 100%;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: clamp(1.4rem, 5vw, 2rem);
-      margin: 1rem 0;
-      color: #1e5631;
-      background: rgba(255, 255, 255, 0.85);
-      padding: 0.6rem 1rem;
-      border-radius: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      display: inline-block;
-    }
-
-    body.night h1 {
-      background: rgba(30, 30, 40, 0.85);
-      color: #bbdefb;
-    }
-
-    /* ===== MAIN CONTENT STYLES ===== */
-    main {
-      width: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      flex-grow: 1;
-    }
-
-    /* ===== GAME AREA STYLES ===== */
-    #game-area {
-      position: relative;
-      width: min(95vw, 400px);
-      height: clamp(280px, 55vh, 400px);
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 16px;
-      margin: 1rem 0;
-      overflow: hidden;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-    }
-
-    body.night #game-area {
-      background: rgba(20, 25, 40, 0.7);
-    }
-
-    #trash-bin {
-      position: absolute;
-      bottom: 15px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: clamp(40px, 7vw, 62px);
-      color: #555;
-      transition: transform 0.2s, color 0.2s;
-      z-index: 5;
-    }
-
-    body.night #trash-bin {
-      color: #e0f7fa;
-    }
-
-    #trash-bin.highlight {
-      transform: translateX(-50%) scale(1.1);
-      color: #2c7a0b;
-    }
-
-    /* ===== ITEM STYLES ===== */
-    .item {
-      position: absolute;
-      font-size: clamp(36px, 6vw, 36px);
-      cursor: grab;
-      user-select: none;
-      z-index: 2;
-      transition: transform 0.2s;
-      animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .item.dragging {
-      cursor: grabbing;
-      transform: scale(1.15);
-      z-index: 10;
-    }
-
-    /* ===== STATUS & UI STYLES ===== */
-    .status-container {
-      margin: 0.8rem 0;
-      font-weight: 600;
-      background: rgba(255,255,255,0.85);
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      text-align: center;
-      width: min(80vw, 300px);
-    }
-
-    body.night .status-container {
-      background: rgba(30, 35, 50, 0.85);
-      color: #bbdefb;
-    }
-
-    #complete-container {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 1rem;
-      padding: 1rem;
-      background: rgba(255,255,255,0.9);
-      border-radius: 12px;
-      max-width: min(90vw, 350px);
-      animation: fadeIn 0.5s ease;
-    }
-
-    body.night #complete-container {
-      background: rgba(30, 35, 50, 0.9);
-      color: #e0f7fa;
-    }
-
-    .btn {
-      padding: 0.5rem 1rem;
-      background: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 20px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: clamp(0.9rem, 3vw, 1rem);
-      transition: background 0.2s;
-    }
-
-    .btn:hover {
-      background: #388E3C;
-    }
-
-    #restart-btn {
-      margin-top: 0.8rem;
-    }
-
-    #countdown {
-      font-size: clamp(1.2rem, 4vw, 1.4rem);
-      margin: 0.5rem 0;
-      font-weight: bold;
-    }
-
-    /* ===== FOOTER STYLES ===== */
-    footer {
-      margin-top: auto;
-      padding: 0.5rem;
-      text-align: center;
-      font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-      font-style: italic;
-      color: #1e5631;
-      opacity: 0.85;
-      width: 100%;
-    }
-
-    body.night footer {
-      color: #bbdefb;
-      opacity: 0.9;
-    }
-
-    /* ===== OVERLAY & LOADING STYLES ===== */
-    #loading-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.95);
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      z-index: 1000;
+      background: linear-gradient(to bottom, var(--gg-blue-100), var(--gg-green-400));
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
+      position: relative;
+      color: var(--gg-green-900);
     }
 
-    body.night #loading-overlay {
-      background: rgba(15, 20, 35, 0.95);
-      color: #e0f7fa;
+    /* ===== Eco Particles ===== */
+    .eco-particle {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 2;
     }
 
-    .spinner {
-      width: 40px; height: 40px;
-      border: 4px solid #e0e0e0;
-      border-top: 4px solid #4CAF50;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 1rem;
+    /* ===== Decorative Elements ===== */
+    .bg-decor {
+      position: absolute;
+      opacity: 0.8;
+      pointer-events: none;
+      z-index: 1;
     }
 
-    body.night .spinner {
-      border-color: #4a4a6a;
-      border-top-color: #66bb6a;
+    /* ===== Main Content ===== */
+    main {
+      text-align: center;
+      z-index: 10;
+      padding: 0 1.5rem;
+      max-width: 500px;
+      width: 100%;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--gg-green-900);
+      margin: 0.5rem 0;
+      text-shadow: 1px 1px 3px rgba(255,255,255,0.9);
+      letter-spacing: -0.5px;
     }
 
-    /* ===== ERROR MESSAGE STYLES ===== */
-    .error-message {
-      display: none;
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #f44336;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      z-index: 1001;
+    header p {
+      font-size: 1.15rem;
+      color: var(--gg-green-800);
+      margin-bottom: 1.8rem;
+      font-weight: 500;
+    }
+
+    /* ===== Progress as Growing Sapling ===== */
+    .progress-container {
+      width: 80%;
+      max-width: 320px;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 12px;
+      margin: 0 auto 2rem;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: var(--gg-green-500);
+      border-radius: 12px;
+      transition: width 0.2s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: "🌱";
+      position: absolute;
+      right: -900p
+      top: -4px;
+      font-size: 0.6rem;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .progress-fill.grow::after {
+      opacity: 1;
+    }
+
+    /* ===== Animated Student on Bike ===== */
+    .student-bike {
+      position: absolute;
+      bottom: 44.5%;
+      left: -120px;
+      z-index: 6;
+      animation: ride 4s linear forwards;
+      font-size: 1.7rem;
+      transform: scaleX(-1);
+    }
+
+    /* ===== Skip Button ===== */
+    .skip-btn {
+      position: absolute;
+      bottom: 1.25rem;
+      right: 1.25rem;
+      background: rgba(255, 255, 255, 0.5);
+      color: var(--gg-green-900);
+      border: 1px solid var(--gg-green-800);
+      border-radius: 20px;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 20;
+      backdrop-filter: blur(4px);
+    }
+
+    .skip-btn:hover,
+    .skip-btn:focus {
+      background: rgba(255, 255, 255, 0.8);
+      transform: translateY(-2px) scale(1.05);
+      outline: 2px solid var(--gg-green-700);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* ===== Animations ===== */
+    @keyframes ride {
+      from { transform: translateX(-150px) scaleX(-1); }
+      to { transform: translateX(calc(100vw + 150px)) scaleX(-1); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-10px) translateX(8px); }
+    }
+
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ===== Reduced Motion ===== */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+      .student-bike, .eco-particle { display: none; }
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.7rem; }
+      header p { font-size: 1rem; }
+      .skip-btn {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.45rem 0.9rem;
+        font-size: 0.85rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1><i class="fas fa-seedling"></i> Bersihkan Hutan Sekolah! <i class="fas fa-leaf"></i></h1>
-  </header>
+  <!-- Decorative Background -->
+  <div class="bg-decor" style="top: 18%; left: 12%; font-size: 2.2rem; animation: float 20s infinite ease-in-out;">☁️</div>
+  <div class="bg-decor" style="top: 25%; right: 15%; font-size: 1.8rem; animation: float 22s infinite ease-in-out 1s;">☁️</div>
+  <div class="bg-decor" style="bottom: 0; left: 8%; font-size: 3.2rem;">🌳</div>
+  <div class="bg-decor" style="bottom: 0; right: 10%; font-size: 3.6rem;">🌲</div>
 
-  <main>
-    <div id="game-area" role="application" aria-label="Area permainan bersih-bersih hutan">
-      <div id="trash-bin" role="button" aria-label="Tempat sampah"><i class="fas fa-trash-alt"></i></div>
-    </div>
+  <!-- Eco Particles (Leaves & Drops) -->
+  <div class="eco-particle" style="left: 10%; animation: fall 8s linear forwards;">🍃</div>
+  <div class="eco-particle" style="left: 30%; animation: fall 9s linear forwards 0.5s;">💧</div>
+  <div class="eco-particle" style="left: 60%; animation: fall 7s linear forwards 1s;">🍂</div>
+  <div class="eco-particle" style="left: 80%; animation: fall 8.5s linear forwards 0.2s;">💧</div>
 
-    <div class="status-container">
-      <div id="status" aria-live="polite">Sisa sampah: 3</div>
-    </div>
+  <!-- Main Content -->
+  <main role="main">
+    <header>
+      <h1>🌱 Green Generation</h1>
+      <p id="loadingMessage">Menanam harapan, memetik keberlanjutan...</p>
+    </header>
 
-    <p style="font-size: 0.85rem; color: #555; margin: 0.5rem 0; text-align: center; max-width: min(90vw, 300px);">
-      Jika sampah tidak muncul atau jumlahnya kurang, tekan tombol di bawah.
-    </p>
-
-    <button id="restart-btn" class="btn" aria-label="Muat ulang permainan">
-      <i class="fas fa-sync-alt"></i> Muat Ulang Sampah
-    </button>
-
-    <div id="complete-container">
-      <div><i class="fas fa-check-circle"></i> Hutan Sekolah Bersih! <i class="fas fa-tree"></i></div>
-      <div id="countdown" aria-live="polite">4</div>
-      <button id="cancel-redirect" class="btn">Ulangi Aksi!</button>
+    <div class="progress-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Memuat halaman utama">
+      <div class="progress-fill" id="progressFill"></div>
     </div>
   </main>
 
-  <footer class="environment-quote">
-    "Menjadi pelopor pelestarian lingkungan di sekolah — Green Generation SMKN 4 Banjarmasin"
-  </footer>
+  <!-- Student on Recycled Bike -->
+  <div class="student-bike" aria-hidden="true">🚴‍♀️</div>
 
-  <div id="loading-overlay">
-    <div class="spinner"></div>
-    <div>Mengarahkan ke green.wasmer.app...</div>
-  </div>
-
-  <div id="error-message" class="error-message"></div>
+  <!-- Skip Button -->
+  <button class="skip-btn" id="skipBtn" aria-label="Lewati halaman loading">Lewati</button>
 
   <script>
-    // ===== MODULE PATTERN =====
-    const ForestCleanupGame = (function() {
-      // ===== PRIVATE VARIABLES =====
-      const gameState = {
-        itemsLeft: 0,
-        isRedirecting: false,
-        redirectTimer: null,
-        draggedItem: null,
-        isDragging: false
-      };
+    const TARGET_URL = 'https://green.wasmer.app/main/';
+    const messages = [
+      "Mengurangi sampah plastik...",
+      "Menanam pohon hari ini...",
+      "Mendaur ulang...",
+      "Menghemat air & energi...",
+      "Membangun sekolah hijau..."
+    ];
 
-      const elements = {
-        gameArea: null,
-        statusText: null,
-        completeContainer: null,
-        countdownEl: null,
-        cancelBtn: null,
-        trashBin: null,
-        loadingOverlay: null,
-        quote: null,
-        restartBtn: null
-      };
+    // Preload
+    const preload = document.createElement('link');
+    preload.rel = 'prefetch';
+    preload.href = TARGET_URL;
+    document.head.appendChild(preload);
 
-      const config = {
-        icons: [
-          "<i class='fas fa-bottle-water' aria-label='Botol plastik (Bank Sampah)'></i>",
-          "<i class='fas fa-can' aria-label='Kaleng minuman (Daur Ulang)'></i>",
-          "<i class='fas fa-soap' aria-label='Sabun dari minyak jelantah (Daur Ulang)'></i>",
-          "<i class='fas fa-leaf' aria-label='Sampah organik (Kompos)'></i>",
-          "<i class='fas fa-box-open' aria-label='Kardus bekas (Bank Sampah)'></i>"
-        ],
-        initialItemCount: 3,
-        redirectCountdown: 4,
-        safeZoneTop: 8,
-        safeZoneBottom: 55,
-        safeZoneLeft: 10,
-        safeZoneRight: 90
-      };
+    const skipBtn = document.getElementById('skipBtn');
+    const progressFill = document.getElementById('progressFill');
+    const messageEl = document.getElementById('loadingMessage');
 
-      // ===== INITIALIZATION =====
-      function init() {
-        try {
-          if (!initElements()) return;
-          setTimeOfDayClass();
-          resetGameState();
-          spawnItems();
-          setupEventListeners();
-        } catch (err) {
-          console.error("Gagal memulai game:", err);
-          showError("Terjadi kesalahan. Silakan muat ulang atau tekan 'Mulai Ulang'.");
-          elements.restartBtn.style.display = 'block';
-        }
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 3 + 1;
+      if (progress > 100) progress = 100;
+
+      progressFill.style.width = `${progress}%`;
+      progressFill.classList.toggle('grow', progress > 10);
+
+      // Rotate messages
+      if (progress % 20 < 2 && progress > 5) {
+        const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+        messageEl.textContent = randomMsg;
       }
 
-      function initElements() {
-        elements.gameArea = document.getElementById("game-area");
-        elements.statusText = document.getElementById("status");
-        elements.completeContainer = document.getElementById("complete-container");
-        elements.countdownEl = document.getElementById("countdown");
-        elements.cancelBtn = document.getElementById("cancel-redirect");
-        elements.trashBin = document.getElementById("trash-bin");
-        elements.loadingOverlay = document.getElementById("loading-overlay");
-        elements.quote = document.querySelector('.environment-quote');
-        elements.restartBtn = document.getElementById("restart-btn");
-
-        if (!elements.gameArea || !elements.trashBin) {
-          showError("Struktur permainan tidak lengkap. Muat ulang halaman.");
-          return false;
-        }
-        return true;
+      if (progress >= 100) {
+        clearInterval(interval);
+        setTimeout(redirectWithFade, 300);
       }
+    }, 100);
 
-      // ===== GAME STATE MANAGEMENT =====
-      function resetGameState() {
-        gameState.itemsLeft = config.initialItemCount;
-        gameState.isRedirecting = false;
-        gameState.draggedItem = null;
-        gameState.isDragging = false;
+    function redirectWithFade() {
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.4s ease';
+      setTimeout(() => {
+        window.location.href = TARGET_URL;
+      }, 400);
+    }
+
+    skipBtn.addEventListener('click', () => {
+      clearInterval(interval);
+      redirectWithFade();
+    });
+
+    // Auto-redirect fallback
+    setTimeout(() => {
+      if (progress < 100) {
+        clearInterval(interval);
+        redirectWithFade();
       }
-
-      function updateStatus() {
-        if (elements.statusText) {
-          elements.statusText.textContent = `Sisa sampah: ${gameState.itemsLeft}`;
-        }
-      }
-
-      // ===== TIME-BASED FUNCTIONALITY =====
-      function setTimeOfDayClass() {
-        const hour = new Date().getHours();
-        let cls = 'afternoon';
-        if (hour >= 5 && hour < 10) cls = 'morning';
-        else if (hour >= 10 && hour < 16) cls = 'afternoon';
-        else if (hour >= 16 && hour < 18.5) cls = 'evening';
-        else cls = 'night';
-
-        document.body.className = document.body.className
-          .replace(/\b(morning|afternoon|evening|night)\b/g, '')
-          .trim();
-        document.body.classList.add(cls);
-      }
-
-      // ===== ITEM MANAGEMENT =====
-      function spawnItems() {
-        document.querySelectorAll('#game-area .item').forEach(el => el.remove());
-        for (let i = 0; i < config.initialItemCount; i++) {
-          const item = createTrashItem();
-          elements.gameArea.insertBefore(item, elements.trashBin);
-        }
-        updateStatus();
-      }
-
-      function createTrashItem() {
-        const item = document.createElement("div");
-        item.className = "item";
-        item.setAttribute("role", "button");
-        item.setAttribute("aria-label", "Sampah yang bisa dibuang");
-        item.innerHTML = config.icons[Math.floor(Math.random() * config.icons.length)];
-
-        const top = Math.random() * (config.safeZoneBottom - config.safeZoneTop) + config.safeZoneTop;
-        const left = Math.random() * (config.safeZoneRight - config.safeZoneLeft) + config.safeZoneLeft;
-
-        item.style.left = `${left}%`;
-        item.style.top = `${top}%`;
-        return item;
-      }
-
-      // ===== DRAG AND DROP FUNCTIONALITY =====
-      function setupEventListeners() {
-        elements.gameArea.addEventListener("mousedown", handleStartDrag);
-        document.addEventListener("mousemove", handleMoveDrag);
-        document.addEventListener("mouseup", handleEndDrag);
-
-        elements.gameArea.addEventListener("touchstart", handleStartDrag, { passive: false });
-        document.addEventListener("touchmove", handleMoveDrag, { passive: false });
-        document.addEventListener("touchend", handleEndDrag);
-
-        if (elements.cancelBtn) elements.cancelBtn.addEventListener("click", cancelRedirect);
-        if (elements.restartBtn) elements.restartBtn.addEventListener("click", restartGame);
-
-        elements.gameArea.addEventListener("touchmove", (e) => {
-          if (gameState.isDragging) e.preventDefault();
-        }, { passive: false });
-      }
-
-      function handleStartDrag(e) {
-        const target = e.target.closest('.item');
-        if (!target) return;
-        e.preventDefault();
-        gameState.draggedItem = target;
-        gameState.isDragging = true;
-        target.classList.add("dragging");
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        const rect = target.getBoundingClientRect();
-        gameState.offsetX = clientX - rect.left;
-        gameState.offsetY = clientY - rect.top;
-      }
-
-      function handleMoveDrag(e) {
-        if (!gameState.isDragging || !gameState.draggedItem) return;
-        e.preventDefault();
-        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-        const area = elements.gameArea.getBoundingClientRect();
-        let x = clientX - area.left - gameState.offsetX;
-        let y = clientY - area.top - gameState.offsetY;
-        x = Math.max(0, Math.min(x, area.width - gameState.draggedItem.offsetWidth));
-        y = Math.max(0, Math.min(y, area.height - gameState.draggedItem.offsetHeight));
-        gameState.draggedItem.style.left = `${x}px`;
-        gameState.draggedItem.style.top = `${y}px`;
-        checkTrashBinProximity(clientX, clientY);
-      }
-
-      function handleEndDrag() {
-        if (!gameState.isDragging || !gameState.draggedItem) return;
-        gameState.isDragging = false;
-        elements.trashBin.classList.remove("highlight");
-        const item = gameState.draggedItem;
-        item.classList.remove("dragging");
-        if (isItemInTrashBin(item)) {
-          collectItem(item);
-        }
-        gameState.draggedItem = null;
-      }
-
-      function checkTrashBinProximity(x, y) {
-        const bin = elements.trashBin.getBoundingClientRect();
-        const near = x > bin.left - 30 && x < bin.right + 30 &&
-                     y > bin.top - 30 && y < bin.bottom + 30;
-        elements.trashBin.classList.toggle("highlight", near);
-      }
-
-      function isItemInTrashBin(item) {
-        const iRect = item.getBoundingClientRect();
-        const bRect = elements.trashBin.getBoundingClientRect();
-        const cx = iRect.left + iRect.width / 2;
-        const cy = iRect.top + iRect.height / 2;
-        return cx >= bRect.left && cx <= bRect.right &&
-               cy >= bRect.top && cy <= bRect.bottom;
-      }
-
-      // ===== ITEM COLLECTION =====
-      function collectItem(item) {
-        createParticleEffect(item);
-        item.remove();
-        gameState.itemsLeft--;
-        updateStatus();
-        if (gameState.itemsLeft === 0) completeGame();
-      }
-
-      function createParticleEffect(item) {
-        const iRect = item.getBoundingClientRect();
-        const gRect = elements.gameArea.getBoundingClientRect();
-        for (let i = 0; i < 6; i++) {
-          const p = document.createElement("div");
-          p.innerHTML = "<i class='fas fa-star' style='color:#4CAF50' aria-hidden='true'></i>";
-          p.style.cssText = `
-            position: absolute;
-            left: ${iRect.left - gRect.left + iRect.width / 2}px;
-            top: ${iRect.top - gRect.top + iRect.height / 2}px;
-            pointer-events: none;
-            opacity: 0;
-            z-index: 100;
-            font-size: 16px;
-            transition: transform 0.7s, opacity 0.7s;
-          `;
-          p.setAttribute("aria-hidden", "true");
-          elements.gameArea.appendChild(p);
-          setTimeout(() => {
-            const angle = (i / 6) * Math.PI * 2;
-            const d = 30 + Math.random() * 20;
-            p.style.transform = `translate(${Math.cos(angle) * d}px, ${Math.sin(angle) * d - 40}px) scale(0.8)`;
-            p.style.opacity = "1";
-          }, 10);
-          setTimeout(() => p.remove(), 700);
-        }
-      }
-
-      // ===== GAME COMPLETION =====
-      function completeGame() {
-        document.body.classList.add("cleaned");
-        if (elements.completeContainer) elements.completeContainer.style.display = "flex";
-        if (elements.quote) {
-          elements.quote.textContent = '"Terima kasih! Kamu telah berkontribusi untuk lingkungan sekolah yang sehat dan hijau."';
-        }
-        startRedirect();
-      }
-
-      // ===== REDIRECTION =====
-      function startRedirect() {
-        let sec = config.redirectCountdown;
-        if (elements.countdownEl) elements.countdownEl.textContent = sec;
-        gameState.redirectTimer = setInterval(() => {
-          sec--;
-          if (elements.countdownEl) elements.countdownEl.textContent = sec;
-          if (sec <= 0) {
-            clearInterval(gameState.redirectTimer);
-            redirectToGreen();
-          }
-        }, 1000);
-      }
-
-      function redirectToGreen() {
-        if (gameState.isRedirecting) return;
-        gameState.isRedirecting = true;
-        if (elements.loadingOverlay) elements.loadingOverlay.style.display = "flex";
-        setTimeout(() => {
-          window.location.href = "https://green.wasmer.app/";
-        }, 1200);
-      }
-
-      function cancelRedirect() {
-        if (gameState.redirectTimer) clearInterval(gameState.redirectTimer);
-        if (elements.completeContainer) elements.completeContainer.style.display = "none";
-        resetGameState();
-        document.body.classList.remove("cleaned");
-        if (elements.quote) {
-          elements.quote.textContent = '"Menjadi pelopor pelestarian lingkungan di sekolah — Green Generation SMKN 4 Banjarmasin"';
-        }
-        setTimeout(spawnItems, 300);
-      }
-
-      // ===== RESTART FUNCTIONALITY =====
-      function restartGame() {
-        if (gameState.redirectTimer) clearInterval(gameState.redirectTimer);
-        if (elements.completeContainer) elements.completeContainer.style.display = "none";
-        document.body.classList.remove("cleaned");
-
-        resetGameState();
-        spawnItems();
-
-        // Hide restart button after use
-        if (elements.restartBtn) elements.restartBtn.style.display = 'none';
-      }
-
-      // ===== ERROR HANDLING =====
-      function showError(message) {
-        const el = document.getElementById('error-message');
-        if (el) {
-          el.textContent = message;
-          el.style.display = 'block';
-          setTimeout(() => el.style.display = 'none', 5000);
-        }
-        // Show restart button when error occurs
-        if (elements.restartBtn) elements.restartBtn.style.display = 'block';
-      }
-
-      // ===== PUBLIC API =====
-      return {
-        init,
-        restartGame
-      };
-    })();
-
-    // ===== ERROR EVENT LISTENER =====
-    window.addEventListener('error', (e) => {
-      if (e.target.tagName === 'LINK') {
-        ForestCleanupGame.showError("Gagal memuat sumber daya eksternal. Tampilan mungkin tidak sempurna.");
-      }
-    }, true);
-
-    // ===== INITIALIZATION =====
-    document.addEventListener("DOMContentLoaded", ForestCleanupGame.init);
+    }, 4500);
   </script>
 </body>
 </html>
