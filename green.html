@@ -1,1 +1,425 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="description" content="Green Generation – Loading ke halaman utama aplikasi lingkungan SMKN 4 Banjarmasin" /><title>Green Generation – Loading...</title><link rel="preconnect" href="https://green.wasmer.app"><style> :root { --gg-green-900: #1b5e20; --gg-green-800: #2e7d32; --gg-green-700: #388e3c; --gg-green-500: #4caf50; --gg-green-400: #81c784; --gg-blue-100: #b3e5fc; --white: #ffffff; } *, *::before, *::after { box-sizing: border-box; } body { margin: 0; padding: 0; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(to bottom, var(--gg-blue-100), var(--gg-green-400)); font-family: 'Segoe UI', system-ui, sans-serif; overflow: hidden; position: relative; color: var(--gg-green-900); } /* ===== Eco Particles ===== */ .eco-particle { position: absolute; font-size: 1.2rem; opacity: 0.7; pointer-events: none; z-index: 2; } /* ===== Decorative Elements ===== */ .bg-decor { position: absolute; opacity: 0.8; pointer-events: none; z-index: 1; } /* ===== Main Content ===== */ main { text-align: center; z-index: 10; padding: 0 1.5rem; max-width: 500px; width: 100%; } header h1 { font-size: 2rem; font-weight: 800; color: var(--gg-green-900); margin: 0.5rem 0; text-shadow: 1px 1px 3px rgba(255,255,255,0.9); letter-spacing: -0.5px; } header p { font-size: 1.15rem; color: var(--gg-green-800); margin-bottom: 1.8rem; font-weight: 500; } /* ===== Progress as Growing Sapling ===== */ .progress-container { width: 80%; max-width: 320px; height: 15px; background: rgba(255, 255, 255, 0.5); border-radius: 12px; margin: 0 auto 2rem; overflow: hidden; position: relative; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); } .progress-fill { height: 100%; width: 0; background: var(--gg-green-500); border-radius: 12px; transition: width 0.2s ease; position: relative; } .progress-fill::after { content: "🌱"; position: absolute; right: -900p top: -4px; font-size: 0.6rem; opacity: 0; transition: opacity 0.3s ease; } .progress-fill.grow::after { opacity: 1; } /* ===== Animated Student on Bike ===== */ .student-bike { position: absolute; bottom: 44.5%; left: -120px; z-index: 6; animation: ride 4s linear forwards; font-size: 1.7rem; transform: scaleX(-1); } /* ===== Skip Button ===== */ .skip-btn { position: absolute; bottom: 1.25rem; right: 1.25rem; background: rgba(255, 255, 255, 0.5); color: var(--gg-green-900); border: 1px solid var(--gg-green-800); border-radius: 20px; padding: 0.55rem 1.1rem; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 20; backdrop-filter: blur(4px); } .skip-btn:hover, .skip-btn:focus { background: rgba(255, 255, 255, 0.8); transform: translateY(-2px) scale(1.05); outline: 2px solid var(--gg-green-700); box-shadow: 0 4px 8px rgba(0,0,0,0.1); } /* ===== Animations ===== */ @keyframes ride { from { transform: translateX(-150px) scaleX(-1); } to { transform: translateX(calc(100vw + 150px)) scaleX(-1); } } @keyframes float { 0%, 100% { transform: translateY(0) translateX(0); } 50% { transform: translateY(-10px) translateX(8px); } } @keyframes fall { to { transform: translateY(100vh) rotate(360deg); opacity: 0; } } /* ===== Reduced Motion ===== */ @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } .student-bike, .eco-particle { display: none; } } /* ===== Responsive ===== */ @media (max-width: 600px) { header h1 { font-size: 1.7rem; } header p { font-size: 1rem; } .skip-btn { bottom: 1rem; right: 1rem; padding: 0.45rem 0.9rem; font-size: 0.85rem; } } </style></head><body><div class="bg-decor" style="top: 18%; left: 12%; font-size: 2.2rem; animation: float 20s infinite ease-in-out;">☁️</div><div class="bg-decor" style="top: 25%; right: 15%; font-size: 1.8rem; animation: float 22s infinite ease-in-out 1s;">☁️</div><div class="bg-decor" style="bottom: 0; left: 8%; font-size: 3.2rem;">🌳</div><div class="bg-decor" style="bottom: 0; right: 10%; font-size: 3.6rem;">🌲</div><div class="eco-particle" style="left: 10%; animation: fall 8s linear forwards;">🍃</div><div class="eco-particle" style="left: 30%; animation: fall 9s linear forwards 0.5s;">💧</div><div class="eco-particle" style="left: 60%; animation: fall 7s linear forwards 1s;">🍂</div><div class="eco-particle" style="left: 80%; animation: fall 8.5s linear forwards 0.2s;">💧</div><main role="main"><header><h1>🌱 Green Generation</h1><p id="loadingMessage">Menanam harapan, memetik keberlanjutan...</p></header><div class="progress-container" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Memuat halaman utama"><div class="progress-fill" id="progressFill"></div></div></main><div class="student-bike" aria-hidden="true">🚴‍♀️</div><button class="skip-btn" id="skipBtn" aria-label="Lewati halaman loading">Lewati</button><script> const TARGET_URL = 'https://green.wasmer.app/main/'; const messages = [ "Mengurangi sampah plastik...", "Menanam pohon hari ini...", "Mendaur ulang...", "Menghemat air & energi...", "Membangun sekolah hijau..." ]; // Preload const preload = document.createElement('link'); preload.rel = 'prefetch'; preload.href = TARGET_URL; document.head.appendChild(preload); const skipBtn = document.getElementById('skipBtn'); const progressFill = document.getElementById('progressFill'); const messageEl = document.getElementById('loadingMessage'); let progress = 0; const interval = setInterval(() => { progress += Math.random() * 3 + 1; if (progress > 100) progress = 100; progressFill.style.width = `${progress}%`; progressFill.classList.toggle('grow', progress > 10); // Rotate messages if (progress % 20 < 2 && progress > 5) { const randomMsg = messages[Math.floor(Math.random() * messages.length)]; messageEl.textContent = randomMsg; } if (progress >= 100) { clearInterval(interval); setTimeout(redirectWithFade, 300); } }, 100); function redirectWithFade() { document.body.style.opacity = '0'; document.body.style.transition = 'opacity 0.4s ease'; setTimeout(() => { window.location.href = TARGET_URL; }, 400); } skipBtn.addEventListener('click', () => { clearInterval(interval); redirectWithFade(); }); // Auto-redirect fallback setTimeout(() => { if (progress < 100) { clearInterval(interval); redirectWithFade(); } }, 4500); </script></body></html>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Green Generation – Loading ke halaman utama aplikasi lingkungan SMKN 4 Banjarmasin" />
+    <title>Green Generation – Loading...</title>
+    <link rel="preconnect" href="https://green.wasmer.app">
+    
+    <style>
+        :root {
+            /* Morning Colors */
+            --morning-top: #87CEEB;
+            --morning-bottom: #98FB98;
+            
+            /* Afternoon Colors */
+            --afternoon-top: #1E90FF;
+            --afternoon-bottom: #32CD32;
+            
+            /* Night Colors */
+            --night-top: #191970;
+            --night-bottom: #006400;
+            
+            /* Common Colors */
+            --gg-green-900: #1b5e20;
+            --gg-green-700: #388e3c;
+            --gg-green-500: #4caf50;
+            --white: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.2);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            overflow: hidden;
+            position: relative;
+            color: var(--white);
+            padding: 1rem;
+        }
+        
+        /* Time-based backgrounds */
+        .morning {
+            background: linear-gradient(to bottom, var(--morning-top), var(--morning-bottom));
+        }
+        
+        .afternoon {
+            background: linear-gradient(to bottom, var(--afternoon-top), var(--afternoon-bottom));
+        }
+        
+        .night {
+            background: linear-gradient(to bottom, var(--night-top), var(--night-bottom));
+        }
+        
+        /* Main container */
+        .container {
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px var(--shadow);
+        }
+        
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .loading-message {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            min-height: 1.5em;
+        }
+        
+        /* Progress bar */
+        .progress-container {
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            width: 0;
+            background: var(--gg-green-500);
+            border-radius: 50px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        /* Decorative elements */
+        .time-element {
+            position: absolute;
+            font-size: 2.5rem;
+            z-index: 1;
+        }
+        
+        .sun {
+            top: 10%;
+            right: 10%;
+            animation: pulse 4s infinite ease-in-out;
+        }
+        
+        .moon {
+            top: 10%;
+            right: 10%;
+            animation: float 6s infinite ease-in-out;
+        }
+        
+        .cloud {
+            top: 20%;
+            left: 10%;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0.8;
+        }
+        
+        .star {
+            position: absolute;
+            font-size: 1.2rem;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+        
+        .tree {
+            position: absolute;
+            bottom: 0;
+            font-size: 3rem;
+            z-index: 1;
+        }
+        
+        /* Skip button */
+        .skip-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            padding: 0.7rem 1.2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 20;
+            backdrop-filter: blur(4px);
+        }
+        
+        .skip-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+        
+        @keyframes ride {
+            from { transform: translateX(-150px) scaleX(-1); }
+            to { transform: translateX(calc(100vw + 150px)) scaleX(-1); }
+        }
+        
+        /* Student on bike */
+        .student-bike {
+            position: absolute;
+            bottom: 15%;
+            left: -100px;
+            z-index: 6;
+            animation: ride 4s linear forwards;
+            font-size: 1.8rem;
+            transform: scaleX(-1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.7rem; }
+            .loading-message { font-size: 1rem; }
+            .container { padding: 1.5rem; }
+            .skip-btn { 
+                bottom: 1rem; 
+                right: 1rem; 
+                padding: 0.5rem 1rem; 
+                font-size: 0.9rem; 
+            }
+        }
+        
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+            .student-bike {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌱 Green Generation</h1>
+        <p class="loading-message" id="loadingMessage">Menanam harapan, memetik keberlanjutan...</p>
+        
+        <div class="progress-container">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0%</div>
+    </div>
+    
+    <div class="student-bike">🚴‍♀️</div>
+    
+    <button class="skip-btn" id="skipBtn">Lewati</button>
+    
+    <script>
+        // Determine time of day
+        function getTimeOfDay() {
+            const hour = new Date().getHours();
+            
+            if (hour >= 6 && hour < 12) {
+                return 'morning';
+            } else if (hour >= 12 && hour < 18) {
+                return 'afternoon';
+            } else {
+                return 'night';
+            }
+        }
+        
+        // Apply time-based theme
+        function applyTimeTheme() {
+            const timeOfDay = getTimeOfDay();
+            document.body.className = timeOfDay;
+            
+            // Clear existing time elements
+            document.querySelectorAll('.time-element, .tree, .star').forEach(el => el.remove());
+            
+            // Add time-specific elements
+            if (timeOfDay === 'morning') {
+                // Morning: Sun and birds
+                const sun = document.createElement('div');
+                sun.className = 'time-element sun';
+                sun.textContent = '☀️';
+                document.body.appendChild(sun);
+                
+                const bird1 = document.createElement('div');
+                bird1.className = 'time-element';
+                bird1.style.top = '15%';
+                bird1.style.left = '20%';
+                bird1.textContent = '🕊️';
+                document.body.appendChild(bird1);
+                
+                const bird2 = document.createElement('div');
+                bird2.className = 'time-element';
+                bird2.style.top = '12%';
+                bird2.style.left = '30%';
+                bird2.textContent = '🦅';
+                document.body.appendChild(bird2);
+                
+            } else if (timeOfDay === 'afternoon') {
+                // Afternoon: Sun and clouds
+                const sun = document.createElement('div');
+                sun.className = 'time-element sun';
+                sun.textContent = '☀️';
+                document.body.appendChild(sun);
+                
+                const cloud1 = document.createElement('div');
+                cloud1.className = 'time-element cloud';
+                cloud1.textContent = '☁️';
+                document.body.appendChild(cloud1);
+                
+                const cloud2 = document.createElement('div');
+                cloud2.className = 'time-element';
+                cloud2.style.top = '25%';
+                cloud2.style.right = '20%';
+                cloud2.textContent = '☁️';
+                cloud2.style.animation = 'float 10s infinite ease-in-out';
+                document.body.appendChild(cloud2);
+                
+            } else {
+                // Night: Moon and stars
+                const moon = document.createElement('div');
+                moon.className = 'time-element moon';
+                moon.textContent = '🌙';
+                document.body.appendChild(moon);
+                
+                // Create stars
+                for (let i = 0; i < 15; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.textContent = '✨';
+                    star.style.top = `${Math.random() * 50}%`;
+                    star.style.left = `${Math.random() * 100}%`;
+                    star.style.animationDelay = `${Math.random() * 3}s`;
+                    document.body.appendChild(star);
+                }
+            }
+            
+            // Add trees (common for all times)
+            const tree1 = document.createElement('div');
+            tree1.className = 'tree';
+            tree1.style.left = '5%';
+            tree1.textContent = '🌳';
+            document.body.appendChild(tree1);
+            
+            const tree2 = document.createElement('div');
+            tree2.className = 'tree';
+            tree2.style.right = '5%';
+            tree2.textContent = '🌲';
+            document.body.appendChild(tree2);
+        }
+        
+        // Loading functionality
+        const TARGET_URL = 'https://green.wasmer.app/main/';
+        const messages = [
+            "Mengurangi sampah plastik...",
+            "Menanam pohon hari ini...",
+            "Mendaur ulang...",
+            "Menghemat air & energi...",
+            "Membangun sekolah hijau..."
+        ];
+        
+        const skipBtn = document.getElementById('skipBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressText = document.getElementById('progressText');
+        const messageEl = document.getElementById('loadingMessage');
+        
+        let progress = 0;
+        let lastMessageChange = 0;
+        
+        // Preload the target page
+        const preload = document.createElement('link');
+        preload.rel = 'prefetch';
+        preload.href = TARGET_URL;
+        document.head.appendChild(preload);
+        
+        // Update progress
+        const interval = setInterval(() => {
+            progress += Math.random() * 3 + 1;
+            if (progress > 100) progress = 100;
+            
+            progressFill.style.width = `${progress}%`;
+            progressText.textContent = `${Math.round(progress)}%`;
+            
+            // Change message periodically
+            if (progress - lastMessageChange > 20 && progress > 5 && progress < 95) {
+                const randomMsg = messages[Math.floor(Math.random() * messages.length)];
+                messageEl.textContent = randomMsg;
+                lastMessageChange = progress;
+            }
+            
+            // Complete loading
+            if (progress >= 100) {
+                clearInterval(interval);
+                setTimeout(redirect, 300);
+            }
+        }, 150);
+        
+        // Redirect function
+        function redirect() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.4s ease';
+            setTimeout(() => {
+                window.location.href = TARGET_URL;
+            }, 400);
+        }
+        
+        // Skip button
+        skipBtn.addEventListener('click', () => {
+            clearInterval(interval);
+            redirect();
+        });
+        
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' || e.key === 'Enter') {
+                clearInterval(interval);
+                redirect();
+            }
+        });
+        
+        // Fallback timeout
+        setTimeout(() => {
+            if (progress < 100) {
+                clearInterval(interval);
+                redirect();
+            }
+        }, 5000);
+        
+        // Apply time-based theme on load
+        applyTimeTheme();
+    </script>
+</body>
+</html>
