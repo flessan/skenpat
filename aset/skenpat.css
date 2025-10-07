@@ -303,6 +303,14 @@ a {
   transform: translateX(100%);
 }
 
+.cbox-wrapper {
+  margin: 2rem 0;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  background: var(--card-dark);
+}
+
 /* ================================
    SECTIONS
    ================================ */
