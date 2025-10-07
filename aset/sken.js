@@ -95,6 +95,6 @@ if (!document.getElementById('dynamic-styles')) {
 // --- PWA Service Worker Registration (optional but recommended) ---
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(console.warn);
+    navigator.serviceWorker.register('/aset/sw.js').catch(console.warn);
   });
 }
