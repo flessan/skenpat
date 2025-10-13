@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Habede Raisya! </title>
+<title>Habede Raisya! 🎂</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -103,11 +103,11 @@ body::before{
 </head>
 <body>
 <div class="container">
-  <h1 class="title">Happy Birthday Raisyaa! ()</h1>
+  <h1 class="title">Happy Birthday Raisyaa! (⁠つ⁠≧⁠▽⁠≦⁠)⁠つ</h1>
 
   <div class="click-area" onclick="nextMessage()">
-    <div class="click-text" id="clickText">Klik kado-nya </div>
-    <div class="gift-icon"></div>
+    <div class="click-text" id="clickText">Klik kado-nya 🎁</div>
+    <div class="gift-icon">🎁</div>
   </div>
 
   <div class="message-container" id="messageContainer">
@@ -119,34 +119,79 @@ body::before{
 
 <script>
 const messages = [
-`<p>
-Selamat ulang tahun, Raisya! <br><br>
-Semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan dalam setiap langkahmu.<br>
-Jadilah pribadi yang terus berkembang, bermanfaat, dan membawa kebaikan bagi sekitarmu.<br><br>
-Panjang umur, sehat selalu, dan semoga segala harapan baikmu dimudahkan jalannya. <br>
-Aamiin ya Rabbal 'alamiin 
-</p>`,
-`<p>
-Selamat ulang tahun, Anandha! <br><br>
-Semoga hari ini membawa senyum baru, semangat baru, dan rasa syukur yang tak putus atas setiap hal indah yang sudah kamu jalani.
-Di setiap langkah yang kamu ambil, semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan yang berlimpah. <br><br>
+  `<p>
+    Selamat ulang tahun, Raisya! 🌸<br><br>
+    Semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan dalam setiap langkahmu.<br>
+    Jadilah pribadi yang terus berkembang, bermanfaat, dan membawa kebaikan bagi sekitarmu.<br><br>
+    Panjang umur, sehat selalu, dan semoga segala harapan baikmu dimudahkan jalannya. 🤲<br>
+    Aamiin ya Rabbal 'aalamiin 🌿
+  </p>`,
 
-Teruslah menjadi pribadi yang lembut hatinya, kuat pendiriannya, dan hangat kehadirannya.</p>`,
-`<p>Panjang umur, sehat selalu, dan semoga setiap harapan yang kamu tanam tumbuh menjadi kenyataan yang indah satu per satu.
-Jangan lupa untuk terus tersenyum, karena senyummu sendiri sudah cukup membuat hari banyak orang jadi lebih baik. <br><br>
+  `<p>
+    Selamat ulang tahun, Anandha! 🌼<br><br>
+    Semoga hari ini membawa senyum baru, semangat baru, dan rasa syukur yang tak putus atas setiap hal indah yang sudah kamu jalani.<br>
+    Di setiap langkah yang kamu ambil, semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan yang berlimpah. 🤍<br><br>
+    Teruslah menjadi pribadi yang lembut hatinya, kuat pendiriannya, dan hangat kehadirannya.
+  </p>`,
 
-Barakallahu fi umrik, Raisya.
-Semoga hidupmu selalu penuh cahaya, dikelilingi orang-orang yang tulus, dan setiap langkahmu selalu dipenuhi keberkahan. <br>
-Aamiin ya Rabbal �aalamiin 
+  `<p>
+    Panjang umur, sehat selalu, dan semoga setiap harapan yang kamu tanam tumbuh menjadi kenyataan yang indah satu per satu.<br>
+    Jangan lupa untuk terus tersenyum, karena senyummu sendiri sudah cukup membuat hari banyak orang jadi lebih baik. ☀️<br><br>
+    Barakallahu fi umrik, Raisyaa.<br>
+    Semoga hidupmu selalu penuh cahaya, dikelilingi orang-orang yang tulus, dan setiap langkahmu selalu dipenuhi keberkahan. 🌿<br>
+    Aamiin ya Rabbal 'aalamiin 🌸
+  </p>`,
 
-</p>`,
-`<p>
-Hari ini bukan sekadar tentang usia yang bertambah, tapi juga tentang seberapa jauh kamu telah tumbuh dan bertahan <br><br>
-Terima kasih sudah jadi sosok yang hangat dan menyenangkan bagi orang-orang di sekitarmu.<br>
-Semoga langkahmu ke depan selalu ringan, hatimu tenang, dan mimpimu pelan-pelan jadi kenyataannn<br><br>
-Nikmati setiap detik, karena hidup yang indah selalu dimulai dari rasa syukur kecil yang tulus. makasih! :)))<br><br>
-</p>`
+  `<p>
+    Hari ini bukan sekadar tentang usia yang bertambah, tapi juga tentang seberapa jauh kamu telah tumbuh dan bertahan. :))<br><br>
+    Terima kasih sudah jadi sosok yang hangat dan menyenangkan bagi orang-orang di sekitarmu.<br>
+    Semoga langkahmu ke depan selalu ringan, hatimu tenang, dan mimpimu pelan-pelan jadi kenyataan.<br><br>
+    Nikmati setiap detik, karena hidup yang indah selalu dimulai dari rasa syukur kecil yang tulus. 🌷<br><br>
+    Makasih udah jadi kamu, apa adnya, tapi tetap luar biasa. :')
+  </p>`
 ];
+
+let currentIndex = 0;
+let finished = false;
+
+function nextMessage() {
+  const container = document.getElementById('messageContainer');
+  const box = document.getElementById('messageBox');
+  const clickText = document.getElementById('clickText');
+
+  if (!container.classList.contains('show')) container.classList.add('show');
+
+  // Tampilkan pesan satu per satu
+  if (currentIndex < messages.length) {
+    box.innerHTML = messages[currentIndex];
+    clickText.textContent = "Klik lagi kado-nya 🎁✨";
+    currentIndex++;
+  } 
+  // Setelah semua pesan habis, tunggu 3 detik lalu munculkan pesan penutup
+  else if (!finished) {
+    finished = true;
+    clickText.textContent = "Tunggu sebentar... 🎀";
+
+    setTimeout(() => {
+      box.innerHTML += `
+        <hr style="margin: 2rem auto; width: 60%; border: 1px solid #ddd; opacity: 0.5;">
+        <div class="final-message" style="opacity: 0; transition: opacity 2s ease;">
+          <p style="font-size:1.1rem; line-height:1.8; color:#333; text-align:center;">
+            🌼 Semua pesan sudah terbuka 🌼<br><br>
+            Semoga setiap kata kecil tadi bisa bikin kamu senyum sedikit hari ini.<br>
+            Nggak harus sempurna kok, cukup bahagia dengan versi terbaikmu sekarang. 💫<br><br>
+            Terima kasih udah lahir dan jadi orang baik di dunia ini, ....<br>
+            You deserve all the good things, always.
+          </p>
+        </div>
+      `;
+
+      const finalMsg = document.querySelector('.final-message');
+      setTimeout(() => finalMsg.style.opacity = 1, 100); // animasi fade-in
+      clickText.textContent = "Semua pesan sudah dibuka 🎉";
+    }, 3000);
+  }
+}
 
 let index = 0;
 
@@ -159,11 +204,11 @@ function nextMessage(){
 
   if(index < messages.length){
     box.innerHTML = messages[index];
-    clickText.textContent = "Klik lagi kado-nya ";
+    clickText.textContent = "Klik lagi kado-nya 🎁";
     index++;
   } else {
-    box.innerHTML += `<p><strong> Semua pesan sudah dibuka! Semoga harimu seindah doa-doa di dalamnya :D</strong></p></br></br></br></br></br></br></br></br></br></br></br>`;
-    clickText.textContent = "Pesan sudah habis ";
+    box.innerHTML += `</br><p><strong>🎉 Semua pesan sudah dibuka! Semoga harimu seindah doa-doa di dalamnya :D</strong></p><br><br><br><br><br><br><br><br><br><br><br>`;
+    clickText.textContent = "Pesan sudah habis 🎁";
   }
 }
 </script>
