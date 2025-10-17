@@ -1,216 +1,511 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Habede Raisya! 🎂</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  font-family:'Segoe UI',Tahoma,Verdana,sans-serif;
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  overflow-x:hidden;
-  position:relative;
-  background:repeating-linear-gradient(45deg,#d63384,#d63384 30px,#4361ee 30px,#4361ee 60px,#f8f9fa 60px,#f8f9fa 90px,#dc3545 90px,#dc3545 120px);
-  background-size:200% 200%;
-  animation:animatedBackground 20s linear infinite
-}
-@keyframes animatedBackground{0%{background-position:0% 0%}100%{background-position:200% 200%}}
-body::before{
-  content:'';
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,0.4);
-  z-index:1
-}
-.container{
-  position:relative;
-  z-index:10;
-  text-align:center;
-  padding:1.5rem;
-  max-width:90%;
-  width:800px;
-  margin:0 auto
-}
-.title{
-  font-size:clamp(1.8rem,8vw,3rem);
-  color:white;
-  margin-bottom:1.5rem;
-  text-shadow:3px 3px 6px rgba(0,0,0,0.8);
-  animation:bounce 2s ease-in-out infinite,glow 2s ease-in-out infinite alternate
-}
-@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes glow{
-  from{text-shadow:3px 3px 6px rgba(0,0,0,0.8),0 0 20px rgba(255,255,255,0.5)}
-  to{text-shadow:3px 3px 6px rgba(0,0,0,0.8),0 0 30px rgba(255,255,255,0.8)}
-}
-.click-area{
-  margin:2rem 0;
-  cursor:pointer;
-  transition:transform .3s ease;
-  display:inline-block;
-  position:relative;
-  padding:1.5rem;
-  border-radius:20px;
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(5px)
-}
-.click-area:hover{transform:scale(1.05)}
-.click-text{
-  font-size:clamp(1.1rem,5vw,1.5rem);
-  color:white;
-  margin-bottom:1rem;
-  font-weight:bold;
-  text-shadow:2px 2px 4px rgba(0,0,0,0.8);
-  animation:shake 2s ease-in-out infinite
-}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
-.gift-icon{
-  font-size:clamp(3rem,15vw,5rem);
-  animation:pulse 2s ease-in-out infinite,rotate 4s linear infinite;
-  filter:drop-shadow(0 4px 8px rgba(0,0,0,0.8))
-}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-@keyframes rotate{from{transform:rotate(-5deg)}50%{transform:rotate(5deg)}to{transform:rotate(-5deg)}}
-.message-container{
-  max-height:0;
-  overflow:hidden;
-  opacity:0;
-  background:rgba(255,255,255,0.95);
-  border-radius:20px;
-  padding:0 1.5rem;
-  margin-top:1.5rem;
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
-  transform:translateY(20px);
-  transition:all 1s ease-out
-}
-.message-container.show{max-height:800px;opacity:1;padding:1.5rem;transform:translateY(0)}
-.message{
-  font-size:clamp(0.9rem,4vw,1.2rem);
-  line-height:1.7;
-  color:#333;
-  text-align:center;
-  animation:fadeInUp 1s ease-out
-}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.footer{position:absolute;bottom:1rem;color:rgba(255,255,255,0.7);font-size:0.8rem;z-index:10;text-align:center;width:100%}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Habede Raisyaa 🎉</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables */
+    :root {
+      --bg1: #e0aaff;
+      --bg2: #bde0fe;
+      --text-dark: #333;
+      --white: #fff;
+      --shadow: rgba(0,0,0,0.15);
+      --primary-gradient: linear-gradient(90deg, #9b5de5, #f15bb5);
+      --card-bg: rgba(255,255,255,0.2);
+      --transition-speed: 0.3s;
+    }
+
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+      position: relative;
+      color: var(--text-dark);
+    }
+
+    /* Main Container */
+    .page-container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    /* Card Styles */
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      border-radius: 2rem;
+      box-shadow: 0 10px 25px var(--shadow);
+      padding: 2.5rem;
+      max-width: 700px;
+      width: 100%;
+      text-align: center;
+      z-index: 10;
+      transition: all 0.4s ease;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Title Styles */
+    .title {
+      font-size: clamp(1.8rem, 6vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* Interaction Area */
+    .interaction-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    /* Gift Button */
+    .gift-button {
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 2rem;
+      border-radius: 1.5rem;
+      background: rgba(255,255,255,0.25);
+      border: none;
+      transition: all var(--transition-speed) ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gift-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+
+    .gift-button:hover::before {
+      transform: translateX(0);
+    }
+
+    .gift-button:hover, 
+    .gift-button:focus {
+      transform: scale(1.05);
+      background: rgba(255,255,255,0.4);
+      outline: 3px solid rgba(255,255,255,0.7);
+      outline-offset: 2px;
+    }
+
+    .gift-button:active {
+      transform: scale(0.98);
+    }
+
+    .click-text {
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 600;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      z-index: 1;
+    }
+
+    .gift-icon {
+      font-size: clamp(3rem, 12vw, 4.5rem);
+      animation: pulse 1.6s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    /* Message Container */
+    .message-container {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      background: var(--white);
+      border-radius: 1.2rem;
+      padding: 0;
+      margin-top: 0;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: all 1s ease-out;
+      width: 100%;
+    }
+
+    .message-container.show {
+      max-height: 900px;
+      opacity: 1;
+      padding: 1.5rem;
+      margin-top: 1.2rem;
+    }
+
+    .message {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-dark);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s ease;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Button Styles */
+    .message-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 8px;
+      font-weight: 600;
+      color: #fff;
+      background: var(--primary-gradient);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+      transition: all var(--transition-speed) ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .message-button:hover, 
+    .message-button:focus {
+      transform: scale(1.1);
+      outline: 2px solid rgba(255,255,255,0.7);
+      outline-offset: 2px;
+    }
+
+    .message-button:active {
+      transform: scale(0.98);
+    }
+
+    /* Footer */
+    .footer {
+      position: absolute;
+      bottom: 1rem;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.85rem;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+      .card {
+        padding: 1.5rem;
+      }
+      
+      .title {
+        margin-bottom: 1.5rem;
+      }
+      
+      .gift-button {
+        padding: 1.2rem 1.5rem;
+      }
+    }
+
+    /* Modal Styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .modal-content {
+      background-color: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      max-width: 80%;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      animation: slideUp 0.3s ease;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Confetti Styles */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background-color: #f0f;
+      position: absolute;
+      animation: confetti-fall linear forwards;
+    }
+    
+    @keyframes confetti-fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1 class="title">Happy Birthday Raisyaa! (⁠つ⁠≧⁠▽⁠≦⁠)⁠つ</h1>
-
-  <div class="click-area" onclick="nextMessage()">
-    <div class="click-text" id="clickText">Klik kado-nya 🎁</div>
-    <div class="gift-icon">🎁</div>
-  </div>
-
-  <div class="message-container" id="messageContainer">
-    <div class="message" id="messageBox"></div>
-  </div>
-</div>
-
-<div class="footer">Habedee</div>
-
-<script>
-const messages = [
-  `<p>
-    Selamat ulang tahun, Raisya! 🌸<br><br>
-    Semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan dalam setiap langkahmu.<br>
-    Jadilah pribadi yang terus berkembang, bermanfaat, dan membawa kebaikan bagi sekitarmu.<br><br>
-    Panjang umur, sehat selalu, dan semoga segala harapan baikmu dimudahkan jalannya. 🤲<br>
-    Aamiin ya Rabbal 'aalamiin 🌿
-  </p>`,
-
-  `<p>
-    Selamat ulang tahun, Anandha! 🌼<br><br>
-    Semoga hari ini membawa senyum baru, semangat baru, dan rasa syukur yang tak putus atas setiap hal indah yang sudah kamu jalani.<br>
-    Di setiap langkah yang kamu ambil, semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan yang berlimpah. 🤍<br><br>
-    Teruslah menjadi pribadi yang lembut hatinya, kuat pendiriannya, dan hangat kehadirannya.
-  </p>`,
-
-  `<p>
-    Panjang umur, sehat selalu, dan semoga setiap harapan yang kamu tanam tumbuh menjadi kenyataan yang indah satu per satu.<br>
-    Jangan lupa untuk terus tersenyum, karena senyummu sendiri sudah cukup membuat hari banyak orang jadi lebih baik. ☀️<br><br>
-    Barakallahu fi umrik, Raisyaa.<br>
-    Semoga hidupmu selalu penuh cahaya, dikelilingi orang-orang yang tulus, dan setiap langkahmu selalu dipenuhi keberkahan. 🌿<br>
-    Aamiin ya Rabbal 'aalamiin 🌸
-  </p>`,
-
-  `<p>
-    Hari ini bukan sekadar tentang usia yang bertambah, tapi juga tentang seberapa jauh kamu telah tumbuh dan bertahan. :))<br><br>
-    Terima kasih sudah jadi sosok yang hangat dan menyenangkan bagi orang-orang di sekitarmu.<br>
-    Semoga langkahmu ke depan selalu ringan, hatimu tenang, dan mimpimu pelan-pelan jadi kenyataan.<br><br>
-    Nikmati setiap detik, karena hidup yang indah selalu dimulai dari rasa syukur kecil yang tulus. 🌷<br><br>
-    Makasih udah jadi kamu, apa adnya, tapi tetap luar biasa. :')
-  </p>`
-];
-
-let currentIndex = 0;
-let finished = false;
-
-function nextMessage() {
-  const container = document.getElementById('messageContainer');
-  const box = document.getElementById('messageBox');
-  const clickText = document.getElementById('clickText');
-
-  if (!container.classList.contains('show')) container.classList.add('show');
-
-  // Tampilkan pesan satu per satu
-  if (currentIndex < messages.length) {
-    box.innerHTML = messages[currentIndex];
-    clickText.textContent = "Klik lagi kado-nya 🎁✨";
-    currentIndex++;
-  } 
-  // Setelah semua pesan habis, tunggu 3 detik lalu munculkan pesan penutup
-  else if (!finished) {
-    finished = true;
-    clickText.textContent = "Tunggu sebentar... 🎀";
-
-    setTimeout(() => {
-      box.innerHTML += `
-        <hr style="margin: 2rem auto; width: 60%; border: 1px solid #ddd; opacity: 0.5;">
-        <div class="final-message" style="opacity: 0; transition: opacity 2s ease;">
-          <p style="font-size:1.1rem; line-height:1.8; color:#333; text-align:center;">
-            🌼 Semua pesan sudah terbuka 🌼<br><br>
-            Semoga setiap kata kecil tadi bisa bikin kamu senyum sedikit hari ini.<br>
-            Nggak harus sempurna kok, cukup bahagia dengan versi terbaikmu sekarang. 💫<br><br>
-            Terima kasih udah lahir dan jadi orang baik di dunia ini, ....<br>
-            You deserve all the good things, always.
-          </p>
+  <main class="page-container">
+    <section class="card" aria-labelledby="birthday-title">
+      <h1 id="birthday-title" class="title">Happy Birthday Raisyaa 🎂💖</h1>
+      
+      <div class="interaction-area">
+        <button 
+          class="gift-button" 
+          id="giftButton" 
+          aria-label="Buka hadiah ulang tahun"
+          aria-describedby="click-instruction">
+          <span id="clickText" class="click-text">Klik kado-nya 🎁</span>
+          <span class="gift-icon" aria-hidden="true">🎁</span>
+        </button>
+        
+        <div id="messageContainer" class="message-container" aria-live="polite">
+          <div id="messageBox" class="message"></div>
         </div>
-      `;
+      </div>
+    </section>
+    
+    <footer class="footer">
+      <p>Habede</p>
+    </footer>
+  </main>
 
-      const finalMsg = document.querySelector('.final-message');
-      setTimeout(() => finalMsg.style.opacity = 1, 100); // animasi fade-in
-      clickText.textContent = "Semua pesan sudah dibuka 🎉";
-    }, 3000);
-  }
-}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Elements
+      const giftButton = document.getElementById('giftButton');
+      const messageContainer = document.getElementById('messageContainer');
+      const messageBox = document.getElementById('messageBox');
+      const clickText = document.getElementById('clickText');
+      
+      // State
+      let messageIndex = 0;
+      let allMessagesShown = false;
+      
+      // Messages
+      const messages = [
+        `<p><b>Sebelumnya...</b> aku mau minta maaf dulu ya 🌧️<br><br>
+        Mungkin akhir-akhir ini aku keliatan menjauh atau cuek.<br>
+        Padahal aku cuma lagi banyak pikiran, bukan karena aku nggak peduli.<br><br>
+        Maafin aku ya? Kita masih temenan kan?<br><br>
+        <button class="message-button" onclick="handleYes()">Iya dong 🤗</button>
+        <button id="noBtn" class="message-button" onmouseover="moveNo()">Enggak 😤</button></p>`,
 
-let index = 0;
+        `<p>
+          Selamat ulang tahun, Raisya! 🌸<br><br>
+          Semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan dalam setiap langkahmu.<br>
+          Jadilah pribadi yang terus berkembang, bermanfaat, dan membawa kebaikan bagi sekitarmu.<br><br>
+          Panjang umur, sehat selalu, dan semoga segala harapan baikmu dimudahkan jalannya. 🤲<br>
+          Aamiin ya Rabbal 'aalamiin 🌿
+        </p>`,
 
-function nextMessage(){
-  const container = document.getElementById('messageContainer');
-  const box = document.getElementById('messageBox');
-  const clickText = document.getElementById('clickText');
+        `<p>
+          Selamat ulang tahun, Anandha! 🌼<br><br>
+          Semoga hari ini membawa senyum baru, semangat baru, dan rasa syukur yang tak putus atas setiap hal indah yang sudah kamu jalani.<br>
+          Di setiap langkah yang kamu ambil, semoga Allah senantiasa melimpahkan rahmat, kebahagiaan, dan keberkahan yang berlimpah. 🤍<br><br>
+          Teruslah menjadi pribadi yang lembut hatinya, kuat pendiriannya, dan hangat kehadirannya.
+        </p>`,
 
-  if(!container.classList.contains('show')) container.classList.add('show');
+        `<p>
+          Panjang umur, sehat selalu, dan semoga setiap harapan yang kamu tanam tumbuh menjadi kenyataan yang indah satu per satu.<br>
+          Jangan lupa untuk terus tersenyum, karena senyummu sendiri sudah cukup membuat hari banyak orang jadi lebih baik. ☀️<br><br>
+          Barakallahu fi umrik, Raisyaa.<br>
+          Semoga hidupmu selalu penuh cahaya, dikelilingi orang-orang yang tulus, dan setiap langkahmu selalu dipenuhi keberkahan. 🌿<br>
+          Aamiin ya Rabbal 'aalamiin 🌸
+        </p>`,
 
-  if(index < messages.length){
-    box.innerHTML = messages[index];
-    clickText.textContent = "Klik lagi kado-nya 🎁";
-    index++;
-  } else {
-    box.innerHTML += `</br><p><strong>🎉 Semua pesan sudah dibuka! Semoga harimu seindah doa-doa di dalamnya :D</strong></p><br><br><br><br><br><br><br><br><br><br><br>`;
-    clickText.textContent = "Pesan sudah habis 🎁";
-  }
-}
-</script>
+        `<p>
+          Hari ini bukan sekadar tentang usia yang bertambah, tapi juga tentang seberapa jauh kamu telah tumbuh dan bertahan. :))<br><br>
+          Terima kasih sudah jadi sosok yang hangat dan menyenangkan bagi orang-orang di sekitarmu.<br>
+          Semoga langkahmu ke depan selalu ringan, hatimu tenang, dan mimpimu pelan-pelan jadi kenyataan.<br><br>
+          Nikmati setiap detik, karena hidup yang indah selalu dimulai dari rasa syukur kecil yang tulus. 🌷<br><br>
+          Makasih udah jadi kamu, apa adanya, tapi tetap luar biasa. :')
+        </p>`,
+
+        `<p>
+          <b>Sekali lagi</b> aku Minta Maaf yaa 🙏<br><br>
+          Kadang aku gak sadar kalau sikapku bisa nyakitin kamu.<br>
+          Tapi aku tulus pengen pertemanan kita tetap baik, karena kamu itu temenku. 🤍<br><br>
+          Makasih udah sabar dan gak bosen sama aku, ya. 🌿
+        </p>`
+      ];
+      
+      // Event Listeners
+      giftButton.addEventListener('click', nextMessage);
+      giftButton.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          nextMessage();
+        }
+      });
+      
+      // Functions
+      function nextMessage() {
+        // Show message container if it's the first message
+        if (messageIndex === 0) {
+          messageContainer.classList.add('show');
+        }
+        
+        // Display current message
+        if (messageIndex < messages.length) {
+          messageBox.innerHTML = messages[messageIndex];
+          messageBox.classList.remove('show');
+          
+          // Trigger animation
+          setTimeout(() => {
+            messageBox.classList.add('show');
+          }, 100);
+          
+          // Update button text
+          if (messageIndex === 0) {
+            clickText.textContent = "Klik lagi 🎁";
+          } else if (messageIndex === messages.length - 1) {
+            clickText.textContent = "Pesan terakhir 🎀";
+          } else {
+            clickText.textContent = `Lanjut (${messageIndex + 1}/${messages.length}) 🎁`;
+          }
+          
+          messageIndex++;
+        } else if (!allMessagesShown) {
+          // Show final message
+          allMessagesShown = true;
+          messageBox.innerHTML = `<p><b>🎉 Semua pesan sudah dibuka!</b><br><br>
+          Semoga hari kamu seindah doa-doa yang kamu panjatkan hari ini. 🌈<br><br>
+          Makasih udah jadi kamu — apa adanya, tapi tetap luar biasa. 💫</p>`;
+          clickText.textContent = "Terima kasih 🎉";
+          
+          // Add a celebration effect
+          createConfetti();
+        } else {
+          // All messages have been shown
+          clickText.textContent = "Udah habis semua 😄";
+          giftButton.disabled = true;
+          giftButton.style.opacity = "0.7";
+          giftButton.style.cursor = "default";
+        }
+        
+        // Scroll to message if it's out of view
+        if (messageContainer.classList.contains('show')) {
+          messageContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+      
+      // Make functions globally accessible
+      window.handleYes = function() {
+        // Create a modal instead of alert
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.innerHTML = `
+          <div class="modal-content">
+            <p>Yeay! Aku legaa 😄 makasih udah maafin ❤️</p>
+            <button class="message-button" onclick="this.parentElement.parentElement.remove()">Tutup</button>
+          </div>
+        `;
+        document.body.appendChild(modal);
+      };
+      
+      window.moveNo = function() {
+        const noBtn = document.getElementById("noBtn");
+        if (noBtn) {
+          // Calculate random position within viewport
+          const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+          const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+          
+          const randomX = Math.floor(Math.random() * maxX);
+          const randomY = Math.floor(Math.random() * maxY);
+          
+          noBtn.style.position = "fixed";
+          noBtn.style.left = `${randomX}px`;
+          noBtn.style.top = `${randomY}px`;
+          noBtn.style.zIndex = "100";
+        }
+      };
+      
+      // Confetti effect for celebration
+      function createConfetti() {
+        const colors = ['#e0aaff', '#bde0fe', '#9b5de5', '#f15bb5', '#feeafa'];
+        const confettiCount = 100;
+        
+        for (let i = 0; i < confettiCount; i++) {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = `${Math.random() * 100}%`;
+          confetti.style.width = `${Math.random() * 10 + 5}px`;
+          confetti.style.height = `${Math.random() * 10 + 5}px`;
+          confetti.style.opacity = Math.random();
+          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+          confetti.style.position = 'fixed';
+          confetti.style.top = '-10px';
+          confetti.style.zIndex = '1000';
+          
+          document.body.appendChild(confetti);
+          
+          // Animate confetti falling
+          const animation = confetti.animate(
+            [
+              { transform: `translate(0, 0) rotate(0deg)`, opacity: 1 },
+              { transform: `translate(${Math.random() * 200 - 100}px, ${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+            ],
+            {
+              duration: Math.random() * 3000 + 2000,
+              easing: 'cubic-bezier(0, .9, .57, 1)',
+            }
+          );
+          
+          animation.onfinish = () => confetti.remove();
+        }
+      }
+    });
+  </script>
 </body>
 </html>
