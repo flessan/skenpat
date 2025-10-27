@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kehadiran Guru — RPL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/guru/g.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dashboard Kehadiran Guru — RPL</h1>
+            <p class="last-update">Memuat data terbaru...</p>
+        </header>
+
+        <div class="loading-indicator" id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>Memuat data...</p>
+        </div>
+
+        <div class="dashboard-content" id="dashboardContent" style="display: none;">
+            <section class="summary-cards">
+                <div class="card">
+                    <h3>Total Laporan Hari Ini</h3>
+                    <p class="stat-number" id="totalReports">0</p>
+                </div>
+                <div class="card">
+                    <h3>Laporan "NIHIL"</h3>
+                    <p class="stat-number" id="nihilReports">0</p>
+                </div>
+                <div class="card">
+                    <h3>Guru Tidak Hadir</h3>
+                    <p class="stat-number" id="absentTeachers">0</p>
+                </div>
+            </section>
+
+            <section class="charts-container">
+                <div class="chart-card">
+                    <h3>Perbandingan Laporan</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Frekuensi Laporan per Kelas</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="classFrequencyChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section class="insights">
+                <div class="insight-card">
+                    <p id="lastUpdateInsight">📅 Data terakhir diupdate pada: Memuat...</p>
+                </div>
+                <div class="insight-card">
+                    <p id="nihilPercentageInsight">✅ 0% laporan menyatakan nihil.</p>
+                </div>
+                <div class="insight-card">
+                    <p id="mostAbsentInsight">⚠️ Guru yang paling sering tercatat tidak hadir: Memuat...</p>
+                </div>
+            </section>
+
+            <section class="table-container">
+                <div class="table-header">
+                    <h3>Data Laporan Kehadiran</h3>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Cari berdasarkan kelas atau nama guru...">
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table id="dataTable">
+                        <thead>
+                            <tr>
+                                <th>Tanggal</th>
+                                <th>Kelas X</th>
+                                <th>Kelas XI</th>
+                                <th>Nama Guru</th>
+                                <th>Tugas</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Data akan diisi oleh JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/guru/g.js"></script>
+</body>
+</html>
