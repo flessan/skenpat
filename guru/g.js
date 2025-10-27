@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update statistik
         totalReportsElement.textContent = csvData.length;
         nihilReportsElement.textContent = nihilCount;
-        absentTeachersElement.textContent = csvData.length - nihilCount;
+        absentTeachersElement.textContent = processedData.length - nihilCount;
     }
     
     // Fungsi untuk update dashboard
