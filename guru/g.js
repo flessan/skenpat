@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Variabel untuk menyimpan data
     let csvData = [];
+    let processedData = [];
     let filteredData = [];
     
     // Fetch data dari CSV
@@ -31,7 +32,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 skipEmptyLines: true,
                 complete: function(results) {
                     csvData = results.data;
-                    filteredData = [...csvData];
+                    
+                    // Proses data CSV
+                    processCSVData();
                     
                     // Update dashboard dengan data
                     updateDashboard();
@@ -47,13 +50,68 @@ document.addEventListener('DOMContentLoaded', function() {
             loadingIndicator.innerHTML = '<p>Gagal memuat data. Silakan coba lagi nanti.</p>';
         });
     
+    // Fungsi untuk memproses data CSV
+    function processCSVData() {
+        processedData = [];
+        let nihilCount = 0;
+        
+        for (let row of csvData) {
+            const dateStr = row["Untitled Question"] || '';
+            const classX = row["KELAS X"] || '';
+            const classXI = row["KELAS XI"] || '';
+            const guruInfo = row["Tuliskan nama guru yang tidak masuk kelas hari ini, sesuai contoh di bawah. \nFormatnya : \nNama Guru, Tugas, Keterangan"] || '';
+            
+            // Periksa apakah guruInfo adalah NIHIL
+            if (guruInfo.trim().toUpperCase() === "NIHIL") {
+                nihilCount++;
+                processedData.push({
+                    date: dateStr,
+                    classX: classX,
+                    classXI: classXI,
+                    teacherName: null,
+                    task: null,
+                    note: null,
+                    isNihil: true
+                });
+            } else {
+                // Pisahkan guruInfo berdasarkan baris baru
+                const teacherEntries = guruInfo.split('\n');
+                for (let entry of teacherEntries) {
+                    entry = entry.trim();
+                    if (entry === '') continue;
+                    
+                    // Pisahkan entry berdasarkan koma
+                    const parts = entry.split(',').map(part => part.trim());
+                    const teacherName = parts[0] || '';
+                    const task = parts[1] || '';
+                    const note = parts.length > 2 ? parts.slice(2).join(', ') : (parts[2] || '');
+                    
+                    processedData.push({
+                        date: dateStr,
+                        classX: classX,
+                        classXI: classXI,
+                        teacherName: teacherName,
+                        task: task,
+                        note: note,
+                        isNihil: false
+                    });
+                }
+            }
+        }
+        
+        // Set filteredData ke semua data yang telah diproses
+        filteredData = [...processedData];
+        
+        // Update statistik
+        totalReportsElement.textContent = csvData.length;
+        nihilReportsElement.textContent = nihilCount;
+        absentTeachersElement.textContent = csvData.length - nihilCount;
+    }
+    
     // Fungsi untuk update dashboard
     function updateDashboard() {
         // Update tanggal terakhir
         updateLastUpdateDate();
-        
-        // Update statistik
-        updateStatistics();
         
         // Update tabel
         updateTable();
@@ -71,31 +129,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fungsi untuk update tanggal terakhir
     function updateLastUpdateDate() {
         if (csvData.length > 0) {
-            const lastDate = csvData[csvData.length - 1].Tanggal;
-            const formattedDate = new Date(lastDate).toLocaleDateString('id-ID', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            lastUpdateElement.textContent = `Data terakhir diupdate: ${formattedDate}`;
-            lastUpdateInsight.textContent = `📅 Data terakhir diupdate pada: ${formattedDate}`;
+            const lastDate = csvData[csvData.length - 1]["Untitled Question"];
+            if (lastDate) {
+                const formattedDate = new Date(lastDate).toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                lastUpdateElement.textContent = `Data terakhir diupdate: ${formattedDate}`;
+                lastUpdateInsight.textContent = `📅 Data terakhir diupdate pada: ${formattedDate}`;
+            }
         }
-    }
-    
-    // Fungsi untuk update statistik
-    function updateStatistics() {
-        const totalReports = csvData.length;
-        const nihilReports = csvData.filter(row => 
-            row.Keterangan && row.Keterangan.toUpperCase() === 'NIHIL'
-        ).length;
-        const absentTeachers = csvData.filter(row => 
-            row.Keterangan && row.Keterangan.toLowerCase().includes('tidak hadir')
-        ).length;
-        
-        totalReportsElement.textContent = totalReports;
-        nihilReportsElement.textContent = nihilReports;
-        absentTeachersElement.textContent = absentTeachers;
     }
     
     // Fungsi untuk update tabel
@@ -108,23 +153,23 @@ document.addEventListener('DOMContentLoaded', function() {
             const tr = document.createElement('tr');
             
             // Tambahkan kelas berdasarkan keterangan
-            if (row.Keterangan && row.Keterangan.toUpperCase() === 'NIHIL') {
+            if (row.isNihil) {
                 tr.classList.add('nihil-row');
-            } else if (row.Keterangan && row.Keterangan.toLowerCase().includes('tidak hadir')) {
+            } else {
                 tr.classList.add('absent-row');
             }
             
             // Format tanggal
-            const formattedDate = row.Tanggal ? new Date(row.Tanggal).toLocaleDateString('id-ID') : '-';
+            const formattedDate = row.date ? new Date(row.date).toLocaleDateString('id-ID') : '-';
             
             // Buat sel untuk setiap kolom
             tr.innerHTML = `
                 <td>${formattedDate}</td>
-                <td>${row['Kelas X'] || '-'}</td>
-                <td>${row['Kelas XI'] || '-'}</td>
-                <td>${row['Nama Guru'] || '-'}</td>
-                <td>${row.Tugas || '-'}</td>
-                <td>${row.Keterangan || '-'}</td>
+                <td>${row.classX || '-'}</td>
+                <td>${row.classXI || '-'}</td>
+                <td>${row.teacherName || '-'}</td>
+                <td>${row.task || '-'}</td>
+                <td>${row.note || (row.isNihil ? 'NIHIL' : '-')}</td>
             `;
             
             tableBody.appendChild(tr);
@@ -134,31 +179,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fungsi untuk update grafik
     function updateCharts() {
         // Data untuk grafik perbandingan
-        const nihilReports = csvData.filter(row => 
-            row.Keterangan && row.Keterangan.toUpperCase() === 'NIHIL'
-        ).length;
-        const absentReports = csvData.filter(row => 
-            row.Keterangan && row.Keterangan.toLowerCase().includes('tidak hadir')
-        ).length;
-        const otherReports = csvData.length - nihilReports - absentReports;
+        const nihilReports = processedData.filter(row => row.isNihil).length;
+        const absentReports = processedData.filter(row => !row.isNihil).length;
         
         // Grafik perbandingan
         const comparisonCtx = document.getElementById('comparisonChart').getContext('2d');
         new Chart(comparisonCtx, {
             type: 'pie',
             data: {
-                labels: ['NIHIL', 'Guru Tidak Hadir', 'Lainnya'],
+                labels: ['NIHIL', 'Guru Tidak Hadir'],
                 datasets: [{
-                    data: [nihilReports, absentReports, otherReports],
+                    data: [nihilReports, absentReports],
                     backgroundColor: [
                         'rgba(76, 175, 80, 0.7)',
-                        'rgba(255, 235, 59, 0.7)',
-                        'rgba(74, 144, 226, 0.7)'
+                        'rgba(255, 235, 59, 0.7)'
                     ],
                     borderColor: [
                         'rgba(76, 175, 80, 1)',
-                        'rgba(255, 235, 59, 1)',
-                        'rgba(74, 144, 226, 1)'
+                        'rgba(255, 235, 59, 1)'
                     ],
                     borderWidth: 1
                 }]
@@ -177,11 +215,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // Data untuk grafik frekuensi per kelas
         const classFrequency = {};
         csvData.forEach(row => {
-            if (row['Kelas X']) {
-                classFrequency[row['Kelas X']] = (classFrequency[row['Kelas X']] || 0) + 1;
+            if (row["KELAS X"]) {
+                classFrequency[row["KELAS X"]] = (classFrequency[row["KELAS X"]] || 0) + 1;
             }
-            if (row['Kelas XI']) {
-                classFrequency[row['Kelas XI']] = (classFrequency[row['Kelas XI']] || 0) + 1;
+            if (row["KELAS XI"]) {
+                classFrequency[row["KELAS XI"]] = (classFrequency[row["KELAS XI"]] || 0) + 1;
             }
         });
         
@@ -225,17 +263,16 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fungsi untuk update insight
     function updateInsights() {
         // Hitung persentase NIHIL
-        const nihilReports = csvData.filter(row => 
-            row.Keterangan && row.Keterangan.toUpperCase() === 'NIHIL'
-        ).length;
-        const nihilPercentage = csvData.length > 0 ? Math.round((nihilReports / csvData.length) * 100) : 0;
+        const nihilReports = processedData.filter(row => row.isNihil).length;
+        const totalReports = processedData.length;
+        const nihilPercentage = totalReports > 0 ? Math.round((nihilReports / totalReports) * 100) : 0;
         nihilPercentageInsight.textContent = `✅ ${nihilPercentage}% laporan menyatakan nihil.`;
         
         // Cari guru yang paling sering tidak hadir
         const absentCount = {};
-        csvData.forEach(row => {
-            if (row.Keterangan && row.Keterangan.toLowerCase().includes('tidak hadir') && row['Nama Guru']) {
-                absentCount[row['Nama Guru']] = (absentCount[row['Nama Guru']] || 0) + 1;
+        processedData.forEach(row => {
+            if (!row.isNihil && row.teacherName) {
+                absentCount[row.teacherName] = (absentCount[row.teacherName] || 0) + 1;
             }
         });
         
@@ -252,13 +289,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const searchTerm = this.value.toLowerCase();
             
             if (searchTerm === '') {
-                filteredData = [...csvData];
+                filteredData = [...processedData];
             } else {
-                filteredData = csvData.filter(row => {
+                filteredData = processedData.filter(row => {
                     // Cari di kolom kelas dan nama guru
-                    const classX = (row['Kelas X'] || '').toLowerCase();
-                    const classXI = (row['Kelas XI'] || '').toLowerCase();
-                    const teacherName = (row['Nama Guru'] || '').toLowerCase();
+                    const classX = (row.classX || '').toLowerCase();
+                    const classXI = (row.classXI || '').toLowerCase();
+                    const teacherName = (row.teacherName || '').toLowerCase();
                     
                     return classX.includes(searchTerm) || 
                            classXI.includes(searchTerm) || 
