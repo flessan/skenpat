@@ -109,9 +109,13 @@
             align-items: center;
         }
 
-        /* Hamburger Menu Styles */
+        /* Hamburger Menu Styles - Updated to use HTML/CSS */
         .hamburger-menu {
             position: relative;
+        }
+
+        .hamburger-toggle {
+            display: none;
         }
 
         .hamburger-btn {
@@ -158,7 +162,7 @@
             z-index: 1000;
         }
 
-        .hamburger-dropdown.active {
+        .hamburger-toggle:checked ~ .hamburger-dropdown {
             opacity: 1;
             visibility: visible;
             transform: translateY(0);
@@ -865,7 +869,7 @@
             transition: var(--transition);
         }
 
-        .menu-overlay.active {
+        .hamburger-toggle:checked ~ .menu-overlay {
             opacity: 1;
             visibility: visible;
         }
@@ -1003,43 +1007,45 @@
                 <div class="logo-icon">
                     <i class="fas fa-dharmachakra" style="color: white; font-size: 20px;"></i>
                 </div>
-                <span>Wheel Spinner Pro</span>
+                <span>Skenpat Wheel</span>
             </div>
             <div class="header-controls">
-                <!-- masii bingung soal hamburger gini awokawokak -->
+                <!-- Hamburger Menu - Updated to use HTML/CSS -->
                 <div class="hamburger-menu">
-    <button class="hamburger-btn" onclick="toggleHamburgerMenu()" aria-label="Menu">
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-    </button>
-    <div class="hamburger-dropdown" id="hamburgerDropdown">
-        <div class="hamburger-item" onclick="goToRoot()">
-            <i class="fas fa-home"></i>
-            <span>Beranda</span>
-        </div>
-        <div class="hamburger-item" onclick="newWheel()">
-            <i class="fas fa-plus-circle"></i>
-            <span>Roda Baru</span>
-        </div>
-        <div class="hamburger-item" onclick="saveLoadMenu()">
-            <i class="fas fa-save"></i>
-            <span>Simpan & Muat</span>
-        </div>
-        <div class="hamburger-item" onclick="openSettings()">
-            <i class="fas fa-cog"></i>
-            <span>Pengaturan</span>
-        </div>
-        <div class="hamburger-item" onclick="showHistory()">
-            <i class="fas fa-history"></i>
-            <span>Riwayat</span>
-        </div>
-        <div class="hamburger-item" onclick="showHelp()">
-            <i class="fas fa-question-circle"></i>
-            <span>Bantuan</span>
-        </div>
-    </div>
-</div>
+                    <input type="checkbox" id="hamburger-toggle" class="hamburger-toggle">
+                    <label for="hamburger-toggle" class="hamburger-btn" aria-label="Menu">
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                        <div class="hamburger-line"></div>
+                    </label>
+                    <div class="hamburger-dropdown">
+                        <div class="hamburger-item" onclick="goToRoot(); document.getElementById('hamburger-toggle').checked = false;">
+                            <i class="fas fa-home"></i>
+                            <span>Beranda</span>
+                        </div>
+                        <div class="hamburger-item" onclick="newWheel(); document.getElementById('hamburger-toggle').checked = false;">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Roda Baru</span>
+                        </div>
+                        <div class="hamburger-item" onclick="saveLoadMenu(); document.getElementById('hamburger-toggle').checked = false;">
+                            <i class="fas fa-save"></i>
+                            <span>Simpan & Muat</span>
+                        </div>
+                        <div class="hamburger-item" onclick="openSettings(); document.getElementById('hamburger-toggle').checked = false;">
+                            <i class="fas fa-cog"></i>
+                            <span>Pengaturan</span>
+                        </div>
+                        <div class="hamburger-item" onclick="showHistory(); document.getElementById('hamburger-toggle').checked = false;">
+                            <i class="fas fa-history"></i>
+                            <span>Riwayat</span>
+                        </div>
+                        <div class="hamburger-item" onclick="showHelp(); document.getElementById('hamburger-toggle').checked = false;">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Bantuan</span>
+                        </div>
+                    </div>
+                    <label for="hamburger-toggle" class="menu-overlay"></label>
+                </div>
                 
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
                     <span id="themeIcon">🌙</span>
@@ -1048,9 +1054,6 @@
             </div>
         </div>
     </header>
-
-    <!-- buat handphonee ncibhh -->
-    <div class="menu-overlay" id="menuOverlay" onclick="closeHamburgerMenu()"></div>
 
     <div class="container">
         <div class="main-content">
@@ -1189,14 +1192,14 @@
 
     <div class="result-modal" id="resultModal" role="dialog" aria-labelledby="winnerTitle" aria-hidden="true">
         <div class="modal-content">
-            <h2 id="winnerTitle" class="winner-text">🎉 Selamat! Pemenangnya adalah:</h2>
+            <h2 id="winnerTitle" class="winner-text">🎉 Selamat! Yang Terpilih adalah:</h2>
             <div class="winner-name" id="winnerName" role="alert"></div>
             <div class="modal-buttons">
                 <button class="btn btn-primary" onclick="spinAgain()" aria-label="Putar lagi">
                     <i class="fas fa-redo"></i> Putar Lagi
                 </button>
-                <button class="btn btn-danger" onclick="removeWinner()" aria-label="Hapus pemenang">
-                    <i class="fas fa-user-minus"></i> Hapus Pemenang
+                <button class="btn btn-danger" onclick="removeWinner()" aria-label="Hapus pilihan">
+                    <i class="fas fa-user-minus"></i> Hapus Pilihan
                 </button>
                 <button class="btn btn-secondary" onclick="closeModal()" aria-label="Tutup modal">
                     <i class="fas fa-times"></i> Tutup
@@ -1206,7 +1209,7 @@
     </div>
 
     <script>
-        // Global variables (javascript dibantu ai ehehehe)
+        // Global variables
         let segments = [];
         let colors = [];
         let currentRotation = 0;
@@ -1218,14 +1221,14 @@
         let updateTimeout;
         let audioContext = null;
 
-        // Color palette pakaai hex colorr
+        // Color palette
         const colorPalette = [
             '#FF6B35', '#F7931E', '#FFC947', '#FF5733', 
             '#C70039', '#900C3F', '#581845', '#FF8C42',
             '#FFA07A', '#FA8072', '#E9967A', '#F08080'
         ];
 
-        // Initialize application (sisanya llmc yg bantu ehehe)
+        // Initialize application
         document.addEventListener('DOMContentLoaded', function() {
             initializeApp();
             setupEventListeners();
@@ -1273,9 +1276,6 @@
                     closeAllModals();
                 }
             });
-
-            // Close hamburger menu when clicking outside
-            document.addEventListener('click', handleClickOutside);
         }
 
         function debounce(func, wait) {
@@ -1321,15 +1321,6 @@
             }
         }
 
-        function handleClickOutside(e) {
-            const hamburgerMenu = document.querySelector('.hamburger-menu');
-            const dropdown = document.getElementById('hamburgerDropdown');
-            
-            if (!hamburgerMenu.contains(e.target) && dropdown.classList.contains('active')) {
-                closeHamburgerMenu();
-            }
-        }
-
         function resizeCanvas() {
             const wrapper = document.querySelector('.wheel-wrapper');
             const size = Math.min(wrapper.offsetWidth, wrapper.offsetHeight);
@@ -1338,24 +1329,11 @@
             drawWheel();
         }
 
-        // Hamburger Menu Functions
-        function toggleHamburgerMenu() {
-            const dropdown = document.getElementById('hamburgerDropdown');
-            const overlay = document.getElementById('menuOverlay');
-            
-            dropdown.classList.toggle('active');
-            overlay.classList.toggle('active');
-        }
-
-        function closeHamburgerMenu() {
-            const dropdown = document.getElementById('hamburgerDropdown');
-            const overlay = document.getElementById('menuOverlay');
-            
-            dropdown.classList.remove('active');
-            overlay.classList.remove('active');
-        }
-
         // Hamburger Menu Actions
+        function goToRoot() {
+            window.location.href = '/';
+        }
+
         function newWheel() {
             showDeleteConfirmation(
                 'Buat Roda Baru?',
@@ -1367,7 +1345,6 @@
                     updateHistoryDisplay();
                     saveToLocalStorage();
                     showNotification('Roda baru telah dibuat!', 'success');
-                    closeHamburgerMenu();
                 }
             );
         }
@@ -1393,18 +1370,15 @@
                     </button>
                 </div>
             `);
-            closeHamburgerMenu();
         }
 
         function openSettings() {
             document.querySelector('.tools-section').scrollIntoView({ behavior: 'smooth' });
-            closeHamburgerMenu();
             showNotification('Pengaturan dibuka', 'info');
         }
 
         function showHistory() {
             document.querySelector('.history-section').scrollIntoView({ behavior: 'smooth' });
-            closeHamburgerMenu();
             showNotification('Riwayat dibuka', 'info');
         }
 
@@ -1416,7 +1390,7 @@
                     <ul style="margin-left: 20px; margin-bottom: 15px;">
                         <li>Ketik nama setiap baris di kotak input</li>
                         <li>Klik "PUTAR RODA" atau tekan Ctrl+Enter</li>
-                        <li>Pemenang akan ditampilkan dengan animasi</li>
+                        <li>Pilihan akan ditampilkan dengan animasi</li>
                     </ul>
                     
                     <h4 style="color: var(--primary-orange); margin-bottom: 10px;">Shortcut Keyboard:</h4>
@@ -1439,7 +1413,6 @@
                     </button>
                 </div>
             `);
-            closeHamburgerMenu();
         }
 
         function showModal(modalId, content) {
@@ -1469,7 +1442,6 @@
         function closeAllModals() {
             document.querySelectorAll('.result-modal').forEach(modal => modal.remove());
             document.getElementById('resultModal').style.display = 'none';
-            closeHamburgerMenu();
             closeDeleteConfirmation();
         }
 
@@ -1886,7 +1858,7 @@
 
         function removeWinner() {
             if (!winnerName || winnerIndex < 0 || winnerIndex >= segments.length) {
-                showNotification('Tidak ada pemenang yang bisa dihapus!', 'danger');
+                showNotification('Tidak ada pilihan yang bisa dihapus!', 'danger');
                 return;
             }
             
@@ -1923,7 +1895,7 @@
                     showNotification(`"${winnerName}" telah dihapus dari roda!`, 'success');
                     closeModal();
                 } else {
-                    showNotification('Pemenang tidak ditemukan dalam daftar!', 'danger');
+                    showNotification('Pilihan tidak ditemukan dalam daftar!', 'danger');
                     winnerNameElement.classList.remove('winner-highlight');
                 }
                 
