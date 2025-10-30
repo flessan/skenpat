@@ -1,0 +1,2171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Wheel Spinner Skenpat - Putar Rodaa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-orange: #FF6B35;
+            --secondary-orange: #F7931E;
+            --light-orange: #FFE5DC;
+            --dark-orange: #E85D2C;
+            --danger-red: #DC3545;
+            --success-green: #28A745;
+            --info-blue: #007BFF;
+            --warning-yellow: #FFC107;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F8F9FA;
+            --text-primary: #2C3E50;
+            --text-secondary: #6C757D;
+            --border-color: #DEE2E6;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #1A1A2E;
+            --bg-secondary: #16213E;
+            --text-primary: #EAEAEA;
+            --text-secondary: #A8A8A8;
+            --border-color: #2C3E50;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: var(--transition);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        header {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-md);
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--primary-orange);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        /* Hamburger Menu Styles */
+        .hamburger-menu {
+            position: relative;
+        }
+
+        .hamburger-btn {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 12px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            transition: var(--transition);
+        }
+
+        .hamburger-btn:hover {
+            background: var(--primary-orange);
+            border-color: var(--primary-orange);
+            transform: translateY(-2px);
+        }
+
+        .hamburger-btn:hover .hamburger-line {
+            background: white;
+        }
+
+        .hamburger-line {
+            width: 20px;
+            height: 2px;
+            background: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .hamburger-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .hamburger-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .hamburger-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hamburger-item:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .hamburger-item:last-child {
+            border-radius: 0 0 12px 12px;
+            border-bottom: none;
+        }
+
+        .hamburger-item:hover {
+            background: var(--bg-secondary);
+        }
+
+        .hamburger-item i {
+            width: 20px;
+            text-align: center;
+            color: var(--primary-orange);
+        }
+
+        .hamburger-item span {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border-color);
+            border-radius: 25px;
+            padding: 8px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 1024px) {
+            .main-content {
+                grid-template-columns: 400px 1fr;
+            }
+        }
+
+        .sidebar {
+            background: var(--bg-primary);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            height: fit-content;
+            order: 2;
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar {
+                order: 1;
+                position: sticky;
+                top: 90px;
+                max-height: calc(100vh - 110px);
+                overflow-y: auto;
+            }
+        }
+
+        .wheel-container {
+            background: var(--bg-primary);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            order: 1;
+            position: relative;
+        }
+
+        @media (min-width: 1024px) {
+            .wheel-container {
+                order: 2;
+            }
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1/1;
+            margin: 0 auto;
+        }
+
+        #wheelCanvas {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 10px 30px rgba(255, 107, 53, 0.3));
+            transition: transform 0.3s ease;
+        }
+
+        #wheelCanvas.spinning {
+            filter: drop-shadow(0 15px 40px rgba(255, 107, 53, 0.4));
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-top: 50px solid var(--primary-orange);
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+            z-index: 10;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        .spin-button {
+            margin-top: 25px;
+            padding: 18px 50px;
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-orange));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            font-family: 'Quicksand', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spin-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .spin-button:hover::before {
+            left: 100%;
+        }
+
+        .spin-button:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .spin-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .spin-button.spinning {
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Real-time Text Input */
+        .input-section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .realtime-input {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            resize: vertical;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: var(--transition);
+            font-family: 'Quicksand', sans-serif;
+            line-height: 1.6;
+        }
+
+        .realtime-input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+        }
+
+        .input-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .shortcuts-bar {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .shortcut-btn {
+            padding: 8px 15px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .shortcut-btn:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: var(--transition);
+            font-family: 'Quicksand', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-danger {
+            background: var(--danger-red);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--info-blue);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning-yellow);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .result-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-primary);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            animation: slideUp 0.5s;
+            max-width: 90%;
+            width: 450px;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translate(-50%, -40%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+
+        .winner-text {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .winner-name {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin-bottom: 25px;
+            word-wrap: break-word;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(247, 147, 30, 0.1));
+            border-radius: 15px;
+            border: 2px solid var(--primary-orange);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(255, 107, 53, 0.5); }
+            to { box-shadow: 0 0 20px rgba(255, 107, 53, 0.8); }
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .history-section {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .history-item {
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .history-item:hover {
+            transform: translateX(5px);
+        }
+
+        .history-winner {
+            font-weight: 600;
+            color: var(--primary-orange);
+        }
+
+        .history-time {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .history-delete {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-left: 8px;
+        }
+
+        .history-delete:hover {
+            color: var(--danger-red);
+            transform: scale(1.2);
+        }
+
+        .confetti {
+            position: fixed;
+            width: 15px;
+            height: 15px;
+            position: absolute;
+            animation: confetti-fall 4s linear;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .tools-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .tool-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .tool-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-orange);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-orange);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-lg);
+            z-index: 2000;
+            animation: slideUp 0.3s;
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 500;
+        }
+
+        .notification.success {
+            background: var(--success-green);
+        }
+
+        .notification.danger {
+            background: var(--danger-red);
+        }
+
+        .notification.info {
+            background: var(--info-blue);
+        }
+
+        .notification.warning {
+            background: var(--warning-yellow);
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 15px;
+            font-size: 12px;
+            color: var(--primary-orange);
+            font-weight: 600;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-orange);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .delete-confirmation {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            z-index: 2001;
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .delete-confirmation h3 {
+            margin-bottom: 15px;
+            color: var(--danger-red);
+        }
+
+        .delete-confirmation p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        .delete-confirmation-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .countdown-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 120px;
+            font-weight: 700;
+            color: var(--primary-orange);
+            text-shadow: 0 0 30px rgba(255, 107, 53, 0.8);
+            z-index: 5;
+            animation: countdownPulse 1s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes countdownPulse {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .settings-group {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .settings-group:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .settings-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .winner-highlight {
+            position: relative;
+            display: inline-block;
+        }
+
+        .winner-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--danger-red);
+            border-radius: 2px;
+            animation: strikethrough 0.5s ease-out;
+        }
+
+        @keyframes strikethrough {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Overlay for mobile menu */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-orange);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--dark-orange);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header-content {
+                padding: 0 10px;
+            }
+            
+            .logo {
+                font-size: 18px;
+            }
+            
+            .logo-icon {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+            
+            .winner-name {
+                font-size: 24px;
+            }
+            
+            .wheel-wrapper {
+                max-width: 350px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .shortcuts-bar {
+                justify-content: center;
+            }
+            
+            .shortcut-btn {
+                flex: 1;
+                min-width: 80px;
+                text-align: center;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* Focus styles */
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: 2px solid var(--primary-orange);
+            outline-offset: 2px;
+        }
+
+        /* Print styles */
+        @media print {
+            .header-controls,
+            .hamburger-menu,
+            .action-buttons,
+            .tools-section,
+            .confetti {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+            }
+            
+            .wheel-container {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-dharmachakra" style="color: white; font-size: 20px;"></i>
+                </div>
+                <span>Wheel Spinner Pro</span>
+            </div>
+            <div class="header-controls">
+                <!-- masii bingung soal hamburger gini awokawokak -->
+                <div class="hamburger-menu">
+    <button class="hamburger-btn" onclick="toggleHamburgerMenu()" aria-label="Menu">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+    </button>
+    <div class="hamburger-dropdown" id="hamburgerDropdown">
+        <div class="hamburger-item" onclick="goToRoot()">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </div>
+        <div class="hamburger-item" onclick="newWheel()">
+            <i class="fas fa-plus-circle"></i>
+            <span>Roda Baru</span>
+        </div>
+        <div class="hamburger-item" onclick="saveLoadMenu()">
+            <i class="fas fa-save"></i>
+            <span>Simpan & Muat</span>
+        </div>
+        <div class="hamburger-item" onclick="openSettings()">
+            <i class="fas fa-cog"></i>
+            <span>Pengaturan</span>
+        </div>
+        <div class="hamburger-item" onclick="showHistory()">
+            <i class="fas fa-history"></i>
+            <span>Riwayat</span>
+        </div>
+        <div class="hamburger-item" onclick="showHelp()">
+            <i class="fas fa-question-circle"></i>
+            <span>Bantuan</span>
+        </div>
+    </div>
+</div>
+                
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                    <span id="themeIcon">🌙</span>
+                    <span id="themeText">Mode Gelap</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- buat handphonee ncibhh -->
+    <div class="menu-overlay" id="menuOverlay" onclick="closeHamburgerMenu()"></div>
+
+    <div class="container">
+        <div class="main-content">
+            <aside class="sidebar">
+                <div class="input-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-edit"></i>
+                        Input Nama
+                        <span class="live-indicator">
+                            <span class="live-dot"></span>
+                            LIVE
+                        </span>
+                    </h3>
+                    <textarea 
+                        id="realtimeInput" 
+                        class="realtime-input" 
+                        placeholder="Ketik nama setiap baris...&#10;Contoh:&#10;Alice&#10;Bob&#10;Charlie&#10;Diana&#10;&#10;Roda akan update otomatis!"
+                        spellcheck="false"
+                        aria-label="Input nama untuk roda"
+                    ></textarea>
+                    <div class="input-stats">
+                        <span id="itemCount">0 item</span>
+                        <span>Ctrl+Enter untuk spin • Enter untuk baris baru</span>
+                    </div>
+                    
+                    <div class="shortcuts-bar">
+                        <button class="shortcut-btn" onclick="insertNames('Alice\nBob\nCharlie\nDiana\nEve')" aria-label="Tambah 5 nama contoh">
+                            <i class="fas fa-users"></i> 5 Nama
+                        </button>
+                        <button class="shortcut-btn" onclick="insertNames('1\n2\n3\n4\n5\n6\n7\n8\n9\n10')" aria-label="Tambah angka 1-10">
+                            <i class="fas fa-sort-numeric-up"></i> Angka
+                        </button>
+                        <button class="shortcut-btn" onclick="insertNames('A\nB\nC\nD\nE\nF\nG\nH\nI\nJ')" aria-label="Tambah huruf A-J">
+                            <i class="fas fa-font"></i> Huruf
+                        </button>
+                        <button class="shortcut-btn" onclick="insertNames('Ya\nTidak')" aria-label="Tambah opsi Ya/Tidak">
+                            <i class="fas fa-dice"></i> Ya/Tidak
+                        </button>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-danger" onclick="clearInput()" aria-label="Hapus semua item">
+                        <i class="fas fa-eraser"></i> Hapus
+                    </button>
+                    <button class="btn btn-success" onclick="saveToLocal()" aria-label="Simpan data">
+                        <i class="fas fa-save"></i> Simpan
+                    </button>
+                    <button class="btn btn-secondary" onclick="loadFromLocal()" aria-label="Muat data tersimpan">
+                        <i class="fas fa-folder-open"></i> Load
+                    </button>
+                    <button class="btn btn-secondary" onclick="copyToClipboard()" aria-label="Salin ke clipboard">
+                        <i class="fas fa-copy"></i> Copy
+                    </button>
+                </div>
+
+                <div class="tools-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-cog"></i>
+                        Pengaturan
+                    </h3>
+                    
+                    <div class="settings-group">
+                        <div class="settings-title">Animasi</div>
+                        <div class="tool-item">
+                            <span class="tool-label">
+                                <i class="fas fa-hourglass-half"></i>
+                                Countdown Sebelum Spin
+                            </span>
+                            <label class="switch">
+                                <input type="checkbox" id="countdownToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="tool-item">
+                            <span class="tool-label">
+                                <i class="fas fa-star"></i>
+                                Animasi Confetti
+                            </span>
+                            <label class="switch">
+                                <input type="checkbox" id="confettiToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <div class="settings-title">Suara</div>
+                        <div class="tool-item">
+                            <span class="tool-label">
+                                <i class="fas fa-volume-up"></i>
+                                Efek Suara
+                            </span>
+                            <label class="switch">
+                                <input type="checkbox" id="soundToggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="settings-group">
+                        <div class="settings-title">Otomatis</div>
+                        <div class="tool-item">
+                            <span class="tool-label">
+                                <i class="fas fa-sync"></i>
+                                Putar Otomatis
+                            </span>
+                            <label class="switch">
+                                <input type="checkbox" id="autoSpinToggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-history"></i>
+                        Riwayat
+                    </h3>
+                    <div id="historyContainer"></div>
+                </div>
+            </aside>
+
+            <main class="wheel-container">
+                <div class="wheel-wrapper">
+                    <div class="wheel-pointer"></div>
+                    <canvas id="wheelCanvas" role="img" aria-label="Roda putar dengan nama-nama"></canvas>
+                </div>
+                <button class="spin-button" id="spinButton" onclick="spin()" aria-label="Putar roda">
+                    <i class="fas fa-play"></i> PUTAR RODA
+                </button>
+            </main>
+        </div>
+    </div>
+
+    <div class="result-modal" id="resultModal" role="dialog" aria-labelledby="winnerTitle" aria-hidden="true">
+        <div class="modal-content">
+            <h2 id="winnerTitle" class="winner-text">🎉 Selamat! Pemenangnya adalah:</h2>
+            <div class="winner-name" id="winnerName" role="alert"></div>
+            <div class="modal-buttons">
+                <button class="btn btn-primary" onclick="spinAgain()" aria-label="Putar lagi">
+                    <i class="fas fa-redo"></i> Putar Lagi
+                </button>
+                <button class="btn btn-danger" onclick="removeWinner()" aria-label="Hapus pemenang">
+                    <i class="fas fa-user-minus"></i> Hapus Pemenang
+                </button>
+                <button class="btn btn-secondary" onclick="closeModal()" aria-label="Tutup modal">
+                    <i class="fas fa-times"></i> Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables (javascript dibantu ai ehehehe)
+        let segments = [];
+        let colors = [];
+        let currentRotation = 0;
+        let isSpinning = false;
+        let history = [];
+        let canvas, ctx;
+        let winnerIndex = -1;
+        let winnerName = '';
+        let updateTimeout;
+        let audioContext = null;
+
+        // Color palette pakaai hex colorr
+        const colorPalette = [
+            '#FF6B35', '#F7931E', '#FFC947', '#FF5733', 
+            '#C70039', '#900C3F', '#581845', '#FF8C42',
+            '#FFA07A', '#FA8072', '#E9967A', '#F08080'
+        ];
+
+        // Initialize application (sisanya llmc yg bantu ehehe)
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeApp();
+            setupEventListeners();
+            loadFromLocalStorage();
+            drawWheel();
+        });
+
+        function initializeApp() {
+            canvas = document.getElementById('wheelCanvas');
+            ctx = canvas.getContext('2d');
+            resizeCanvas();
+            
+            // Initialize audio context on first user interaction
+            document.addEventListener('click', initAudioContext, { once: true });
+        }
+
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function setupEventListeners() {
+            // Real-time input handler
+            const input = document.getElementById('realtimeInput');
+            input.addEventListener('input', debounce(handleRealtimeInput, 150));
+            input.addEventListener('keypress', handleInputKeypress);
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', handleKeyboardShortcuts);
+
+            // Settings change listeners
+            ['countdownToggle', 'confettiToggle', 'soundToggle'].forEach(id => {
+                document.getElementById(id).addEventListener('change', saveSettings);
+            });
+
+            document.getElementById('autoSpinToggle').addEventListener('change', handleAutoSpinToggle);
+
+            // Window resize
+            window.addEventListener('resize', debounce(resizeCanvas, 250));
+
+            // Close modals on escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+
+            // Close hamburger menu when clicking outside
+            document.addEventListener('click', handleClickOutside);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function handleInputKeypress(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                e.preventDefault();
+                if (segments.length > 0) {
+                    spin();
+                }
+            }
+        }
+
+        function handleKeyboardShortcuts(e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                e.preventDefault();
+                if (segments.length > 0) {
+                    spin();
+                }
+            }
+            if (e.key === ' ' && document.activeElement.tagName !== 'TEXTAREA' && document.activeElement.tagName !== 'INPUT') {
+                e.preventDefault();
+                if (segments.length > 0) {
+                    spin();
+                }
+            }
+        }
+
+        function handleAutoSpinToggle() {
+            saveSettings();
+            if (this.checked && segments.length > 0) {
+                setTimeout(() => spin(), 1000);
+            }
+        }
+
+        function handleClickOutside(e) {
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const dropdown = document.getElementById('hamburgerDropdown');
+            
+            if (!hamburgerMenu.contains(e.target) && dropdown.classList.contains('active')) {
+                closeHamburgerMenu();
+            }
+        }
+
+        function resizeCanvas() {
+            const wrapper = document.querySelector('.wheel-wrapper');
+            const size = Math.min(wrapper.offsetWidth, wrapper.offsetHeight);
+            canvas.width = size;
+            canvas.height = size;
+            drawWheel();
+        }
+
+        // Hamburger Menu Functions
+        function toggleHamburgerMenu() {
+            const dropdown = document.getElementById('hamburgerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+            
+            dropdown.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeHamburgerMenu() {
+            const dropdown = document.getElementById('hamburgerDropdown');
+            const overlay = document.getElementById('menuOverlay');
+            
+            dropdown.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        // Hamburger Menu Actions
+        function newWheel() {
+            showDeleteConfirmation(
+                'Buat Roda Baru?',
+                'Apakah Anda yakin ingin membuat roda baru? Semua data saat ini akan dihapus.',
+                () => {
+                    document.getElementById('realtimeInput').value = '';
+                    handleRealtimeInput();
+                    history = [];
+                    updateHistoryDisplay();
+                    saveToLocalStorage();
+                    showNotification('Roda baru telah dibuat!', 'success');
+                    closeHamburgerMenu();
+                }
+            );
+        }
+
+        function saveLoadMenu() {
+            showModal('saveLoadModal', `
+                <h3><i class="fas fa-save"></i> Simpan & Muat</h3>
+                <div class="modal-buttons" style="flex-direction: column; gap: 10px;">
+                    <button class="btn btn-success" onclick="saveToLocal(); closeModal('saveLoadModal');">
+                        <i class="fas fa-save"></i> Simpan Data Saat Ini
+                    </button>
+                    <button class="btn btn-primary" onclick="loadFromLocal(); closeModal('saveLoadModal');">
+                        <i class="fas fa-folder-open"></i> Muat Data Tersimpan
+                    </button>
+                    <button class="btn btn-info" onclick="exportData(); closeModal('saveLoadModal');">
+                        <i class="fas fa-download"></i> Export ke File
+                    </button>
+                    <button class="btn btn-warning" onclick="importData(); closeModal('saveLoadModal');">
+                        <i class="fas fa-upload"></i> Import dari File
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeModal('saveLoadModal');">
+                        <i class="fas fa-times"></i> Tutup
+                    </button>
+                </div>
+            `);
+            closeHamburgerMenu();
+        }
+
+        function openSettings() {
+            document.querySelector('.tools-section').scrollIntoView({ behavior: 'smooth' });
+            closeHamburgerMenu();
+            showNotification('Pengaturan dibuka', 'info');
+        }
+
+        function showHistory() {
+            document.querySelector('.history-section').scrollIntoView({ behavior: 'smooth' });
+            closeHamburgerMenu();
+            showNotification('Riwayat dibuka', 'info');
+        }
+
+        function showHelp() {
+            showModal('helpModal', `
+                <h3><i class="fas fa-question-circle"></i> Bantuan</h3>
+                <div style="text-align: left; color: var(--text-secondary); line-height: 1.6;">
+                    <h4 style="color: var(--primary-orange); margin-bottom: 10px;">Cara Menggunakan:</h4>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        <li>Ketik nama setiap baris di kotak input</li>
+                        <li>Klik "PUTAR RODA" atau tekan Ctrl+Enter</li>
+                        <li>Pemenang akan ditampilkan dengan animasi</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--primary-orange); margin-bottom: 10px;">Shortcut Keyboard:</h4>
+                    <ul style="margin-left: 20px; margin-bottom: 15px;">
+                        <li><kbd>Ctrl+Enter</kbd> - Putar roda</li>
+                        <li><kbd>Space</kbd> - Putar roda (ketika tidak fokus di input)</li>
+                        <li><kbd>Escape</kbd> - Tutup modal/menu</li>
+                    </ul>
+                    
+                    <h4 style="color: var(--primary-orange); margin-bottom: 10px;">Tips:</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>Gunakan tombol shortcut untuk cepat menambah item</li>
+                        <li>Data otomatis tersimpan di browser</li>
+                        <li>Kustomisasi pengaturan sesuai kebutuhan</li>
+                    </ul>
+                </div>
+                <div style="margin-top: 20px;">
+                    <button class="btn btn-primary" onclick="closeModal('helpModal')">
+                        <i class="fas fa-check"></i> Mengerti
+                    </button>
+                </div>
+            `);
+            closeHamburgerMenu();
+        }
+
+        function showModal(modalId, content) {
+            // Remove existing modal if any
+            const existingModal = document.getElementById(modalId);
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            const modal = document.createElement('div');
+            modal.className = 'result-modal';
+            modal.id = modalId;
+            modal.style.display = 'block';
+            modal.innerHTML = `<div class="modal-content">${content}</div>`;
+            document.body.appendChild(modal);
+        }
+
+        function closeModal(modalId) {
+            if (modalId) {
+                const modal = document.getElementById(modalId);
+                if (modal) modal.remove();
+            } else {
+                document.getElementById('resultModal').style.display = 'none';
+            }
+        }
+
+        function closeAllModals() {
+            document.querySelectorAll('.result-modal').forEach(modal => modal.remove());
+            document.getElementById('resultModal').style.display = 'none';
+            closeHamburgerMenu();
+            closeDeleteConfirmation();
+        }
+
+        function exportData() {
+            try {
+                const data = {
+                    segments: segments,
+                    history: history,
+                    settings: getSettings(),
+                    timestamp: new Date().toISOString(),
+                    version: '1.0'
+                };
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `wheel-spinner-${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                showNotification('Data berhasil diekspor!', 'success');
+            } catch (error) {
+                showNotification('Gagal mengekspor data!', 'danger');
+                console.error('Export error:', error);
+            }
+        }
+
+        function importData() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(event) {
+                        try {
+                            const data = JSON.parse(event.target.result);
+                            
+                            // Validate data structure
+                            if (!data.version) {
+                                showNotification('Format file tidak didukung!', 'danger');
+                                return;
+                            }
+                            
+                            // Load segments
+                            if (data.segments && Array.isArray(data.segments)) {
+                                document.getElementById('realtimeInput').value = data.segments.join('\n');
+                                handleRealtimeInput();
+                            }
+                            
+                            // Load history
+                            if (data.history && Array.isArray(data.history)) {
+                                history = data.history.slice(0, 10); // Limit to 10 items
+                                updateHistoryDisplay();
+                            }
+                            
+                            // Load settings
+                            if (data.settings) {
+                                applySettings(data.settings);
+                            }
+                            
+                            saveToLocalStorage();
+                            showNotification('Data berhasil diimpor!', 'success');
+                        } catch (error) {
+                            showNotification('Gagal mengimpor data! Format file tidak valid.', 'danger');
+                            console.error('Import error:', error);
+                        }
+                    };
+                    reader.readAsText(file);
+                }
+            };
+            input.click();
+        }
+
+        function getSettings() {
+            return {
+                countdown: document.getElementById('countdownToggle').checked,
+                confetti: document.getElementById('confettiToggle').checked,
+                sound: document.getElementById('soundToggle').checked,
+                autoSpin: document.getElementById('autoSpinToggle').checked
+            };
+        }
+
+        function applySettings(settings) {
+            document.getElementById('countdownToggle').checked = settings.countdown !== false;
+            document.getElementById('confettiToggle').checked = settings.confetti !== false;
+            document.getElementById('soundToggle').checked = settings.sound !== false;
+            document.getElementById('autoSpinToggle').checked = settings.autoSpin === true;
+            saveSettings();
+        }
+
+        function handleRealtimeInput() {
+            const input = document.getElementById('realtimeInput');
+            const lines = input.value.split('\n').filter(line => line.trim());
+            
+            segments = lines;
+            colors = segments.map((_, i) => colorPalette[i % colorPalette.length]);
+            
+            // Update stats
+            document.getElementById('itemCount').textContent = `${segments.length} item`;
+            
+            drawWheel();
+            saveToLocalStorage();
+        }
+
+        function insertNames(text) {
+            const input = document.getElementById('realtimeInput');
+            if (input.value && !input.value.endsWith('\n')) {
+                input.value += '\n';
+            }
+            input.value += text;
+            handleRealtimeInput();
+            input.focus();
+            
+            // Scroll to bottom
+            input.scrollTop = input.scrollHeight;
+        }
+
+        function clearInput() {
+            showDeleteConfirmation(
+                'Hapus Semua Item?',
+                'Apakah Anda yakin ingin menghapus semua item dari roda?',
+                () => {
+                    document.getElementById('realtimeInput').value = '';
+                    handleRealtimeInput();
+                    showNotification('Semua item telah dihapus!', 'success');
+                }
+            );
+        }
+
+        function saveToLocal() {
+            try {
+                const input = document.getElementById('realtimeInput');
+                const data = {
+                    text: input.value,
+                    timestamp: new Date().toISOString()
+                };
+                localStorage.setItem('wheelSpinnerSaved', JSON.stringify(data));
+                showNotification('Data berhasil disimpan!', 'success');
+            } catch (error) {
+                showNotification('Gagal menyimpan data!', 'danger');
+                console.error('Save error:', error);
+            }
+        }
+
+        function loadFromLocal() {
+            try {
+                const saved = localStorage.getItem('wheelSpinnerSaved');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('realtimeInput').value = data.text || '';
+                    handleRealtimeInput();
+                    showNotification('Data berhasil dimuat!', 'success');
+                } else {
+                    showNotification('Tidak ada data tersimpan!', 'warning');
+                }
+            } catch (error) {
+                showNotification('Gagal memuat data!', 'danger');
+                console.error('Load error:', error);
+            }
+        }
+
+        function copyToClipboard() {
+            try {
+                const input = document.getElementById('realtimeInput');
+                input.select();
+                document.execCommand('copy');
+                showNotification('Tersalin ke clipboard!', 'success');
+            } catch (error) {
+                showNotification('Gagal menyalin ke clipboard!', 'danger');
+                console.error('Copy error:', error);
+            }
+        }
+
+        function drawWheel() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(centerX, centerY) - 20;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            if (segments.length === 0) {
+                // Draw empty wheel
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+                ctx.fillStyle = '#f0f0f0';
+                ctx.fill();
+                ctx.strokeStyle = '#ddd';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                ctx.fillStyle = '#999';
+                ctx.font = `${Math.max(14, radius/10)}px Quicksand`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('Mulai mengetik untuk membuat roda', centerX, centerY);
+                return;
+            }
+            
+            const anglePerSegment = (2 * Math.PI) / segments.length;
+            
+            segments.forEach((segment, index) => {
+                const startAngle = index * anglePerSegment + currentRotation;
+                const endAngle = startAngle + anglePerSegment;
+                
+                // Draw segment
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = colors[index];
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                
+                // Draw text
+                ctx.save();
+                ctx.translate(centerX, centerY);
+                ctx.rotate(startAngle + anglePerSegment / 2);
+                ctx.textAlign = 'center';
+                ctx.fillStyle = '#fff';
+                ctx.font = `bold ${Math.max(12, radius/12)}px Quicksand`;
+                
+                // Truncate text if too long
+                let displayText = segment;
+                const maxWidth = radius * 0.8;
+                if (ctx.measureText(displayText).width > maxWidth) {
+                    while (ctx.measureText(displayText + '...').width > maxWidth && displayText.length > 0) {
+                        displayText = displayText.substring(0, displayText.length - 1);
+                    }
+                    displayText += '...';
+                }
+                
+                ctx.fillText(displayText, radius / 2, 0);
+                ctx.restore();
+            });
+            
+            // Draw center circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius * 0.08, 0, 2 * Math.PI);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.strokeStyle = '#FF6B35';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+        }
+
+        function spin() {
+            if (isSpinning || segments.length === 0) {
+                if (segments.length === 0) {
+                    showNotification('Tambahkan item terlebih dahulu!', 'warning');
+                }
+                return;
+            }
+            
+            isSpinning = true;
+            const spinButton = document.getElementById('spinButton');
+            spinButton.disabled = true;
+            spinButton.classList.add('spinning');
+            canvas.classList.add('spinning');
+            
+            // Check if countdown is enabled
+            const countdownEnabled = document.getElementById('countdownToggle').checked;
+            
+            if (countdownEnabled) {
+                showCountdown(3, () => performSpin());
+            } else {
+                performSpin();
+            }
+        }
+
+        function performSpin() {
+            const spinDuration = 4000 + Math.random() * 2000;
+            const totalRotation = (Math.PI * 2 * (8 + Math.random() * 8));
+            const startTime = Date.now();
+            const startRotation = currentRotation;
+            
+            // Play sound effect
+            if (document.getElementById('soundToggle').checked) {
+                playSpinSound();
+            }
+            
+            function animate() {
+                const now = Date.now();
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                
+                // Enhanced easing function
+                const easeOut = 1 - Math.pow(1 - progress, 4);
+                currentRotation = startRotation + totalRotation * easeOut;
+                
+                drawWheel();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    finishSpin();
+                }
+            }
+            
+            animate();
+        }
+
+        function finishSpin() {
+            isSpinning = false;
+            const spinButton = document.getElementById('spinButton');
+            spinButton.disabled = false;
+            spinButton.classList.remove('spinning');
+            canvas.classList.remove('spinning');
+            
+            // Calculate winner with improved accuracy
+            const normalizedRotation = currentRotation % (2 * Math.PI);
+            const adjustedRotation = (normalizedRotation + Math.PI / 2) % (2 * Math.PI);
+            winnerIndex = Math.floor((2 * Math.PI - adjustedRotation) / (2 * Math.PI / segments.length)) % segments.length;
+            winnerName = segments[winnerIndex];
+            
+            // Show winner with dramatic pause
+            setTimeout(() => showWinner(), 500);
+            
+            // Add to history
+            addToHistory(winnerName);
+            
+            // Check auto spin
+            if (document.getElementById('autoSpinToggle').checked) {
+                setTimeout(() => spin(), 3000);
+            }
+        }
+
+        function showCountdown(count, callback) {
+            const wrapper = document.querySelector('.wheel-wrapper');
+            
+            if (count > 0) {
+                const countdown = document.createElement('div');
+                countdown.className = 'countdown-overlay';
+                countdown.textContent = count;
+                wrapper.appendChild(countdown);
+                
+                if (document.getElementById('soundToggle').checked) {
+                    playCountdownSound();
+                }
+                
+                setTimeout(() => {
+                    countdown.remove();
+                    showCountdown(count - 1, callback);
+                }, 1000);
+            } else {
+                const go = document.createElement('div');
+                go.className = 'countdown-overlay';
+                go.textContent = 'GO!';
+                go.style.color = '#28A745';
+                wrapper.appendChild(go);
+                
+                if (document.getElementById('soundToggle').checked) {
+                    playGoSound();
+                }
+                
+                setTimeout(() => {
+                    go.remove();
+                    callback();
+                }, 1000);
+            }
+        }
+
+        function showWinner() {
+            const winnerNameElement = document.getElementById('winnerName');
+            
+            // Dramatic reveal
+            winnerNameElement.style.opacity = '0';
+            document.getElementById('resultModal').style.display = 'block';
+            document.getElementById('resultModal').setAttribute('aria-hidden', 'false');
+            
+            setTimeout(() => {
+                winnerNameElement.textContent = winnerName;
+                winnerNameElement.style.transition = 'opacity 1s ease-in';
+                winnerNameElement.style.opacity = '1';
+            }, 200);
+            
+            // Enhanced confetti
+            if (document.getElementById('confettiToggle').checked) {
+                createEnhancedConfetti();
+            }
+            
+            // Play win sound
+            if (document.getElementById('soundToggle').checked) {
+                playWinSound();
+            }
+        }
+
+        function createEnhancedConfetti() {
+            const colors = ['#FF6B35', '#F7931E', '#FFC947', '#FF5733', '#C70039', '#28A745', '#007BFF', '#6F42C1'];
+            
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 5000);
+                }, i * 20);
+            }
+        }
+
+        function spinAgain() {
+            closeModal();
+            setTimeout(() => spin(), 500);
+        }
+
+        function removeWinner() {
+            if (!winnerName || winnerIndex < 0 || winnerIndex >= segments.length) {
+                showNotification('Tidak ada pemenang yang bisa dihapus!', 'danger');
+                return;
+            }
+            
+            // Add strikethrough effect
+            const winnerNameElement = document.getElementById('winnerName');
+            winnerNameElement.classList.add('winner-highlight');
+            
+            // Play remove sound
+            if (document.getElementById('soundToggle').checked) {
+                playRemoveSound();
+            }
+            
+            setTimeout(() => {
+                const input = document.getElementById('realtimeInput');
+                const lines = input.value.split('\n');
+                const cleanedLines = lines.filter(line => line.trim());
+                const winnerLineIndex = cleanedLines.findIndex(line => line.trim() === winnerName.trim());
+                
+                if (winnerLineIndex !== -1) {
+                    // Remove from original lines array
+                    let actualIndex = 0;
+                    for (let i = 0; i < lines.length; i++) {
+                        if (lines[i].trim()) {
+                            if (actualIndex === winnerLineIndex) {
+                                lines.splice(i, 1);
+                                break;
+                            }
+                            actualIndex++;
+                        }
+                    }
+                    
+                    input.value = lines.join('\n');
+                    handleRealtimeInput();
+                    showNotification(`"${winnerName}" telah dihapus dari roda!`, 'success');
+                    closeModal();
+                } else {
+                    showNotification('Pemenang tidak ditemukan dalam daftar!', 'danger');
+                    winnerNameElement.classList.remove('winner-highlight');
+                }
+                
+                // Reset winner variables
+                winnerName = '';
+                winnerIndex = -1;
+            }, 500);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('resultModal');
+            const winnerNameElement = document.getElementById('winnerName');
+            
+            winnerNameElement.classList.remove('winner-highlight');
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+            
+            winnerName = '';
+            winnerIndex = -1;
+        }
+
+        function showDeleteConfirmation(title, message, onConfirm) {
+            closeDeleteConfirmation();
+            
+            const confirmation = document.createElement('div');
+            confirmation.className = 'delete-confirmation';
+            confirmation.innerHTML = `
+                <h3><i class="fas fa-exclamation-triangle"></i> ${title}</h3>
+                <p>${message}</p>
+                <div class="delete-confirmation-buttons">
+                    <button class="btn btn-danger" onclick="executeDelete()">
+                        <i class="fas fa-trash"></i> Hapus
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeDeleteConfirmation()">
+                        <i class="fas fa-times"></i> Batal
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(confirmation);
+            window.deleteCallback = onConfirm;
+        }
+
+        function executeDelete() {
+            if (window.deleteCallback) {
+                window.deleteCallback();
+                window.deleteCallback = null;
+            }
+            closeDeleteConfirmation();
+        }
+
+        function closeDeleteConfirmation() {
+            const confirmation = document.querySelector('.delete-confirmation');
+            if (confirmation) {
+                confirmation.remove();
+            }
+            window.deleteCallback = null;
+        }
+
+        function addToHistory(winner) {
+            const time = new Date().toLocaleTimeString('id-ID');
+            history.unshift({ winner, time });
+            if (history.length > 10) history.pop();
+            
+            updateHistoryDisplay();
+            saveToLocalStorage();
+        }
+
+        function updateHistoryDisplay() {
+            const container = document.getElementById('historyContainer');
+            container.innerHTML = '';
+            
+            if (history.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">Belum ada riwayat</p>';
+                return;
+            }
+            
+            history.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <span class="history-winner">${item.winner}</span>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span class="history-time">${item.time}</span>
+                        <button class="history-delete" onclick="deleteHistoryItem(${index})" title="Hapus dari riwayat">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function deleteHistoryItem(index) {
+            history.splice(index, 1);
+            updateHistoryDisplay();
+            saveToLocalStorage();
+            showNotification('Item dihapus dari riwayat', 'success');
+        }
+
+        function saveSettings() {
+            try {
+                const settings = getSettings();
+                localStorage.setItem('wheelSpinnerSettings', JSON.stringify(settings));
+            } catch (error) {
+                console.error('Settings save error:', error);
+            }
+        }
+
+        function loadSettings() {
+            try {
+                const saved = localStorage.getItem('wheelSpinnerSettings');
+                if (saved) {
+                    const settings = JSON.parse(saved);
+                    applySettings(settings);
+                }
+            } catch (error) {
+                console.error('Settings load error:', error);
+            }
+        }
+
+        function saveToLocalStorage() {
+            try {
+                const data = {
+                    input: document.getElementById('realtimeInput').value,
+                    history: history.slice(0, 10) // Limit history size
+                };
+                localStorage.setItem('wheelSpinnerData', JSON.stringify(data));
+            } catch (error) {
+                console.error('Data save error:', error);
+            }
+        }
+
+        function loadFromLocalStorage() {
+            try {
+                const saved = localStorage.getItem('wheelSpinnerData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('realtimeInput').value = data.input || '';
+                    history = data.history || [];
+                    handleRealtimeInput();
+                    updateHistoryDisplay();
+                }
+                
+                loadSettings();
+            } catch (error) {
+                console.error('Data load error:', error);
+            }
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                icon.textContent = '🌙';
+                text.textContent = 'Mode Gelap';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                icon.textContent = '☀️';
+                text.textContent = 'Mode Terang';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Load theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.getElementById('themeIcon').textContent = '☀️';
+            document.getElementById('themeText').textContent = 'Mode Terang';
+        }
+
+        function showNotification(message, type = 'primary') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Sound effects with error handling
+        function playCountdownSound() {
+            playSound(800, 'sine', 0.2, 0.2);
+        }
+
+        function playGoSound() {
+            playSound(1200, 'sine', 0.3, 0.3);
+        }
+
+        function playSpinSound() {
+            playSound(200, 'sine', 0.1, 0.1);
+        }
+
+        function playWinSound() {
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            notes.forEach((freq, i) => {
+                setTimeout(() => playSound(freq, 'sine', 0.2, 0.5), i * 150);
+            });
+        }
+
+        function playRemoveSound() {
+            playSound(300, 'sawtooth', 0.1, 0.2);
+        }
+
+        function playSound(frequency, type, volume, duration) {
+            try {
+                if (!audioContext) return;
+                
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = frequency;
+                oscillator.type = type;
+                gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch (error) {
+                console.log('Audio not supported:', error);
+            }
+        }
+
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                from { opacity: 1; }
+                to { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
