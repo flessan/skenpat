@@ -1,19 +1,19 @@
 {
-  "name": "Skenpat - SMK Negeri 4 Banjarmasin",
+  "name": "Skenpat SMKN 4 Banjarmasin",
   "short_name": "Skenpat",
-  "description": "Unofficial portal for SMKN 4 Banjarmasin students",
+  "description": "Website tak resmi SMKN 4 Banjarmasin",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#F46900",
   "icons": [
     {
-      "src": "https://imgpx.com/en/aDhTgqgh3Lqr-192.png",
+      "src": "https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://imgpx.com/en/aDhTgqgh3Lqr-512.png",
+      "src": "https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
