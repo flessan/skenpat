@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#F46900" />
-
+  
   <!-- Primary Meta Tags -->
   <title>Skenpat (Unofficial) | SMKN 4 Banjarmasin</title>
   <meta name="description" content="Website tak resmi SMKN 4 Banjarmasin: ekstrakurikuler, jadwal, profil, visi misi, dan link penting." />
@@ -12,15 +12,20 @@
   <meta name="author" content="Thio Saputra, Flessan, Unofficial Skenpat Team" />
   <meta name="robots" content="index,follow" />
   <meta name="google-site-verification" content="LLRTvgE6Hv0v2j79WKysj9p2CQdyWPLxIgvkjRpy2sM" />
-
+  
+  <!-- Performance & Security Meta Tags -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="referrer" content="origin-when-cross-origin" />
+  <meta http-equiv="Cache-Control" content="max-age=31536000, immutable" />
+  
   <!-- Canonical -->
   <link rel="canonical" href="https://skenpat.pages.dev/" />
-
+  
   <!-- Favicon & PWA Icons -->
   <link rel="icon" href="https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef.png" type="image/png" />
   <link rel="apple-touch-icon" href="https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef-192.png" />
   <link rel="manifest" href="/manifest.json" />
-
+  
   <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://skenpat.pages.dev/" />
@@ -28,11 +33,11 @@
   <meta property="og:description" content="Website tak resmi SMKN 4 Banjarmasin: jadwal, ekstrakurikuler, link penting, profil, dan visi misi." />
   <meta property="og:image" content="https://skenpat.pages.dev/g.png" />
   <meta property="og:site_name" content="Skenpat SMKN 4 Banjarmasin" />
-
+  
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@skenpat" />
   <meta name="twitter:creator" content="@flessan" />
-
+  
   <!-- Schema.org -->
   <script type="application/ld+json">
   {
@@ -49,13 +54,143 @@
     }
   }
   </script>
-
-  <!-- Fonts & CSS -->
+  
+  <!-- Preconnect to external domains -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+  <link rel="preconnect" href="https://res.cloudinary.com" />
+  <link rel="preconnect" href="https://www3.cbox.ws" />
+  <link rel="preconnect" href="https://www.youtube.com" />
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap&font-display=swap" as="style" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" />
+  <link rel="preload" href="/aset/skenpat.css" as="style" />
+  <link rel="preload" href="https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef.png" as="image" />
+  
+  <!-- Fonts & CSS -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap&font-display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/aset/skenpat.css" />
+  
+  <!-- Inline critical CSS for faster initial render -->
+  <style>
+    /* Critical CSS for initial render */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #0a0a0a;
+      color: #f0f0f0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: #0a0a0a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      transition: opacity 0.5s, visibility 0.5s;
+    }
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-circle {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(244, 105, 0, 0.2);
+      border-top-color: #F46900;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .app-container {
+      width: 100%;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.7s forwards;
+      animation-delay: 0.3s;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fab, .back-to-top {
+      position: fixed;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+    .fab {
+      bottom: 25px;
+      right: 25px;
+      background: linear-gradient(135deg, #F46900, #FF8A4C);
+      color: white;
+    }
+    .back-to-top {
+      bottom: 25px;
+      left: 25px;
+      background: rgba(30, 30, 30, 0.9);
+      backdrop-filter: blur(10px);
+      color: #F46900;
+      opacity: 0;
+      visibility: hidden;
+      border: 1px solid rgba(244, 105, 0, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  </style>
+  
+  <!-- Defer non-critical CSS -->
+  <link rel="stylesheet" href="/aset/non-critical.css" media="print" onload="this.media='all'">
+  
+  <!-- Preconnect for DNS prefetching -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com" />
+  <link rel="dns-prefetch" href="//res.cloudinary.com" />
 </head>
 <body>
   <!-- Loading Screen -->
@@ -67,7 +202,7 @@
   <nav class="navbar" id="navbar">
     <div class="navbar-container">
       <div class="navbar-logo">
-        <img src="https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef.png" alt="SMKN4BJM Logo">
+        <img src="https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef.png" alt="SMKN4BJM Logo" width="36" height="36" loading="lazy">
         <span>SMKN4BJM</span>
       </div>
       <ul class="navbar-menu" id="navbar-menu">
@@ -76,7 +211,7 @@
         <li><a href="#team">Tim</a></li>
         <li><a href="#profile">Profil</a></li>
       </ul>
-      <button class="navbar-toggle" id="navbar-toggle">
+      <button class="navbar-toggle" id="navbar-toggle" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
     </div>
@@ -229,6 +364,203 @@
     </main>
   </div>
 
+  <!-- Defer non-critical JavaScript -->
   <script src="/aset/sken.js" defer></script>
+  
+  <!-- Inline critical JavaScript -->
+  <script>
+    // Service Worker Registration for Caching
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/aset/sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+          })
+          .catch(error => {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+      });
+    }
+    
+    // Enhanced Loader
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const loader = document.getElementById('loader');
+        if (loader) {
+          loader.classList.add('hidden');
+          
+          // Remove loader from DOM after transition completes
+          loader.addEventListener('transitionend', () => {
+            loader.remove();
+          });
+        }
+      }, 400);
+    });
+    
+    // Enhanced Navigation
+    document.addEventListener('DOMContentLoaded', () => {
+      const navbar = document.getElementById('navbar');
+      const navbarToggle = document.getElementById('navbar-toggle');
+      const navbarMenu = document.getElementById('navbar-menu');
+      const backBtn = document.getElementById('backToTop');
+      const fab = document.getElementById('fab');
+      
+      // Mobile menu toggle
+      if (navbarToggle && navbarMenu) {
+        navbarToggle.addEventListener('click', () => {
+          navbarMenu.classList.toggle('active');
+          const icon = navbarToggle.querySelector('i');
+          if (icon) {
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+          }
+        });
+      }
+      
+      // Navbar scroll effect
+      window.addEventListener('scroll', () => {
+        if (navbar) {
+          if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+          } else {
+            navbar.classList.remove('scrolled');
+          }
+        }
+        
+        // Back to top button visibility
+        if (backBtn) {
+          backBtn.classList.toggle('visible', window.scrollY > 300);
+        }
+      });
+      
+      // Back to top functionality
+      if (backBtn) {
+        backBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+      
+      // Fun Facts
+      const funFacts = [
+        "👾 Website ini dibuat full oleh satu orang siswa RPL 1 kelas 10.",
+        "🦄 Pemilik Subdomain & UI/UX designer adalah satu orang yang sama.",
+        "✨ Tanpa framework, cuma HTML, CSS & JS. Udahh Html Statis aja Gitu",
+        '🌱 Selalu update, kalo tidak hubungi saja <a href="https://flessan.pages.dev/#contact" target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a>',
+        "💡 Powered by Orang Baik, Siapa Lagi? Github Ama Cloudflare ygy",
+        "🤕 Si Atmin Kerja Kerja Gini Ga Bergaji Loo, Siapa Juga Yg Bayar Ama Ginian",
+        "😄 Kamu Coba Bacain Semua Fun Fact Ini?</br> </br>(Kesempatan Mendapatkan Chat Langka Naik -1 Persen)",
+        "🔥 Support SMKN 4 Banjarmasin, spread positivity!",
+        "😎 Fitur baru akan hadir, pantau terus ya!",
+        '😄 Donasi Atmin tempatnya</br>Disini yaa <a href=" https://flessan.pages.dev/donate " target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a></br> </br>Si Atmin Belum Bergaji Nich, Bantuin Ya Orang Orang Baik :3',
+        "😄 DAMN! i Love Skenpat! </br>SMK Negeri 4 Banjarmasin!",
+        "🦧 DAMN! i Love Banjarmasin! </br>Kayuh Baimbai Waja Sampai Kaputing",
+        "😓 Dulu Webset Ini Ga Berloading Loo, Jadi Kutambahin Aja Biar Maksimol hehe",
+        "🎨 Desain UI ku buat biar enak di skrol di hape."
+      ];
+      
+      function showFunFact() {
+        const old = document.getElementById('fun-fact-notif');
+        if (old) old.remove();
+        
+        const fact = funFacts[Math.floor(Math.random() * funFacts.length)];
+        const notif = document.createElement('div');
+        notif.id = 'fun-fact-notif';
+        notif.innerHTML = `
+          <div style="background:rgba(30,30,30,0.98);color:#ffe6b8;border-radius:20px;box-shadow:0 8px 32px rgba(0,0,0,0.5);position:fixed;bottom:100px;right:32px;max-width:350px;z-index:9999;padding:1.5rem 2.2rem 1.25rem 1.25rem;font-size:1.05rem;line-height:1.6;animation:fadeInNotif 0.5s;border:1px solid #F46900;font-family:'Poppins',sans-serif;">
+            <button onclick="this.parentElement.parentElement.remove()" aria-label="Tutup" style="position:absolute;top:0.5rem;right:0.8rem;background:none;border:none;color:#f0ad4e;font-size:1.6rem;cursor:pointer;opacity:.7;">×</button>
+            <b style="color:#FFD966; font-size:1.1rem">Fun Fact:</b><br/>
+            <span>${fact}</span>
+          </div>
+        `;
+        document.body.appendChild(notif);
+      }
+      
+      if (fab) {
+        fab.addEventListener('click', showFunFact);
+      }
+      
+      // Privacy Policy & Terms of Service
+      window.showPrivacyPolicy = function() {
+        const content = `
+          <div style="max-width: 600px; margin: 0 auto; padding: 2rem; background: var(--card-dark); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Kebijakan Privasi</h2>
+            <p>Kami tidak mengumpulkan data pribadi apa pun dari pengunjung website ini. Website ini murni untuk informasi dan tidak memiliki fitur yang memerlukan data pribadi.</p>
+            <p>Kami menggunakan cookie minimal untuk pengalaman pengguna yang lebih baik, tetapi tidak melacak aktivitas pribadi Anda.</p>
+            <p style="margin-top: 1.5rem;">Terakhir diperbarui: Januari 2025</p>
+          </div>
+        `;
+        showModal("Kebijakan Privasi", content);
+      };
+      
+      window.showTermsOfService = function() {
+        const content = `
+          <div style="max-width: 600px; margin: 0 auto; padding: 2rem; background: var(--card-dark); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
+            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Syarat & Ketentuan</h2>
+            <p>Website ini adalah website tidak resmi yang dibuat untuk siswa SMKN 4 Banjarmasin. Kami tidak berafiliasi dengan pihak sekolah secara resmi.</p>
+            <p>Semua informasi di website ini bersifat informatif dan kami berusaha untuk menyajikan informasi yang akurat. Namun, kami tidak bertanggung jawab atas ketidakakuratan informasi yang mungkin ada.</p>
+            <p style="margin-top: 1.5rem;">Terakhir diperbarui: Januari 2025</p>
+          </div>
+        `;
+        showModal("Syarat & Ketentuan", content);
+      };
+      
+      window.showModal = function(title, content) {
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+          position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000;
+          display: flex; align-items: center; justify-content: center; padding: 1rem;
+          backdrop-filter: blur(5px);
+        `;
+        
+        modal.innerHTML = `
+          <div style="background: var(--card-dark); border-radius: 20px; max-width: 90vw; max-height: 90vh; overflow-y: auto; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 20px 60px rgba(0,0,0,0.5); position: relative;">
+            <div style="padding: 2rem;">
+              <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">${title}</h2>
+              ${content}
+              <button onclick="this.closest('div[style*=\"position: fixed\"]').remove()" style="margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--primary-color); color: white; border: none; border-radius: 30px; font-weight: 600; cursor: pointer;">Tutup</button>
+            </div>
+          </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Close on outside click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) modal.remove();
+        });
+      };
+      
+      // Add keyframes dynamically
+      if (!document.getElementById('dynamic-styles')) {
+        const style = document.createElement('style');
+        style.id = 'dynamic-styles';
+        style.textContent = `
+          @keyframes floaty {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-80px) scale(1.3); }
+          }
+          @keyframes fadeInNotif {
+            from { opacity: 0; transform: translateY(40px) scale(0.96); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+          }
+        `;
+        document.head.appendChild(style);
+      }
+      
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+    });
+  </script>
 </body>
 </html>
