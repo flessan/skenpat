@@ -1049,7 +1049,7 @@
                 
                 <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
                     <span id="themeIcon">🌙</span>
-                    <span id="themeText">Mode Gelap</span>
+                    <span id="themeText"></span>
                 </button>
             </div>
         </div>
@@ -1365,7 +1365,7 @@
                     <button class="btn btn-warning" onclick="importData(); closeModal('saveLoadModal');">
                         <i class="fas fa-upload"></i> Import dari File
                     </button>
-                    <button class="btn btn-secondary" onclick="closeModal('saveLoadModal');">
+                    <button class="btn btn-secondary" onclick="location.reload(true)">
                         <i class="fas fa-times"></i> Tutup
                     </button>
                 </div>
@@ -1408,7 +1408,7 @@
                     </ul>
                 </div>
                 <div style="margin-top: 20px;">
-                    <button class="btn btn-primary" onclick="closeModal('helpModal')">
+                    <button class="btn btn-primary" onclick="location.reload(true)">
                         <i class="fas fa-check"></i> Mengerti
                     </button>
                 </div>
@@ -2054,12 +2054,12 @@
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
                 icon.textContent = '🌙';
-                text.textContent = 'Mode Gelap';
+                text.textContent = '';
                 localStorage.setItem('theme', 'light');
             } else {
                 body.setAttribute('data-theme', 'dark');
                 icon.textContent = '☀️';
-                text.textContent = 'Mode Terang';
+                text.textContent = '';
                 localStorage.setItem('theme', 'dark');
             }
         }
@@ -2068,7 +2068,7 @@
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             document.getElementById('themeIcon').textContent = '☀️';
-            document.getElementById('themeText').textContent = 'Mode Terang';
+            document.getElementById('themeText').textContent = '';
         }
 
         function showNotification(message, type = 'primary') {
