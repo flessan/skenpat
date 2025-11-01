@@ -8,11 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initNavigation();
   initScrollEffects();
   initFloatingButtons();
-  initFunFacts(); // FIX: Function call was missing
-  initModals();   // FIX: Function call was missing
+  initFunFacts();
+  initModals();
   initSmoothScrolling();
   initAccessibility();
-  initMusicPlayer(); // FIX: Added music player initialization
 });
 
 // ================================
@@ -35,7 +34,7 @@ function initNavigation() {
     });
     
     // Close menu when clicking on a link
-    const menuLinks = navbarMenu.querySelectorAll('a, button');
+    const menuLinks = navbarMenu.querySelectorAll('a');
     menuLinks.forEach(link => {
       link.addEventListener('click', () => {
         navbarMenu.classList.remove('active');
@@ -92,20 +91,19 @@ function initFloatingButtons() {
 function initFunFacts() {
   const fab = document.getElementById('fab');
   
-  // FIX: Corrected function structure and added event listener
   const funFacts = [
     "👾 Website ini dibuat full oleh satu orang siswa RPL 1 kelas 10.",
     "🦄 Pemilik Subdomain & UI/UX designer adalah satu orang yang sama.",
     "✨ Tanpa framework, cuma HTML, CSS & JS. Udahh Html Statis aja Gitu",
     '🌱 Selalu update, kalo tidak hubungi saja <a href="https://flessan.pages.dev/#contact" target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a>',
     "💡 Powered by Orang Baik, Siapa Lagi? Github Ama Cloudflare ygy",
-    "🤕 Si developer kerja inisiatif diri sendiri loo, kamu juga bisa produktif! semangatt",
-    "😄 Kamu Coba Bacain Semua Fun Fact Ini?<br><br>(Kesempatan Mendapatkan Chat Langka Naik -1 Persen)",
+    "🤕 Si Atmin Kerja Kerja Gini Ga Bergaji Loo, Siapa Juga Yg Bayar Ama Ginian",
+    "😄 Kamu Coba Bacain Semua Fun Fact Ini?</br> </br>(Kesempatan Mendapatkan Chat Langka Naik -1 Persen)",
     "🔥 Support SMKN 4 Banjarmasin, spread positivity!",
     "😎 Fitur baru akan hadir, pantau terus ya!",
-    '😄 Donasi Atmin tempatnya<br>Disini yaa <a href=" https://flessan.pages.dev/donate " target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a><br><br>Si Atmin Belum Bergaji Nich, Bantuin Ya Orang Orang Baik :3',
-    "😄 DAMN! i Love Skenpat! <br>SMK Negeri 4 Banjarmasin!",
-    "🦧 DAMN! i Love Banjarmasin! <br>Kayuh Baimbai Waja Sampai Kaputing",
+    '😄 Donasi Atmin tempatnya</br>Disini yaa <a href=" https://flessan.pages.dev/donate " target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a></br> </br>Si Atmin Belum Bergaji Nich, Bantuin Ya Orang Orang Baik :3',
+    "😄 DAMN! i Love Skenpat! </br>SMK Negeri 4 Banjarmasin!",
+    "🦧 DAMN! i Love Banjarmasin! </br>Kayuh Baimbai Waja Sampai Kaputing",
     "😓 Dulu Webset Ini Ga Berloading Loo, Jadi Kutambahin Aja Biar Maksimol hehe",
     "🎨 Desain UI ku buat biar enak di skrol di hape."
   ];
@@ -155,27 +153,27 @@ function initFunFacts() {
 // MODAL FUNCTIONALITY
 // ================================
 function initModals() {
-  // FIX: Corrected function definition and structure
+  // Privacy Policy
   window.showPrivacyPolicy = function() {
     const content = `
-      <div style="max-width: 600px; margin: 0 auto; padding: 2rem; background: var(--card-dark); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Kebijakan Privasi</h2>
+      <div class="modal-content">
+        <h2>Kebijakan Privasi</h2>
         <p>Kami tidak mengumpulkan data pribadi apa pun dari pengunjung website ini. Website ini murni untuk informasi dan tidak memiliki fitur yang memerlukan data pribadi.</p>
-        <p>Kami menggunakan cookie minimal untuk pengalaman pengguna yang lebih baik, tetapi tidak melacak aktivitas pribadi Anda. <a href="https://flessan.pages.dev/#contact" target="_blank" style="color:#ffd966;text-decoration:underline;">lebih lengkap disini!</a></p>
-        <p style="margin-top: 1.5rem;">Terakhir diperbarui: Januari 2025</p>
+        <p>Kami menggunakan cookie minimal untuk pengalaman pengguna yang lebih baik, tetapi tidak melacak aktivitas pribadi Anda.</p>
+        <p class="modal-footer">Terakhir diperbarui: Januari 2025</p>
       </div>
     `;
     showModal("Kebijakan Privasi", content);
   };
   
+  // Terms of Service
   window.showTermsOfService = function() {
     const content = `
-      <div style="max-width: 600px; margin: 0 auto; padding: 2rem; background: var(--card-dark); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1);">
-        <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Syarat & Ketentuan</h2>
+      <div class="modal-content">
+        <h2>Syarat & Ketentuan</h2>
         <p>Website ini adalah website tidak resmi yang dibuat untuk siswa SMKN 4 Banjarmasin. Kami tidak berafiliasi dengan pihak sekolah secara resmi.</p>
         <p>Semua informasi di website ini bersifat informatif dan kami berusaha untuk menyajikan informasi yang akurat. Namun, kami tidak bertanggung jawab atas ketidakakuratan informasi yang mungkin ada.</p>
-        <p>Fun Fact: Site ini Sudah diakui oleh Guru Informatika Dan Guru Pemrograman Dasar SMK Negeri 4 Banjarmasin.</p>
-        <p style="margin-top: 1.5rem;">Terakhir diperbarui: Januari 2025</p>
+        <p class="modal-footer">Terakhir diperbarui: Januari 2025</p>
       </div>
     `;
     showModal("Syarat & Ketentuan", content);
@@ -234,152 +232,6 @@ function initModals() {
     });
   };
 }
-
-// ================================
-// MUSIC PLAYER FUNCTIONALITY
-// ================================
-function initMusicPlayer() {
-  const audioPlayer = document.getElementById('audio-player');
-  const playPauseBtn = document.getElementById('play-pause-btn');
-  const playPauseIcon = playPauseBtn?.querySelector('i');
-  const progressBar = document.getElementById('progress-bar');
-  const currentTimeDisplay = document.getElementById('current-time');
-  const totalTimeDisplay = document.getElementById('total-time');
-  const volumeSlider = document.getElementById('volume-slider');
-  const volumeBtn = document.getElementById('volume-btn');
-  const volumeIcon = volumeBtn?.querySelector('i');
-  const lyricsModal = document.getElementById('lyrics-modal');
-  const showLyricsBtn = document.getElementById('show-lyrics-modal-btn');
-  const closeLyricsBtn = document.getElementById('close-lyrics-btn');
-  const playMarsTriggerBtn = document.getElementById('play-mars-trigger-btn');
-  const musicPlayerSection = document.getElementById('music-player');
-
-  if (!audioPlayer || !playPauseBtn) return;
-
-  // Fungsi untuk memformat waktu
-  function formatTime(seconds) {
-    if (isNaN(seconds)) return "0:00";
-    const minutes = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
-  }
-
-  // Inisialisasi volume
-  audioPlayer.volume = (volumeSlider?.value / 100) || 0.7;
-
-  // Event listener untuk metadata audio dimuat
-  audioPlayer.addEventListener('loadedmetadata', () => {
-    if(totalTimeDisplay) totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
-  });
-
-  // Tombol trigger di menu hamburger
-  playMarsTriggerBtn?.addEventListener('click', () => {
-    // Tutup menu hamburger setelah tombol diklik
-    const navbarMenu = document.getElementById('navbar-menu');
-    const navbarToggle = document.getElementById('navbar-toggle');
-    if (navbarMenu?.classList.contains('active')) {
-        navbarMenu.classList.remove('active');
-        const icon = navbarToggle?.querySelector('i');
-        if (icon) {
-          icon.classList.remove('fa-times');
-          icon.classList.add('fa-bars');
-        }
-    }
-    // Scroll ke player
-    musicPlayerSection?.scrollIntoView({ behavior: 'smooth' });
-    
-    // Play audio
-    if (audioPlayer.paused) {
-      audioPlayer.play();
-      playPauseIcon?.classList.remove('fa-play');
-      playPauseIcon?.classList.add('fa-pause');
-    }
-  });
-
-  // Logika Play/Pause
-  playPauseBtn.addEventListener('click', () => {
-    if (audioPlayer.paused) {
-      audioPlayer.play();
-      playPauseIcon?.classList.remove('fa-play');
-      playPauseIcon?.classList.add('fa-pause');
-    } else {
-      audioPlayer.pause();
-      playPauseIcon?.classList.remove('fa-pause');
-      playPauseIcon?.classList.add('fa-play');
-    }
-  });
-
-  // Update progress bar dan waktu
-  audioPlayer.addEventListener('timeupdate', () => {
-    if (!progressBar || !currentTimeDisplay) return;
-    const progressPercent = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-    progressBar.value = progressPercent || 0;
-    currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
-  });
-
-  // Logika untuk seeking
-  progressBar?.addEventListener('input', () => {
-    const newTime = (progressBar.value / 100) * audioPlayer.duration;
-    audioPlayer.currentTime = newTime;
-  });
-
-  // Logika untuk kontrol volume
-  volumeSlider?.addEventListener('input', () => {
-    audioPlayer.volume = volumeSlider.value / 100;
-    
-    // Update icon volume berdasarkan level
-    if (!volumeIcon) return;
-    if (volumeSlider.value == 0) {
-      volumeIcon.className = 'fas fa-volume-mute';
-    } else if (volumeSlider.value < 50) {
-      volumeIcon.className = 'fas fa-volume-down';
-    } else {
-      volumeIcon.className = 'fas fa-volume-up';
-    }
-  });
-
-  // Toggle volume dengan mengklik icon
-  volumeBtn?.addEventListener('click', () => {
-    if (audioPlayer.muted) {
-      audioPlayer.muted = false;
-      if(volumeSlider) volumeSlider.value = audioPlayer.volume * 100;
-      
-      // Update icon
-      if (volumeSlider && volumeSlider.value < 50) {
-        volumeIcon.className = 'fas fa-volume-down';
-      } else {
-        volumeIcon.className = 'fas fa-volume-up';
-      }
-    } else {
-      audioPlayer.muted = true;
-      volumeIcon.className = 'fas fa-volume-mute';
-    }
-  });
-
-  // Logika untuk menampilkan modal lirik
-  showLyricsBtn?.addEventListener('click', () => {
-    lyricsModal?.classList.add('visible');
-  });
-
-  closeLyricsBtn?.addEventListener('click', () => {
-    lyricsModal?.classList.remove('visible');
-  });
-
-  // Tutup modal lirik jika klik di luar area konten
-  lyricsModal?.addEventListener('click', (e) => {
-    if (e.target === lyricsModal) {
-      lyricsModal.classList.remove('visible');
-    }
-  });
-
-  // Event listener saat lagu selesai
-  audioPlayer.addEventListener('ended', () => {
-    playPauseIcon?.classList.remove('fa-pause');
-    playPauseIcon?.classList.add('fa-play');
-    audioPlayer.currentTime = 0;
-  });
-}
-
 
 // ================================
 // SMOOTH SCROLLING
