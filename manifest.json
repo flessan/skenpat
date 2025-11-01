@@ -8,12 +8,12 @@
   "theme_color": "#F46900",
   "icons": [
     {
-      "src": "https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef-192.png",
+      "src": "https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef-512.png",
+      "src": "https://res.cloudinary.com/dahcxjdbl/image/upload/v1760687917/faviconV2_s4utef.png",
       "sizes": "512x512",
       "type": "image/png"
     }
