@@ -113,6 +113,16 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+    
+    /* --- PERBAIKAN HAMBURGER: Gaya Navbar Umum --- */
+    .navbar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
     .navbar {
       position: fixed;
       top: 0;
@@ -125,6 +135,31 @@
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
+    .navbar-menu {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .navbar-menu li a {
+      color: #f0f0f0;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s;
+      border-radius: 5px;
+    }
+    .navbar-menu li a:hover {
+      color: #F46900;
+    }
+    .navbar-toggle {
+      display: none; /* Sembunyikan di desktop */
+      background: none;
+      border: none;
+      color: #f0f0f0;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
     .app-container {
       width: 100%;
       min-height: 100vh;
@@ -440,36 +475,72 @@
       transform: scale(1.05);
     }
 
-    /* --- PERBAIKAN: CSS untuk Tombol di Menu Hamburger --- */
-    .navbar-menu .play-mars-trigger-btn {
-      width: 100%;
-      padding: 0.5rem 1rem;
-      background: none;
-      border: none;
-      color: #f0f0f0;
-      font-family: 'Poppins', sans-serif;
-      font-size: 1rem;
-      font-weight: 400;
-      text-align: left;
-      cursor: pointer;
-      transition: color 0.3s ease, background-color 0.3s ease;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .navbar-menu .play-mars-trigger-btn:hover {
-      color: #F46900;
-      background-color: rgba(244, 105, 0, 0.1);
-    }
-    .navbar-menu li:last-child {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    /* Responsif untuk player */
+    /* --- PERBAIKAN HAMBURGER: CSS untuk Mobile --- */
     @media (max-width: 768px) {
+      /* Tampilkan tombol hamburger */
+      .navbar-toggle {
+        display: block;
+      }
+
+      /* Sembunyikan menu navigasi default */
+      .navbar-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80%;
+        max-width: 300px;
+        height: 100vh;
+        background: rgba(20, 20, 20, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 5rem 1rem 2rem;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease-in-out;
+        z-index: 999; /* Di bawah navbar (1000) */
+      }
+
+      /* Tampilkan menu saat aktif */
+      .navbar-menu.active {
+        transform: translateX(0);
+      }
+
+      /* Gaya untuk item menu di mobile */
+      .navbar-menu li {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+      .navbar-menu li a {
+        display: block;
+        padding: 0.75rem 1rem;
+        color: #f0f0f0;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.2s, color 0.2s;
+      }
+      .navbar-menu li a:hover {
+        color: #F46900;
+        background-color: rgba(244, 105, 0, 0.1);
+      }
+      
+      /* Gaya untuk overlay */
+      .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 998; /* Di bawah menu (999) */
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+      }
+      .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      /* Responsif untuk player */
       .soundcloud-player {
         flex-wrap: wrap;
         justify-content: center;
@@ -491,18 +562,6 @@
       }
       .player-track-title {
         max-width: 200px;
-      }
-      /* PERBAIKAN: CSS untuk tombol di mobile */
-      .navbar-menu .play-mars-trigger-btn {
-        justify-content: center;
-        padding: 0.75rem 1rem;
-        margin-top: 0.5rem;
-        background: rgba(244, 105, 0, 0.1);
-        border-radius: 30px;
-        font-weight: 500;
-      }
-      .navbar-menu .play-mars-trigger-btn:hover {
-        background: rgba(244, 105, 0, 0.2);
       }
     }
   </style>
@@ -810,17 +869,41 @@
       const backBtn = document.getElementById('backToTop');
       const fab = document.getElementById('fab');
       
-      // Mobile menu toggle
-      if (navbarToggle && navbarMenu) {
-        navbarToggle.addEventListener('click', () => {
-          navbarMenu.classList.toggle('active');
-          const icon = navbarToggle.querySelector('i');
-          if (icon) {
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
+      // --- PERBAIKAN HAMBURGER: Logika Menu Mobile ---
+      // Buat overlay secara dinamis
+      const menuOverlay = document.createElement('div');
+      menuOverlay.className = 'menu-overlay';
+      document.body.appendChild(menuOverlay);
+
+      // Fungsi untuk membuka/menutup menu
+      function toggleMenu() {
+        navbarMenu.classList.toggle('active');
+        menuOverlay.classList.toggle('active');
+        
+        const icon = navbarToggle.querySelector('i');
+        if (icon) {
+          icon.classList.toggle('fa-bars');
+          icon.classList.toggle('fa-times');
+        }
+      }
+
+      // Event listener untuk tombol toggle
+      if (navbarToggle) {
+        navbarToggle.addEventListener('click', toggleMenu);
+      }
+
+      // Event listener untuk overlay (klik di luar menu untuk menutup)
+      menuOverlay.addEventListener('click', toggleMenu);
+
+      // Event listener untuk setiap link di menu (menutup menu saat link diklik)
+      const menuLinks = navbarMenu.querySelectorAll('a');
+      menuLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          if (navbarMenu.classList.contains('active')) {
+            toggleMenu();
           }
         });
-      }
+      });
       
       // Navbar scroll effect
       window.addEventListener('scroll', () => {
@@ -982,8 +1065,6 @@
       const lyricsModal = document.getElementById('lyrics-modal');
       const showLyricsBtn = document.getElementById('show-lyrics-modal-btn');
       const closeLyricsBtn = document.getElementById('close-lyrics-btn');
-      // PERBAIKAN: Elemen ini sekarang ada di HTML
-      const playMarsTriggerBtn = document.getElementById('play-mars-trigger-btn'); 
       const musicPlayerSection = document.getElementById('music-player');
 
       // Fungsi untuk memformat waktu
@@ -1001,30 +1082,6 @@
       audioPlayer.addEventListener('loadedmetadata', () => {
         totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
       });
-
-      // PERBAIKAN: Tombol trigger di menu hamburger sekarang berfungsi
-      if (playMarsTriggerBtn) {
-        playMarsTriggerBtn.addEventListener('click', () => {
-          // Tutup menu hamburger setelah tombol diklik
-          if (navbarMenu.classList.contains('active')) {
-              navbarMenu.classList.remove('active');
-              const icon = navbarToggle.querySelector('i');
-              if (icon) {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-              }
-          }
-          // Scroll ke player
-          musicPlayerSection.scrollIntoView({ behavior: 'smooth' });
-          
-          // Play audio
-          if (audioPlayer.paused) {
-            audioPlayer.play();
-            playPauseIcon.classList.remove('fa-play');
-            playPauseIcon.classList.add('fa-pause');
-          }
-        });
-      }
 
       // Logika Play/Pause
       playPauseBtn.addEventListener('click', () => {
