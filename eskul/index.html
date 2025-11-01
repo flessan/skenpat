@@ -16,7 +16,687 @@
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
   
   <!-- Inline critical CSS for faster initial render -->
-  
+  <style>
+    :root {
+      --primary-color: #FF7A45; /* Warna oranye yang sedikit lebih lembut */
+      --primary-light: #FF9A76;
+      --primary-dark: #E55A2B;
+      --secondary-color: #4ECDC4;
+      --accent-color: #FFD166;
+      --dark-bg: #121212;
+      --card-bg: #1E1E1E;
+      --card-hover: #2A2A2A;
+      --card-border: #333333;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --text-muted: #808080;
+      --today-bg: rgba(255, 122, 69, 0.15);
+      --success-color: #4CAF50;
+      --info-color: #2196F3;
+      --warning-color: #FFC107;
+      --danger-color: #F44336;
+      --shadow-sm: 0 2px 8px rgba(0,0,0,0.15);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.2);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.25);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius: 12px;
+      --radius-lg: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--dark-bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      padding: 1rem;
+      overflow-x: hidden;
+    }
+
+    /* Loading Screen */
+    .loader-container {
+      position: fixed;
+      inset: 0;
+      background: var(--dark-bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loader-container.hidden { opacity: 0; pointer-events: none; }
+
+    /* App Container */
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: 2rem;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      flex-direction: column;
+      margin: 1.5rem 0 2rem;
+      position: relative;
+    }
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1.2rem;
+      padding: 10px 16px;
+      background: var(--card-bg);
+      border-radius: 30px;
+      color: var(--text-primary);
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+      align-self: flex-start;
+      border: 1px solid var(--card-border);
+    }
+    .back-button:hover { background: var(--card-hover); transform: translateY(-2px); }
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 0.5rem;
+    }
+    .header-subtitle {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      justify-content: space-around;
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .stat-value { font-size: 1.5rem; font-weight: 700; color: var(--primary-color); }
+    .stat-label { font-size: 0.85rem; color: var(--text-secondary); }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 1.5rem;
+    }
+    .search-container {
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
+    .search-container i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--primary-color);
+    }
+    .toolbar input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      border: 1px solid var(--card-border);
+      border-radius: 30px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    .toolbar input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(255, 122, 69, 0.2);
+    }
+    .btn-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .toolbar button {
+      padding: 10px 18px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+    .toolbar button:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .toolbar button.secondary { background: var(--secondary-color); }
+    .toolbar button.secondary:hover { background: #5EDDD5; }
+    .toolbar button.success { background: var(--success-color); }
+    .toolbar button.success:hover { background: #5CBF60; }
+    .toolbar button.info { background: var(--info-color); }
+    .toolbar button.info:hover { background: #42A5F5; }
+    .toolbar button.warning { background: var(--warning-color); }
+    .toolbar button.warning:hover { background: #FFD54F; }
+
+    /* View Toggle */
+    .view-toggle {
+      display: flex;
+      background: var(--card-bg);
+      border-radius: 30px;
+      padding: 4px;
+      margin: 0 auto 1.5rem;
+      width: fit-content;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-sm);
+    }
+    .view-toggle button {
+      padding: 8px 20px;
+      background: transparent;
+      color: var(--text-secondary);
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      font-size: 0.9rem;
+    }
+    .view-toggle button.active {
+      background: var(--primary-color);
+      color: white;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Filters */
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+    }
+    .filter-pill {
+      padding: 8px 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .filter-pill:hover { background: var(--card-hover); transform: translateY(-2px); }
+    .filter-pill.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* Schedule Grid */
+    .schedule {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 2rem;
+    }
+    .day {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--shadow-sm);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .day.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .day:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+    .day.today {
+      background: var(--card-bg);
+      position: relative;
+      border: 1px solid var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(255, 122, 69, 0.3);
+    }
+    .day.today::before {
+      content: "Hari Ini";
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      background: var(--primary-color);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      z-index: 2;
+    }
+    .day-header {
+      padding: 16px 20px;
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .day-header h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.2rem;
+    }
+    .toggle {
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+    .toggle.collapsed { transform: rotate(-90deg); }
+    .activities {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+    .activity {
+      background: rgba(30, 30, 30, 0.7);
+      padding: 16px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+      transition: var(--transition);
+      border: 1px solid transparent;
+    }
+    .activity:hover {
+      background: rgba(40, 40, 40, 0.8);
+      border-color: rgba(255, 122, 69, 0.3);
+      transform: translateX(4px);
+    }
+    .activity i {
+      color: var(--primary-color);
+      font-size: 1.3rem;
+      margin-top: 3px;
+      background: rgba(255, 122, 69, 0.1);
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+    }
+    .activity-info { flex: 1; }
+    .activity-name { font-weight: 600; margin-bottom: 6px; font-size: 1rem; }
+    .activity-time, .activity-location {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+    .favorite-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    .favorite-btn:hover { background: rgba(255, 255, 255, 0.1); }
+    .favorite-btn.active { color: var(--warning-color); }
+    .activity.hidden { display: none !important; }
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: var(--text-muted);
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--card-border);
+    }
+    .no-results i { font-size: 3rem; margin-bottom: 1rem; color: var(--text-muted); }
+
+    /* List View */
+    .list-view { display: none; }
+    .list-view.active { display: block; }
+    .list-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: var(--transition);
+    }
+    .list-item:hover {
+      background: var(--card-hover);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-sm);
+    }
+    .list-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 122, 69, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      font-size: 1.3rem;
+      flex-shrink: 0;
+    }
+    .list-content { flex: 1; }
+    .list-title { font-weight: 600; margin-bottom: 6px; font-size: 1.1rem; }
+    .list-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .list-day {
+      background: var(--primary-color);
+      color: white;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      white-space: nowrap;
+    }
+
+    /* Calendar View */
+    .calendar-view { display: none; }
+    .calendar-view.active { display: block; }
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .calendar-nav { display: flex; gap: 10px; }
+    .calendar-nav button {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-primary);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .calendar-nav button:hover {
+      background: var(--card-hover);
+      border-color: var(--primary-color);
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+    .calendar-day-header {
+      text-align: center;
+      font-weight: 600;
+      color: var(--text-secondary);
+      padding: 10px 0;
+      font-size: 0.9rem;
+    }
+    .calendar-day {
+      aspect-ratio: 1/1;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .calendar-day:hover { background: var(--card-hover); border-color: var(--primary-color); }
+    .calendar-day.today {
+      background: var(--today-bg);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(255, 122, 69, 0.3);
+    }
+    .calendar-day-number { font-weight: 600; margin-bottom: 4px; }
+    .calendar-day-activities {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex: 1;
+    }
+    .calendar-day-activity {
+      background: var(--primary-color);
+      color: white;
+      border-radius: 4px;
+      padding: 2px 4px;
+      font-size: 0.7rem;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(5px);
+    }
+    .modal.active { display: flex; }
+    .modal-content {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      max-width: 500px;
+      width: 100%;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      animation: modalFadeIn 0.3s ease;
+    }
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 1.4rem;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+    .modal-close:hover { background: rgba(255, 255, 255, 0.1); }
+    .modal-form input, .modal-form textarea, .modal-form select {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      color: var(--text-primary);
+      margin-top: 8px;
+      margin-bottom: 16px;
+      font-family: 'Poppins', sans-serif;
+      transition: var(--transition);
+    }
+    .modal-form input:focus, .modal-form textarea:focus, .modal-form select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .modal-form label { font-weight: 500; color: var(--text-secondary); }
+    .modal-form button {
+      width: 100%;
+      padding: 12px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .modal-form button:hover { background: var(--primary-light); }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--card-bg);
+      color: var(--text-primary);
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transform: translateY(100px);
+      transition: var(--transition);
+      z-index: 1001;
+      border: 1px solid var(--card-border);
+      box-shadow: var(--shadow-lg);
+      max-width: 350px;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .toast.success { border-left: 4px solid var(--success-color); }
+    .toast.error { border-left: 4px solid var(--danger-color); }
+    .toast.info { border-left: 4px solid var(--info-color); }
+    .toast.warning { border-left: 4px solid var(--warning-color); }
+
+    /* Floating Action Button */
+    .fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      z-index: 100;
+    }
+    .fab:hover { background: var(--primary-light); transform: scale(1.1); }
+
+    /* Print Styles */
+    @media print {
+      body { background: #fff; color: #000; }
+      .toolbar, .view-toggle, .filter-container, .back-button, .fab, .modal-close, .toast { display: none !important; }
+      .header { margin-bottom: 1rem; }
+      .day { break-inside: avoid; page-break-after: always; box-shadow: none; border: 1px solid #ddd; }
+      .day-header { background: var(--primary-color) !important; -webkit-print-color-adjust: exact; }
+      .activities { padding: 10px; }
+      .activity { background: #f9f9f9; border: 1px solid #eee; }
+      .favorite-btn { display: none; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .schedule { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; }
+      .search-container { max-width: 100%; }
+      .list-item { flex-direction: column; align-items: flex-start; }
+      .list-day { align-self: flex-start; margin-top: 12px; }
+      .stats-bar { flex-wrap: wrap; gap: 1rem; }
+      .calendar-grid { gap: 5px; }
+      .calendar-day-activity { font-size: 0.6rem; }
+    }
+    @media (max-width: 480px) {
+      .header h1 { font-size: 1.8rem; }
+      .filter-container { justify-content: flex-start; overflow-x: auto; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+      .modal-content { padding: 20px; }
+      .toast { right: 10px; left: 10px; max-width: none; }
+    }
+  </style>
 </head>
 <body>
   <!-- Loading Screen -->
@@ -238,6 +918,695 @@
     <span id="toast-message">Pesan berhasil disimpan!</span>
   </div>
 
-  
+  <script>
+    // Initialize variables
+    let allExpanded = false;
+    let currentMonth = new Date().getMonth();
+    let currentYear = new Date().getFullYear();
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    
+    // Data kegiatan ekstrakurikuler
+    const activitiesData = [
+      { day: 'Senin', activities: [
+        { name: 'Basket', time: '15:00 - 17:00', location: 'Lapangan sekolah', category: 'olahraga', icon: 'fas fa-basketball-ball' },
+        { name: 'Dance', time: '15:30 - 17:30', location: 'Lapangan sekolah', category: 'seni', icon: 'fas fa-music' }
+      ]},
+      { day: 'Selasa', activities: [
+        { name: 'Pramuka', time: '14:00 - 16:00', location: 'Lapangan sekolah', category: 'sosial', icon: 'fas fa-campground' },
+        { name: 'Paskibra', time: '15:00 - 17:00', location: 'Lapangan sekolah', category: 'sosial', icon: 'fas fa-flag' },
+        { name: 'Futsal', time: '16:00 - 18:00', location: 'Lapangan sekolah', category: 'olahraga', icon: 'fas fa-futbol' },
+        { name: 'Teater', time: '14:30 - 16:30', location: 'Taman budaya', category: 'seni', icon: 'fa-solid fa-masks-theater' }
+      ]},
+      { day: 'Rabu', activities: [
+        { name: 'Habsyi', time: '15:00 - 16:30', location: 'Mushola', category: 'keagamaan', icon: 'fas fa-microphone-alt' },
+        { name: 'Basket', time: '15:00 - 17:00', location: 'Lapangan sekolah', category: 'olahraga', icon: 'fas fa-basketball-ball' },
+        { name: 'Bahasa Jepang', time: '14:00 - 15:30', location: 'Kelas teori 17', category: 'akademik', icon: 'fas fa-language' },
+        { name: 'Tari Tradisional', time: '15:30 - 17:00', location: 'Lapangan sekolah', category: 'seni', icon: 'fas fa-vest' },
+        { name: 'Dance', time: '15:30 - 17:30', location: 'Lapangan sekolah', category: 'seni', icon: 'fas fa-music' }
+      ]},
+      { day: 'Kamis', activities: [
+        { name: 'Ekupat', time: '14:00 - 16:00', location: 'Aula edotel', category: 'sosial', icon: 'fas fa-cat' },
+        { name: 'Paskibra', time: '15:00 - 17:00', location: 'Lapangan sekolah', category: 'sosial', icon: 'fas fa-flag' },
+        { name: 'PMR', time: '14:30 - 16:30', location: 'Lapangan sekolah', category: 'sosial', icon: 'fa-solid fa-heart-circle-plus' },
+        { name: 'Futsal', time: '16:00 - 18:00', location: 'Lapangan sekolah', category: 'olahraga', icon: 'fas fa-futbol' }
+      ]},
+      { day: 'Jumat', activities: [
+        { name: 'Pramuka', time: '14:00 - 16:00', location: 'Lapangan sekolah', category: 'sosial', icon: 'fas fa-campground' }
+      ]},
+      { day: 'Sabtu', activities: [
+        { name: 'Modeling', time: '09:00 - 11:00', location: 'Aula sekolah', category: 'seni', icon: 'fas fa-user-tie' },
+        { name: 'Teater', time: '10:00 - 12:00', location: 'Taman budaya', category: 'seni', icon: 'fa-solid fa-masks-theater' }
+      ]}
+    ];
+
+    // Cache DOM elements
+    const scheduleEl = document.getElementById('schedule');
+    const listViewEl = document.getElementById('list-view');
+    const calendarGridEl = document.getElementById('calendar-grid');
+    const calendarMonthEl = document.getElementById('calendar-month');
+    const loaderEl = document.getElementById('loader');
+    const toastEl = document.getElementById('toast');
+    const toastMessageEl = document.getElementById('toast-message');
+
+    // Hide loader when page is loaded
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        loaderEl.classList.add('hidden');
+        renderSchedule();
+        updateStats();
+        populateReminderActivities();
+        generateCalendar();
+      }, 500);
+    });
+    
+    // Dark mode toggle
+    function toggleDarkMode() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? '' : 'dark');
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+
+      const btn = document.querySelector('.toolbar button:first-child');
+      const icon = btn.querySelector('i');
+      icon.className = isDark ? 'fas fa-moon' : 'fas fa-sun';
+      btn.innerHTML = icon.outerHTML + (isDark ? ' Mode Gelap' : ' Mode Terang');
+    }
+
+    // Expand / Collapse All
+    function toggleAllDays() {
+      allExpanded = !allExpanded;
+      document.querySelectorAll('.activities').forEach(act => {
+        act.style.display = allExpanded ? 'none' : 'grid';
+      });
+      document.querySelectorAll('.toggle').forEach(icon => {
+        icon.classList.toggle('collapsed', !allExpanded);
+      });
+      const btn = document.querySelector('button[onclick="toggleAllDays()"]');
+      btn.innerHTML = allExpanded
+        ? '<i class="fas fa-angle-double-down"></i> Expand Semua'
+        : '<i class="fas fa-angle-double-up"></i> Collapse Semua';
+    }
+
+    // Toggle per hari
+    function toggleDay(header) {
+      const activities = header.nextElementSibling;
+      const icon = header.querySelector('.toggle');
+      const visible = activities.style.display !== 'none';
+      activities.style.display = visible ? 'none' : 'grid';
+      icon.classList.toggle('collapsed', visible);
+    }
+
+    // Highlight today
+    function highlightToday() {
+      const today = new Date();
+      const dayNames = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const todayName = dayNames[today.getDay()];
+      const todayEl = document.querySelector(`.day[data-day="${todayName}"]`);
+      if (todayEl) {
+        todayEl.classList.add('today');
+        todayEl.querySelector('.activities').style.display = 'grid';
+      }
+      document.querySelectorAll('.day:not(.today) .activities').forEach(el => {
+        el.style.display = 'none';
+        el.previousElementSibling.querySelector('.toggle').classList.add('collapsed');
+      });
+    }
+
+    // Filter
+    function filterActivities() {
+      const query = document.getElementById('search').value.toLowerCase();
+      let anyVisible = false;
+      
+      document.querySelectorAll('.day').forEach(day => {
+        let dayVisible = false;
+        day.querySelectorAll('.activity').forEach(act => {
+          const match = act.textContent.toLowerCase().includes(query);
+          act.classList.toggle('hidden', !match);
+          if (match) dayVisible = true;
+        });
+        day.style.display = dayVisible ? '' : 'none';
+        if (dayVisible) anyVisible = true;
+      });
+      
+      handleNoResults(anyVisible);
+      
+      // Also filter list view if active
+      if (listViewEl.classList.contains('active')) {
+        filterListView(query);
+      }
+    }
+
+    // Handle "no results" message
+    function handleNoResults(isVisible) {
+      let noResultsEl = document.getElementById('no-results');
+      if (!isVisible) {
+        if (!noResultsEl) {
+          noResultsEl = document.createElement('div');
+          noResultsEl.id = 'no-results';
+          noResultsEl.innerHTML = '<i class="fas fa-search"></i><p>Tidak ditemukan kegiatan yang sesuai</p>';
+          scheduleEl.appendChild(noResultsEl);
+        }
+      } else if (noResultsEl) {
+        noResultsEl.remove();
+      }
+    }
+
+    // Toggle favorite
+    function toggleFavorite(btn) {
+      const activityEl = btn.closest('.activity');
+      const activityName = activityEl.querySelector('.activity-name').textContent;
+      const icon = btn.querySelector('i');
+      
+      icon.classList.toggle('far');
+      icon.classList.toggle('fas');
+      btn.classList.toggle('active');
+      
+      // Update favorites array
+      if (btn.classList.contains('active')) {
+        if (!favorites.includes(activityName)) {
+          favorites.push(activityName);
+        }
+      } else {
+        favorites = favorites.filter(name => name !== activityName);
+      }
+      
+      // Save to localStorage
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+      
+      // Update stats
+      updateStats();
+      
+      // Show toast notification
+      showToast(`${activityName} ${btn.classList.contains('active') ? 'ditambahkan ke' : 'dihapus dari'} favorit`, 'success');
+    }
+
+    // Switch view
+    function switchView(view) {
+      const toggleButtons = document.querySelectorAll('.view-toggle button');
+      
+      // Reset all buttons
+      toggleButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Hide all views
+      scheduleEl.style.display = 'none';
+      listViewEl.classList.remove('active');
+      document.getElementById('calendar-view').classList.remove('active');
+      
+      if (view === 'card') {
+        scheduleEl.style.display = 'grid';
+        toggleButtons[0].classList.add('active');
+      } else if (view === 'list') {
+        listViewEl.classList.add('active');
+        toggleButtons[1].classList.add('active');
+        if (listViewEl.children.length === 0) {
+          generateListView();
+        }
+      } else if (view === 'calendar') {
+        document.getElementById('calendar-view').classList.add('active');
+        toggleButtons[2].classList.add('active');
+        if (calendarGridEl.children.length === 0) {
+          generateCalendar();
+        }
+      }
+    }
+
+    // Generate list view
+    function generateListView() {
+      listViewEl.innerHTML = ''; // Clear previous content
+      
+      activitiesData.forEach(dayData => {
+        dayData.activities.forEach(activity => {
+          const listItem = document.createElement('div');
+          listItem.className = 'list-item';
+          
+          // Clone icon from original data to avoid parsing issues
+          const iconEl = document.createElement('i');
+          iconEl.className = activity.icon;
+          
+          listItem.innerHTML = `
+            <div class="list-icon">${iconEl.outerHTML}</div>
+            <div class="list-content">
+              <div class="list-title">${activity.name}</div>
+              <div class="list-details">
+                <span><i class="fas fa-clock"></i> ${activity.time}</span>
+                <span><i class="fas fa-map-marker-alt"></i> ${activity.location}</span>
+              </div>
+            </div>
+            <div class="list-day">${dayData.day}</div>
+          `;
+          
+          listViewEl.appendChild(listItem);
+        });
+      });
+    }
+
+    // Filter list view
+    function filterListView(query) {
+      const listItems = listViewEl.querySelectorAll('.list-item');
+      let anyVisible = false;
+      
+      listItems.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        const match = text.includes(query);
+        item.style.display = match ? 'flex' : 'none';
+        if (match) anyVisible = true;
+      });
+      
+      handleNoResults(anyVisible);
+    }
+
+    // Generate calendar view
+    function generateCalendar() {
+      calendarGridEl.innerHTML = '';
+      
+      // Add day headers
+      const dayHeaders = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+      dayHeaders.forEach(day => {
+        const dayHeaderEl = document.createElement('div');
+        dayHeaderEl.className = 'calendar-day-header';
+        dayHeaderEl.textContent = day;
+        calendarGridEl.appendChild(dayHeaderEl);
+      });
+      
+      // Get first day of month and number of days
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      
+      // Add empty cells for days before month starts
+      for (let i = 0; i < firstDay; i++) {
+        calendarGridEl.appendChild(document.createElement('div'));
+      }
+      
+      // Get current day for highlighting
+      const today = new Date();
+      const todayDate = today.getDate();
+      const isCurrentMonth = currentMonth === today.getMonth() && currentYear === today.getFullYear();
+      
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayEl = document.createElement('div');
+        dayEl.className = 'calendar-day';
+        
+        // Check if this is today
+        if (isCurrentMonth && day === todayDate) {
+          dayEl.classList.add('today');
+        }
+        
+        // Get day of week
+        const dayOfWeek = new Date(currentYear, currentMonth, day).getDay();
+        const dayName = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'][dayOfWeek];
+        
+        // Find activities for this day
+        const dayData = activitiesData.find(d => d.day === dayName);
+        const activities = dayData ? dayData.activities : [];
+        
+        // Create day number
+        const dayNumberEl = document.createElement('div');
+        dayNumberEl.className = 'calendar-day-number';
+        dayNumberEl.textContent = day;
+        dayEl.appendChild(dayNumberEl);
+        
+        // Create activities container
+        const activitiesDiv = document.createElement('div');
+        activitiesDiv.className = 'calendar-day-activities';
+        
+        // Add up to 2 activities
+        activities.forEach((activity, index) => {
+          if (index < 2) {
+            const activityDiv = document.createElement('div');
+            activityDiv.className = 'calendar-day-activity';
+            activityDiv.textContent = activity.name;
+            activitiesDiv.appendChild(activityDiv);
+          }
+        });
+        
+        // Add "more" indicator if there are more than 2 activities
+        if (activities.length > 2) {
+          const moreDiv = document.createElement('div');
+          moreDiv.className = 'calendar-day-activity';
+          moreDiv.textContent = `+${activities.length - 2} lagi`;
+          moreDiv.style.background = 'var(--text-secondary)';
+          activitiesDiv.appendChild(moreDiv);
+        }
+        
+        dayEl.appendChild(activitiesDiv);
+        calendarGridEl.appendChild(dayEl);
+      }
+      
+      // Update month display
+      const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+      calendarMonthEl.textContent = `${monthNames[currentMonth]} ${currentYear}`;
+    }
+
+    // Calendar navigation
+    function previousMonth() {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      generateCalendar();
+    }
+
+    function nextMonth() {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      generateCalendar();
+    }
+
+    // Filter by category
+    function filterByCategory(category) {
+      // Update active filter pill
+      document.querySelectorAll('.filter-pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Filter activities
+      document.querySelectorAll('.activity').forEach(activity => {
+        if (category === 'all' || activity.dataset.category === category) {
+          activity.style.display = 'flex';
+        } else {
+          activity.style.display = 'none';
+        }
+      });
+      
+      // Check if any day has visible activities
+      document.querySelectorAll('.day').forEach(day => {
+        const visibleActivities = day.querySelectorAll('.activity:not([style*="display: none"])');
+        day.style.display = visibleActivities.length > 0 ? '' : 'none';
+      });
+      
+      // Also filter list view if active
+      if (listViewEl.classList.contains('active')) {
+        filterListByCategory(category);
+      }
+    }
+
+    // Filter list view by category
+    function filterListByCategory(category) {
+      const listItems = listViewEl.querySelectorAll('.list-item');
+      let anyVisible = false;
+      
+      listItems.forEach(item => {
+        const activityEl = item.querySelector('.list-title');
+        const categoryName = item.querySelector('.list-day').textContent;
+        const dayData = activitiesData.find(d => d.day === categoryName);
+        const categoryMatch = category === 'all' || dayData?.activities.some(a => a.category === category);
+        
+        item.style.display = categoryMatch ? 'flex' : 'none';
+        if (categoryMatch) anyVisible = true;
+      });
+      
+      handleNoResults(anyVisible);
+    }
+
+    // Update statistics
+    function updateStats() {
+      // Total activities
+      const totalActivities = document.querySelectorAll('.activity').length;
+      document.getElementById('total-activities').textContent = totalActivities;
+      
+      // Total categories
+      const categories = new Set();
+      document.querySelectorAll('.activity').forEach(activity => {
+        categories.add(activity.dataset.category);
+      });
+      document.getElementById('total-categories').textContent = categories.size;
+      
+      // Today's activities
+      const today = new Date();
+      const dayNames = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'][ today.getDay() ];
+      const todayActivities = document.querySelectorAll(`.day[data-day="${dayNames[today.getDay()]} .activity`).length;
+      document.getElementById('today-activities').textContent = todayActivities;
+      
+      // Favorite count
+      document.getElementById('favorite-count').textContent = favorites.length;
+    }
+
+    // Populate reminder activities
+    function populateReminderActivities() {
+      const select = document.getElementById('reminder-activity');
+      select.innerHTML = '<option value="">Pilih kegiatan</option>';
+      
+      document.querySelectorAll('.activity').forEach(activity => {
+        const name = activity.querySelector('.activity-name').textContent;
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+      });
+    }
+
+    // Modal functions
+    function showModal(modalId) {
+      document.getElementById(modalId).classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function showReminderModal() { showModal('reminder-modal'); }
+    function showAddActivityModal() { showModal('add-activity-modal'); }
+    function showExportModal() { showModal('export-modal'); }
+
+    // Set reminder
+    function setReminder(event) {
+      event.preventDefault();
+      const activity = document.getElementById('reminder-activity').value;
+      const time = document.getElementById('reminder-time').value;
+      const note = document.getElementById('reminder-note').value;
+      
+      console.log('Reminder set:', { activity, time, note });
+      
+      closeModal('reminder-modal');
+      showToast('Pengingat berhasil disimpan!', 'success');
+    }
+
+    // Add activity
+    function addActivity(event) {
+      event.preventDefault();
+      
+      const name = document.getElementById('activity-name').value;
+      const day = document.getElementById('activity-day').value;
+      const timeStart = document.getElementById('activity-time-start').value;
+      const timeEnd = document.getElementById('activity-time-end').value;
+      const location = document.getElementById('activity-location').value;
+      const category = document.getElementById('activity-category').value;
+      const icon = document.getElementById('activity-icon').value;
+      
+      // Find the day element
+      const dayEl = document.querySelector(`.day[data-day="${day}"]`);
+      
+      if (dayEl) {
+        const activitiesContainer = dayEl.querySelector('.activities');
+        
+        // Create new activity element
+        const activityEl = document.createElement('div');
+        activityEl.className = 'activity';
+        activityEl.dataset.category = category;
+        
+        activityEl.innerHTML = `
+          <i class="${icon}"></i>
+          <div class="activity-info">
+            <div class="activity-name">${name}</div>
+            <div class="activity-time"><i class="fas fa-clock"></i> ${timeStart} - ${timeEnd}</div>
+            <div class="activity-location"><i class="fas fa-map-marker-alt"></i> ${location}</div>
+          </div>
+          <button class="favorite-btn" onclick="toggleFavorite(this)">
+            <i class="far fa-star"></i>
+          </button>
+        `;
+        
+        activitiesContainer.appendChild(activityEl);
+        
+        // Update stats
+        updateStats();
+        
+        // Show success message
+        showToast('Kegiatan berhasil ditambahkan!', 'success');
+        
+        // Reset form
+        event.target.reset();
+        closeModal('add-activity-modal');
+      }
+    }
+
+    // Export schedule
+    function exportSchedule() {
+      showModal('export-modal');
+    }
+
+    // Do export
+    function doExport(event) {
+      event.preventDefault();
+      
+      const format = document.getElementById('export-format').value;
+      const includeFavorites = document.getElementById('include-favorites').checked;
+      
+      let dataToExport = activitiesData;
+      if (includeFavorites) {
+        dataToExport = activitiesData.map(day => ({
+          ...day,
+          activities: day.activities.filter(act => favorites.includes(act.name))
+        })).filter(day => day.activities.length > 0);
+      }
+      
+      // Create a blob and download link
+      const dataStr = JSON.stringify(dataToExport, null, 2);
+      const blob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `jadwal_ekstrakurikuler.${format}`;
+      document.body.appendChild(a);
+      a.click();
+      
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 100);
+      
+      closeModal('export-modal');
+      showToast(`Jadwal berhasil diexport sebagai ${format.toUpperCase()}!`, 'success');
+    }
+
+    // Share schedule
+    function shareSchedule() {
+      const view = document.querySelector('.view-toggle button.active').textContent.trim().toLowerCase();
+      const activeFilter = document.querySelector('.filter-pill.active').textContent.trim().toLowerCase();
+      const shareUrl = `${window.location.origin}${window.location.pathname}?view=${view}&filter=${activeFilter}`;
+      
+      if (navigator.share) {
+        navigator.share({
+          title: 'Jadwal Ekstrakurikuler SMKN 4 Banjarmasin',
+          text: 'Lihat jadwal lengkap kegiatan ekstrakurikuler di SMKN 4 Banjarmasin.',
+          url: shareUrl
+        }).catch(err => console.error('Error sharing:', err));
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast('Link jadwal telah disalin!', 'info');
+      }
+    }
+
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      toastMessageEl.textContent = message;
+      
+      toastEl.className = 'toast';
+      if (type) {
+        toastEl.classList.add(type);
+      }
+      
+      const icon = toastEl.querySelector('i');
+      switch (type) {
+        case 'success': icon.className = 'fas fa-check-circle'; break;
+        case 'error': icon.className = 'fas fa-exclamation-circle'; break;
+        case 'info': icon.className = 'fas fa-info-circle'; break;
+        case 'warning': icon.className = 'fas fa-exclamation-triangle'; break;
+        default: icon.className = 'fas fa-check-circle';
+      }
+      
+      toastEl.classList.add('show');
+      
+      setTimeout(() => {
+        toastEl.classList.remove('show');
+      }, 3000);
+    }
+
+    // Render schedule from data
+    function renderSchedule() {
+      scheduleEl.innerHTML = '';
+      
+      activitiesData.forEach(dayData => {
+        const dayEl = document.createElement('div');
+        dayEl.className = 'day';
+        dayEl.dataset.day = dayData.day;
+        
+        const dayHeaderEl = document.createElement('div');
+        dayHeaderEl.className = 'day-header';
+        dayHeaderEl.setAttribute('onclick', 'toggleDay(this)');
+        dayHeaderEl.innerHTML = `
+          <h2><i class="fas fa-calendar-day"></i> ${dayData.day}</h2>
+          <span class="toggle">▾</span>
+        `;
+        
+        const activitiesEl = document.createElement('div');
+        activitiesEl.className = 'activities';
+        
+        dayData.activities.forEach(activity => {
+          const activityEl = document.createElement('div');
+          activityEl.className = 'activity';
+          activityEl.dataset.category = activity.category;
+          
+          // Check if this activity is a favorite
+          const isFavorite = favorites.includes(activity.name);
+          
+          activityEl.innerHTML = `
+            <i class="${activity.icon}"></i>
+            <div class="activity-info">
+              <div class="activity-name">${activity.name}</div>
+              <div class="activity-time"><i class="fas fa-clock"></i> ${activity.time}</div>
+              <div class="activity-location"><i class="fas fa-map-marker-alt"></i> ${activity.location}</div>
+            </div>
+            <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(this)">
+              <i class="${isFavorite ? 'fas' : 'far'} fa-star"></i>
+            </button>
+          `;
+          
+          activitiesEl.appendChild(activityEl);
+        });
+        
+        dayEl.appendChild(dayHeaderEl);
+        dayEl.appendChild(activitiesEl);
+        scheduleEl.appendChild(dayEl);
+      });
+      
+      // Animate cards on load
+      document.querySelectorAll('.day').forEach((day, i) => {
+        setTimeout(() => {
+          day.classList.add('animate');
+        }, i * 100);
+      });
+    }
+
+    // Initialize app
+    document.addEventListener('DOMContentLoaded', () => {
+      // Load theme preference
+      const theme = localStorage.getItem('theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        const btn = document.querySelector('.toolbar button:first-child');
+        const icon = btn.querySelector('i');
+        icon.className = 'fas fa-sun';
+        btn.innerHTML = icon.outerHTML + ' Mode Terang';
+      }
+
+      // Highlight today
+      highlightToday();
+      
+      // Animate cards on load
+      document.querySelectorAll('.day').forEach((day, i) => {
+        setTimeout(() => {
+          day.style.opacity = '1';
+          day.style.transform = 'translateY(0)';
+        }, i * 100);
+      });
+    });
+  </script>
 </body>
 </html>
