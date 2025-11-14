@@ -378,6 +378,7 @@ a {
 
 .cbox-wrapper {
   margin: 2.5rem 0;
+  padding-top: 48px;
   border-radius: var(--border-radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-lg);
@@ -847,6 +848,17 @@ a {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+/* ================================
+   MUSIC PLAYER MOBILE TWEAKS
+   ================================ */
+@media (max-width: 768px) {
+  .soundcloud-player { flex-wrap: wrap; justify-content: center; }
+  .player-artwork-info { width: 100%; justify-content: center; margin-bottom: 10px; }
+  .player-controls-progress { width: 100%; order: 3; }
+  .player-extras { width: 100%; justify-content: center; order: 2; margin-top: 5px; }
+  .player-track-title { max-width: 200px; }
 }
 
 /* ================================

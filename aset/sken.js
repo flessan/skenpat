@@ -4,7 +4,6 @@
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize all components
   initNavigation();
   initScrollEffects();
   initFloatingButtons();
@@ -12,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initModals();
   initSmoothScrolling();
   initAccessibility();
+  initMusicPlayer();
 });
 
 // ================================
@@ -26,18 +26,20 @@ function initNavigation() {
   if (navbarToggle && navbarMenu) {
     navbarToggle.addEventListener('click', () => {
       navbarMenu.classList.toggle('active');
+      const isOpen = navbarMenu.classList.contains('active');
+      navbarToggle.setAttribute('aria-expanded', String(isOpen));
       const icon = navbarToggle.querySelector('i');
       if (icon) {
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-times');
+        icon.classList.toggle('fa-bars', !isOpen);
+        icon.classList.toggle('fa-times', isOpen);
       }
     });
     
-    // Close menu when clicking on a link
     const menuLinks = navbarMenu.querySelectorAll('a');
     menuLinks.forEach(link => {
       link.addEventListener('click', () => {
         navbarMenu.classList.remove('active');
+        navbarToggle.setAttribute('aria-expanded', 'false');
         const icon = navbarToggle.querySelector('i');
         if (icon) {
           icon.classList.add('fa-bars');
@@ -92,12 +94,12 @@ function initFunFacts() {
   const fab = document.getElementById('fab');
   
   const funFacts = [
-    "👾 Website ini dibuat full oleh satu orang siswa RPL 1 kelas 10.",
-    "🦄 Pemilik Subdomain & UI/UX designer adalah satu orang yang sama.",
+    "👾 Website ini dibuat oleh satu orang siswa RPL 1 kelas 10. beserta bantuan ai wkwk",
+    "🦄 Pemilik Subdomain adalah murid dari sekolah, tanpa suruhan siapapun.",
     "✨ Tanpa framework, cuma HTML, CSS & JS. Udahh Html Statis aja Gitu",
     '🌱 Selalu update, kalo tidak hubungi saja <a href="https://flessan.pages.dev/#contact" target="_blank" style="color:#ffd966;text-decoration:underline;">klik aku!</a>',
     "💡 Powered by Orang Baik, Siapa Lagi? Github Ama Cloudflare ygy",
-    "🤕 Si Atmin Kerja Kerja Gini Ga Bergaji Loo, Siapa Juga Yg Bayar Ama Ginian",
+    "🤕 Si Atmin ngeluangin waktu gini ga berpenghasilan loo, Siapa Juga Yg Bayar Ama Ginian",
     "😄 Kamu Coba Bacain Semua Fun Fact Ini?</br> </br>(Kesempatan Mendapatkan Chat Langka Naik -1 Persen)",
     "🔥 Support SMKN 4 Banjarmasin, spread positivity!",
     "😎 Fitur baru akan hadir, pantau terus ya!",
@@ -335,6 +337,61 @@ const animateOnScroll = () => {
 };
 
 document.addEventListener('DOMContentLoaded', animateOnScroll);
+
+// ================================
+// MUSIC PLAYER
+// ================================
+function initMusicPlayer() {
+  const audio = document.getElementById('audio-player');
+  const playBtn = document.getElementById('play-pause-btn');
+  const playIcon = playBtn?.querySelector('i');
+  const progress = document.getElementById('progress-bar');
+  const cur = document.getElementById('current-time');
+  const total = document.getElementById('total-time');
+  const volSlider = document.getElementById('volume-slider');
+  const volBtn = document.getElementById('volume-btn');
+  const volIcon = volBtn?.querySelector('i');
+  const lyrics = document.getElementById('lyrics-modal');
+  const showLyrics = document.getElementById('show-lyrics-modal-btn');
+  const closeLyrics = document.getElementById('close-lyrics-btn');
+  if (!audio) return;
+  const fmt = s => isNaN(s) ? '0:00' : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+  if (volSlider) audio.volume = volSlider.value / 100;
+  audio.addEventListener('loadedmetadata', () => { if (total) total.textContent = fmt(audio.duration); });
+  playBtn && playBtn.addEventListener('click', () => {
+    if (audio.paused) { audio.play(); playIcon && (playIcon.classList.remove('fa-play'), playIcon.classList.add('fa-pause')); }
+    else { audio.pause(); playIcon && (playIcon.classList.remove('fa-pause'), playIcon.classList.add('fa-play')); }
+  });
+  audio.addEventListener('timeupdate', () => {
+    const pct = (audio.currentTime / audio.duration) * 100;
+    if (progress) progress.value = pct || 0;
+    if (cur) cur.textContent = fmt(audio.currentTime);
+  });
+  progress && progress.addEventListener('input', () => { audio.currentTime = (progress.value / 100) * audio.duration; });
+  volSlider && volSlider.addEventListener('input', () => {
+    audio.volume = volSlider.value / 100;
+    if (!volIcon) return;
+    if (volSlider.value == 0) volIcon.className = 'fas fa-volume-mute';
+    else if (volSlider.value < 50) volIcon.className = 'fas fa-volume-down';
+    else volIcon.className = 'fas fa-volume-up';
+  });
+  volBtn && volBtn.addEventListener('click', () => {
+    audio.muted = !audio.muted;
+    if (!volIcon) return;
+    if (audio.muted) volIcon.className = 'fas fa-volume-mute';
+    else {
+      const v = volSlider ? volSlider.value : 100;
+      volIcon.className = v < 50 ? 'fas fa-volume-down' : 'fas fa-volume-up';
+    }
+  });
+  showLyrics && showLyrics.addEventListener('click', () => { lyrics && lyrics.classList.add('visible'); });
+  closeLyrics && closeLyrics.addEventListener('click', () => { lyrics && lyrics.classList.remove('visible'); });
+  lyrics && lyrics.addEventListener('click', (e) => { if (e.target === lyrics) lyrics.classList.remove('visible'); });
+  audio.addEventListener('ended', () => {
+    if (playIcon) { playIcon.classList.remove('fa-pause'); playIcon.classList.add('fa-play'); }
+    audio.currentTime = 0;
+  });
+}
 
 // ================================
 // SERVICE WORKER REGISTRATION
