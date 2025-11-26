@@ -1388,7 +1388,10 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
     const updateThemeIcon = (theme) => {
       const themeToggle = document.getElementById('theme-toggle');
       if (themeToggle) {
-        themeToggle.innerHTML = theme === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        const icon = themeToggle.querySelector('i');
+        if (icon) {
+          icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+        }
       }
     };
     
@@ -1442,12 +1445,25 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
       navbarToggle.addEventListener('click', () => {
         navbarMenu.classList.toggle('active');
         menuOverlay.classList.toggle('active');
+        const isOpen = navbarMenu.classList.contains('active');
+        navbarToggle.setAttribute('aria-expanded', String(isOpen));
+        const icon = navbarToggle.querySelector('i');
+        if (icon) {
+          icon.classList.toggle('fa-bars', !isOpen);
+          icon.classList.toggle('fa-times', isOpen);
+        }
       });
       
-      // Close mobile menu when clicking on overlay
+      // Close menu when clicking on overlay
       menuOverlay.addEventListener('click', () => {
         navbarMenu.classList.remove('active');
         menuOverlay.classList.remove('active');
+        navbarToggle.setAttribute('aria-expanded', 'false');
+        const icon = navbarToggle.querySelector('i');
+        if (icon) {
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
       });
       
       // Close mobile menu when clicking on a link
@@ -1455,6 +1471,12 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
         link.addEventListener('click', () => {
           navbarMenu.classList.remove('active');
           menuOverlay.classList.remove('active');
+          navbarToggle.setAttribute('aria-expanded', 'false');
+          const icon = navbarToggle.querySelector('i');
+          if (icon) {
+            icon.classList.add('fa-bars');
+            icon.classList.remove('fa-times');
+          }
         });
       });
       
@@ -1491,40 +1513,65 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
       
       // PERBAIKAN: Membuat modal lebih robust dengan class overlay
       window.showModal = function(title, content) {
-        const modal = document.createElement('div');
-        modal.className = 'modal-overlay'; // PERBAIKAN: Gunakan class untuk selector yang lebih stabil
-        modal.style.cssText = `
-          position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000;
-          display: flex; align-items: center; justify-content: center; padding: 1rem;
-          backdrop-filter: blur(5px);
-        `;
+        // Remove existing modal if any
+        const existingModal = document.getElementById('custom-modal');
+        if (existingModal) {
+          existingModal.remove();
+        }
         
+        // Create modal
+        const modal = document.createElement('div');
+        modal.id = 'custom-modal';
+        modal.className = 'modal-overlay';
         modal.innerHTML = `
-          <div class="modal-content-wrapper" style="background: var(--bg-secondary); border-radius: 20px; max-width: 90vw; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border-color); box-shadow: 0 20px 60px rgba(0,0,0,0.5); position: relative;">
-            <div style="padding: 2rem;">
-              <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">${title}</h2>
+          <div class="modal-content-wrapper">
+            <div class="modal-header">
+              <h2>${title}</h2>
+              <button class="modal-close-btn" aria-label="Tutup">&times;</button>
+            </div>
+            <div class="modal-body">
               ${content}
-              <button onclick="this.closest('.modal-overlay').remove()" style="margin-top: 1.5rem; padding: 0.75rem 1.5rem; background: var(--primary-color); color: white; border: none; border-radius: 30px; font-weight: 600; cursor: pointer;">Tutup</button>
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary modal-close">Tutup</button>
             </div>
           </div>
         `;
         
         document.body.appendChild(modal);
         
+        // Add event listeners
+        const closeButtons = modal.querySelectorAll('.modal-close-btn, .modal-close');
+        closeButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            modal.remove();
+          });
+        });
+        
         // Close on outside click
         modal.addEventListener('click', (e) => {
-          if (e.target === modal) modal.remove();
+          if (e.target === modal) {
+            modal.remove();
+          }
+        });
+        
+        // Close on Escape key
+        document.addEventListener('keydown', function handleEscape(e) {
+          if (e.key === 'Escape') {
+            modal.remove();
+            document.removeEventListener('keydown', handleEscape);
+          }
         });
       };
 
       // Privacy Policy & Terms of Service
       window.showPrivacyPolicy = function() {
         const content = `
-          <div style="max-width: 600px; margin: 0 auto; padding: 2rem; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border-color);">
-            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Kebijakan Privasi</h2>
+          <div class="modal-content">
+            <h2>Kebijakan Privasi</h2>
             <p>Kami tidak mengumpulkan data pribadi apa pun dari pengunjung website ini. Website ini murni untuk informasi dan tidak memiliki fitur yang memerlukan data pribadi.</p>
             <p>Kami menggunakan cookie minimal untuk pengalaman pengguna yang lebih baik, tetapi tidak melacak aktivitas pribadi Anda. <a href="https://flessan.pages.dev/#contact" target="_blank" style="color:var(--primary-color);text-decoration:underline;">lebih lengkap disini!</a></p>
-            <p style="margin-top: 1.5rem;">Terakhir diperbarui: Januari 2025</p>
+            <p class="modal-footer">Terakhir diperbarui: Januari 2025</p>
           </div>
         `;
         showModal("Kebijakan Privasi", content);
@@ -1532,12 +1579,12 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
       
       window.showTermsOfService = function() {
         const content = `
-          <div style="max-width: 600px; margin: 0 auto; padding: 2rem; background: var(--bg-secondary); border-radius: 20px; border: 1px solid var(--border-color);">
-            <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Syarat & Ketentuan</h2>
+          <div class="modal-content">
+            <h2>Syarat & Ketentuan</h2>
             <p>Website ini adalah website tidak resmi yang dibuat untuk siswa SMKN 4 Banjarmasin. Kami tidak berafiliasi dengan pihak sekolah secara resmi.</p>
             <p>Semua informasi di website ini bersifat informatif dan kami berusaha untuk menyajikan informasi yang akurat. Namun, kami tidak bertanggung jawab atas ketidakakuratan informasi yang mungkin ada.</p>
             <p>Fun Fact: Site ini Sudah diakui oleh Guru Informatika Dan Guru Pemrograman Dasar SMK Negeri 4 Banjarmasin.</p>
-            <p style="margin-top: 1.5rem;">Terakhir diperbarui: Januari 2025</p>
+            <p class="modal-footer">Terakhir diperbarui: Januari 2025</p>
           </div>
         `;
         showModal("Syarat & Ketentuan", content);
@@ -1592,62 +1639,52 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
       const playlistItems = document.getElementById('playlist-items');
       const playlistItemElements = document.querySelectorAll('.playlist-item');
       
-      // Set initial volume
-      audioPlayer.volume = 0.7;
+      if (!audioPlayer) return;
+      
+      const fmt = s => isNaN(s) ? '0:00' : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+      
+      if (volumeSlider) audioPlayer.volume = volumeSlider.value / 100;
+      
+      audioPlayer.addEventListener('loadedmetadata', () => { 
+        if (totalTimeEl) totalTimeEl.textContent = fmt(audioPlayer.duration); 
+      });
       
       // Play/Pause functionality
-      playPauseBtn.addEventListener('click', () => {
-        if (audioPlayer.paused) {
-          audioPlayer.play();
+      playPauseBtn && playPauseBtn.addEventListener('click', () => {
+        if (audioPlayer.paused) { 
+          audioPlayer.play(); 
           playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
           playPauseBtn.classList.add('playing');
-        } else {
-          audioPlayer.pause();
+        } else { 
+          audioPlayer.pause(); 
           playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
           playPauseBtn.classList.remove('playing');
         }
       });
       
-      // Update progress bar
+      // Progress bar update
       audioPlayer.addEventListener('timeupdate', () => {
-        const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-        progressBar.value = progress;
-        
-        // Update current time
-        const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
-        const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
-        currentTimeEl.textContent = `${currentMinutes}:${currentSeconds < 10 ? '0' : ''}${currentSeconds}`;
+        const pct = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+        if (progressBar) progressBar.value = pct || 0;
+        if (currentTimeEl) currentTimeEl.textContent = fmt(audioPlayer.currentTime);
       });
       
-      // Set total time when metadata is loaded
-      audioPlayer.addEventListener('loadedmetadata', () => {
-        const durationMinutes = Math.floor(audioPlayer.duration / 60);
-        const durationSeconds = Math.floor(audioPlayer.duration % 60);
-        totalTimeEl.textContent = `${durationMinutes}:${durationSeconds < 10 ? '0' : ''}${durationSeconds}`;
-      });
-      
-      // Seek in the audio when progress bar is changed
-      progressBar.addEventListener('input', () => {
-        const seekTime = (progressBar.value / 100) * audioPlayer.duration;
-        audioPlayer.currentTime = seekTime;
+      // Progress bar seek
+      progressBar && progressBar.addEventListener('input', () => { 
+        audioPlayer.currentTime = (progressBar.value / 100) * audioPlayer.duration; 
       });
       
       // Volume control
-      volumeSlider.addEventListener('input', () => {
+      volumeSlider && volumeSlider.addEventListener('input', () => {
         audioPlayer.volume = volumeSlider.value / 100;
-        
-        // Update volume icon based on volume level
-        if (volumeSlider.value == 0) {
-          volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-        } else if (volumeSlider.value < 50) {
-          volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-        } else {
-          volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-        }
+        if (!volumeBtn) return;
+        if (volumeSlider.value == 0) volumeBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        else if (volumeSlider.value < 50) volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
+        else volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
       });
       
-      // Toggle mute when volume button is clicked
-      volumeBtn.addEventListener('click', () => {
+      // Mute toggle
+      volumeBtn && volumeBtn.addEventListener('click', () => {
         if (audioPlayer.volume > 0) {
           // Save current volume
           volumeBtn.dataset.prevVolume = audioPlayer.volume;
@@ -1659,34 +1696,25 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
           const prevVolume = volumeBtn.dataset.prevVolume || 0.7;
           audioPlayer.volume = prevVolume;
           volumeSlider.value = prevVolume * 100;
-          
-          if (prevVolume < 0.5) {
-            volumeBtn.innerHTML = '<i class="fas fa-volume-down"></i>';
-          } else {
-            volumeBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-          }
+          volumeBtn.innerHTML = prevVolume < 0.5 ? '<i class="fas fa-volume-down"></i>' : '<i class="fas fa-volume-up"></i>';
         }
       });
       
-      // Show lyrics modal
-      lyricsBtn.addEventListener('click', () => {
-        lyricsModal.classList.add('visible');
+      // Lyrics modal
+      lyricsBtn && lyricsBtn.addEventListener('click', () => { 
+        lyricsModal && lyricsModal.classList.add('visible'); 
       });
       
-      // Close lyrics modal
-      closeLyricsBtn.addEventListener('click', () => {
-        lyricsModal.classList.remove('visible');
+      closeLyricsBtn && closeLyricsBtn.addEventListener('click', () => { 
+        lyricsModal && lyricsModal.classList.remove('visible'); 
       });
       
-      // Close lyrics modal when clicking outside
-      lyricsModal.addEventListener('click', (e) => {
-        if (e.target === lyricsModal) {
-          lyricsModal.classList.remove('visible');
-        }
+      lyricsModal && lyricsModal.addEventListener('click', (e) => { 
+        if (e.target === lyricsModal) lyricsModal.classList.remove('visible'); 
       });
       
       // Download functionality
-      downloadBtn.addEventListener('click', () => {
+      downloadBtn && downloadBtn.addEventListener('click', () => {
         const audioSrc = audioPlayer.src;
         const a = document.createElement('a');
         a.href = audioSrc;
@@ -1700,7 +1728,7 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
       });
       
       // Playlist toggle
-      playlistToggle.addEventListener('click', () => {
+      playlistToggle && playlistToggle.addEventListener('click', () => {
         playlistItems.classList.toggle('active');
         
         if (playlistItems.classList.contains('active')) {
@@ -1730,12 +1758,51 @@ Berkolaborasi dengan: SMK Negeri 2 Banjarmasin</div>
           document.querySelector('.player-track-title').textContent = title;
           document.querySelector('.player-track-artist').textContent = artist;
           
-          // Load and play the new track
+          // Load and play new track
           audioPlayer.load();
           audioPlayer.play();
           playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
           playPauseBtn.classList.add('playing');
         });
+      });
+      
+      // Previous/Next buttons
+      prevBtn && prevBtn.addEventListener('click', () => {
+        const activeItem = document.querySelector('.playlist-item.active');
+        if (activeItem) {
+          const prevItem = activeItem.previousElementSibling;
+          if (prevItem && prevItem.classList.contains('playlist-item')) {
+            prevItem.click();
+          }
+        }
+      });
+      
+      nextBtn && nextBtn.addEventListener('click', () => {
+        const activeItem = document.querySelector('.playlist-item.active');
+        if (activeItem) {
+          const nextItem = activeItem.nextElementSibling;
+          if (nextItem && nextItem.classList.contains('playlist-item')) {
+            nextItem.click();
+          }
+        }
+      });
+      
+      // Handle song end
+      audioPlayer.addEventListener('ended', () => {
+        if (playPauseBtn) { 
+          playPauseBtn.innerHTML = '<i class="fas fa-play"></i>'; 
+          playPauseBtn.classList.remove('playing');
+        }
+        audioPlayer.currentTime = 0;
+        
+        // Auto-play next song if available
+        const activeItem = document.querySelector('.playlist-item.active');
+        if (activeItem) {
+          const nextItem = activeItem.nextElementSibling;
+          if (nextItem && nextItem.classList.contains('playlist-item')) {
+            nextItem.click();
+          }
+        }
       });
       
       // Timeline functionality
