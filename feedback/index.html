@@ -270,11 +270,47 @@
       border: 1px solid var(--border-color);
       margin-bottom: 2rem;
       animation: fadeInUp 0.7s 0.2s backwards;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    /* Decorative elements */
+    .form-container::before {
+      content: '';
+      position: absolute;
+      top: -70px; 
+      right: -70px;
+      width: 250px; 
+      height: 250px;
+      background: radial-gradient(circle, rgba(244, 105, 0, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pulse 5s infinite alternate;
+    }
+    
+    .form-container::after {
+      content: '';
+      position: absolute;
+      bottom: -50px; 
+      left: -50px;
+      width: 180px; 
+      height: 180px;
+      background: radial-gradient(circle, rgba(78, 205, 196, 0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: pulse 5s infinite alternate-reverse;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.2; }
+      100% { transform: scale(1.15); opacity: 0.35; }
     }
     
     .form-header {
       text-align: center;
       margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
     }
     
     .form-header h2 {
@@ -292,6 +328,8 @@
     .feedback-form {
       display: grid;
       gap: 1.5rem;
+      position: relative;
+      z-index: 1;
     }
     
     .form-group {
@@ -365,6 +403,21 @@
       justify-content: center;
       gap: 0.5rem;
       margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .submit-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(-100%);
+      transition: transform 0.6s;
+    }
+    
+    .submit-btn:hover::before {
+      transform: translateX(100%);
     }
     
     .submit-btn:hover {
@@ -655,7 +708,7 @@
           <i class="fas fa-envelope"></i>
         </div>
         <h3>Email Langsung</h3>
-        <p>Anda juga bisa mengirim email langsung ke tim official kami untuk respon lebih lengkap</p>
+        <p>Anda juga bisa mengirim email langsung ke tim kami untuk respon yang lebih lengkap</p>
       </div>
       <div class="info-card">
         <div class="info-card-icon">
@@ -677,7 +730,7 @@
     <footer class="footer">
       <p>&copy; 2025 <a href="https://skenpat.pages.dev">Unofficial Skenpat Pages</a> | SMKN 4 Banjarmasin</p>
       <p>
-        <a href="/">Kembali ke Beranda</a> | 
+        <a href="https://skenpat.pages.dev">Kembali ke Beranda</a> | 
         <a href="https://flessan.pages.dev">Developer</a>
       </p>
     </footer>
