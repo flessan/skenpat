@@ -2,24 +2,31 @@
 
 # Website SMK Negeri 4 Banjarmasin (Skenpat)
 
-[![Website](https://img.shields.io/badge/Website-smkn4bjm.sch.id-blue?style=for-the-badge&logo=vercel)](https://smkn4bjm.sch.id)
+[![Website](https://img.shields.io/badge/Website-smkn4bjm.sch.id-blue?style=for-the-badge&logo=globe)](https://smkn4bjm.sch.id)
 [![Subdomain](https://img.shields.io/badge/Subdomain-skenpat.pages.dev-green?style=for-the-badge&logo=github)](https://skenpat.pages.dev)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
-Website resmi SMK Negeri 4 Banjarmasin (Skenpat) yang menyediakan informasi lengkap tentang sekolah, jadwal pelajaran, profil tenaga pendidik, dan berbagai layanan pendidikan lainnya.
+Landing page tidak/belum resmi **SMK Negeri 4 Banjarmasin** (Skenpat) yang menyediakan informasi lengkap tentang sekolah, jadwal pelajaran, profil tenaga pendidik, dan berbagai layanan pendidikan lainnya. 
+##
+<img width="1366" height="420" alt="Pi7-Image-Cropper" src="https://github.com/user-attachments/assets/8cbdc7a9-4023-4365-933a-330b183e6800" />
+- Data Tahun Ajaran 2025 - 2026
 
 ## 🏫 Tentang SMK Negeri 4 Banjarmasin
 
 SMK Negeri 4 Banjarmasin adalah sekolah menengah kejuruan terkemuka di Banjarmasin, Kalimantan Selatan yang berkomitmen untuk mencetak lulusan yang berkualitas dan siap bersaing di dunia industri.
 
 ### Visi
-Menjadi sekolah unggulan dalam pengembangan sumber daya manusia yang berakhlak mulia, berwawasan global, dan berbasis teknologi informasi.
+Mewujudkan Lulusan Yang Kompeten, Berkarakter, Berdaya Saing, Siap Menghadapi Dunia Kerja Dan Perkembangan Teknologi Berlandaskan Nilai-nilai Luhur Pancasila
 
 ### Misi
-- Menyelenggarakan pendidikan bermutu dengan kurikulum yang relevan dengan kebutuhan industri
-- Mengembangkan potensi peserta didik melalui pembelajaran inovatif dan kreatif
-- Membentuk karakter peserta didik yang berakhlak mulia dan berjiwa wirausaha
-- Meningkatkan kerjasama dengan industri dan dunia kerja
+- Mewujudkan Peserta Didik Yang Memiliki Profil Pelajar Pancasila Dan Budaya Kerja.
+- Melaksanakan Program Pendidikan Inklusif.
+- Melaksanakan Pembelajaran Berbasis Teaching Factory (ТЕFА).
+- Mengembangkan Manajemen Berbasis Data Dan Digital Yang Mendukung Efektivitas Layanan.
+- Menyediakan Sarana Dan Prasarana Yang Sesuai Dengan Standar Dunia Kerja Dan Perkembangan Teknologi.
+- Memperkuat Kemitraan Dengan Dunia Kerja Dan Stakeholder.
+- Memfasilitasi Lulusan Memiliki Sertifikat Uji Kompetensi Vang Diterbitkan Oleh BNSP.
+- Menumbuhkan Wawasan Dan Kepedulian Warga Sekolah Terhadap Lingkungan Hidup Dan Budaya Lokal.
 
 ## 🌐 Website Resmi
 
