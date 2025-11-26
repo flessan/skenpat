@@ -1,13 +1,14 @@
 /* ================================
-   NON-CRITICAL CSS - Decorative Effects
-   ================================ */
+  NON-CRITICAL CSS - ENHANCED VISUAL EFFECTS
+  ================================ */
 
-/* These styles are loaded after the initial page render
-   to improve perceived performance. They contain
-   decorative effects and animations that are not
-   critical for the initial layout. */
+/* This file contains visual effects and animations that enhance the user experience
+   but are not critical for the basic functionality of the website */
 
-/* Decorative shine effect on FAB */
+/* ================================
+  FLOATING ACTION BUTTON EFFECTS
+  ================================ */
+
 .fab::after {
   content: '';
   position: absolute;
@@ -23,13 +24,22 @@
   opacity: 0;
 }
 
-/* Decorative pulse animation on card balance */
+/* Theme-aware FAB effects */
+[data-theme="light"] .fab::after {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ================================
+  DECORATIVE PULSE ANIMATION ON CARD BALANCE
+  ================================ */
+
 .card-balance::before,
 .card-balance::after {
   content: '';
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
+  z-index: 0;
 }
 
 .card-balance::before {
@@ -55,16 +65,368 @@
   100% { transform: scale(1.15); opacity: 0.35; }
 }
 
-/* Decorative shine effect on action buttons */
+/* Theme-aware pulse effects */
+[data-theme="light"] .card-balance::before {
+  background: radial-gradient(circle, rgba(244, 105, 0, 0.15) 0%, transparent 70%);
+}
+
+[data-theme="light"] .card-balance::after {
+  background: radial-gradient(circle, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+}
+
+/* ================================
+  DECORATIVE SHINE EFFECT ON ACTION BUTTONS
+  ================================ */
+
 .card-balance .actions a::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transform: translateX(-100%);
   transition: transform 0.6s;
 }
 
 .card-balance .actions a:hover::before {
   transform: translateX(100%);
+}
+
+/* Theme-aware shine effects */
+[data-theme="light"] .card-balance .actions a::before {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+}
+
+/* ================================
+  ENHANCED VISUAL EFFECTS FOR BUTTONS
+  ================================ */
+
+/* Ripple effect on button clicks */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%);
+  transform-origin: 50% 50%;
+}
+
+.btn:focus:not(:active)::after {
+  animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0);
+    opacity: 0.5;
+  }
+  20% {
+    transform: scale(25, 25);
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(40, 40);
+  }
+}
+
+/* Theme-aware ripple effect */
+[data-theme="light"] .btn::after {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* ================================
+  ENHANCED CARD HOVER EFFECTS
+  ================================ */
+
+.grid .btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.grid .btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.grid .btn:hover::after {
+  transform: translateX(100%);
+}
+
+/* Theme-aware card hover effects */
+[data-theme="light"] .grid .btn::after {
+  background: linear-gradient(45deg, transparent 30%, rgba(0, 0, 0, 0.05) 50%, transparent 70%);
+}
+
+/* ================================
+  ENHANCED NAVIGATION EFFECTS
+  ================================ */
+
+/* Smooth underline animation for navigation links */
+.navbar-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: width 0.3s ease;
+}
+
+.navbar-menu a:hover::after {
+  width: 100%;
+}
+
+/* Theme-aware navigation effects */
+[data-theme="light"] .navbar-menu a::after {
+  background: var(--primary-color);
+}
+
+/* ================================
+  ENHANCED LOADING ANIMATIONS
+  ================================ */
+
+/* Staggered animation for content sections */
+.section {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.7s forwards;
+}
+
+.section:nth-child(1) { animation-delay: 0.1s; }
+.section:nth-child(2) { animation-delay: 0.2s; }
+.section:nth-child(3) { animation-delay: 0.3s; }
+.section:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced loading spinner */
+.loader-circle {
+  position: relative;
+}
+
+.loader-circle::before,
+.loader-circle::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 4px solid transparent;
+}
+
+.loader-circle::before {
+  inset: -8px;
+  border-top-color: var(--secondary-color);
+  animation: spin 1.5s linear infinite reverse;
+}
+
+.loader-circle::after {
+  inset: -16px;
+  border-bottom-color: var(--accent-color);
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ================================
+  ENHANCED TIMELINE EFFECTS
+  ================================ */
+
+/* Staggered animation for timeline items */
+.timeline-item {
+  opacity: 0;
+  animation: fadeInUp 0.7s forwards;
+}
+
+.timeline-item:nth-child(1) { animation-delay: 0.1s; }
+.timeline-item:nth-child(2) { animation-delay: 0.2s; }
+.timeline-item:nth-child(3) { animation-delay: 0.3s; }
+.timeline-item:nth-child(4) { animation-delay: 0.4s; }
+
+/* Enhanced timeline hover effect */
+.timeline-content {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.timeline-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(244, 105, 0, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.timeline-content:hover::before {
+  left: 100%;
+}
+
+/* Theme-aware timeline effects */
+[data-theme="light"] .timeline-content::before {
+  background: linear-gradient(90deg, transparent, rgba(244, 105, 0, 0.2), transparent);
+}
+
+/* ================================
+  ENHANCED MUSIC PLAYER EFFECTS
+  ================================ */
+
+/* Visual feedback for playing state */
+.main-play-btn.playing {
+  animation: pulse-icon 1.5s infinite alternate;
+}
+
+@keyframes pulse-icon {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+/* Enhanced progress bar animation */
+.player-progress-bar {
+  position: relative;
+}
+
+.player-progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--progress, 0%);
+  background: var(--primary-color);
+  border-radius: 3px;
+  transition: width 0.1s linear;
+}
+
+/* Theme-aware music player effects */
+[data-theme="light"] .player-progress-bar::before {
+  background: var(--primary-color);
+}
+
+/* ================================
+  ENHANCED MODAL EFFECTS
+  ================================ */
+
+/* Modal entrance animation */
+.modal-overlay {
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-container {
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================================
+  ENHANCED NOTIFICATION EFFECTS
+  ================================ */
+
+/* Notification entrance animation */
+.notification {
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from { 
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to { 
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ================================
+  ENHANCED SEARCH EFFECTS
+  ================================ */
+
+/* Search input focus effect */
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(244, 105, 0, 0.2);
+}
+
+/* Theme-aware search effects */
+[data-theme="light"] .search-input:focus {
+  box-shadow: 0 0 0 3px rgba(244, 105, 0, 0.3);
+}
+
+/* ================================
+  REDUCED MOTION SUPPORT
+  ================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable animations for users who prefer reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ================================
+  HIGH CONTRAST MODE SUPPORT
+  ================================ */
+
+@media (prefers-contrast: high) {
+  /* Increase contrast for users who prefer high contrast */
+  .card-balance::before,
+  .card-balance::after {
+    opacity: 0.5;
+  }
+  
+  .card-balance .actions a::before {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  [data-theme="light"] .card-balance .actions a::before {
+    background: rgba(0, 0, 0, 0.2);
+  }
 }
