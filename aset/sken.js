@@ -4,6 +4,7 @@
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
   initNavigation();
   initScrollEffects();
   initFloatingButtons();
@@ -12,7 +13,44 @@ document.addEventListener('DOMContentLoaded', () => {
   initSmoothScrolling();
   initAccessibility();
   initMusicPlayer();
+  initTimeline();
+  initSearch();
+  initPerformanceOptimizations();
 });
+
+// ================================
+// THEME MANAGEMENT
+// ================================
+function initTheme() {
+  const themeToggle = document.getElementById('theme-toggle');
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  
+  // Apply saved theme
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  updateThemeIcon(savedTheme);
+  
+  // Theme toggle functionality
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeIcon(newTheme);
+    });
+  }
+}
+
+function updateThemeIcon(theme) {
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    const icon = themeToggle.querySelector('i');
+    if (icon) {
+      icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+    }
+  }
+}
 
 // ================================
 // NAVIGATION FUNCTIONALITY
@@ -22,10 +60,16 @@ function initNavigation() {
   const navbarToggle = document.getElementById('navbar-toggle');
   const navbarMenu = document.getElementById('navbar-menu');
   
+  // Create menu overlay for mobile
+  const menuOverlay = document.createElement('div');
+  menuOverlay.className = 'menu-overlay';
+  document.body.appendChild(menuOverlay);
+  
   // Mobile menu toggle
   if (navbarToggle && navbarMenu) {
     navbarToggle.addEventListener('click', () => {
       navbarMenu.classList.toggle('active');
+      menuOverlay.classList.toggle('active');
       const isOpen = navbarMenu.classList.contains('active');
       navbarToggle.setAttribute('aria-expanded', String(isOpen));
       const icon = navbarToggle.querySelector('i');
@@ -35,10 +79,23 @@ function initNavigation() {
       }
     });
     
+    // Close menu when clicking on overlay
+    menuOverlay.addEventListener('click', () => {
+      navbarMenu.classList.remove('active');
+      menuOverlay.classList.remove('active');
+      navbarToggle.setAttribute('aria-expanded', 'false');
+      const icon = navbarToggle.querySelector('i');
+      if (icon) {
+        icon.classList.add('fa-bars');
+        icon.classList.remove('fa-times');
+      }
+    });
+    
     const menuLinks = navbarMenu.querySelectorAll('a');
     menuLinks.forEach(link => {
       link.addEventListener('click', () => {
         navbarMenu.classList.remove('active');
+        menuOverlay.classList.remove('active');
         navbarToggle.setAttribute('aria-expanded', 'false');
         const icon = navbarToggle.querySelector('i');
         if (icon) {
@@ -279,11 +336,296 @@ function initAccessibility() {
 }
 
 // ================================
+// MUSIC PLAYER
+// ================================
+function initMusicPlayer() {
+  const audio = document.getElementById('audio-player');
+  const playBtn = document.getElementById('play-pause-btn');
+  const playIcon = playBtn?.querySelector('i');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const progress = document.getElementById('progress-bar');
+  const cur = document.getElementById('current-time');
+  const total = document.getElementById('total-time');
+  const volSlider = document.getElementById('volume-slider');
+  const volBtn = document.getElementById('volume-btn');
+  const volIcon = volBtn?.querySelector('i');
+  const lyrics = document.getElementById('lyrics-modal');
+  const showLyrics = document.getElementById('show-lyrics-modal-btn');
+  const closeLyrics = document.getElementById('close-lyrics-btn');
+  const downloadBtn = document.getElementById('download-btn');
+  const playlistToggle = document.getElementById('playlist-toggle');
+  const playlistItems = document.getElementById('playlist-items');
+  const playlistItemElements = document.querySelectorAll('.playlist-item');
+  
+  if (!audio) return;
+  
+  const fmt = s => isNaN(s) ? '0:00' : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+  
+  if (volSlider) audio.volume = volSlider.value / 100;
+  
+  audio.addEventListener('loadedmetadata', () => { 
+    if (total) total.textContent = fmt(audio.duration); 
+  });
+  
+  // Play/Pause functionality
+  playBtn && playBtn.addEventListener('click', () => {
+    if (audio.paused) { 
+      audio.play(); 
+      playIcon && (playIcon.classList.remove('fa-play'), playIcon.classList.add('fa-pause'));
+      playBtn.classList.add('playing');
+    } else { 
+      audio.pause(); 
+      playIcon && (playIcon.classList.remove('fa-pause'), playIcon.classList.add('fa-play'));
+      playBtn.classList.remove('playing');
+    }
+  });
+  
+  // Progress bar update
+  audio.addEventListener('timeupdate', () => {
+    const pct = (audio.currentTime / audio.duration) * 100;
+    if (progress) progress.value = pct || 0;
+    if (cur) cur.textContent = fmt(audio.currentTime);
+  });
+  
+  // Progress bar seek
+  progress && progress.addEventListener('input', () => { 
+    audio.currentTime = (progress.value / 100) * audio.duration; 
+  });
+  
+  // Volume control
+  volSlider && volSlider.addEventListener('input', () => {
+    audio.volume = volSlider.value / 100;
+    if (!volIcon) return;
+    if (volSlider.value == 0) volIcon.className = 'fas fa-volume-mute';
+    else if (volSlider.value < 50) volIcon.className = 'fas fa-volume-down';
+    else volIcon.className = 'fas fa-volume-up';
+  });
+  
+  // Mute toggle
+  volBtn && volBtn.addEventListener('click', () => {
+    if (audio.volume > 0) {
+      // Save current volume
+      volBtn.dataset.prevVolume = audio.volume;
+      audio.volume = 0;
+      volSlider.value = 0;
+      volIcon.className = 'fas fa-volume-mute';
+    } else {
+      // Restore previous volume
+      const prevVolume = volBtn.dataset.prevVolume || 0.7;
+      audio.volume = prevVolume;
+      volSlider.value = prevVolume * 100;
+      volIcon.className = prevVolume < 0.5 ? 'fas fa-volume-down' : 'fas fa-volume-up';
+    }
+  });
+  
+  // Lyrics modal
+  showLyrics && showLyrics.addEventListener('click', () => { 
+    lyrics && lyrics.classList.add('visible'); 
+  });
+  
+  closeLyrics && closeLyrics.addEventListener('click', () => { 
+    lyrics && lyrics.classList.remove('visible'); 
+  });
+  
+  lyrics && lyrics.addEventListener('click', (e) => { 
+    if (e.target === lyrics) lyrics.classList.remove('visible'); 
+  });
+  
+  // Download functionality
+  downloadBtn && downloadBtn.addEventListener('click', () => {
+    const audioSrc = audio.src;
+    const a = document.createElement('a');
+    a.href = audioSrc;
+    a.download = 'Mars_SMKN_4_Banjarmasin.mp3';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    
+    // Show notification
+    showModal("Unduhan Dimulai", `<p style="text-align: center; padding: 20px;">Lagu Mars SMKN 4 Banjarmasin sedang diunduh.</p>`);
+  });
+  
+  // Playlist toggle
+  playlistToggle && playlistToggle.addEventListener('click', () => {
+    playlistItems.classList.toggle('active');
+    
+    if (playlistItems.classList.contains('active')) {
+      playlistToggle.innerHTML = '<i class="fas fa-chevron-up"></i> Sembunyikan';
+    } else {
+      playlistToggle.innerHTML = '<i class="fas fa-chevron-down"></i> Tampilkan';
+    }
+  });
+  
+  // Playlist item selection
+  playlistItemElements.forEach(item => {
+    item.addEventListener('click', () => {
+      // Remove active class from all items
+      playlistItemElements.forEach(i => i.classList.remove('active'));
+      
+      // Add active class to clicked item
+      item.classList.add('active');
+      
+      // Change audio source
+      const newSrc = item.dataset.src;
+      audio.src = newSrc;
+      
+      // Update track info
+      const title = item.querySelector('.playlist-item-title').textContent;
+      const artist = item.querySelector('.playlist-item-artist').textContent;
+      
+      document.querySelector('.player-track-title').textContent = title;
+      document.querySelector('.player-track-artist').textContent = artist;
+      
+      // Load and play the new track
+      audio.load();
+      audio.play();
+      playIcon && (playIcon.classList.remove('fa-play'), playIcon.classList.add('fa-pause'));
+      playBtn.classList.add('playing');
+    });
+  });
+  
+  // Previous/Next buttons
+  prevBtn && prevBtn.addEventListener('click', () => {
+    const activeItem = document.querySelector('.playlist-item.active');
+    if (activeItem) {
+      const prevItem = activeItem.previousElementSibling;
+      if (prevItem && prevItem.classList.contains('playlist-item')) {
+        prevItem.click();
+      }
+    }
+  });
+  
+  nextBtn && nextBtn.addEventListener('click', () => {
+    const activeItem = document.querySelector('.playlist-item.active');
+    if (activeItem) {
+      const nextItem = activeItem.nextElementSibling;
+      if (nextItem && nextItem.classList.contains('playlist-item')) {
+        nextItem.click();
+      }
+    }
+  });
+  
+  // Handle song end
+  audio.addEventListener('ended', () => {
+    if (playIcon) { 
+      playIcon.classList.remove('fa-pause'); 
+      playIcon.classList.add('fa-play'); 
+    }
+    playBtn.classList.remove('playing');
+    audio.currentTime = 0;
+    
+    // Auto-play next song if available
+    const activeItem = document.querySelector('.playlist-item.active');
+    if (activeItem) {
+      const nextItem = activeItem.nextElementSibling;
+      if (nextItem && nextItem.classList.contains('playlist-item')) {
+        nextItem.click();
+      }
+    }
+  });
+}
+
+// ================================
+// TIMELINE FUNCTIONALITY
+// ================================
+function initTimeline() {
+  const timelineToggles = document.querySelectorAll('.timeline-toggle');
+  
+  timelineToggles.forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      const targetId = toggle.dataset.target;
+      const detailsElement = document.getElementById(targetId);
+      
+      detailsElement.classList.toggle('active');
+      
+      if (detailsElement.classList.contains('active')) {
+        toggle.innerHTML = 'Sembunyikan <i class="fas fa-chevron-up"></i>';
+      } else {
+        toggle.innerHTML = 'Selengkapnya <i class="fas fa-chevron-down"></i>';
+      }
+    });
+  });
+}
+
+// ================================
+// SEARCH FUNCTIONALITY
+// ================================
+function initSearch() {
+  // Create search container if it doesn't exist
+  if (!document.querySelector('.search-container')) {
+    const searchContainer = document.createElement('div');
+    searchContainer.className = 'search-container';
+    searchContainer.innerHTML = `
+      <input type="text" class="search-input" placeholder="Cari informasi..." aria-label="Cari">
+      <button class="search-button" aria-label="Cari">
+        <i class="fas fa-search"></i>
+      </button>
+    `;
+    
+    // Insert search container after header
+    const header = document.querySelector('.header');
+    if (header) {
+      header.after(searchContainer);
+    }
+  }
+  
+  const searchInput = document.querySelector('.search-input');
+  const searchButton = document.querySelector('.search-button');
+  
+  // Search functionality
+  const performSearch = () => {
+    const query = searchInput.value.toLowerCase().trim();
+    if (!query) return;
+    
+    // Find all searchable elements
+    const searchableElements = document.querySelectorAll('.section h3, .visi-misi h3, .visi-misi h2, .visi-misi p, .visi-misi li');
+    
+    // Reset previous highlights
+    document.querySelectorAll('.search-highlight').forEach(el => {
+      el.classList.remove('search-highlight');
+    });
+    
+    // Count matches
+    let matchCount = 0;
+    
+    // Highlight matches
+    searchableElements.forEach(element => {
+      const text = element.textContent.toLowerCase();
+      if (text.includes(query)) {
+        element.classList.add('search-highlight');
+        matchCount++;
+      }
+    });
+    
+    // Show notification
+    if (matchCount > 0) {
+      showModal("Hasil Pencarian", `<p>Ditemukan ${matchCount} hasil untuk "${query}".</p>`);
+      
+      // Scroll to first match
+      const firstMatch = document.querySelector('.search-highlight');
+      if (firstMatch) {
+        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } else {
+      showModal("Hasil Pencarian", `<p>Tidak ada hasil untuk "${query}".</p>`);
+    }
+  };
+  
+  // Add event listeners
+  searchButton?.addEventListener('click', performSearch);
+  searchInput?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+}
+
+// ================================
 // PERFORMANCE OPTIMIZATIONS
 // ================================
-
-// Lazy load images
-document.addEventListener('DOMContentLoaded', () => {
+function initPerformanceOptimizations() {
+  // Lazy load images
   const lazyImages = document.querySelectorAll('img[loading="lazy"]');
   
   if ('IntersectionObserver' in window) {
@@ -291,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src;
+          img.src = img.dataset.src || img.src;
           img.removeAttribute('loading');
           imageObserver.unobserve(img);
         }
@@ -304,93 +646,38 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     // Fallback for browsers that don't support IntersectionObserver
     lazyImages.forEach(img => {
-      img.src = img.dataset.src;
+      img.src = img.dataset.src || img.src;
     });
   }
-});
-
-// Add animation classes when elements come into view
-const animateOnScroll = () => {
-  const elements = document.querySelectorAll('.section, .visi-misi');
   
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('animate-in');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, {
-      threshold: 0.1
-    });
+  // Add animation classes when elements come into view
+  const animateOnScroll = () => {
+    const elements = document.querySelectorAll('.section, .visi-misi');
     
-    elements.forEach(element => {
-      observer.observe(element);
-    });
-  } else {
-    // Fallback
-    elements.forEach(element => {
-      element.classList.add('animate-in');
-    });
-  }
-};
-
-document.addEventListener('DOMContentLoaded', animateOnScroll);
-
-// ================================
-// MUSIC PLAYER
-// ================================
-function initMusicPlayer() {
-  const audio = document.getElementById('audio-player');
-  const playBtn = document.getElementById('play-pause-btn');
-  const playIcon = playBtn?.querySelector('i');
-  const progress = document.getElementById('progress-bar');
-  const cur = document.getElementById('current-time');
-  const total = document.getElementById('total-time');
-  const volSlider = document.getElementById('volume-slider');
-  const volBtn = document.getElementById('volume-btn');
-  const volIcon = volBtn?.querySelector('i');
-  const lyrics = document.getElementById('lyrics-modal');
-  const showLyrics = document.getElementById('show-lyrics-modal-btn');
-  const closeLyrics = document.getElementById('close-lyrics-btn');
-  if (!audio) return;
-  const fmt = s => isNaN(s) ? '0:00' : `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
-  if (volSlider) audio.volume = volSlider.value / 100;
-  audio.addEventListener('loadedmetadata', () => { if (total) total.textContent = fmt(audio.duration); });
-  playBtn && playBtn.addEventListener('click', () => {
-    if (audio.paused) { audio.play(); playIcon && (playIcon.classList.remove('fa-play'), playIcon.classList.add('fa-pause')); }
-    else { audio.pause(); playIcon && (playIcon.classList.remove('fa-pause'), playIcon.classList.add('fa-play')); }
-  });
-  audio.addEventListener('timeupdate', () => {
-    const pct = (audio.currentTime / audio.duration) * 100;
-    if (progress) progress.value = pct || 0;
-    if (cur) cur.textContent = fmt(audio.currentTime);
-  });
-  progress && progress.addEventListener('input', () => { audio.currentTime = (progress.value / 100) * audio.duration; });
-  volSlider && volSlider.addEventListener('input', () => {
-    audio.volume = volSlider.value / 100;
-    if (!volIcon) return;
-    if (volSlider.value == 0) volIcon.className = 'fas fa-volume-mute';
-    else if (volSlider.value < 50) volIcon.className = 'fas fa-volume-down';
-    else volIcon.className = 'fas fa-volume-up';
-  });
-  volBtn && volBtn.addEventListener('click', () => {
-    audio.muted = !audio.muted;
-    if (!volIcon) return;
-    if (audio.muted) volIcon.className = 'fas fa-volume-mute';
-    else {
-      const v = volSlider ? volSlider.value : 100;
-      volIcon.className = v < 50 ? 'fas fa-volume-down' : 'fas fa-volume-up';
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+      
+      elements.forEach(element => {
+        observer.observe(element);
+      });
+    } else {
+      // Fallback
+      elements.forEach(element => {
+        element.classList.add('animate-in');
+      });
     }
-  });
-  showLyrics && showLyrics.addEventListener('click', () => { lyrics && lyrics.classList.add('visible'); });
-  closeLyrics && closeLyrics.addEventListener('click', () => { lyrics && lyrics.classList.remove('visible'); });
-  lyrics && lyrics.addEventListener('click', (e) => { if (e.target === lyrics) lyrics.classList.remove('visible'); });
-  audio.addEventListener('ended', () => {
-    if (playIcon) { playIcon.classList.remove('fa-pause'); playIcon.classList.add('fa-play'); }
-    audio.currentTime = 0;
-  });
+  };
+  
+  animateOnScroll();
 }
 
 // ================================
@@ -474,10 +761,10 @@ function addDynamicStyles() {
         to { opacity: 1; transform: translateY(0) scale(1); }
       }
       .fun-fact-notification {
-        background: rgba(30, 30, 30, 0.98);
-        color: #ffe6b8;
+        background: var(--card-dark);
+        color: var(--text-light);
         border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        box-shadow: var(--shadow-lg);
         position: fixed;
         bottom: 100px;
         right: 32px;
@@ -487,8 +774,13 @@ function addDynamicStyles() {
         font-size: 1.05rem;
         line-height: 1.6;
         animation: fadeInNotif 0.5s;
-        border: 1px solid #F46900;
+        border: 1px solid var(--primary-color);
         font-family: 'Poppins', sans-serif;
+      }
+      [data-theme="light"] .fun-fact-notification {
+        background: var(--light-card);
+        color: var(--light-text);
+        box-shadow: var(--light-shadow-lg);
       }
       .fun-fact-close {
         position: absolute;
@@ -496,13 +788,13 @@ function addDynamicStyles() {
         right: 0.8rem;
         background: none;
         border: none;
-        color: #f0ad4e;
+        color: var(--primary-color);
         font-size: 1.6rem;
         cursor: pointer;
         opacity: 0.7;
       }
       .fun-fact-title {
-        color: #FFD966;
+        color: var(--primary-color);
         font-size: 1.1rem;
         font-weight: bold;
         margin-bottom: 0.5rem;
@@ -520,6 +812,13 @@ function addDynamicStyles() {
         justify-content: center;
         padding: 1rem;
         backdrop-filter: blur(5px);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
+      }
+      .modal-overlay.visible {
+        opacity: 1;
+        visibility: visible;
       }
       .modal-container {
         background: var(--card-dark);
@@ -532,6 +831,16 @@ function addDynamicStyles() {
         position: relative;
         width: 100%;
         max-width: 600px;
+        transform: translateY(20px);
+        transition: transform 0.3s;
+      }
+      .modal-overlay.visible .modal-container {
+        transform: translateY(0);
+      }
+      [data-theme="light"] .modal-container {
+        background: var(--light-card);
+        border: 1px solid var(--light-border);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
       }
       .modal-header {
         display: flex;
@@ -539,6 +848,9 @@ function addDynamicStyles() {
         align-items: center;
         padding: 1.5rem 2rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      [data-theme="light"] .modal-header {
+        border-bottom: 1px solid var(--light-border);
       }
       .modal-header h2 {
         color: var(--primary-color);
@@ -563,6 +875,9 @@ function addDynamicStyles() {
         background: rgba(255, 255, 255, 0.1);
         color: var(--text-light);
       }
+      [data-theme="light"] .modal-close-btn:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
       .modal-body {
         padding: 2rem;
       }
@@ -583,6 +898,9 @@ function addDynamicStyles() {
         font-style: italic;
         color: var(--text-muted);
       }
+      [data-theme="light"] .modal-footer {
+        color: var(--light-text-muted);
+      }
       .skip-link {
         position: absolute;
         top: -40px;
@@ -599,6 +917,62 @@ function addDynamicStyles() {
       }
       .animate-in {
         animation: fadeInUp 0.7s forwards;
+      }
+      .search-highlight {
+        background-color: rgba(244, 105, 0, 0.2);
+        padding: 2px 4px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+      [data-theme="light"] .search-highlight {
+        background-color: rgba(244, 105, 0, 0.3);
+      }
+      .search-container {
+        position: relative;
+        margin: 2rem 0;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .search-input {
+        width: 100%;
+        padding: 1rem 3rem 1rem 1.5rem;
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: var(--card-dark);
+        color: var(--text-light);
+        font-size: 1rem;
+        transition: var(--transition);
+      }
+      [data-theme="light"] .search-input {
+        background: var(--light-card);
+        color: var(--light-text);
+        border: 1px solid var(--light-border);
+      }
+      .search-input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(244, 105, 0, 0.2);
+      }
+      .search-button {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--primary-color);
+        border: none;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+      .search-button:hover {
+        background: var(--primary-light);
       }
     `;
     document.head.appendChild(style);
