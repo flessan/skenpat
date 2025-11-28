@@ -1,131 +1,86 @@
-// Data structure
-    const departmentsData = [
-      {
-        id: 'wirausaha',
-        title: 'Sekbid Wirausaha',
-        icon: 'fa-store',
-        members: [
-          { name: 'Farraz Ibnu Fadli', role: 'Ketua Sekbid' },
-          { name: 'Salsabila Azzahra', role: 'Anggota' },
-          { name: 'Maskanah', role: 'Anggota' },
-          { name: 'Muhammad Naufal', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'humas',
-        title: 'Sekbid Humas',
-        icon: 'fa-handshake',
-        members: [
-          { name: 'Muhammad Iqbal', role: 'Ketua Sekbid' },
-          { name: 'Akhmad Fitrianoor', role: 'Anggota' },
-          { name: 'Adinda Azrelia H.', role: 'Anggota' },
-          { name: 'Sarah Naila Humaira', role: 'Anggota' },
-          { name: 'Kamila Jamil', role: 'Anggota' },
-          { name: 'Nur Rumaisya Adzkiya', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'lingkungan',
-        title: 'Sekbid Lingkungan Hidup',
-        icon: 'fa-leaf',
-        members: [
-          { name: 'Muhammad Rasya Azizi', role: 'Ketua Sekbid' },
-          { name: 'Dara Puspita Rahayu', role: 'Anggota' },
-          { name: 'Salsabila Salma', role: 'Anggota' },
-          { name: 'Erika Purnama Saputri', role: 'Anggota' },
-          { name: 'Nur Amaliah', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'olahraga',
-        title: 'Sekbid Olahraga',
-        icon: 'fa-running',
-        members: [
-          { name: 'Muhammad Rayhan', role: 'Ketua Sekbid' },
-          { name: 'Latifatul Azkiya', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'keagamaan',
-        title: 'Sekbid Keagamaan',
-        icon: 'fa-pray',
-        members: [
-          { name: 'Humaira Faizatun Husna', role: 'Ketua Sekbid' },
-          { name: 'Julia Azzahra', role: 'Anggota' },
-          { name: 'Zahratussita', role: 'Anggota' },
-          { name: 'Maulida Rizki Ardiani', role: 'Anggota' },
-          { name: 'Muhammad Syahrul', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'belanegara',
-        title: 'Sekbid Bela Negara',
-        icon: 'fa-shield-alt',
-        members: [
-          { name: 'Gusti Cynthia Anggraini Rinanda', role: 'Ketua Sekbid' },
-          { name: 'Ebira Hasanatina', role: 'Anggota' },
-          { name: 'Siti Maimunah Fadilla', role: 'Anggota' },
-          { name: 'Helma Nazulla', role: 'Anggota' },
-          { name: 'Muhammad Iqbal 👦', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'kepemimpinan',
-        title: 'Sekbid Kepemimpinan',
-        icon: 'fa-crown',
-        members: [
-          { name: 'Shireen Nur Aura Rizqy', role: 'Ketua Sekbid' },
-          { name: 'Muhammad Farhan R.', role: 'Anggota' },
-          { name: 'Muhammad Haffi Tasmin', role: 'Anggota' },
-          { name: 'Muhammad Nazril Ilham', role: 'Anggota' },
-          { name: 'Rizkya Nur Aulia', role: 'Anggota' },
-          { name: 'Yeni Agustine', role: 'Anggota' }
-        ]
-      }
-    ];
-
-    // Photo URLs 
-    const photoUrls = {
-  "Muhammad Reno Helmawan": "https://drive.google.com/uc?export=view&id=1qqyR4UQyh1mectQRTsXPKDia63KqwtTK",
-  "Corry Laura Beuty Pakpahan": "https://drive.google.com/uc?export=view&id=19VLZ2yoG0MUVnQkk1bqCHFGe61-sDhvx",
-  "Amalia Rahmania": "https://drive.google.com/uc?export=view&id=1Q3gY0djwi9W32DrQZE-dwVdBS1qj8NfN",
-  "Nur Almira Putri": "https://drive.google.com/uc?export=view&id=1BFPTyGjN3jWATdR2GaSnMOd_G4SiVjRv",
-  "Arya Tri Nugraha": "https://drive.google.com/uc?export=view&id=1hd11D7q8cJ4MhtGsNmH8G6vuQm1PjX70",
-  "Muhammad Dede Riyadhi": "https://drive.google.com/uc?export=view&id=1ZWEfxog8cJ4MhtGsNmH8G6vuQm1PjX70",
-  "Farraz Ibnu Fadli": "https://drive.google.com/uc?export=view&id=1Ght2dIp5w8WqEjTtCRDAeuOVzz2azhf7",
-  "Salsabila Azzahra": "https://drive.google.com/uc?export=view&id=1FvO0jxzp-pO9X5w2NmH8G6vuQm1PjX70",
-  "Maskanah": "https://drive.google.com/uc?export=view&id=1CsNSHlUEbGBhJgiMem44zcDwqpZoOYqS",
-  "Muhammad Naufal": "https://drive.google.com/uc?export=view&id=1M5vZoRDtuwduUXH35igj9dWOgcZWzQC6",
-  "Muhammad Iqbal": "https://drive.google.com/uc?export=view&id=1E-OWlSL15gGZ4iv4gJlOixg5tYkPU2Ga",
-  "Akhmad Fitrianoor": "https://drive.google.com/uc?export=view&id=1B_9SZi5TpZOyJJcoRDlMOWTgKAvOpiMb",
-  "Adinda Azrelia H.": "https://drive.google.com/uc?export=view&id=12pUEMMe-Dkp1nt0kBTQaamTlq3dPMzFB",
-  "Sarah Naila Humaira": "https://drive.google.com/uc?export=view&id=1FS5dcFeqJi8eSGp-cv4Mw4j0SKQp9c6z",
-  "Kamila Jamil": "https://drive.google.com/uc?export=view&id=1a-ahw6PLNZCEHIRM60MyrWIzGQ3i3baI",
-  "Nur Rumaisya Adzkiya": "https://drive.google.com/uc?export=view&id=1TSkNs1VV83-4iCrmwc0W4pbP-CAgGNxb",
-  "Muhammad Rasya Azizi": "https://drive.google.com/uc?export=view&id=1QlPQbzijGF21-UhivYGKmL3PGvDbOSSJ",
-  "Dara Puspita Rahayu": "https://drive.google.com/uc?export=view&id=1fcfsZDW3hCBvnfyZ9ILpVptSgLTZdXVT",
-  "Salsabila Salma": "https://drive.google.com/uc?export=view&id=10GvNgfDO848uAzRNQiArIiCLd4jQDJUw",
-  "Erika Purnama Saputri": "https://drive.google.com/uc?export=view&id=1oM4W-OeIwB_j1nXkW4q9rX6gpG-WvNyx",
-  "Nur Amaliah": "https://drive.google.com/uc?export=view&id=16FGPDv1dQQOX6XfFCZpn7OmoLvizNC8X",
-  "Muhammad Rayhan": "https://drive.google.com/uc?export=view&id=1r2dc0SVDrW36Or5kJCfM6ZNE0tpH85TO",
-  "Latifatul Azkiya": "https://drive.google.com/uc?export=view&id=1puAccURdioDZpiEjPiLZ8PfxOhaFfzqy",
-  "Humaira Faizatun Husna": "https://drive.google.com/uc?export=view&id=1U0ffaOenXyvZFnLNDKHU63mhkwmBq9si",
-  "Julia Azzahra": "https://drive.google.com/uc?export=view&id=1ZvkP1W76B3bcJcT5LCw6LNppACuXlKdv",
-  "Zahratussita": "https://drive.google.com/uc?export=view&id=1XugVGaccTc0q0BVEu7qlyAZILqi_AV2V",
-  "Maulida Rizki Ardiani": "https://drive.google.com/uc?export=view&id=1-425RR8U9Me9Lo9r66cK86lCb4lfDnvN",
-  "Muhammad Syahrul": "https://drive.google.com/uc?export=view&id=1iMDOJdgjL7N-tLI4pXZWVes8N7H60yxz",
-  "Gusti Cynthia Anggraini Rinanda": "https://drive.google.com/uc?export=view&id=1dVYoPPVIN_FAiUvApZBbpowz3A4D1Z9a",
-  "Ebira Hasanatina": "https://drive.google.com/uc?export=view&id=1WiCjcBMQNSlmVOymjOW7nTulnsYrWbM1",
-  "Siti Maimunah Fadilla": "https://drive.google.com/uc?export=view&id=181ZeOUXyvuVWfJoczknBiNzd1E_PmXxj",
-  "Helma Nazulla": "https://drive.google.com/uc?export=view&id=1Rxloa5uVG1zq3LhFqBkkfqxvhzNgL8kR",
-  "Muhammad Iqbal 👦": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
-  "Shireen Nur Aura Rizqy": "https://drive.google.com/uc?export=view&id=1RiGD5ivNSf8qNztqts1MheC7GGJUlJs9",
-  "Muhammad Farhan R.": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
-  "Muhammad Haffi Tasmin": "https://drive.google.com/uc?export=view&id=18XBqAbhOcMMaNUX6WQft7Pc7PzHJeIq-",
-  "Muhammad Nazril Ilham": "https://drive.google.com/uc?export=view&id=11l6T2-jorJSJ7kEUYLpHObRfsgG0f0y4",
-  "Rizkya Nur Aulia": "https://drive.google.com/uc?export=view&id=1XxrNanbGi4FAwm29eY5IMtKGPD3ZWMdW",
-  "Yeni Agustine": "https://drive.google.com/uc?export=view&id=1rk0ynoj0QouqwkHq1G6ZiHieLUoUC7qR"
-};
+const departmentsData = [
+  {
+    id: 'wirausaha',
+    title: 'Sekbid Wirausaha',
+    icon: 'fa-store',
+    members: [
+      { name: 'Muhammad Naufal', role: 'Ketua Koordinator' },
+      { name: 'Nayla Mufida Amalia', role: 'Anggota' },
+      { name: 'Nur Aleesya Nashirah', role: 'Anggota' },
+      { name: 'Arini Dia Astuti', role: 'Anggota' },
+      { name: 'Aira Dwi Astuti', role: 'Anggota' }
+    ]
+  },
+  {
+    id: 'humas',
+    title: 'Sekbid Humas',
+    icon: 'fa-handshake',
+    members: [
+      { name: 'Kamilia Jamil', role: 'Ketua Koordinator' },
+      { name: 'Dhini Maulida', role: 'Anggota' },
+      { name: 'Muhammad Nizam', role: 'Anggota' },
+      { name: 'Muhammad Saman Mulia', role: 'Anggota' }
+    ]
+  },
+  {
+    id: 'lingkungan',
+    title: 'Sekbid Lingkungan Hidup',
+    icon: 'fa-leaf',
+    members: [
+      { name: 'Salsabila Salma', role: 'Ketua Koordinator' },
+      { name: 'Nur Amaliah', role: 'Anggota' },
+      { name: 'Nur Rumaisya Adzkiya', role: 'Anggota' },
+      { name: 'Desi Maulida', role: 'Anggota' },
+      { name: 'Maulidina Chesa Amandani', role: 'Anggota' }
+    ]
+  },
+  {
+    id: 'olahraga',
+    title: 'Sekbid Olahraga',
+    icon: 'fa-running',
+    members: [
+      { name: 'Nur Almira Putri', role: 'Ketua Koordinator' },
+      { name: 'Muhammad Nazril Ilham', role: 'Anggota' },
+      { name: 'Andrea Tifany', role: 'Anggota' },
+      { name: 'Muhammad Zhia Al-Kautsar', role: 'Anggota' },
+      { name: 'Salwa Elysia', role: 'Anggota' }
+    ]
+  },
+  {
+    id: 'keagamaan',
+    title: 'Sekbid Keagamaan',
+    icon: 'fa-pray',
+    members: [
+      { name: 'Maulida Rizky Ardani', role: 'Ketua Koordinator' },
+      { name: 'Muhammad Thio Saputra', role: 'Anggota' },
+      { name: 'Raisha', role: 'Anggota' },
+      { name: 'Kirana Saskiya Puteri', role: 'Anggota' }
+    ]
+  },
+  {
+    id: 'belanegara',
+    title: 'Sekbid Bela Negara',
+    icon: 'fa-shield-alt',
+    members: [
+      { name: 'Helma Nazulla Husna', role: 'Ketua Koordinator' },
+      { name: 'Muhammad Iqbal', role: 'Anggota' },
+      { name: 'Zahra Salsabila', role: 'Anggota' },
+      { name: 'Kaswid Yatma Rifa�i', role: 'Anggota' },
+      { name: 'Kalila Rahma', role: 'Anggota' }
+    ]
+  },
+  {
+    id: 'kepemimpinan',
+    title: 'Sekbid Kepemimpinan',
+    icon: 'fa-crown',
+    members: [
+      { name: 'Rizkya Nur Aulia', role: 'Ketua Koordinator' },
+      { name: 'Yeni Agustine', role: 'Anggota' },
+      { name: 'Intan Karunia Putri', role: 'Anggota' },
+      { name: 'Anna Nogo Kelen', role: 'Anggota' },
+      { name: 'Reany Fathinah Nuraini', role: 'Anggota' }
+    ]
+  };
 
     // State
     let filteredDepartments = [...departmentsData];
