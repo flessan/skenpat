@@ -65,7 +65,7 @@ const departmentsData = [
       { name: 'Helma Nazulla Husna', role: 'Ketua Koordinator' },
       { name: 'Muhammad Iqbal', role: 'Anggota' },
       { name: 'Zahra Salsabila', role: 'Anggota' },
-      { name: 'Kaswid Yatma Rifa�i', role: 'Anggota' },
+      { name: 'Kaswid Yatma Rifa’i', role: 'Anggota' },
       { name: 'Kalila Rahma', role: 'Anggota' }
     ]
   },
@@ -80,7 +80,8 @@ const departmentsData = [
       { name: 'Anna Nogo Kelen', role: 'Anggota' },
       { name: 'Reany Fathinah Nuraini', role: 'Anggota' }
     ]
-  };
+  }
+];
 
     // State
     let filteredDepartments = [...departmentsData];
