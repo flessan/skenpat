@@ -5,23 +5,11 @@
         title: 'Sekbid Wirausaha',
         icon: 'fa-store',
         members: [
-          { name: 'Farraz Ibnu Fadli', role: 'Ketua Sekbid' },
-          { name: 'Salsabila Azzahra', role: 'Anggota' },
-          { name: 'Maskanah', role: 'Anggota' },
-          { name: 'Muhammad Naufal', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'humas',
-        title: 'Sekbid Humas',
-        icon: 'fa-handshake',
-        members: [
-          { name: 'Muhammad Iqbal', role: 'Ketua Sekbid' },
-          { name: 'Akhmad Fitrianoor', role: 'Anggota' },
-          { name: 'Adinda Azrelia H.', role: 'Anggota' },
-          { name: 'Sarah Naila Humaira', role: 'Anggota' },
-          { name: 'Kamila Jamil', role: 'Anggota' },
-          { name: 'Nur Rumaisya Adzkiya', role: 'Anggota' }
+          { name: 'Muhammad Naufal', role: 'Ketua', class: 'XI Kuliner 2' },
+          { name: 'Nayla Mufida Amalia', role: 'Anggota', class: 'X Kuliner 1' },
+          { name: 'Nur Aleesya Nashirah', role: 'Anggota', class: 'X Kuliner 1' },
+          { name: 'Arini Dia Astuti', role: 'Anggota', class: 'X Kecantikan' },
+          { name: 'Aira Dwi Astuti', role: 'Anggota', class: 'X Kuliner 2' }
         ]
       },
       {
@@ -29,44 +17,23 @@
         title: 'Sekbid Lingkungan Hidup',
         icon: 'fa-leaf',
         members: [
-          { name: 'Muhammad Rasya Azizi', role: 'Ketua Sekbid' },
-          { name: 'Dara Puspita Rahayu', role: 'Anggota' },
-          { name: 'Salsabila Salma', role: 'Anggota' },
-          { name: 'Erika Purnama Saputri', role: 'Anggota' },
-          { name: 'Nur Amaliah', role: 'Anggota' }
+          { name: 'Salsabila Salma', role: 'Ketua', class: 'XI Kuliner 3' },
+          { name: 'Nur Rumaisya Adzkiya', role: 'Anggota', class: 'XI Busana 3' },
+          { name: 'Nur Amaliah', role: 'Anggota', class: 'XI RPL 2' },
+          { name: 'Desi Maulida', role: 'Anggota', class: 'X Kuliner 2' },
+          { name: 'Maulidina Chesa Amandani', role: 'Anggota', class: 'X Kuliner 2' }
         ]
       },
       {
-        id: 'olahraga',
-        title: 'Sekbid Olahraga',
-        icon: 'fa-running',
+        id: 'humas',
+        title: 'Sekbid Humas',
+        icon: 'fa-handshake',
         members: [
-          { name: 'Muhammad Rayhan', role: 'Ketua Sekbid' },
-          { name: 'Latifatul Azkiya', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'keagamaan',
-        title: 'Sekbid Keagamaan',
-        icon: 'fa-pray',
-        members: [
-          { name: 'Humaira Faizatun Husna', role: 'Ketua Sekbid' },
-          { name: 'Julia Azzahra', role: 'Anggota' },
-          { name: 'Zahratussita', role: 'Anggota' },
-          { name: 'Maulida Rizki Ardiani', role: 'Anggota' },
-          { name: 'Muhammad Syahrul', role: 'Anggota' }
-        ]
-      },
-      {
-        id: 'belanegara',
-        title: 'Sekbid Bela Negara',
-        icon: 'fa-shield-alt',
-        members: [
-          { name: 'Gusti Cynthia Anggraini Rinanda', role: 'Ketua Sekbid' },
-          { name: 'Ebira Hasanatina', role: 'Anggota' },
-          { name: 'Siti Maimunah Fadilla', role: 'Anggota' },
-          { name: 'Helma Nazulla', role: 'Anggota' },
-          { name: 'Muhammad Iqbal 👦', role: 'Anggota' }
+          { name: 'Kamilia Jamil', role: 'Ketua', class: 'XI Busana 3' },
+          { name: 'Dhini Maulida', role: 'Anggota', class: 'XI ULW' },
+          { name: 'Muhammad Nizam', role: 'Anggota', class: 'X RPL 1' },
+          { name: 'Muhammad Saman Mulia', role: 'Anggota', class: 'X RPL 2' },
+          { name: 'Utari Kartika Putri', role: 'Anggota', class: 'X Seni Musik' }
         ]
       },
       {
@@ -74,62 +41,246 @@
         title: 'Sekbid Kepemimpinan',
         icon: 'fa-crown',
         members: [
-          { name: 'Shireen Nur Aura Rizqy', role: 'Ketua Sekbid' },
-          { name: 'Muhammad Farhan R.', role: 'Anggota' },
-          { name: 'Muhammad Haffi Tasmin', role: 'Anggota' },
-          { name: 'Muhammad Nazril Ilham', role: 'Anggota' },
-          { name: 'Rizkya Nur Aulia', role: 'Anggota' },
-          { name: 'Yeni Agustine', role: 'Anggota' }
+          { name: 'Rizkya Nur Aulia', role: 'Ketua', class: 'XI RPL 2' },
+          { name: 'Yeni Agustine', role: 'Anggota', class: 'XI RPL 2' },
+          { name: 'Intan Karunia Putri', role: 'Anggota', class: 'X Busana 1' },
+          { name: 'Reany Fathinah Nuraini', role: 'Anggota', class: 'X Kuliner 2' },
+          { name: 'Anna Nogo Kelen', role: 'Anggota', class: 'X ULW' }
         ]
+      },
+      {
+        id: 'olahraga',
+        title: 'Sekbid Olahraga',
+        icon: 'fa-running',
+        members: [
+          { name: 'Nur Almira Putri', role: 'Ketua', class: 'XI Busana 3' },
+          { name: 'Muhammad Nazril Ilham', role: 'Anggota', class: 'XI RPL 1' },
+          { name: 'Muhammad Zhia Al-Kautsar', role: 'Anggota', class: 'X RPL 2' },
+          { name: 'Andrea Tifany', role: 'Anggota', class: 'X RPL 2' },
+          { name: 'Salwa Elysia', role: 'Anggota', class: 'X Perhotelan 2' }
+        ]
+      },
+      {
+        id: 'keagamaan',
+        title: 'Sekbid Keagamaan',
+        icon: 'fa-pray',
+        members: [
+          { name: 'Maulida Rizki Ardiani', role: 'Ketua', class: 'XI RPL 1' },
+          { name: 'Muhammad Thio Saputra', role: 'Anggota', class: 'X RPL 1' },
+          { name: 'Raisha', role: 'Anggota', class: 'X Busana 2' },
+          { name: 'Kirana Saskiya Puteri', role: 'Anggota', class: 'X ULW' }
+        ]
+      },
+      {
+        id: 'belanegara',
+        title: 'Sekbid Bela Negara',
+        icon: 'fa-shield-alt',
+        members: [
+          { name: 'Helma Nazulla Husna', role: 'Ketua', class: 'XI Busana 3' },
+          { name: 'Muhammad Iqbal', role: 'Anggota', class: 'XI RPL 1' },
+          { name: 'Kaswid Yatma Rifa\'i', role: 'Anggota', class: 'X Kuliner 2' },
+          { name: 'Zahra Salsabila', role: 'Anggota', class: 'X Kuliner 3' },
+          { name: 'Kalila Rahma', role: 'Anggota', class: 'X RPL 2' }
+        ]
+      }
+    ];
+
+    // Chat messages data
+    const chatMessages = [
+      {
+        author: 'Dhini Maulida',
+        time: '18/11/25 19.47',
+        message: 'Halo temen temen semua kenalin nama aku Dhini Mualida aku dari kelas XI ulw , Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'XI ULW'
+      },
+      {
+        author: 'Nor Fitriah',
+        time: '18/11/25 19.48',
+        message: 'Halo temen temen semua kenalin nama aku Nor Fitriah, aku dari kelas 10 Kecantikan, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X Kecantikan'
+      },
+      {
+        author: 'Nizam',
+        time: '18/11/25 19.48',
+        message: 'Halo temen temen semua kenalin nama aku Mahammad Nizam, aku dari kelas X RPL 2, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X RPL 2'
+      },
+      {
+        author: 'Arini Astuti',
+        time: '18/11/25 19.48',
+        message: 'Halo temen temen semua kenalin nama aku Arini Dia Astuti, aku dari kelas 10 Kecantikan, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X Kecantikan'
+      },
+      {
+        author: 'Reany Fathinah',
+        time: '18/11/25 19.49',
+        message: 'Halo temen temen semua kenalin nama aku Reany Fathinah Nuraini, aku dari kelas X Kuliner 2, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X Kuliner 2'
+      },
+      {
+        author: 'Raisya Oktama',
+        time: '18/11/25 19.51',
+        message: 'Halo temen temen semua kenalin nama aku anandha raisya oktama putri simpel nya raisya, aku dari kelas X rpl 1, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X RPL 1'
+      },
+      {
+        author: 'Thio Saputra',
+        time: '18/11/25 19.52',
+        message: 'Halo semuaa, kenalin nama aku Muhammad Thio Saputra, bisa dipanggil thio, aku dari kelas x rpl satuu, mohon kerjasamanya untuk kedepannya nyaa yaa teman temann, salam kenalll',
+        class: 'X RPL 1'
+      },
+      {
+        author: 'Kaswid Rifa\'i',
+        time: '18/11/25 19.52',
+        message: 'Halo semuanya perkenalkan saya Kaswid Yatma Rifa\'i dari kelas 10 Kuliner 2, mohon kerjasama nya yaa. Salam kenal semuanya',
+        class: 'X Kuliner 2'
+      },
+      {
+        author: 'Utari Putri',
+        time: '18/11/25 19.54',
+        message: 'Halo temen temen semua kenalin nama aku Utari Kartika Putri, aku dari kelas X Seni Musik, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X Seni Musik'
+      },
+      {
+        author: 'Zahra Salsabila',
+        time: '18/11/25 19.59',
+        message: 'Halo temen temen semua kenalin nama aku (bela), aku dari kelas (x boga 3), Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X Kuliner 3'
+      },
+      {
+        author: 'Aleesya Nashirah',
+        time: '18/11/25 20.08',
+        message: 'Halo temen temen semua kenalin nama aku Aleesya , aku dari kelas x kuliner 1, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall yaa',
+        class: 'X Kuliner 1'
+      },
+      {
+        author: 'Raisha',
+        time: '18/11/25 20.35',
+        message: 'Halo temen temen semua kenalin nama aku Raisha, aku dari kelas 10 busana 2, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall yoo',
+        class: 'X Busana 2'
+      },
+      {
+        author: 'Intan Putri',
+        time: '18/11/25 21.34',
+        message: 'halo temen temen semua kenalin aku intan aku dari kelas 10 busana 1 , mohon kerjasama nyaa untuk kedepannya teman teman salam kenal yya',
+        class: 'X Busana 1'
+      },
+      {
+        author: 'Desi Maulida',
+        time: '18/11/25 21.42',
+        message: 'halo teman teman salam kenal aku dyaa dari kelas 10 bodu mohon kerja sama nya untuk kedepaya teman-teman salam kenal',
+        class: 'X Kuliner 2'
+      },
+      {
+        author: 'Leonardus Noverianto',
+        time: '18/11/25 21.57',
+        message: 'Halo rekan-rekan dan kawan-kawan semua ijinkan saya melakukan suatu kegiatan guna identitas diri di ketahui oleh anggota suatu kelompok kenalin nama saya Leonardus Dwi Noverianto, saya merupakan seorang siswa yang duduk di bangku SMKN 4 Banjarmasin dari sebuah lingkup yang mencakup suatu ruangan yang dinamakan kelas yaitu XA1. Demi kesejahteraan dan kelancaran performa dalam melaksanakan tugas oleh karena itu saya mohon kerjasama nyaa untuk kedepannya kepada rekan-rekan dan kawan-kawan sekalian salam kenal.',
+        class: 'X Kuliner 1'
+      },
+      {
+        author: 'Nayla Amalia',
+        time: '19/11/25 05.52',
+        message: 'Halo temen temen semua kenalin nama aku Nayla Mufida Amalia, aku dari kelas X Kuliner 1, Mohon kerjasama nyaa untuk kedepannya teman teman salam kenall',
+        class: 'X Kuliner 1'
+      },
+      {
+        author: 'Andrea Tifany',
+        time: '19/11/25 06.07',
+        message: 'halo guys, kenalin ak Andrea Tifany dari 10 RPL 2, salam kenal semuanyaaa',
+        class: 'X RPL 2'
+      },
+      {
+        author: 'Salwa Elysia',
+        time: '20/11/25 19.10',
+        message: 'hayy temann temann semua prknlkn nama akuu Salwa Elysia, dri kelas x perhotelan 2, mohon kerjasamanya untuk kedepannya teman" salam kenal',
+        class: 'X Perhotelan 2'
+      },
+      {
+        author: 'Kalila Rahma',
+        time: '20/11/25 20.38',
+        message: 'haii semuaa, perkenalkan namaku kalila rahma dari kelas x rpl 2, mohon kerjasamanya untuk kedepannya yaa, salam kenal teman"',
+        class: 'X RPL 2'
+      },
+      {
+        author: 'Anna Kelen',
+        time: '20/11/25 20.43',
+        message: 'Selamat malam teman-teman semua perkenalkan nama aku anna nogo kelen dari kelas 10 usaha layanan wisata, aku suka sekali sama keju dan semua yang berwarna pink🤗💞 kalo ketemu aku maaf ya kalo blm bisa aku sapa kalian semua karena jujur aku belum ingat nama nama dan muka kalian🙏🏼😊 oh iya maaf ya kalo selama kita masih jadi calon dan masih tahap seleksi kemarin aku ada buat salah sama kalian, Entah itu yang aku sengaja atau yang aku tidak sengaja. Kedepannya mohon kerja sama dari kalian semua ya teman teman 🫂❤️',
+        class: 'X ULW'
+      },
+      {
+        author: 'Saman Mulia',
+        time: '21/11/25 06.09',
+        message: 'haii semuaa, perkenalkan namaku Muhammad Saman Mulia dari kelas x rpl 2, mohon kerjasamanya untuk kedepannya yaa, salam kenal teman"',
+        class: 'X RPL 2'
+      },
+      {
+        author: 'Aira Astuti',
+        time: '05/12/25 09.04',
+        message: 'Halo temen-temen semua, kenalin aku Aira Dwi Astuti dari kelas 10 Kuliner 2. Mohon kerja samanya yaa buat ke depannya. Salam kenal semuanya!🫰🏻',
+        class: 'X Kuliner 2'
+      },
+      {
+        author: 'Kirana Puteri',
+        time: '05/12/25 09.28',
+        message: 'halo temen-temen semua, perkenalkan aku kirana saskiya puteri dari kelas x ulw. mohon kerja samanya yaa buat ke depannya..',
+        class: 'X ULW'
+      },
+      {
+        author: 'Chesa Amandani',
+        time: '05/12/25 09.51',
+        message: 'EH AKU BELUM JUGAA 🫠 sorry telat guyss, baiklah baiklah. Perkenalkan aku Maulidina Chesa Amandani dari kelas 10 kuliner 2. Mohon kerja samanya yaa buat kedepaya, salam kenal teman teman semuaa 👋🏻👋🏻',
+        class: 'X Kuliner 2'
       }
     ];
 
     // Photo URLs 
     const photoUrls = {
-  "Muhammad Reno Helmawan": "https://drive.google.com/uc?export=view&id=1qqyR4UQyh1mectQRTsXPKDia63KqwtTK",
-  "Corry Laura Beuty Pakpahan": "https://drive.google.com/uc?export=view&id=19VLZ2yoG0MUVnQkk1bqCHFGe61-sDhvx",
-  "Amalia Rahmania": "https://drive.google.com/uc?export=view&id=1Q3gY0djwi9W32DrQZE-dwVdBS1qj8NfN",
-  "Nur Almira Putri": "https://drive.google.com/uc?export=view&id=1BFPTyGjN3jWATdR2GaSnMOd_G4SiVjRv",
-  "Arya Tri Nugraha": "https://drive.google.com/uc?export=view&id=1hd11D7q8cJ4MhtGsNmH8G6vuQm1PjX70",
-  "Muhammad Dede Riyadhi": "https://drive.google.com/uc?export=view&id=1ZWEfxog8cJ4MhtGsNmH8G6vuQm1PjX70",
-  "Farraz Ibnu Fadli": "https://drive.google.com/uc?export=view&id=1Ght2dIp5w8WqEjTtCRDAeuOVzz2azhf7",
-  "Salsabila Azzahra": "https://drive.google.com/uc?export=view&id=1FvO0jxzp-pO9X5w2NmH8G6vuQm1PjX70",
-  "Maskanah": "https://drive.google.com/uc?export=view&id=1CsNSHlUEbGBhJgiMem44zcDwqpZoOYqS",
-  "Muhammad Naufal": "https://drive.google.com/uc?export=view&id=1M5vZoRDtuwduUXH35igj9dWOgcZWzQC6",
-  "Muhammad Iqbal": "https://drive.google.com/uc?export=view&id=1E-OWlSL15gGZ4iv4gJlOixg5tYkPU2Ga",
-  "Akhmad Fitrianoor": "https://drive.google.com/uc?export=view&id=1B_9SZi5TpZOyJJcoRDlMOWTgKAvOpiMb",
-  "Adinda Azrelia H.": "https://drive.google.com/uc?export=view&id=12pUEMMe-Dkp1nt0kBTQaamTlq3dPMzFB",
-  "Sarah Naila Humaira": "https://drive.google.com/uc?export=view&id=1FS5dcFeqJi8eSGp-cv4Mw4j0SKQp9c6z",
-  "Kamila Jamil": "https://drive.google.com/uc?export=view&id=1a-ahw6PLNZCEHIRM60MyrWIzGQ3i3baI",
-  "Nur Rumaisya Adzkiya": "https://drive.google.com/uc?export=view&id=1TSkNs1VV83-4iCrmwc0W4pbP-CAgGNxb",
-  "Muhammad Rasya Azizi": "https://drive.google.com/uc?export=view&id=1QlPQbzijGF21-UhivYGKmL3PGvDbOSSJ",
-  "Dara Puspita Rahayu": "https://drive.google.com/uc?export=view&id=1fcfsZDW3hCBvnfyZ9ILpVptSgLTZdXVT",
-  "Salsabila Salma": "https://drive.google.com/uc?export=view&id=10GvNgfDO848uAzRNQiArIiCLd4jQDJUw",
-  "Erika Purnama Saputri": "https://drive.google.com/uc?export=view&id=1oM4W-OeIwB_j1nXkW4q9rX6gpG-WvNyx",
-  "Nur Amaliah": "https://drive.google.com/uc?export=view&id=16FGPDv1dQQOX6XfFCZpn7OmoLvizNC8X",
-  "Muhammad Rayhan": "https://drive.google.com/uc?export=view&id=1r2dc0SVDrW36Or5kJCfM6ZNE0tpH85TO",
-  "Latifatul Azkiya": "https://drive.google.com/uc?export=view&id=1puAccURdioDZpiEjPiLZ8PfxOhaFfzqy",
-  "Humaira Faizatun Husna": "https://drive.google.com/uc?export=view&id=1U0ffaOenXyvZFnLNDKHU63mhkwmBq9si",
-  "Julia Azzahra": "https://drive.google.com/uc?export=view&id=1ZvkP1W76B3bcJcT5LCw6LNppACuXlKdv",
-  "Zahratussita": "https://drive.google.com/uc?export=view&id=1XugVGaccTc0q0BVEu7qlyAZILqi_AV2V",
-  "Maulida Rizki Ardiani": "https://drive.google.com/uc?export=view&id=1-425RR8U9Me9Lo9r66cK86lCb4lfDnvN",
-  "Muhammad Syahrul": "https://drive.google.com/uc?export=view&id=1iMDOJdgjL7N-tLI4pXZWVes8N7H60yxz",
-  "Gusti Cynthia Anggraini Rinanda": "https://drive.google.com/uc?export=view&id=1dVYoPPVIN_FAiUvApZBbpowz3A4D1Z9a",
-  "Ebira Hasanatina": "https://drive.google.com/uc?export=view&id=1WiCjcBMQNSlmVOymjOW7nTulnsYrWbM1",
-  "Siti Maimunah Fadilla": "https://drive.google.com/uc?export=view&id=181ZeOUXyvuVWfJoczknBiNzd1E_PmXxj",
-  "Helma Nazulla": "https://drive.google.com/uc?export=view&id=1Rxloa5uVG1zq3LhFqBkkfqxvhzNgL8kR",
-  "Muhammad Iqbal 👦": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
-  "Shireen Nur Aura Rizqy": "https://drive.google.com/uc?export=view&id=1RiGD5ivNSf8qNztqts1MheC7GGJUlJs9",
-  "Muhammad Farhan R.": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
-  "Muhammad Haffi Tasmin": "https://drive.google.com/uc?export=view&id=18XBqAbhOcMMaNUX6WQft7Pc7PzHJeIq-",
-  "Muhammad Nazril Ilham": "https://drive.google.com/uc?export=view&id=11l6T2-jorJSJ7kEUYLpHObRfsgG0f0y4",
-  "Rizkya Nur Aulia": "https://drive.google.com/uc?export=view&id=1XxrNanbGi4FAwm29eY5IMtKGPD3ZWMdW",
-  "Yeni Agustine": "https://drive.google.com/uc?export=view&id=1rk0ynoj0QouqwkHq1G6ZiHieLUoUC7qR"
-};
+      "Corry Laura Beuty Pakpahan": "https://drive.google.com/uc?export=view&id=19VLZ2yoG0MUVnQkk1bqCHFGe61-sDhvx",
+      "Nor Firiah": "https://drive.google.com/uc?export=view&id=1BFPTyGjN3jWATdR2GaSnMOd_G4SiVjRv",
+      "Muhammad Syahrul": "https://drive.google.com/uc?export=view&id=1hd11D7q8cJ4MhtGsNmH8G6vuQm1PjX70",
+      "Anandha Raisya Oktama Putri": "https://drive.google.com/uc?export=view&id=1CsNSHlUEbGBhJgiMem44zcDwqpZoOYqS",
+      "Muhammad Dede Riyadhi": "https://drive.google.com/uc?export=view&id=1ZWEfxog8cJ4MhtGsNmH8G6vuQm1PjX70",
+      "Leonardus Dwi Noverianto": "https://drive.google.com/uc?export=view&id=1M5vZoRDtuwduUXH35igj9dWOgcZWzQC6",
+      "Muhammad Naufal": "https://drive.google.com/uc?export=view&id=1E-OWlSL15gGZ4iv4gJlOixg5tYkPU2Ga",
+      "Nayla Mufida Amalia": "https://drive.google.com/uc?export=view&id=12pUEMMe-Dkp1nt0kBTQaamTlq3dPMzFB",
+      "Nur Aleesya Nashirah": "https://drive.google.com/uc?export=view&id=1FS5dcFeqJi8eSGp-cv4Mw4j0SKQp9c6z",
+      "Arini Dia Astuti": "https://drive.google.com/uc?export=view&id=1a-ahw6PLNZCEHIRM60MyrWIzGQ3i3baI",
+      "Aira Dwi Astuti": "https://drive.google.com/uc?export=view&id=1TSkNs1VV83-4iCrmwc0W4pbP-CAgGNxb",
+      "Salsabila Salma": "https://drive.google.com/uc?export=view&id=1QlPQbzijGF21-UhivYGKmL3PGvDbOSSJ",
+      "Nur Rumaisya Adzkiya": "https://drive.google.com/uc?export=view&id=1fcfsZDW3hCBvnfyZ9ILpVptSgLTZdXVT",
+      "Nur Amaliah": "https://drive.google.com/uc?export=view&id=10GvNgfDO848uAzRNQiArIiCLd4jQDJUw",
+      "Desi Maulida": "https://drive.google.com/uc?export=view&id=1oM4W-OeIwB_j1nXkW4q9rX6gpG-WvNyx",
+      "Maulidina Chesa Amandani": "https://drive.google.com/uc?export=view&id=16FGPDv1dQQOX6XfFCZpn7OmoLvizNC8X",
+      "Kamilia Jamil": "https://drive.google.com/uc?export=view&id=1r2dc0SVDrW36Or5kJCfM6ZNE0tpH85TO",
+      "Dhini Maulida": "https://drive.google.com/uc?export=view&id=1puAccURdioDZpiEjPiLZ8PfxOhaFfzqy",
+      "Muhammad Nizam": "https://drive.google.com/uc?export=view&id=1U0ffaOenXyvZFnLNDKHU63mhkwmBq9si",
+      "Muhammad Saman Mulia": "https://drive.google.com/uc?export=view&id=1ZvkP1W76B3bcJcT5LCw6LNppACuXlKdv",
+      "Utari Kartika Putri": "https://drive.google.com/uc?export=view&id=1XugVGaccTc0q0BVEu7qlyAZILqi_AV2V",
+      "Rizkya Nur Aulia": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
+      "Yeni Agustine": "https://drive.google.com/uc?export=view&id=1-425RR8U9Me9Lo9r66cK86lCb4lfDnvN",
+      "Intan Karunia Putri": "https://drive.google.com/uc?export=view&id=1iMDOJdgjL7N-tLI4pXZWVes8N7H60yxz",
+      "Reany Fathinah Nuraini": "https://drive.google.com/uc?export=view&id=1RiGD5ivNSf8qNztqts1MheC7GGJUlJs9",
+      "Anna Nogo Kelen": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
+      "Nur Almira Putri": "https://drive.google.com/uc?export=view&id=18XBqAbhOcMMaNUX6WQft7Pc7PzHJeIq-",
+      "Muhammad Nazril Ilham": "https://drive.google.com/uc?export=view&id=11l6T2-jorJSJ7kEUYLpHObRfsgG0f0y4",
+      "Muhammad Zhia Al-Kautsar": "https://drive.google.com/uc?export=view&id=1XxrNanbGi4FAwm29eY5IMtKGPD3ZWMdW",
+      "Andrea Tifany": "https://drive.google.com/uc?export=view&id=1rk0ynoj0QouqwkHq1G6ZiHieLUoUC7qR",
+      "Salwa Elysia": "https://drive.google.com/uc?export=view&id=1Rxloa5uVG1zq3LhFqBkkfqxvhzNgL8kR",
+      "Maulida Rizki Ardiani": "https://drive.google.com/uc?export=view&id=1WiCjcBMQNSlmVOymjOW7nTulnsYrWbM1",
+      "Muhammad Thio Saputra": "https://drive.google.com/uc?export=view&id=181ZeOUXyvuVWfJoczknBiNzd1E_PmXxj",
+      "Raisha": "https://drive.google.com/uc?export=view&id=1dVYoPPVIN_FAiUvApZBbpowz3A4D1Z9a",
+      "Kirana Saskiya Puteri": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
+      "Helma Nazulla Husna": "https://drive.google.com/uc?export=view&id=1Rxloa5uVG1zq3LhFqBkkfqxvhzNgL8kR",
+      "Muhammad Iqbal": "https://drive.google.com/uc?export=view&id=1RiGD5ivNSf8qNztqts1MheC7GGJUlJs9",
+      "Kaswid Yatma Rifa\'i": "https://drive.google.com/uc?export=view&id=1XxrNanbGi4FAwm29eY5IMtKGPD3ZWMdW",
+      "Zahra Salsabila": "https://drive.google.com/uc?export=view&id=1W16WYsZ1hWxxuIh1muXzQTz6cz8vzUa-",
+      "Kalila Rahma": "https://drive.google.com/uc?export=view&id=1rk0ynoj0QouqwkHq1G6ZiHieLUoUC7qR"
+    };
 
     // State
     let filteredDepartments = [...departmentsData];
     let isExpanded = true;
+    let currentTab = 'structure';
 
     // DOM elements
     const searchInput = document.getElementById('searchInput');
@@ -139,6 +290,10 @@
     const themeToggle = document.getElementById('themeToggle');
     const expandAll = document.getElementById('expandAll');
     const collapseAll = document.getElementById('collapseAll');
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    const chatContainer = document.getElementById('chatContainer');
+    const refreshChat = document.getElementById('refreshChat');
 
     // Utility functions
     function escapeHtml(text) {
@@ -182,7 +337,8 @@
         const titleMatch = normalizeText(dept.title).includes(normalizedQuery);
         const memberMatch = dept.members.some(member => 
           normalizeText(member.name).includes(normalizedQuery) ||
-          normalizeText(member.role).includes(normalizedQuery)
+          normalizeText(member.role).includes(normalizedQuery) ||
+          normalizeText(member.class).includes(normalizedQuery)
         );
         return titleMatch || memberMatch;
       });
@@ -240,11 +396,14 @@
                 <li class="member-item">
                   <div class="member-info">
                     <div class="member-name">${highlightText(member.name, query)}</div>
-                    <div class="member-role">${highlightText(member.role, query)}</div>
+                    <div class="member-role">${highlightText(member.role, query)} · ${highlightText(member.class, query)}</div>
                   </div>
                   <div class="member-actions">
                     ${photoUrls[member.name] ? `
-                      <a class="photo-btn" href="${photoUrls[member.name]}" target="_blank" rel="noopener">   <i class="fas fa-image"></i>   Foto</a>
+                      <a class="photo-btn" href="${photoUrls[member.name]}" target="_blank" rel="noopener">
+                        <i class="fas fa-image"></i>
+                        Foto
+                      </a>
                     ` : ''}
                   </div>
                 </li>
@@ -260,6 +419,44 @@
       if (!isExpanded) {
         collapseAllDepartments();
       }
+    }
+
+    // Render chat messages
+    function renderChatMessages() {
+      chatContainer.innerHTML = '';
+      
+      // Sort messages by time
+      const sortedMessages = [...chatMessages].sort((a, b) => {
+        const dateA = new Date(a.time.replace(/(\d{2})\/(\d{2})\/(\d{2})/, '20$3-$1-$2'));
+        const dateB = new Date(b.time.replace(/(\d{2})\/(\d{2})\/(\d{2})/, '20$3-$1-$2'));
+        return dateA - dateB;
+      });
+      
+      sortedMessages.forEach(msg => {
+        const messageEl = document.createElement('div');
+        messageEl.className = 'chat-message';
+        
+        // Get initials for avatar
+        const initials = msg.author.split(' ').map(n => n[0]).join('').substring(0, 2);
+        
+        messageEl.innerHTML = `
+          <div class="message-avatar">${initials}</div>
+          <div class="message-content">
+            <div class="message-header">
+              <div class="message-author">${msg.author}</div>
+              <div class="message-time">${msg.time}</div>
+            </div>
+            <div class="message-bubble">
+              <div class="message-text">${msg.message}</div>
+            </div>
+          </div>
+        `;
+        
+        chatContainer.appendChild(messageEl);
+      });
+      
+      // Scroll to bottom
+      chatContainer.scrollTop = chatContainer.scrollHeight;
     }
 
     // Department actions
@@ -281,7 +478,7 @@
       const dept = departmentsData.find(d => d.id === deptId);
       if (!dept) return;
       
-      const membersList = dept.members.map(member => member.name).join('\n');
+      const membersList = dept.members.map(member => `${member.name} (${member.class})`).join('\n');
       
       if (navigator.clipboard) {
         navigator.clipboard.writeText(membersList).then(() => {
@@ -490,6 +687,34 @@
       }
     }
 
+    // Tab management
+    function switchTab(tabName) {
+      // Update tab buttons
+      tabButtons.forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      // Update tab contents
+      tabContents.forEach(content => {
+        if (content.id === `${tabName}-tab`) {
+          content.classList.add('active');
+        } else {
+          content.classList.remove('active');
+        }
+      });
+      
+      currentTab = tabName;
+      
+      // Initialize chat when switching to chat tab
+      if (tabName === 'chat' && chatContainer.children.length === 0) {
+        renderChatMessages();
+      }
+    }
+
     // Event listeners
     searchInput.addEventListener('input', (e) => {
       const query = e.target.value;
@@ -509,6 +734,19 @@
       performSearch('');
     });
 
+    // Tab navigation
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchTab(btn.dataset.tab);
+      });
+    });
+
+    // Refresh chat
+    refreshChat.addEventListener('click', () => {
+      renderChatMessages();
+      showNotification('Pesan berhasil diperbarui!', 'success');
+    });
+
     // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
       // Alt + F to focus search
@@ -521,6 +759,17 @@
       if (e.ctrlKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         searchInput.focus();
+      }
+      
+      // Tab shortcuts
+      if (e.altKey && e.key === '1') {
+        e.preventDefault();
+        switchTab('structure');
+      }
+      
+      if (e.altKey && e.key === '2') {
+        e.preventDefault();
+        switchTab('chat');
       }
     });
 

@@ -1,0 +1,1463 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arsip OSIS — SMK Negeri 4 Banjarmasin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      /* Orange color scheme */
+      --primary: #FF4000;
+      --primary-light: #FF6A33;   /* lighter tint */
+      --primary-dark: #CC3300;    /* darker shade */
+      --secondary: #f59e0b;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --info: #06b6d4;
+      
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-400: #9ca3af;
+      --gray-500: #6b7280;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --gray-900: #111827;
+      
+      --bg: var(--gray-50);
+      --surface: white;
+      --text: var(--gray-900);
+      --text-muted: var(--gray-600);
+      --border: var(--gray-200);
+      --border-light: var(--gray-100);
+      
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      
+      --radius: 0.75rem;
+      --radius-sm: 0.5rem;
+      --radius-lg: 1rem;
+      
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--gray-900);
+      --surface: var(--gray-800);
+      --text: var(--gray-100);
+      --text-muted: var(--gray-400);
+      --border: var(--gray-700);
+      --border-light: var(--gray-800);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      color-scheme: light dark;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    /* Header */
+    .header {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem 1rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .header .subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      font-size: 0.875rem;
+      color: inherit;
+    }
+
+    .btn:focus {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--gray-100);
+      color: var(--text);
+    }
+
+    [data-theme="dark"] .btn-ghost:hover {
+      background: var(--gray-700);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+    }
+
+    /* Search Section */
+    .search-section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 1rem;
+      background: var(--bg);
+      transition: var(--transition);
+      color: var(--text);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+      opacity: 1;
+    }
+
+    [data-theme="dark"] .search-input {
+      color: var(--gray-100);
+    }
+
+    [data-theme="dark"] .search-input::placeholder {
+      color: var(--gray-400);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 64, 0, 0.2);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-stats {
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+    }
+
+    /* Tab Navigation */
+    .tab-nav {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      padding: 0.75rem 1rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Filter Container */
+    .filter-container {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-select {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255, 64, 0, 0.2);
+    }
+
+    /* Archive Grid */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .archive-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .archive-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .archive-header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white;
+      padding: 1rem;
+    }
+
+    .archive-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .archive-subtitle {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    .archive-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .archive-image:hover {
+      opacity: 0.9;
+    }
+
+    .archive-content {
+      padding: 1.5rem;
+    }
+
+    .archive-content p {
+      margin-bottom: 1rem;
+      color: var(--text-muted);
+    }
+
+    .archive-details {
+      margin-bottom: 1rem;
+    }
+
+    .archive-detail {
+      display: flex;
+      margin-bottom: 0.5rem;
+    }
+
+    .archive-detail-label {
+      font-weight: 500;
+      margin-right: 0.5rem;
+      min-width: 100px;
+    }
+
+    .archive-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .archive-actions .btn {
+      flex: 1;
+      justify-content: center;
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .page-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .page-btn:hover {
+      background: var(--gray-100);
+    }
+
+    [data-theme="dark"] .page-btn:hover {
+      background: var(--gray-700);
+    }
+
+    .page-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      margin-top: 2rem;
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 3rem;
+      height: 3rem;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 999;
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .back-to-top:hover {
+      background-color: var(--primary-dark);
+      transform: translateY(-3px);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: var(--surface);
+      color: var(--text);
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 1001;
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .toast.success {
+      border-left: 4px solid var(--success);
+    }
+
+    .toast.error {
+      border-left: 4px solid var(--danger);
+    }
+
+    .toast.info {
+      border-left: 4px solid var(--info);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0.5rem;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .header .subtitle {
+        font-size: 1rem;
+      }
+      
+      .archive-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-actions {
+        flex-direction: column;
+        width: 100%;
+      }
+      
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .filter-container {
+        flex-direction: column;
+      }
+      
+      .filter-select {
+        width: 100%;
+      }
+    }
+
+    /* Accessibility */
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-muted);
+    }
+
+    .empty-state i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: var(--gray-400);
+    }
+
+    .empty-state h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <h1>Arsip OSIS Skenpat</h1>
+      <p class="subtitle">SMK Negeri 4 Banjarmasin · Periode 2025/2026</p>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="themeToggle" aria-label="Alihkan mode gelap">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+          <span>Mode Gelap</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Search -->
+    <section class="search-section" aria-labelledby="searchHeading">
+      <h2 id="searchHeading" class="visually-hidden">Pencarian Arsip</h2>
+      <div class="search-container">
+        <div class="search-icon" aria-hidden="true">
+          <i class="fas fa-search"></i>
+        </div>
+        <input 
+          type="search" 
+          class="search-input" 
+          id="searchInput" 
+          placeholder="Cari arsip, nama, atau periode..."
+          autocomplete="off"
+          aria-label="Cari arsip OSIS"
+        >
+      </div>
+      <div class="search-stats" id="searchStats" aria-live="polite">
+        Total: <strong>69</strong> Periode OSIS · <strong>2</strong> Ter-arsipkan
+      </div>
+    </section>
+
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="period">
+        <i class="fas fa-calendar-alt"></i> Arsip Periode
+      </button>
+      <button class="tab-btn" data-tab="supervisor">
+        <i class="fas fa-user-tie"></i> Arsip Pembina OSIS
+      </button>
+    </div>
+
+    <!-- Period Archive Tab Content -->
+    <div class="tab-content active" id="period-tab">
+      <div class="filter-container">
+        <select class="filter-select" id="periodFilter">
+          <option value="all">Semua Periode</option>
+          <option value="2025-2026">2025/2026</option>
+          <option value="2024-2025">2024/2025</option>
+        </select>
+        <select class="filter-select" id="sortBy">
+          <option value="newest">Terbaru</option>
+          <option value="oldest">Terlama</option>
+          <option value="name">Nama Ketua</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" id="resetFilters">
+          <i class="fas fa-redo"></i> Reset Filter
+        </button>
+      </div>
+
+      <div class="archive-grid" id="periodArchiveGrid">
+        <!-- Archive Card 1 -->
+        <div class="archive-card" data-period="2025-2026" data-name="Corry Laura Beuty Pakpahan">
+          <div class="archive-header">
+            <div class="archive-title">Periode 2025/2026</div>
+            <div class="archive-subtitle">Ketua: Corry Laura Beuty Pakpahan</div>
+          </div>
+          <img src="https://picsum.photos/seed/osis2025/400/200.jpg" alt="Foto OSIS Periode 2025/2026" class="archive-image" loading="lazy" data-url="/arsip/org/osis/2025-2026">
+          <div class="archive-content">
+            <p>Periode dengan fokus pada pengembangan digital dan inovasi sekolah.</p>
+            <div class="archive-details">
+              <div class="archive-detail">
+                <span class="archive-detail-label">Wakil Ketua:</span>
+                <span>Nor Fitriah</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Sekretaris:</span>
+                <span>Muhammad Syahrul & Anandha Raisya Oktama Putri</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Bendahara:</span>
+                <span>Muhammad Dede Riyadhi & Leonardus Dwi Noverianto</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Pembina:</span>
+                <span>Ade Fitriyadi S.Pd.</span>
+              </div>
+            </div>
+            <div class="archive-actions">
+              <a href="/arsip/org/osis/2025-2026" class="btn btn-primary">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Archive Card 2 -->
+        <div class="archive-card" data-period="2024-2025" data-name="Muhammad Reno Helmawan">
+          <div class="archive-header">
+            <div class="archive-title">Periode 2024/2025</div>
+            <div class="archive-subtitle">Ketua: Muhammad Reno Helmawan</div>
+          </div>
+          <img src="https://picsum.photos/seed/osis2024/400/200.jpg" alt="Foto OSIS Periode 2024/2025" class="archive-image" loading="lazy" data-url="/arsip/org/osis/2024-2025">
+          <div class="archive-content">
+            <p>Periode dengan pencapaian terbaik dalam kompetisi tingkat provinsi.</p>
+            <div class="archive-details">
+              <div class="archive-detail">
+                <span class="archive-detail-label">Wakil Ketua:</span>
+                <span>Corry Laura Beuty Pakpahan</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Sekretaris:</span>
+                <span>Amalia Rahmania & Nur Almira Putri</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Bendahara:</span>
+                <span>Arya Tri Nugraha & Muhammad Dede Riyadhi</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Pembina:</span>
+                <span>Ade Fitriyadi S.Pd.</span>
+              </div>
+            </div>
+            <div class="archive-actions">
+              <a href="/arsip/org/osis/2024-2025" class="btn btn-primary">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination" id="periodPagination">
+        <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Supervisor Archive Tab Content -->
+    <div class="tab-content" id="supervisor-tab">
+      <div class="filter-container">
+        <select class="filter-select" id="supervisorFilter">
+          <option value="all">Semua Pembina</option>
+          <option value="active">Masih Aktif</option>
+          <option value="former">Mantan Pembina</option>
+        </select>
+        <select class="filter-select" id="sortBySupervisor">
+          <option value="name">Nama</option>
+          <option value="period">Periode</option>
+          <option value="duration">Lama Masa Bakti</option>
+        </select>
+        <button class="btn btn-ghost btn-sm" id="resetSupervisorFilters">
+          <i class="fas fa-redo"></i> Reset Filter
+        </button>
+      </div>
+
+      <div class="archive-grid" id="supervisorArchiveGrid">
+        <!-- Supervisor Card 1 -->
+        <div class="archive-card" data-status="active" data-name="Ade Fitriyadi">
+          <div class="archive-header">
+            <div class="archive-title">Ade Fitriyadi S.Pd.</div>
+            <div class="archive-subtitle">2020 - Sekarang</div>
+          </div>
+          <img src="https://picsum.photos/seed/ade/400/200.jpg" alt="Foto Ade Fitriyadi S.Pd." class="archive-image" loading="lazy" data-url="/arsip/org/pembina/ade-fitriyadi.htm">
+          <div class="archive-content">
+            <p>Fokus pada pengembangan leadership dan digital literacy.</p>
+            <div class="archive-details">
+              <div class="archive-detail">
+                <span class="archive-detail-label">Status:</span>
+                <span>Masih Aktif</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Prestasi:</span>
+                <span>Pembina Terbaik Tingkat Kota 2025</span>
+              </div>
+            </div>
+            <div class="archive-actions">
+              <a href="/arsip/org/pembina/ade-fitriyadi.htm" class="btn btn-primary">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Supervisor Card 2 -->
+        <div class="archive-card" data-status="former" data-name="Bambang Supriyadi">
+          <div class="archive-header">
+            <div class="archive-title">hmmm</div>
+            <div class="archive-subtitle">2015 - 2018</div>
+          </div>
+          <img src="https://picsum.photos/seed/bambang/400/200.jpg" alt="Foto Bambang Supriyadi S.Pd." class="archive-image" loading="lazy" data-url="/arsip/org/pembina/duwa.htm">
+          <div class="archive-content">
+            <p>Mengembangkan program ekstrakurikuler unggulan sekolah.</p>
+            <div class="archive-details">
+              <div class="archive-detail">
+                <span class="archive-detail-label">Status:</span>
+                <span>Mantan Pembina</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Prestasi:</span>
+                <span>Pembina Berprestasi 2017</span>
+              </div>
+            </div>
+            <div class="archive-actions">
+              <a href="/arsip/org/pembina/duwa.htm" class="btn btn-primary">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination" id="supervisorPagination">
+        <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+      <p>© 2026 Organisasi Siswa Intra Sekolah | SMK Negeri 4 Banjarmasin</p>
+      <p style="margin-top: 0.5rem;">
+        Sistem informasi arsip digital OSIS
+      </p>
+    </footer>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Kembali ke atas">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // App State
+    const app = {
+      currentTab: 'period',
+      currentPage: {
+        period: 1,
+        supervisor: 1
+      },
+      filters: {
+        period: {
+          search: '',
+          period: 'all',
+          sortBy: 'newest'
+        },
+        supervisor: {
+          search: '',
+          status: 'all',
+          sortBy: 'name'
+        }
+      },
+      data: {
+        periods: [
+          {
+            id: 'period-2025-2026',
+            period: '2025/2026',
+            ketua: 'Corry Laura Beuty Pakpahan',
+            wakil: 'Nor Fitriah',
+            sekretaris: 'Muhammad Syahrul & Anandha Raisya Oktama Putri',
+            bendahara: 'Muhammad Dede Riyadhi & Leonardus Dwi Noverianto',
+            pembina: 'Ade Fitriyadi S.Pd.',
+            description: 'Periode dengan fokus pada pengembangan digital dan inovasi sekolah.',
+            image: 'https://picsum.photos/seed/osis2025/800/400.jpg',
+            url: '/arsip/org/osis/2025-2026'
+          },
+          {
+            id: 'period-2024-2025',
+            period: '2024/2025',
+            ketua: 'Muhammad Reno Helmawan',
+            wakil: 'Corry Laura Beuty Pakpahan',
+            sekretaris: 'Amalia Rahmania & Nur Almira Putri',
+            bendahara: 'Arya Tri Nugraha & Muhammad Dede Riyadhi',
+            pembina: 'Ade Fitriyadi S.Pd.',
+            description: 'Periode dengan pencapaian terbaik dalam kompetisi tingkat provinsi.',
+            image: 'https://picsum.photos/seed/osis2024/800/400.jpg',
+            url: '/arsip/org/osis/2024-2025'
+          }
+        ],
+        supervisors: [
+          {
+            id: 'supervisor-ade',
+            name: 'Ade Fitriyadi S.Pd.',
+            period: '2020 - Sekarang',
+            status: 'active',
+            description: 'Fokus pada pengembangan leadership dan digital literacy.',
+            image: 'https://picsum.photos/seed/ade/800/400.jpg',
+            url: '/arsip/org/osis/pembina/ade-fitriyadi.htm'
+          },
+          {
+            id: 'supervisor-bambang',
+            name: 'Bambang Supriyadi S.Pd.',
+            period: '2015 - 2018',
+            status: 'former',
+            description: 'Mengembangkan program ekstrakurikuler unggulan sekolah.',
+            image: 'https://picsum.photos/seed/bambang/800/400.jpg',
+            url: '/arsip/org/osis/pembina/bambang-supriyadi'
+          }
+        ]
+      }
+    };
+
+    // DOM Elements
+    const elements = {
+      themeToggle: document.getElementById('themeToggle'),
+      searchInput: document.getElementById('searchInput'),
+      searchStats: document.getElementById('searchStats'),
+      tabButtons: document.querySelectorAll('.tab-btn'),
+      tabContents: document.querySelectorAll('.tab-content'),
+      periodFilter: document.getElementById('periodFilter'),
+      sortBy: document.getElementById('sortBy'),
+      supervisorFilter: document.getElementById('supervisorFilter'),
+      sortBySupervisor: document.getElementById('sortBySupervisor'),
+      resetFilters: document.getElementById('resetFilters'),
+      resetSupervisorFilters: document.getElementById('resetSupervisorFilters'),
+      periodArchiveGrid: document.getElementById('periodArchiveGrid'),
+      supervisorArchiveGrid: document.getElementById('supervisorArchiveGrid'),
+      periodPagination: document.getElementById('periodPagination'),
+      supervisorPagination: document.getElementById('supervisorPagination'),
+      backToTop: document.getElementById('backToTop'),
+      toast: document.getElementById('toast')
+    };
+
+    // Initialize App
+    function init() {
+      setupEventListeners();
+      loadUserPreferences();
+      renderArchiveCards();
+      updatePagination();
+      checkScrollPosition();
+    }
+
+    // Setup Event Listeners
+    function setupEventListeners() {
+      // Theme Toggle
+      elements.themeToggle.addEventListener('click', toggleTheme);
+      
+      // Search
+      elements.searchInput.addEventListener('input', handleSearch);
+      
+      // Tab Navigation
+      elements.tabButtons.forEach(button => {
+        button.addEventListener('click', () => switchTab(button.getAttribute('data-tab')));
+      });
+      
+      // Filters
+      elements.periodFilter.addEventListener('change', handlePeriodFilter);
+      elements.sortBy.addEventListener('change', handlePeriodSort);
+      elements.supervisorFilter.addEventListener('change', handleSupervisorFilter);
+      elements.sortBySupervisor.addEventListener('change', handleSupervisorSort);
+      
+      // Reset Filters
+      elements.resetFilters.addEventListener('click', resetPeriodFilters);
+      elements.resetSupervisorFilters.addEventListener('click', resetSupervisorFilters);
+      
+      // Back to Top
+      elements.backToTop.addEventListener('click', scrollToTop);
+      window.addEventListener('scroll', checkScrollPosition);
+      
+      // Keyboard Shortcuts
+      document.addEventListener('keydown', handleKeyboardShortcuts);
+      
+      // Image clicks for navigation
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('archive-image')) {
+          const url = e.target.getAttribute('data-url');
+          if (url) {
+            window.location.href = url;
+          }
+        }
+      });
+      
+      // Pagination (using event delegation)
+      document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('page-btn') && !e.target.disabled) {
+          if (e.target.closest('#periodPagination')) {
+            handlePeriodPagination(e.target);
+          } else if (e.target.closest('#supervisorPagination')) {
+            handleSupervisorPagination(e.target);
+          }
+        }
+      });
+    }
+
+    // Theme Toggle
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      // Update button text and icon
+      if (newTheme === 'dark') {
+        elements.themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i><span>Mode Terang</span>';
+      } else {
+        elements.themeToggle.innerHTML = '<i class="fas fa-moon" aria-hidden="true"></i><span>Mode Gelap</span>';
+      }
+      
+      showToast('Tema berhasil diubah', 'success');
+    }
+
+    // Load User Preferences
+    function loadUserPreferences() {
+      // Theme
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      if (savedTheme === 'dark') {
+        elements.themeToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i><span>Mode Terang</span>';
+      }
+      
+      // Other preferences can be loaded here
+    }
+
+    // Tab Navigation
+    function switchTab(tabName) {
+      // Update active states
+      elements.tabButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-tab') === tabName);
+      });
+      
+      elements.tabContents.forEach(content => {
+        content.classList.toggle('active', content.id === `${tabName}-tab`);
+      });
+      
+      // Update app state
+      app.currentTab = tabName;
+      
+      // Update search placeholder based on active tab
+      if (tabName === 'period') {
+        elements.searchInput.placeholder = 'Cari arsip, nama, atau periode...';
+      } else {
+        elements.searchInput.placeholder = 'Cari nama pembina atau periode...';
+      }
+      
+      // Apply current search and filters
+      applyFilters();
+    }
+
+    // Search
+    function handleSearch(e) {
+      const searchTerm = e.target.value;
+      app.filters[app.currentTab].search = searchTerm.toLowerCase();
+      applyFilters();
+    }
+
+    // Filter Handlers
+    function handlePeriodFilter(e) {
+      app.filters.period.period = e.target.value;
+      applyFilters();
+    }
+
+    function handlePeriodSort(e) {
+      app.filters.period.sortBy = e.target.value;
+      applyFilters();
+    }
+
+    function handleSupervisorFilter(e) {
+      app.filters.supervisor.status = e.target.value;
+      applyFilters();
+    }
+
+    function handleSupervisorSort(e) {
+      app.filters.supervisor.sortBy = e.target.value;
+      applyFilters();
+    }
+
+    // Reset Filters
+    function resetPeriodFilters() {
+      app.filters.period = {
+        search: '',
+        period: 'all',
+        sortBy: 'newest'
+      };
+      
+      elements.searchInput.value = '';
+      elements.periodFilter.value = 'all';
+      elements.sortBy.value = 'newest';
+      
+      applyFilters();
+      showToast('Filter berhasil direset', 'info');
+    }
+
+    function resetSupervisorFilters() {
+      app.filters.supervisor = {
+        search: '',
+        status: 'all',
+        sortBy: 'name'
+      };
+      
+      elements.searchInput.value = '';
+      elements.supervisorFilter.value = 'all';
+      elements.sortBySupervisor.value = 'name';
+      
+      applyFilters();
+      showToast('Filter berhasil direset', 'info');
+    }
+
+    // Apply Filters and Render
+    function applyFilters() {
+      if (app.currentTab === 'period') {
+        renderPeriodCards();
+        updatePeriodPagination();
+      } else {
+        renderSupervisorCards();
+        updateSupervisorPagination();
+      }
+      
+      updateSearchStats();
+    }
+
+    // Render Archive Cards
+    function renderArchiveCards() {
+      if (app.currentTab === 'period') {
+        renderPeriodCards();
+      } else {
+        renderSupervisorCards();
+      }
+    }
+
+    function renderPeriodCards() {
+      const filteredData = filterPeriodData();
+      const sortedData = sortPeriodData(filteredData);
+      const paginatedData = paginateData(sortedData, app.currentPage.period);
+      
+      if (paginatedData.length === 0) {
+        elements.periodArchiveGrid.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-folder-open"></i>
+            <h3>Tidak ada arsip ditemukan</h3>
+            <p>Coba ubah filter atau kata kunci pencarian Anda</p>
+          </div>
+        `;
+        return;
+      }
+      
+      elements.periodArchiveGrid.innerHTML = paginatedData.map(period => `
+        <div class="archive-card" data-period="${period.period}" data-name="${period.ketua}">
+          <div class="archive-header">
+            <div class="archive-title">Periode ${period.period}</div>
+            <div class="archive-subtitle">Ketua: ${period.ketua}</div>
+          </div>
+          <img src="${period.image}" alt="Foto OSIS Periode ${period.period}" class="archive-image" loading="lazy" data-url="${period.url}">
+          <div class="archive-content">
+            <p>${period.description}</p>
+            <div class="archive-details">
+              <div class="archive-detail">
+                <span class="archive-detail-label">Wakil Ketua:</span>
+                <span>${period.wakil}</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Sekretaris:</span>
+                <span>${period.sekretaris}</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Bendahara:</span>
+                <span>${period.bendahara}</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Pembina:</span>
+                <span>${period.pembina}</span>
+              </div>
+            </div>
+            <div class="archive-actions">
+              <a href="${period.url}" class="btn btn-primary">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderSupervisorCards() {
+      const filteredData = filterSupervisorData();
+      const sortedData = sortSupervisorData(filteredData);
+      const paginatedData = paginateData(sortedData, app.currentPage.supervisor);
+      
+      if (paginatedData.length === 0) {
+        elements.supervisorArchiveGrid.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-user-tie"></i>
+            <h3>Tidak ada pembina ditemukan</h3>
+            <p>Coba ubah filter atau kata kunci pencarian Anda</p>
+          </div>
+        `;
+        return;
+      }
+      
+      elements.supervisorArchiveGrid.innerHTML = paginatedData.map(supervisor => `
+        <div class="archive-card" data-status="${supervisor.status}" data-name="${supervisor.name}">
+          <div class="archive-header">
+            <div class="archive-title">${supervisor.name}</div>
+            <div class="archive-subtitle">${supervisor.period}</div>
+          </div>
+          <img src="${supervisor.image}" alt="Foto ${supervisor.name}" class="archive-image" loading="lazy" data-url="${supervisor.url}">
+          <div class="archive-content">
+            <p>${supervisor.description}</p>
+            <div class="archive-details">
+              <div class="archive-detail">
+                <span class="archive-detail-label">Status:</span>
+                <span>${supervisor.status === 'active' ? 'Masih Aktif' : 'Mantan Pembina'}</span>
+              </div>
+              <div class="archive-detail">
+                <span class="archive-detail-label">Prestasi:</span>
+                <span>Pembina Terbaik Tingkat Kota 2025</span>
+              </div>
+            </div>
+            <div class="archive-actions">
+              <a href="${supervisor.url}" class="btn btn-primary">Lihat Detail</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Filter Data
+    function filterPeriodData() {
+      const { search, period } = app.filters.period;
+      
+      return app.data.periods.filter(item => {
+        // Search filter
+        if (search && !(
+          item.period.toLowerCase().includes(search) ||
+          item.ketua.toLowerCase().includes(search) ||
+          item.wakil.toLowerCase().includes(search) ||
+          item.pembina.toLowerCase().includes(search) ||
+          item.description.toLowerCase().includes(search)
+        )) {
+          return false;
+        }
+        
+        // Period filter
+        if (period !== 'all' && item.period !== period) {
+          return false;
+        }
+        
+        return true;
+      });
+    }
+
+    function filterSupervisorData() {
+      const { search, status } = app.filters.supervisor;
+      
+      return app.data.supervisors.filter(item => {
+        // Search filter
+        if (search && !(
+          item.name.toLowerCase().includes(search) ||
+          item.period.toLowerCase().includes(search) ||
+          item.description.toLowerCase().includes(search)
+        )) {
+          return false;
+        }
+        
+        // Status filter
+        if (status !== 'all' && item.status !== status) {
+          return false;
+        }
+        
+        return true;
+      });
+    }
+
+    // Sort Data
+    function sortPeriodData(data) {
+      const { sortBy } = app.filters.period;
+      
+      return [...data].sort((a, b) => {
+        switch (sortBy) {
+          case 'newest':
+            return b.period.localeCompare(a.period);
+          case 'oldest':
+            return a.period.localeCompare(b.period);
+          case 'name':
+            return a.ketua.localeCompare(b.ketua);
+          default:
+            return 0;
+        }
+      });
+    }
+
+    function sortSupervisorData(data) {
+      const { sortBy } = app.filters.supervisor;
+      
+      return [...data].sort((a, b) => {
+        switch (sortBy) {
+          case 'name':
+            return a.name.localeCompare(b.name);
+          case 'period':
+            return b.period.localeCompare(a.period);
+          case 'duration':
+            // This is a simplified sort, in a real app you'd calculate actual duration
+            return a.status === 'active' ? -1 : 1;
+          default:
+            return 0;
+        }
+      });
+    }
+
+    // Pagination
+    function paginateData(data, page) {
+      const itemsPerPage = 6;
+      const startIndex = (page - 1) * itemsPerPage;
+      return data.slice(startIndex, startIndex + itemsPerPage);
+    }
+
+    function updatePagination() {
+      if (app.currentTab === 'period') {
+        updatePeriodPagination();
+      } else {
+        updateSupervisorPagination();
+      }
+    }
+
+    function updatePeriodPagination() {
+      const filteredData = filterPeriodData();
+      const totalPages = Math.ceil(filteredData.length / 6);
+      const currentPage = app.currentPage.period;
+      
+      let paginationHTML = `
+        <button class="page-btn" ${currentPage === 1 ? 'disabled' : ''}>
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      `;
+      
+      // Add page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        // Show first page, last page, current page, and pages around current page
+        if (
+          i === 1 || 
+          i === totalPages || 
+          (i >= currentPage - 1 && i <= currentPage + 1)
+        ) {
+          paginationHTML += `
+            <button class="page-btn ${i === currentPage ? 'active' : ''}">${i}</button>
+          `;
+        } else if (
+          (i === currentPage - 2 && i > 1) || 
+          (i === currentPage + 2 && i < totalPages)
+        ) {
+          paginationHTML += `<span class="page-ellipsis">...</span>`;
+        }
+      }
+      
+      paginationHTML += `
+        <button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''}>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      `;
+      
+      elements.periodPagination.innerHTML = paginationHTML;
+    }
+
+    function updateSupervisorPagination() {
+      const filteredData = filterSupervisorData();
+      const totalPages = Math.ceil(filteredData.length / 6);
+      const currentPage = app.currentPage.supervisor;
+      
+      let paginationHTML = `
+        <button class="page-btn" ${currentPage === 1 ? 'disabled' : ''}>
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      `;
+      
+      // Add page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        // Show first page, last page, current page, and pages around current page
+        if (
+          i === 1 || 
+          i === totalPages || 
+          (i >= currentPage - 1 && i <= currentPage + 1)
+        ) {
+          paginationHTML += `
+            <button class="page-btn ${i === currentPage ? 'active' : ''}">${i}</button>
+          `;
+        } else if (
+          (i === currentPage - 2 && i > 1) || 
+          (i === currentPage + 2 && i < totalPages)
+        ) {
+          paginationHTML += `<span class="page-ellipsis">...</span>`;
+        }
+      }
+      
+      paginationHTML += `
+        <button class="page-btn" ${currentPage === totalPages ? 'disabled' : ''}>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      `;
+      
+      elements.supervisorPagination.innerHTML = paginationHTML;
+    }
+
+    function handlePeriodPagination(button) {
+      if (button.querySelector('.fa-chevron-left')) {
+        app.currentPage.period = Math.max(1, app.currentPage.period - 1);
+      } else if (button.querySelector('.fa-chevron-right')) {
+        const filteredData = filterPeriodData();
+        const totalPages = Math.ceil(filteredData.length / 6);
+        app.currentPage.period = Math.min(totalPages, app.currentPage.period + 1);
+      } else {
+        app.currentPage.period = parseInt(button.textContent);
+      }
+      
+      renderPeriodCards();
+      updatePeriodPagination();
+      scrollToTop();
+    }
+
+    function handleSupervisorPagination(button) {
+      if (button.querySelector('.fa-chevron-left')) {
+        app.currentPage.supervisor = Math.max(1, app.currentPage.supervisor - 1);
+      } else if (button.querySelector('.fa-chevron-right')) {
+        const filteredData = filterSupervisorData();
+        const totalPages = Math.ceil(filteredData.length / 6);
+        app.currentPage.supervisor = Math.min(totalPages, app.currentPage.supervisor + 1);
+      } else {
+        app.currentPage.supervisor = parseInt(button.textContent);
+      }
+      
+      renderSupervisorCards();
+      updateSupervisorPagination();
+      scrollToTop();
+    }
+
+    // Update Search Stats
+    function updateSearchStats() {
+      let total, archived;
+      
+      if (app.currentTab === 'period') {
+        total = app.data.periods.length;
+        archived = filterPeriodData().length;
+      } else {
+        total = app.data.supervisors.length;
+        archived = filterSupervisorData().length;
+      }
+      
+      elements.searchStats.innerHTML = `Total: <strong>69</strong> Periode OSIS · <strong>${archived}</strong> ${app.currentTab === 'period' ? 'Periode OSIS Ter-arsipkan' : 'Pembina OSIS Diarsipkan'}`;
+    }
+
+    // Toast Notification
+    function showToast(message, type = 'info') {
+      elements.toast.textContent = message;
+      elements.toast.className = `toast ${type}`;
+      elements.toast.classList.add('show');
+      
+      setTimeout(() => {
+        elements.toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Back to Top
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    function checkScrollPosition() {
+      if (window.scrollY > 300) {
+        elements.backToTop.classList.add('visible');
+      } else {
+        elements.backToTop.classList.remove('visible');
+      }
+    }
+
+    // Keyboard Shortcuts
+    function handleKeyboardShortcuts(e) {
+      // Alt + T: Toggle theme
+      if (e.altKey && e.key === 't') {
+        toggleTheme();
+      }
+      
+      // Alt + S: Focus search
+      if (e.altKey && e.key === 's') {
+        e.preventDefault();
+        elements.searchInput.focus();
+      }
+    }
+
+    // Initialize the app when DOM is ready
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
