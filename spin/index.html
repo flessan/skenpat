@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <title>Wheel Spinner Skenpat - Putar Rodaa</title>
+    <title>Wheel Spinner Skenpat - Putar Roda</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -53,12 +53,28 @@
             min-height: 100vh;
             transition: var(--transition);
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background pattern */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(255, 107, 53, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(247, 147, 30, 0.05) 0%, transparent 50%);
+            z-index: -1;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 15px;
+            width: 100%;
         }
 
         header {
@@ -222,16 +238,10 @@
         }
 
         .main-content {
-            display: grid;
-            grid-template-columns: 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             margin-top: 20px;
-        }
-
-        @media (min-width: 1024px) {
-            .main-content {
-                grid-template-columns: 400px 1fr;
-            }
         }
 
         .sidebar {
@@ -241,16 +251,7 @@
             box-shadow: var(--shadow-lg);
             height: fit-content;
             order: 2;
-        }
-
-        @media (min-width: 1024px) {
-            .sidebar {
-                order: 1;
-                position: sticky;
-                top: 90px;
-                max-height: calc(100vh - 110px);
-                overflow-y: auto;
-            }
+            width: 100%;
         }
 
         .wheel-container {
@@ -263,12 +264,7 @@
             align-items: center;
             order: 1;
             position: relative;
-        }
-
-        @media (min-width: 1024px) {
-            .wheel-container {
-                order: 2;
-            }
+            width: 100%;
         }
 
         .wheel-wrapper {
@@ -909,8 +905,453 @@
             background: var(--dark-orange);
         }
 
+        /* New Features Styles */
+        .tab-container {
+            margin-bottom: 20px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 15px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-button {
+            padding: 10px 15px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: var(--transition);
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+
+        .tab-button.active {
+            color: var(--primary-orange);
+            border-bottom-color: var(--primary-orange);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .segment-editor {
+            margin-bottom: 20px;
+        }
+
+        .segment-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+
+        .segment-color {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .segment-color:hover {
+            transform: scale(1.1);
+            border-color: var(--primary-orange);
+        }
+
+        .segment-name {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .segment-weight {
+            width: 60px;
+            padding: 8px;
+            margin-left: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .segment-remove {
+            background: var(--danger-red);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .segment-remove:hover {
+            background: #C82333;
+        }
+
+        .add-segment {
+            background: var(--success-green);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .add-segment:hover {
+            background: #218838;
+        }
+
+        .statistics {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .probability-bar {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .probability-fill {
+            height: 100%;
+            background: var(--primary-orange);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .templates-section {
+            margin-top: 20px;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .template-card {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .template-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-orange);
+        }
+
+        .template-icon {
+            font-size: 24px;
+            color: var(--primary-orange);
+            margin-bottom: 5px;
+        }
+
+        .template-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .share-section {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .share-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .share-button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .share-facebook {
+            background: #1877F2;
+            color: white;
+        }
+
+        .share-twitter {
+            background: #1DA1F2;
+            color: white;
+        }
+
+        .share-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+
+        .share-link {
+            background: var(--info-blue);
+            color: white;
+        }
+
+        .share-button:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .color-picker {
+            position: absolute;
+            z-index: 1000;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: var(--shadow-lg);
+            display: none;
+        }
+
+        .color-picker.active {
+            display: block;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin: 5px;
+            cursor: pointer;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .color-option:hover {
+            transform: scale(1.2);
+        }
+
+        .undo-redo-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .undo-button, .redo-button {
+            padding: 8px 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .undo-button:hover, .redo-button:hover {
+            background: var(--primary-orange);
+            color: white;
+            border-color: var(--primary-orange);
+        }
+
+        .undo-button:disabled, .redo-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .timer-setting {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .timer-input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            text-align: center;
+        }
+
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 3000;
+            display: none;
+        }
+
+        .tour-overlay.active {
+            display: block;
+        }
+
+        .tour-highlight {
+            position: relative;
+            z-index: 3001;
+            box-shadow: 0 0 0 9999px rgba(0,0,0,0.7);
+            border-radius: 8px;
+        }
+
+        .tour-tooltip {
+            position: absolute;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            padding: 15px;
+            max-width: 300px;
+            z-index: 3002;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .tour-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-orange);
+        }
+
+        .tour-content {
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+        }
+
+        .tour-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .tour-prev, .tour-next, .tour-close {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .tour-prev {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .tour-next {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        .tour-close {
+            background: var(--danger-red);
+            color: white;
+        }
+
+        .tour-prev:hover, .tour-next:hover, .tour-close:hover {
+            opacity: 0.9;
+        }
+
+        .screenshot-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.8);
+            color: var(--text-primary);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            z-index: 10;
+        }
+
+        .screenshot-button:hover {
+            background: var(--primary-orange);
+            color: white;
+        }
+
+        .drag-over {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: var(--primary-orange);
+        }
+
+        .dragging {
+            opacity: 0.5;
+        }
+
         /* Mobile Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 1200px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                order: 2;
+            }
+            
+            .wheel-container {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 992px) {
             .container {
                 padding: 10px;
             }
@@ -941,21 +1382,469 @@
             .wheel-wrapper {
                 max-width: 350px;
             }
+            
+            .action-buttons {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
-        @media (max-width: 480px) {
-            .action-buttons {
-                grid-template-columns: 1fr;
+        @media (max-width: 768px) {
+            .container {
+                padding: 8px;
             }
             
-            .shortcuts-bar {
-                justify-content: center;
+            .header-content {
+                padding: 0 8px;
+            }
+            
+            .logo {
+                font-size: 16px;
+            }
+            
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .modal-content {
+                padding: 15px;
+                margin: 15px;
+                width: calc(100% - 30px);
+            }
+            
+            .winner-name {
+                font-size: 20px;
+            }
+            
+            .wheel-wrapper {
+                max-width: 300px;
+            }
+            
+            .spin-button {
+                padding: 14px 40px;
+                font-size: 18px;
+            }
+            
+            .section-title {
+                font-size: 16px;
+            }
+            
+            .realtime-input {
+                min-height: 150px;
+                font-size: 13px;
+            }
+            
+            .input-stats {
+                font-size: 12px;
             }
             
             .shortcut-btn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            .tab-buttons {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .template-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            
+            .share-options {
+                flex-wrap: wrap;
+            }
+            
+            .share-button {
+                flex: 1 0 45%;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 5px;
+            }
+            
+            .header-content {
+                padding: 0 5px;
+            }
+            
+            .logo {
+                font-size: 14px;
+            }
+            
+            .logo-icon {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .modal-content {
+                padding: 10px;
+                margin: 10px;
+                width: calc(100% - 20px);
+            }
+            
+            .winner-name {
+                font-size: 18px;
+            }
+            
+            .wheel-wrapper {
+                max-width: 250px;
+            }
+            
+            .spin-button {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 14px;
+            }
+            
+            .realtime-input {
+                min-height: 120px;
+                font-size: 12px;
+                padding: 10px;
+            }
+            
+            .input-stats {
+                font-size: 11px;
+            }
+            
+            .shortcut-btn {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+                gap: 6px;
+            }
+            
+            .btn {
+                padding: 8px 10px;
+                font-size: 12px;
+            }
+            
+            .tab-buttons {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .template-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            .share-options {
+                flex-wrap: wrap;
+            }
+            
+            .share-button {
+                flex: 1 0 45%;
+                margin-bottom: 10px;
+            }
+            
+            .segment-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            
+            .segment-name, .segment-weight {
+                width: 100%;
+            }
+            
+            .segment-remove {
+                align-self: flex-end;
+            }
+            
+            .tour-tooltip {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wheel-wrapper {
+                max-width: 220px;
+            }
+            
+            .spin-button {
+                padding: 10px 25px;
+                font-size: 14px;
+            }
+            
+            .modal-content {
+                padding: 8px;
+                margin: 8px;
+                width: calc(100% - 16px);
+            }
+            
+            .winner-name {
+                font-size: 16px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 6px 8px;
+                font-size: 11px;
+            }
+            
+            .shortcut-btn {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            
+            .section-title {
+                font-size: 13px;
+            }
+            
+            .realtime-input {
+                min-height: 100px;
+                font-size: 11px;
+                padding: 8px;
+            }
+            
+            .input-stats {
+                font-size: 10px;
+            }
+            
+            .tools-section {
+                padding: 10px;
+            }
+            
+            .tool-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .tool-label {
+                font-size: 12px;
+            }
+            
+            .template-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            
+            .template-icon {
+                font-size: 20px;
+            }
+            
+            .template-name {
+                font-size: 12px;
+            }
+            
+            .share-options {
+                flex-direction: column;
+            }
+            
+            .share-button {
                 flex: 1;
-                min-width: 80px;
-                text-align: center;
+                margin-bottom: 8px;
+            }
+            
+            .statistics {
+                padding: 10px;
+            }
+            
+            .stat-item {
+                font-size: 12px;
+            }
+            
+            .probability-bar {
+                height: 6px;
+            }
+            
+            .history-section {
+                padding-top: 15px;
+            }
+            
+            .history-item {
+                padding: 8px;
+                font-size: 12px;
+            }
+            
+            .history-winner {
+                font-size: 13px;
+            }
+            
+            .history-time {
+                font-size: 10px;
+            }
+            
+            .delete-confirmation {
+                min-width: 250px;
+                padding: 15px;
+            }
+            
+            .delete-confirmation h3 {
+                font-size: 16px;
+            }
+            
+            .delete-confirmation p {
+                font-size: 14px;
+            }
+            
+            .tour-tooltip {
+                max-width: 200px;
+            }
+            
+            .tour-title {
+                font-size: 14px;
+            }
+            
+            .tour-content {
+                font-size: 12px;
+            }
+            
+            .tour-prev, .tour-next, .tour-close {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .wheel-wrapper {
+                max-width: 180px;
+            }
+            
+            .spin-button {
+                padding: 8px 20px;
+                font-size: 12px;
+            }
+            
+            .modal-content {
+                padding: 5px;
+                margin: 5px;
+                width: calc(100% - 10px);
+            }
+            
+            .winner-name {
+                font-size: 14px;
+            }
+            
+            .modal-buttons {
+                flex-direction: column;
+                gap: 6px;
+            }
+            
+            .btn {
+                padding: 5px 6px;
+                font-size: 10px;
+            }
+            
+            .shortcut-btn {
+                font-size: 9px;
+                padding: 3px 6px;
+            }
+            
+            .section-title {
+                font-size: 12px;
+            }
+            
+            .realtime-input {
+                min-height: 80px;
+                font-size: 10px;
+                padding: 6px;
+            }
+            
+            .input-stats {
+                font-size: 9px;
+            }
+            
+            .tools-section {
+                padding: 8px;
+            }
+            
+            .tool-label {
+                font-size: 11px;
+            }
+            
+            .template-grid {
+                grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+            
+            .template-icon {
+                font-size: 18px;
+            }
+            
+            .template-name {
+                font-size: 10px;
+            }
+            
+            .statistics {
+                padding: 8px;
+            }
+            
+            .stat-item {
+                font-size: 11px;
+            }
+            
+            .probability-bar {
+                height: 5px;
+            }
+            
+            .history-section {
+                padding-top: 10px;
+            }
+            
+            .history-item {
+                padding: 6px;
+                font-size: 11px;
+            }
+            
+            .history-winner {
+                font-size: 12px;
+            }
+            
+            .history-time {
+                font-size: 9px;
+            }
+            
+            .delete-confirmation {
+                min-width: 200px;
+                padding: 10px;
+            }
+            
+            .delete-confirmation h3 {
+                font-size: 14px;
+            }
+            
+            .delete-confirmation p {
+                font-size: 12px;
+            }
+            
+            .tour-tooltip {
+                max-width: 180px;
+            }
+            
+            .tour-title {
+                font-size: 12px;
+            }
+            
+            .tour-content {
+                font-size: 10px;
+            }
+            
+            .tour-prev, .tour-next, .tour-close {
+                padding: 5px 8px;
+                font-size: 10px;
             }
         }
 
@@ -996,6 +1885,26 @@
             
             .wheel-container {
                 break-inside: avoid;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 1200px) {
+            .main-content {
+                display: grid;
+                grid-template-columns: 400px 1fr;
+            }
+            
+            .sidebar {
+                order: 1;
+                position: sticky;
+                top: 90px;
+                max-height: calc(100vh - 110px);
+                overflow-y: auto;
+            }
+            
+            .wheel-container {
+                order: 2;
             }
         }
     </style>
@@ -1039,9 +1948,9 @@
                             <i class="fas fa-history"></i>
                             <span>Riwayat</span>
                         </div>
-                        <div class="hamburger-item" onclick="showHelp(); document.getElementById('hamburger-toggle').checked = false;">
+                        <div class="hamburger-item" onclick="startTour(); document.getElementById('hamburger-toggle').checked = false;">
                             <i class="fas fa-question-circle"></i>
-                            <span>Bantuan</span>
+                            <span>Tur Panduan</span>
                         </div>
                     </div>
                     <label for="hamburger-toggle" class="menu-overlay"></label>
@@ -1058,40 +1967,135 @@
     <div class="container">
         <div class="main-content">
             <aside class="sidebar">
-                <div class="input-section">
-                    <h3 class="section-title">
-                        <i class="fas fa-edit"></i>
-                        Input Nama
-                        <span class="live-indicator">
-                            <span class="live-dot"></span>
-                            LIVE
-                        </span>
-                    </h3>
-                    <textarea 
-                        id="realtimeInput" 
-                        class="realtime-input" 
-                        placeholder="Ketik nama setiap baris...&#10;Contoh:&#10;Alice&#10;Bob&#10;Charlie&#10;Diana&#10;&#10;Roda akan update otomatis!"
-                        spellcheck="false"
-                        aria-label="Input nama untuk roda"
-                    ></textarea>
-                    <div class="input-stats">
-                        <span id="itemCount">0 item</span>
-                        <span>Ctrl+Enter untuk spin • Enter untuk baris baru</span>
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" onclick="switchTab('input')">
+                            <i class="fas fa-edit"></i> Input
+                        </button>
+                        <button class="tab-button" onclick="switchTab('editor')">
+                            <i class="fas fa-palette"></i> Editor
+                        </button>
+                        <button class="tab-button" onclick="switchTab('templates')">
+                            <i class="fas fa-th-large"></i> Template
+                        </button>
                     </div>
                     
-                    <div class="shortcuts-bar">
-                        <button class="shortcut-btn" onclick="insertNames('Danuri\nArsidi\nHafizh\nThio\nDaus')" aria-label="Tambah 5 nama contoh">
-                            <i class="fas fa-users"></i> 5 Nama
-                        </button>
-                        <button class="shortcut-btn" onclick="insertNames('1\n2\n3\n4\n5\n6\n7\n8\n9\n10')" aria-label="Tambah angka 1-10">
-                            <i class="fas fa-sort-numeric-up"></i> Angka
-                        </button>
-                        <button class="shortcut-btn" onclick="insertNames('A\nB\nC\nD\nE\nF\nG\nH\nI\nJ')" aria-label="Tambah huruf A-J">
-                            <i class="fas fa-font"></i> Huruf
-                        </button>
-                        <button class="shortcut-btn" onclick="insertNames('Ya\nTidak')" aria-label="Tambah opsi Ya/Tidak">
-                            <i class="fas fa-dice"></i> Ya/Tidak
-                        </button>
+                    <div id="input-tab" class="tab-content active">
+                        <div class="input-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-edit"></i>
+                                Input Nama
+                                <span class="live-indicator">
+                                    <span class="live-dot"></span>
+                                    LIVE
+                                </span>
+                            </h3>
+                            <textarea 
+                                id="realtimeInput" 
+                                class="realtime-input" 
+                                placeholder="Ketik nama setiap baris...&#10;Contoh:&#10;Hafizh&#10;Arsidi&#10;Daus&#10;Danuri&#10;&#10;Roda akan update otomatis!"
+                                spellcheck="false"
+                                aria-label="Input nama untuk roda"
+                            ></textarea>
+                            <div class="input-stats">
+                                <span id="itemCount">0 item</span>
+                                <span>Ctrl+Enter untuk spin • Enter untuk baris baru</span>
+                            </div>
+                            
+                            <div class="shortcuts-bar">
+                                <button class="shortcut-btn" onclick="insertNames('Danuri\nArsidi\nHafizh\nThio\nDaus')" aria-label="Tambah 5 nama contoh">
+                                    <i class="fas fa-users"></i> 5 Nama
+                                </button>
+                                <button class="shortcut-btn" onclick="insertNames('1\n2\n3\n4\n5\n6\n7\n8\n9\n10')" aria-label="Tambah angka 1-10">
+                                    <i class="fas fa-sort-numeric-up"></i> Angka
+                                </button>
+                                <button class="shortcut-btn" onclick="insertNames('A\nB\nC\nD\nE\nF\nG\nH\nI\nJ')" aria-label="Tambah huruf A-J">
+                                    <i class="fas fa-font"></i> Huruf
+                                </button>
+                                <button class="shortcut-btn" onclick="insertNames('Ya\nTidak')" aria-label="Tambah opsi Ya/Tidak">
+                                    <i class="fas fa-dice"></i> Ya/Tidak
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="editor-tab" class="tab-content">
+                        <div class="segment-editor">
+                            <h3 class="section-title">
+                                <i class="fas fa-palette"></i>
+                                Editor Segmen
+                            </h3>
+                            
+                            <div class="undo-redo-buttons">
+                                <button class="undo-button" id="undoButton" onclick="undo()" disabled>
+                                    <i class="fas fa-undo"></i> Undo
+                                </button>
+                                <button class="redo-button" id="redoButton" onclick="redo()" disabled>
+                                    <i class="fas fa-redo"></i> Redo
+                                </button>
+                            </div>
+                            
+                            <div id="segmentsList"></div>
+                            
+                            <button class="add-segment" onclick="addNewSegment()">
+                                <i class="fas fa-plus"></i> Tambah Segmen
+                            </button>
+                            
+                            <div class="statistics">
+                                <h3 class="section-title">
+                                    <i class="fas fa-chart-pie"></i>
+                                    Statistik & Probabilitas
+                                </h3>
+                                <div id="statisticsContainer"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="templates-tab" class="tab-content">
+                        <div class="templates-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-th-large"></i>
+                                Template
+                            </h3>
+                            <div class="template-grid">
+                                <div class="template-card" onclick="loadTemplate('decision')">
+                                    <div class="template-icon">
+                                        <i class="fas fa-question"></i>
+                                    </div>
+                                    <div class="template-name">Keputusan</div>
+                                </div>
+                                <div class="template-card" onclick="loadTemplate('yesno')">
+                                    <div class="template-icon">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div class="template-name">Ya/Tidak</div>
+                                </div>
+                                <div class="template-card" onclick="loadTemplate('numbers')">
+                                    <div class="template-icon">
+                                        <i class="fas fa-sort-numeric-up"></i>
+                                    </div>
+                                    <div class="template-name">Angka</div>
+                                </div>
+                                <div class="template-card" onclick="loadTemplate('food')">
+                                    <div class="template-icon">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div class="template-name">Makanan</div>
+                                </div>
+                                <div class="template-card" onclick="loadTemplate('activities')">
+                                    <div class="template-icon">
+                                        <i class="fas fa-running"></i>
+                                    </div>
+                                    <div class="template-name">Aktivitas</div>
+                                </div>
+                                <div class="template-card" onclick="loadTemplate('colors')">
+                                    <div class="template-icon">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div class="template-name">Warna</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -1166,6 +2170,31 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
+                        <div class="timer-setting" id="timerSetting" style="display: none;">
+                            <span>Interval (detik):</span>
+                            <input type="number" id="autoSpinInterval" class="timer-input" value="5" min="1" max="60">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="share-section">
+                    <h3 class="section-title">
+                        <i class="fas fa-share-alt"></i>
+                        Bagikan
+                    </h3>
+                    <div class="share-options">
+                        <button class="share-button share-facebook" onclick="shareOnFacebook()">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button class="share-button share-twitter" onclick="shareOnTwitter()">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button class="share-button share-whatsapp" onclick="shareOnWhatsApp()">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button class="share-button share-link" onclick="copyShareLink()">
+                            <i class="fas fa-link"></i>
+                        </button>
                     </div>
                 </div>
 
@@ -1179,6 +2208,9 @@
             </aside>
 
             <main class="wheel-container">
+                <button class="screenshot-button" onclick="takeScreenshot()" title="Ambil Screenshot">
+                    <i class="fas fa-camera"></i>
+                </button>
                 <div class="wheel-wrapper">
                     <div class="wheel-pointer"></div>
                     <canvas id="wheelCanvas" role="img" aria-label="Roda putar dengan nama-nama"></canvas>
@@ -1208,10 +2240,29 @@
         </div>
     </div>
 
+    <!-- Color Picker Modal -->
+    <div class="color-picker" id="colorPicker">
+        <!-- Color options will be dynamically added -->
+    </div>
+
+    <!-- Tour Overlay -->
+    <div class="tour-overlay" id="tourOverlay">
+        <div class="tour-tooltip" id="tourTooltip">
+            <div class="tour-title" id="tourTitle"></div>
+            <div class="tour-content" id="tourContent"></div>
+            <div class="tour-buttons">
+                <button class="tour-prev" id="tourPrev" onclick="prevTourStep()">Sebelumnya</button>
+                <button class="tour-close" id="tourClose" onclick="closeTour()">Tutup</button>
+                <button class="tour-next" id="tourNext" onclick="nextTourStep()">Selanjutnya</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Global variables
         let segments = [];
-        let colors = [];
+        let segmentWeights = [];
+        let segmentColors = [];
         let currentRotation = 0;
         let isSpinning = false;
         let history = [];
@@ -1220,12 +2271,105 @@
         let winnerName = '';
         let updateTimeout;
         let audioContext = null;
+        let undoStack = [];
+        let redoStack = [];
+        let autoSpinTimer = null;
+        let currentTourStep = 0;
 
         // Color palette
         const colorPalette = [
             '#FF6B35', '#F7931E', '#FFC947', '#FF5733', 
             '#C70039', '#900C3F', '#581845', '#FF8C42',
-            '#FFA07A', '#FA8072', '#E9967A', '#F08080'
+            '#FFA07A', '#FA8072', '#E9967A', '#F08080',
+            '#4361EE', '#3A0CA3', '#7209B7', '#B5179E',
+            '#F72585', '#4CC9F0', '#4895EF', '#560BAD'
+        ];
+
+        // Templates
+        const templates = {
+            decision: [
+                { name: 'Ya', weight: 1, color: '#28A745' },
+                { name: 'Tidak', weight: 1, color: '#DC3545' },
+                { name: 'Mungkin', weight: 1, color: '#FFC107' }
+            ],
+            yesno: [
+                { name: 'Ya', weight: 1, color: '#28A745' },
+                { name: 'Tidak', weight: 1, color: '#DC3545' }
+            ],
+            numbers: [
+                { name: '1', weight: 1, color: '#FF6B35' },
+                { name: '2', weight: 1, color: '#F7931E' },
+                { name: '3', weight: 1, color: '#FFC947' },
+                { name: '4', weight: 1, color: '#FF5733' },
+                { name: '5', weight: 1, color: '#C70039' },
+                { name: '6', weight: 1, color: '#900C3F' },
+                { name: '7', weight: 1, color: '#581845' },
+                { name: '8', weight: 1, color: '#FF8C42' },
+                { name: '9', weight: 1, color: '#FFA07A' },
+                { name: '10', weight: 1, color: '#FA8072' }
+            ],
+            food: [
+                { name: 'Pizza', weight: 1, color: '#FF6B35' },
+                { name: 'Burger', weight: 1, color: '#F7931E' },
+                { name: 'Sushi', weight: 1, color: '#FFC947' },
+                { name: 'Pasta', weight: 1, color: '#FF5733' },
+                { name: 'Salad', weight: 1, color: '#28A745' },
+                { name: 'Taco', weight: 1, color: '#C70039' },
+                { name: 'Steak', weight: 1, color: '#900C3F' },
+                { name: 'Seafood', weight: 1, color: '#4361EE' }
+            ],
+            activities: [
+                { name: 'Bermain Game', weight: 1, color: '#FF6B35' },
+                { name: 'Menonton Film', weight: 1, color: '#F7931E' },
+                { name: 'Olahraga', weight: 1, color: '#28A745' },
+                { name: 'Membaca Buku', weight: 1, color: '#4361EE' },
+                { name: 'Berkumpul dengan Teman', weight: 1, color: '#7209B7' },
+                { name: 'Memasak', weight: 1, color: '#F72585' }
+            ],
+            colors: [
+                { name: 'Merah', weight: 1, color: '#DC3545' },
+                { name: 'Biru', weight: 1, color: '#007BFF' },
+                { name: 'Hijau', weight: 1, color: '#28A745' },
+                { name: 'Kuning', weight: 1, color: '#FFC107' },
+                { name: 'Ungu', weight: 1, color: '#7209B7' },
+                { name: 'Oranye', weight: 1, color: '#FF6B35' },
+                { name: 'Pink', weight: 1, color: '#F72585' },
+                { name: 'Coklat', weight: 1, color: '#795548' }
+            ]
+        };
+
+        // Tour steps
+        const tourSteps = [
+            {
+                element: '.realtime-input',
+                title: 'Input Nama',
+                content: 'Ketik nama setiap baris di kotak ini untuk membuat segmen pada roda. Roda akan diperbarui secara otomatis.',
+                position: 'top'
+            },
+            {
+                element: '.spin-button',
+                title: 'Tombol Putar',
+                content: 'Klik tombol ini atau tekan Ctrl+Enter untuk memutar roda dan memilih pemenang secara acak.',
+                position: 'top'
+            },
+            {
+                element: '.tab-buttons',
+                title: 'Tab Navigasi',
+                content: 'Gunakan tab ini untuk beralih antara mode Input, Editor (untuk mengedit warna dan bobot segmen), dan Template.',
+                position: 'bottom'
+            },
+            {
+                element: '.tools-section',
+                title: 'Pengaturan',
+                content: 'Sesuaikan pengalaman Anda dengan mengaktifkan atau menonaktifkan animasi, suara, dan putar otomatis.',
+                position: 'top'
+            },
+            {
+                element: '.share-section',
+                title: 'Bagikan Roda',
+                content: 'Bagikan roda Anda ke media sosial atau salin tautan untuk dibagikan kepada orang lain.',
+                position: 'top'
+            }
         ];
 
         // Initialize application
@@ -1234,6 +2378,11 @@
             setupEventListeners();
             loadFromLocalStorage();
             drawWheel();
+            
+            // Show tour for first-time users
+            if (!localStorage.getItem('wheelSpinnerTourCompleted')) {
+                setTimeout(() => startTour(), 1000);
+            }
         });
 
         function initializeApp() {
@@ -1243,12 +2392,26 @@
             
             // Initialize audio context on first user interaction
             document.addEventListener('click', initAudioContext, { once: true });
+            
+            // Initialize color picker
+            initColorPicker();
         }
 
         function initAudioContext() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
             }
+        }
+
+        function initColorPicker() {
+            const colorPicker = document.getElementById('colorPicker');
+            colorPalette.forEach(color => {
+                const colorOption = document.createElement('div');
+                colorOption.className = 'color-option';
+                colorOption.style.backgroundColor = color;
+                colorOption.onclick = () => selectColor(color);
+                colorPicker.appendChild(colorOption);
+            });
         }
 
         function setupEventListeners() {
@@ -1266,6 +2429,7 @@
             });
 
             document.getElementById('autoSpinToggle').addEventListener('change', handleAutoSpinToggle);
+            document.getElementById('autoSpinInterval').addEventListener('change', updateAutoSpinInterval);
 
             // Window resize
             window.addEventListener('resize', debounce(resizeCanvas, 250));
@@ -1276,6 +2440,13 @@
                     closeAllModals();
                 }
             });
+            
+            // Drag and drop for reordering segments
+            setupDragAndDrop();
+        }
+
+        function setupDragAndDrop() {
+            // This will be implemented when segments are rendered in the editor tab
         }
 
         function debounce(func, wait) {
@@ -1312,12 +2483,50 @@
                     spin();
                 }
             }
+            if (e.ctrlKey && e.key === 'z') {
+                e.preventDefault();
+                undo();
+            }
+            if (e.ctrlKey && e.key === 'y') {
+                e.preventDefault();
+                redo();
+            }
         }
 
         function handleAutoSpinToggle() {
             saveSettings();
-            if (this.checked && segments.length > 0) {
-                setTimeout(() => spin(), 1000);
+            const timerSetting = document.getElementById('timerSetting');
+            
+            if (this.checked) {
+                timerSetting.style.display = 'flex';
+                startAutoSpin();
+            } else {
+                timerSetting.style.display = 'none';
+                stopAutoSpin();
+            }
+        }
+
+        function updateAutoSpinInterval() {
+            if (document.getElementById('autoSpinToggle').checked) {
+                stopAutoSpin();
+                startAutoSpin();
+            }
+        }
+
+        function startAutoSpin() {
+            const interval = parseInt(document.getElementById('autoSpinInterval').value) * 1000;
+            
+            if (segments.length > 0) {
+                autoSpinTimer = setTimeout(() => {
+                    spin();
+                }, interval);
+            }
+        }
+
+        function stopAutoSpin() {
+            if (autoSpinTimer) {
+                clearTimeout(autoSpinTimer);
+                autoSpinTimer = null;
             }
         }
 
@@ -1327,6 +2536,230 @@
             canvas.width = size;
             canvas.height = size;
             drawWheel();
+        }
+
+        // Tab switching
+        function switchTab(tabName) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            
+            // If switching to editor tab, update the segments list
+            if (tabName === 'editor') {
+                updateSegmentsList();
+                updateStatistics();
+            }
+        }
+
+        function updateSegmentsList() {
+            const container = document.getElementById('segmentsList');
+            container.innerHTML = '';
+            
+            if (segments.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">Tidak ada segmen. Tambahkan segmen terlebih dahulu.</p>';
+                return;
+            }
+            
+            segments.forEach((segment, index) => {
+                const segmentItem = document.createElement('div');
+                segmentItem.className = 'segment-item';
+                segmentItem.draggable = true;
+                segmentItem.dataset.index = index;
+                
+                segmentItem.innerHTML = `
+                    <div class="segment-color" style="background-color: ${segmentColors[index]};" onclick="showColorPicker(${index})"></div>
+                    <input type="text" class="segment-name" value="${segment}" onchange="updateSegmentName(${index}, this.value)">
+                    <input type="number" class="segment-weight" value="${segmentWeights[index]}" min="1" max="10" onchange="updateSegmentWeight(${index}, this.value)">
+                    <button class="segment-remove" onclick="removeSegment(${index})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                `;
+                
+                // Add drag and drop event listeners
+                segmentItem.addEventListener('dragstart', handleDragStart);
+                segmentItem.addEventListener('dragover', handleDragOver);
+                segmentItem.addEventListener('drop', handleDrop);
+                segmentItem.addEventListener('dragend', handleDragEnd);
+                
+                container.appendChild(segmentItem);
+            });
+        }
+
+        function updateStatistics() {
+            const container = document.getElementById('statisticsContainer');
+            container.innerHTML = '';
+            
+            if (segments.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">Tidak ada data statistik.</p>';
+                return;
+            }
+            
+            const totalWeight = segmentWeights.reduce((sum, weight) => sum + weight, 0);
+            
+            segments.forEach((segment, index) => {
+                const probability = (segmentWeights[index] / totalWeight * 100).toFixed(1);
+                
+                const statItem = document.createElement('div');
+                statItem.className = 'stat-item';
+                statItem.innerHTML = `
+                    <span class="stat-label">${segment}</span>
+                    <span class="stat-value">${probability}%</span>
+                `;
+                
+                const probBar = document.createElement('div');
+                probBar.className = 'probability-bar';
+                
+                const probFill = document.createElement('div');
+                probFill.className = 'probability-fill';
+                probFill.style.width = `${probability}%`;
+                probFill.style.backgroundColor = segmentColors[index];
+                
+                probBar.appendChild(probFill);
+                
+                container.appendChild(statItem);
+                container.appendChild(probBar);
+            });
+        }
+
+        function showColorPicker(index) {
+            const colorPicker = document.getElementById('colorPicker');
+            const segmentItem = document.querySelectorAll('.segment-item')[index];
+            const rect = segmentItem.getBoundingClientRect();
+            
+            colorPicker.style.left = `${rect.left}px`;
+            colorPicker.style.top = `${rect.bottom + 5}px`;
+            colorPicker.classList.add('active');
+            
+            window.currentColorIndex = index;
+        }
+
+        function selectColor(color) {
+            if (window.currentColorIndex !== undefined) {
+                segmentColors[window.currentColorIndex] = color;
+                document.querySelectorAll('.segment-color')[window.currentColorIndex].style.backgroundColor = color;
+                drawWheel();
+                saveToLocalStorage();
+            }
+            
+            document.getElementById('colorPicker').classList.remove('active');
+            window.currentColorIndex = undefined;
+        }
+
+        function updateSegmentName(index, value) {
+            saveToUndoStack();
+            segments[index] = value;
+            document.getElementById('realtimeInput').value = segments.join('\n');
+            drawWheel();
+            saveToLocalStorage();
+        }
+
+        function updateSegmentWeight(index, value) {
+            saveToUndoStack();
+            segmentWeights[index] = parseInt(value) || 1;
+            updateStatistics();
+            drawWheel();
+            saveToLocalStorage();
+        }
+
+        function removeSegment(index) {
+            saveToUndoStack();
+            segments.splice(index, 1);
+            segmentWeights.splice(index, 1);
+            segmentColors.splice(index, 1);
+            
+            document.getElementById('realtimeInput').value = segments.join('\n');
+            updateSegmentsList();
+            updateStatistics();
+            drawWheel();
+            saveToLocalStorage();
+        }
+
+        function addNewSegment() {
+            saveToUndoStack();
+            const newIndex = segments.length;
+            segments.push(`Item ${newIndex + 1}`);
+            segmentWeights.push(1);
+            segmentColors.push(colorPalette[newIndex % colorPalette.length]);
+            
+            document.getElementById('realtimeInput').value = segments.join('\n');
+            updateSegmentsList();
+            updateStatistics();
+            drawWheel();
+            saveToLocalStorage();
+        }
+
+        function saveToUndoStack() {
+            undoStack.push({
+                segments: [...segments],
+                weights: [...segmentWeights],
+                colors: [...segmentColors]
+            });
+            
+            // Limit undo stack size
+            if (undoStack.length > 20) {
+                undoStack.shift();
+            }
+            
+            // Clear redo stack when new action is performed
+            redoStack = [];
+            updateUndoRedoButtons();
+        }
+
+        function undo() {
+            if (undoStack.length === 0) return;
+            
+            redoStack.push({
+                segments: [...segments],
+                weights: [...segmentWeights],
+                colors: [...segmentColors]
+            });
+            
+            const state = undoStack.pop();
+            segments = state.segments;
+            segmentWeights = state.weights;
+            segmentColors = state.colors;
+            
+            document.getElementById('realtimeInput').value = segments.join('\n');
+            updateSegmentsList();
+            updateStatistics();
+            drawWheel();
+            updateUndoRedoButtons();
+            saveToLocalStorage();
+        }
+
+        function redo() {
+            if (redoStack.length === 0) return;
+            
+            undoStack.push({
+                segments: [...segments],
+                weights: [...segmentWeights],
+                colors: [...segmentColors]
+            });
+            
+            const state = redoStack.pop();
+            segments = state.segments;
+            segmentWeights = state.weights;
+            segmentColors = state.colors;
+            
+            document.getElementById('realtimeInput').value = segments.join('\n');
+            updateSegmentsList();
+            updateStatistics();
+            drawWheel();
+            updateUndoRedoButtons();
+            saveToLocalStorage();
+        }
+
+        function updateUndoRedoButtons() {
+            document.getElementById('undoButton').disabled = undoStack.length === 0;
+            document.getElementById('redoButton').disabled = redoStack.length === 0;
         }
 
         // Hamburger Menu Actions
@@ -1365,7 +2798,7 @@
                     <button class="btn btn-warning" onclick="importData(); closeModal('saveLoadModal');">
                         <i class="fas fa-upload"></i> Import dari File
                     </button>
-                    <button class="btn btn-secondary" onclick="location.reload(true)">
+                    <button class="btn btn-secondary" onclick="closeModal('saveLoadModal')">
                         <i class="fas fa-times"></i> Tutup
                     </button>
                 </div>
@@ -1382,37 +2815,175 @@
             showNotification('Riwayat dibuka', 'info');
         }
 
-        function showHelp() {
-            showModal('helpModal', `
-                <h3><i class="fas fa-question-circle"></i> Bantuan</h3>
-                <div style="text-align: left; color: var(--text-secondary); line-height: 1.6;">
-                    <h4 style="color: var(--primary-orange); margin-bottom: 10px;">Cara Menggunakan:</h4>
-                    <ul style="margin-left: 20px; margin-bottom: 15px;">
-                        <li>Ketik nama setiap baris di kotak input</li>
-                        <li>Klik "PUTAR RODA" atau tekan Ctrl+Enter</li>
-                        <li>Pilihan akan ditampilkan dengan animasi</li>
-                    </ul>
+        function loadTemplate(templateName) {
+            if (!templates[templateName]) return;
+            
+            saveToUndoStack();
+            const template = templates[templateName];
+            segments = template.map(item => item.name);
+            segmentWeights = template.map(item => item.weight);
+            segmentColors = template.map(item => item.color);
+            
+            document.getElementById('realtimeInput').value = segments.join('\n');
+            updateSegmentsList();
+            updateStatistics();
+            drawWheel();
+            saveToLocalStorage();
+            
+            // Switch to editor tab to show the loaded template
+            switchTab('editor');
+            document.querySelector('.tab-button:nth-child(2)').click();
+            
+            showNotification(`Template "${templateName}" telah dimuat!`, 'success');
+        }
+
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareOnTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('Coba Wheel Spinner Skenpat ini!');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function shareOnWhatsApp() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://wa.me/?text=Coba%20Wheel%20Spinner%20Skenpat%20ini!%20${url}`, '_blank');
+        }
+
+        function copyShareLink() {
+            const url = window.location.href;
+            navigator.clipboard.writeText(url).then(() => {
+                showNotification('Tautan berhasil disalin ke clipboard!', 'success');
+            }).catch(() => {
+                showNotification('Gagal menyalin tautan!', 'danger');
+            });
+        }
+
+        function takeScreenshot() {
+            try {
+                // Create a temporary canvas to draw the wheel
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
+                const size = canvas.width;
+                
+                tempCanvas.width = size;
+                tempCanvas.height = size;
+                
+                // Draw white background
+                tempCtx.fillStyle = 'white';
+                tempCtx.fillRect(0, 0, size, size);
+                
+                // Draw the wheel
+                tempCtx.drawImage(canvas, 0, 0);
+                
+                // Convert to blob and download
+                tempCanvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `wheel-spinner-${new Date().toISOString().split('T')[0]}.png`;
+                    a.click();
+                    URL.revokeObjectURL(url);
                     
-                    <h4 style="color: var(--primary-orange); margin-bottom: 10px;">Shortcut Keyboard:</h4>
-                    <ul style="margin-left: 20px; margin-bottom: 15px;">
-                        <li><kbd>Ctrl+Enter</kbd> - Putar roda</li>
-                        <li><kbd>Space</kbd> - Putar roda (ketika tidak fokus di input)</li>
-                        <li><kbd>Escape</kbd> - Tutup modal/menu</li>
-                    </ul>
-                    
-                    <h4 style="color: var(--primary-orange); margin-bottom: 10px;">Tips:</h4>
-                    <ul style="margin-left: 20px;">
-                        <li>Gunakan tombol shortcut untuk cepat menambah item</li>
-                        <li>Data otomatis tersimpan di browser</li>
-                        <li>Kustomisasi pengaturan sesuai kebutuhan</li>
-                    </ul>
-                </div>
-                <div style="margin-top: 20px;">
-                    <button class="btn btn-primary" onclick="location.reload(true)">
-                        <i class="fas fa-check"></i> Mengerti
-                    </button>
-                </div>
-            `);
+                    showNotification('Screenshot berhasil disimpan!', 'success');
+                });
+            } catch (error) {
+                showNotification('Gagal mengambil screenshot!', 'danger');
+                console.error('Screenshot error:', error);
+            }
+        }
+
+        // Tour functionality
+        function startTour() {
+            currentTourStep = 0;
+            document.getElementById('tourOverlay').classList.add('active');
+            showTourStep();
+        }
+
+        function showTourStep() {
+            if (currentTourStep < 0 || currentTourStep >= tourSteps.length) {
+                closeTour();
+                return;
+            }
+            
+            const step = tourSteps[currentTourStep];
+            const element = document.querySelector(step.element);
+            
+            if (!element) {
+                nextTourStep();
+                return;
+            }
+            
+            // Highlight the element
+            document.querySelectorAll('.tour-highlight').forEach(el => {
+                el.classList.remove('tour-highlight');
+            });
+            element.classList.add('tour-highlight');
+            
+            // Position the tooltip
+            const tooltip = document.getElementById('tourTooltip');
+            const rect = element.getBoundingClientRect();
+            
+            // Reset position
+            tooltip.style.top = '';
+            tooltip.style.left = '';
+            tooltip.style.right = '';
+            tooltip.style.bottom = '';
+            
+            switch (step.position) {
+                case 'top':
+                    tooltip.style.bottom = `${window.innerHeight - rect.top + 10}px`;
+                    tooltip.style.left = `${rect.left + rect.width / 2 - 150}px`;
+                    break;
+                case 'bottom':
+                    tooltip.style.top = `${rect.bottom + 10}px`;
+                    tooltip.style.left = `${rect.left + rect.width / 2 - 150}px`;
+                    break;
+                case 'left':
+                    tooltip.style.right = `${window.innerWidth - rect.left + 10}px`;
+                    tooltip.style.top = `${rect.top + rect.height / 2 - 75}px`;
+                    break;
+                case 'right':
+                    tooltip.style.left = `${rect.right + 10}px`;
+                    tooltip.style.top = `${rect.top + rect.height / 2 - 75}px`;
+                    break;
+            }
+            
+            // Update content
+            document.getElementById('tourTitle').textContent = step.title;
+            document.getElementById('tourContent').textContent = step.content;
+            
+            // Update buttons
+            document.getElementById('tourPrev').style.display = currentTourStep === 0 ? 'none' : 'inline-block';
+            document.getElementById('tourNext').textContent = currentTourStep === tourSteps.length - 1 ? 'Selesai' : 'Selanjutnya';
+        }
+
+        function nextTourStep() {
+            currentTourStep++;
+            if (currentTourStep >= tourSteps.length) {
+                closeTour();
+            } else {
+                showTourStep();
+            }
+        }
+
+        function prevTourStep() {
+            currentTourStep--;
+            if (currentTourStep < 0) {
+                currentTourStep = 0;
+            }
+            showTourStep();
+        }
+
+        function closeTour() {
+            document.getElementById('tourOverlay').classList.remove('active');
+            document.querySelectorAll('.tour-highlight').forEach(el => {
+                el.classList.remove('tour-highlight');
+            });
+            localStorage.setItem('wheelSpinnerTourCompleted', 'true');
         }
 
         function showModal(modalId, content) {
@@ -1443,16 +3014,21 @@
             document.querySelectorAll('.result-modal').forEach(modal => modal.remove());
             document.getElementById('resultModal').style.display = 'none';
             closeDeleteConfirmation();
+            document.getElementById('colorPicker').classList.remove('active');
         }
 
         function exportData() {
             try {
                 const data = {
-                    segments: segments,
+                    segments: segments.map((name, i) => ({
+                        name,
+                        weight: segmentWeights[i],
+                        color: segmentColors[i]
+                    })),
                     history: history,
                     settings: getSettings(),
                     timestamp: new Date().toISOString(),
-                    version: '1.0'
+                    version: '2.0'
                 };
                 
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -1483,15 +3059,21 @@
                             const data = JSON.parse(event.target.result);
                             
                             // Validate data structure
-                            if (!data.version) {
-                                showNotification('Format file tidak didukung!', 'danger');
+                            if (!data.version || parseFloat(data.version) < 2.0) {
+                                showNotification('Format file tidak didukung atau versi terlalu lama!', 'danger');
                                 return;
                             }
                             
                             // Load segments
                             if (data.segments && Array.isArray(data.segments)) {
-                                document.getElementById('realtimeInput').value = data.segments.join('\n');
-                                handleRealtimeInput();
+                                segments = data.segments.map(item => item.name);
+                                segmentWeights = data.segments.map(item => item.weight || 1);
+                                segmentColors = data.segments.map(item => item.color || colorPalette[0]);
+                                
+                                document.getElementById('realtimeInput').value = segments.join('\n');
+                                updateSegmentsList();
+                                updateStatistics();
+                                drawWheel();
                             }
                             
                             // Load history
@@ -1523,7 +3105,8 @@
                 countdown: document.getElementById('countdownToggle').checked,
                 confetti: document.getElementById('confettiToggle').checked,
                 sound: document.getElementById('soundToggle').checked,
-                autoSpin: document.getElementById('autoSpinToggle').checked
+                autoSpin: document.getElementById('autoSpinToggle').checked,
+                autoSpinInterval: document.getElementById('autoSpinInterval').value
             };
         }
 
@@ -1532,6 +3115,7 @@
             document.getElementById('confettiToggle').checked = settings.confetti !== false;
             document.getElementById('soundToggle').checked = settings.sound !== false;
             document.getElementById('autoSpinToggle').checked = settings.autoSpin === true;
+            document.getElementById('autoSpinInterval').value = settings.autoSpinInterval || 5;
             saveSettings();
         }
 
@@ -1539,14 +3123,34 @@
             const input = document.getElementById('realtimeInput');
             const lines = input.value.split('\n').filter(line => line.trim());
             
-            segments = lines;
-            colors = segments.map((_, i) => colorPalette[i % colorPalette.length]);
+            // Check if segments actually changed
+            const segmentsChanged = JSON.stringify(segments) !== JSON.stringify(lines);
             
-            // Update stats
-            document.getElementById('itemCount').textContent = `${segments.length} item`;
-            
-            drawWheel();
-            saveToLocalStorage();
+            if (segmentsChanged) {
+                saveToUndoStack();
+                segments = lines;
+                
+                // Adjust weights and colors arrays
+                while (segmentWeights.length < segments.length) {
+                    segmentWeights.push(1);
+                }
+                while (segmentColors.length < segments.length) {
+                    segmentColors.push(colorPalette[segmentColors.length % colorPalette.length]);
+                }
+                segmentWeights.length = segments.length;
+                segmentColors.length = segments.length;
+                
+                // Update UI
+                document.getElementById('itemCount').textContent = `${segments.length} item`;
+                drawWheel();
+                saveToLocalStorage();
+                
+                // Update editor if it's active
+                if (document.getElementById('editor-tab').classList.contains('active')) {
+                    updateSegmentsList();
+                    updateStatistics();
+                }
+            }
         }
 
         function insertNames(text) {
@@ -1567,6 +3171,7 @@
                 'Hapus Semua Item?',
                 'Apakah Anda yakin ingin menghapus semua item dari roda?',
                 () => {
+                    saveToUndoStack();
                     document.getElementById('realtimeInput').value = '';
                     handleRealtimeInput();
                     showNotification('Semua item telah dihapus!', 'success');
@@ -1609,9 +3214,14 @@
         function copyToClipboard() {
             try {
                 const input = document.getElementById('realtimeInput');
-                input.select();
-                document.execCommand('copy');
-                showNotification('Tersalin ke clipboard!', 'success');
+                navigator.clipboard.writeText(input.value).then(() => {
+                    showNotification('Tersalin ke clipboard!', 'success');
+                }).catch(() => {
+                    // Fallback for older browsers
+                    input.select();
+                    document.execCommand('copy');
+                    showNotification('Tersalin ke clipboard!', 'success');
+                });
             } catch (error) {
                 showNotification('Gagal menyalin ke clipboard!', 'danger');
                 console.error('Copy error:', error);
@@ -1643,18 +3253,21 @@
                 return;
             }
             
-            const anglePerSegment = (2 * Math.PI) / segments.length;
+            // Calculate weighted angles
+            const totalWeight = segmentWeights.reduce((sum, weight) => sum + weight, 0);
+            let currentAngle = currentRotation;
             
             segments.forEach((segment, index) => {
-                const startAngle = index * anglePerSegment + currentRotation;
-                const endAngle = startAngle + anglePerSegment;
+                const weight = segmentWeights[index];
+                const angleSize = (2 * Math.PI) * (weight / totalWeight);
+                const endAngle = currentAngle + angleSize;
                 
                 // Draw segment
                 ctx.beginPath();
                 ctx.moveTo(centerX, centerY);
-                ctx.arc(centerX, centerY, radius, startAngle, endAngle);
+                ctx.arc(centerX, centerY, radius, currentAngle, endAngle);
                 ctx.closePath();
-                ctx.fillStyle = colors[index];
+                ctx.fillStyle = segmentColors[index];
                 ctx.fill();
                 ctx.strokeStyle = '#fff';
                 ctx.lineWidth = 3;
@@ -1663,7 +3276,7 @@
                 // Draw text
                 ctx.save();
                 ctx.translate(centerX, centerY);
-                ctx.rotate(startAngle + anglePerSegment / 2);
+                ctx.rotate(currentAngle + angleSize / 2);
                 ctx.textAlign = 'center';
                 ctx.fillStyle = '#fff';
                 ctx.font = `bold ${Math.max(12, radius/12)}px Quicksand`;
@@ -1680,6 +3293,8 @@
                 
                 ctx.fillText(displayText, radius / 2, 0);
                 ctx.restore();
+                
+                currentAngle = endAngle;
             });
             
             // Draw center circle
@@ -1710,7 +3325,7 @@
             const countdownEnabled = document.getElementById('countdownToggle').checked;
             
             if (countdownEnabled) {
-                showCountdown(3, () => performSpin());
+                showCountdown(1, () => performSpin());
             } else {
                 performSpin();
             }
@@ -1755,10 +3370,31 @@
             spinButton.classList.remove('spinning');
             canvas.classList.remove('spinning');
             
-            // Calculate winner with improved accuracy
+            // Calculate winner with weighted probability
+            const totalWeight = segmentWeights.reduce((sum, weight) => sum + weight, 0);
             const normalizedRotation = currentRotation % (2 * Math.PI);
             const adjustedRotation = (normalizedRotation + Math.PI / 2) % (2 * Math.PI);
-            winnerIndex = Math.floor((2 * Math.PI - adjustedRotation) / (2 * Math.PI / segments.length)) % segments.length;
+            
+            let currentAngle = 0;
+            winnerIndex = -1;
+            
+            for (let i = 0; i < segments.length; i++) {
+                const angleSize = (2 * Math.PI) * (segmentWeights[i] / totalWeight);
+                const segmentEndAngle = currentAngle + angleSize;
+                
+                if (adjustedRotation >= currentAngle && adjustedRotation < segmentEndAngle) {
+                    winnerIndex = i;
+                    break;
+                }
+                
+                currentAngle = segmentEndAngle;
+            }
+            
+            // Fallback in case of calculation error
+            if (winnerIndex === -1) {
+                winnerIndex = Math.floor(Math.random() * segments.length);
+            }
+            
             winnerName = segments[winnerIndex];
             
             // Show winner with dramatic pause
@@ -1769,7 +3405,7 @@
             
             // Check auto spin
             if (document.getElementById('autoSpinToggle').checked) {
-                setTimeout(() => spin(), 3000);
+                startAutoSpin();
             }
         }
 
@@ -1872,32 +3508,18 @@
             }
             
             setTimeout(() => {
-                const input = document.getElementById('realtimeInput');
-                const lines = input.value.split('\n');
-                const cleanedLines = lines.filter(line => line.trim());
-                const winnerLineIndex = cleanedLines.findIndex(line => line.trim() === winnerName.trim());
+                saveToUndoStack();
+                segments.splice(winnerIndex, 1);
+                segmentWeights.splice(winnerIndex, 1);
+                segmentColors.splice(winnerIndex, 1);
                 
-                if (winnerLineIndex !== -1) {
-                    // Remove from original lines array
-                    let actualIndex = 0;
-                    for (let i = 0; i < lines.length; i++) {
-                        if (lines[i].trim()) {
-                            if (actualIndex === winnerLineIndex) {
-                                lines.splice(i, 1);
-                                break;
-                            }
-                            actualIndex++;
-                        }
-                    }
-                    
-                    input.value = lines.join('\n');
-                    handleRealtimeInput();
-                    showNotification(`"${winnerName}" telah dihapus dari roda!`, 'success');
-                    closeModal();
-                } else {
-                    showNotification('Pilihan tidak ditemukan dalam daftar!', 'danger');
-                    winnerNameElement.classList.remove('winner-highlight');
-                }
+                document.getElementById('realtimeInput').value = segments.join('\n');
+                updateSegmentsList();
+                updateStatistics();
+                drawWheel();
+                
+                showNotification(`"${winnerName}" telah dihapus dari roda!`, 'success');
+                closeModal();
                 
                 // Reset winner variables
                 winnerName = '';
@@ -2020,7 +3642,11 @@
         function saveToLocalStorage() {
             try {
                 const data = {
-                    input: document.getElementById('realtimeInput').value,
+                    segments: segments.map((name, i) => ({
+                        name,
+                        weight: segmentWeights[i],
+                        color: segmentColors[i]
+                    })),
                     history: history.slice(0, 10) // Limit history size
                 };
                 localStorage.setItem('wheelSpinnerData', JSON.stringify(data));
@@ -2034,9 +3660,19 @@
                 const saved = localStorage.getItem('wheelSpinnerData');
                 if (saved) {
                     const data = JSON.parse(saved);
-                    document.getElementById('realtimeInput').value = data.input || '';
+                    
+                    // Load segments
+                    if (data.segments && Array.isArray(data.segments)) {
+                        segments = data.segments.map(item => item.name);
+                        segmentWeights = data.segments.map(item => item.weight || 1);
+                        segmentColors = data.segments.map(item => item.color || colorPalette[0]);
+                        
+                        document.getElementById('realtimeInput').value = segments.join('\n');
+                        drawWheel();
+                    }
+                    
+                    // Load history
                     history = data.history || [];
-                    handleRealtimeInput();
                     updateHistoryDisplay();
                 }
                 
@@ -2049,17 +3685,14 @@
         function toggleTheme() {
             const body = document.body;
             const icon = document.getElementById('themeIcon');
-            const text = document.getElementById('themeText');
             
             if (body.getAttribute('data-theme') === 'dark') {
                 body.removeAttribute('data-theme');
                 icon.textContent = '🌙';
-                text.textContent = '';
                 localStorage.setItem('theme', 'light');
             } else {
                 body.setAttribute('data-theme', 'dark');
                 icon.textContent = '☀️';
-                text.textContent = '';
                 localStorage.setItem('theme', 'dark');
             }
         }
@@ -2068,7 +3701,6 @@
         if (localStorage.getItem('theme') === 'dark') {
             document.body.setAttribute('data-theme', 'dark');
             document.getElementById('themeIcon').textContent = '☀️';
-            document.getElementById('themeText').textContent = '';
         }
 
         function showNotification(message, type = 'primary') {
@@ -2081,6 +3713,87 @@
                 notification.style.animation = 'fadeOut 0.3s';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
+        }
+
+        // Drag and Drop handlers
+        let draggedElement = null;
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            
+            const afterElement = getDragAfterElement(document.getElementById('segmentsList'), e.clientY);
+            if (afterElement == null) {
+                document.getElementById('segmentsList').appendChild(draggedElement);
+            } else {
+                document.getElementById('segmentsList').insertBefore(draggedElement, afterElement);
+            }
+            
+            return false;
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            // Reorder the arrays based on the new DOM order
+            const segmentItems = document.querySelectorAll('.segment-item');
+            const newOrder = [];
+            
+            segmentItems.forEach(item => {
+                const index = parseInt(item.dataset.index);
+                newOrder.push({
+                    segment: segments[index],
+                    weight: segmentWeights[index],
+                    color: segmentColors[index]
+                });
+            });
+            
+            segments = newOrder.map(item => item.segment);
+            segmentWeights = newOrder.map(item => item.weight);
+            segmentColors = newOrder.map(item => item.color);
+            
+            // Update data-index attributes
+            segmentItems.forEach((item, i) => {
+                item.dataset.index = i;
+            });
+            
+            drawWheel();
+            saveToLocalStorage();
+            
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            const segmentItems = document.querySelectorAll('.segment-item');
+            segmentItems.forEach(item => {
+                item.classList.remove('dragging');
+            });
+        }
+
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('.segment-item:not(.dragging)')];
+            
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
         }
 
         // Sound effects with error handling
