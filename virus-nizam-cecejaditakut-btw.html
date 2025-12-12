@@ -29,8 +29,15 @@
 
 <script>
   const container = document.getElementById('container');
-  const imageUrl = "https://imgpx.com/en/iFLrRlceURqs.png";
-  const jumlahGambar = 20; // jumlah gambar yang ingin ditampilkan
+
+  // Daftar URL gambar
+  const imageUrls = [
+    "https://imgpx.com/en/iFLrRlceURqs.png",
+    "https://imgpx.com/en/2iA7vSyMSeJt.png" // gambar tambahan
+  ];
+
+  const jumlahGambar = 20; // jumlah gambar utama
+  const gambarTotal = jumlahGambar + 1; // total termasuk gambar tambahan
 
   // Fungsi untuk generate posisi acak dalam container
   function getRandomPosition(maxWidth, maxHeight, imgWidth, imgHeight) {
@@ -42,27 +49,38 @@
   // Generate gambar dengan posisi acak
   for (let i = 0; i < jumlahGambar; i++) {
     const img = document.createElement('img');
-    img.src = imageUrl;
+    img.src = imageUrls[0]; // gambar utama
     img.className = 'image';
 
-    // Ukuran gambar
     const imgWidth = 100;
-    const imgHeight = 100; // sesuai ukuran CSS
+    const imgHeight = 100;
 
-    // Posisi acak
     const { x, y } = getRandomPosition(600, 600, imgWidth, imgHeight);
-
-    // Rotasi acak
     const rotateDeg = Math.random() * 360;
 
-    // Terapkan posisi dan rotasi
     img.style.left = x + 'px';
     img.style.top = y + 'px';
     img.style.transform = `rotate(${rotateDeg}deg)`;
-    img.style.opacity = 0.8; // opsional, untuk efek transparan
+    img.style.opacity = 0.8;
 
     container.appendChild(img);
   }
+
+  // Tambahkan gambar tambahan
+  const imgTambah = document.createElement('img');
+  imgTambah.src = imageUrls[1]; // gambar tambahan
+  imgTambah.className = 'image';
+
+  const xTambah = Math.random() * (600 - 100);
+  const yTambah = Math.random() * (600 - 100);
+  const rotateTambah = Math.random() * 360;
+
+  imgTambah.style.left = xTambah + 'px';
+  imgTambah.style.top = yTambah + 'px';
+  imgTambah.style.transform = `rotate(${rotateTambah}deg)`;
+  imgTambah.style.opacity = 0.8;
+
+  container.appendChild(imgTambah);
 </script>
 </body>
 </html>
