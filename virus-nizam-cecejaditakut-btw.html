@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Foto Bertumpuk Acak</title>
+<title>Foto Bergerak Berhamburan</title>
 <style>
   body {
     margin: 0;
@@ -12,15 +12,17 @@
   }
   .stack-container {
     position: relative;
-    width: 600px; /* sesuaikan ukuran frame */
+    width: 600px;
     height: 600px;
     margin: 50px auto;
     border: 1px solid #ccc;
+    overflow: hidden;
   }
   .image {
     position: absolute;
-    width: 100px; /* ukuran gambar, bisa disesuaikan */
+    width: 100px;
     height: auto;
+    will-change: transform, left, top;
   }
 </style>
 </head>
@@ -29,58 +31,68 @@
 
 <script>
   const container = document.getElementById('container');
-
-  // Daftar URL gambar
   const imageUrls = [
     "https://imgpx.com/en/iFLrRlceURqs.png",
-    "https://imgpx.com/en/2iA7vSyMSeJt.png" // gambar tambahan
+    "https://imgpx.com/en/2iA7vSyMSeJt.png"
   ];
 
   const jumlahGambar = 20; // jumlah gambar utama
-  const gambarTotal = jumlahGambar + 1; // total termasuk gambar tambahan
+  const semuaGambar = [];
 
-  // Fungsi untuk generate posisi acak dalam container
+  // Fungsi posisi acak
   function getRandomPosition(maxWidth, maxHeight, imgWidth, imgHeight) {
     const x = Math.random() * (maxWidth - imgWidth);
     const y = Math.random() * (maxHeight - imgHeight);
     return { x, y };
   }
 
-  // Generate gambar dengan posisi acak
+  // Buat semua gambar dan jalankan animasi
   for (let i = 0; i < jumlahGambar; i++) {
     const img = document.createElement('img');
-    img.src = imageUrls[0]; // gambar utama
+    img.src = imageUrls[0];
     img.className = 'image';
-
-    const imgWidth = 100;
-    const imgHeight = 100;
-
-    const { x, y } = getRandomPosition(600, 600, imgWidth, imgHeight);
-    const rotateDeg = Math.random() * 360;
-
-    img.style.left = x + 'px';
-    img.style.top = y + 'px';
-    img.style.transform = `rotate(${rotateDeg}deg)`;
-    img.style.opacity = 0.8;
-
     container.appendChild(img);
+    semuaGambar.push({element: img, width: 100, height: 100});
   }
 
   // Tambahkan gambar tambahan
   const imgTambah = document.createElement('img');
-  imgTambah.src = imageUrls[1]; // gambar tambahan
+  imgTambah.src = imageUrls[1];
   imgTambah.className = 'image';
-
-  const xTambah = Math.random() * (600 - 100);
-  const yTambah = Math.random() * (600 - 100);
-  const rotateTambah = Math.random() * 360;
-
-  imgTambah.style.left = xTambah + 'px';
-  imgTambah.style.top = yTambah + 'px';
-  imgTambah.style.transform = `rotate(${rotateTambah}deg)`;
-  imgTambah.style.opacity = 0.8;
-
   container.appendChild(imgTambah);
+  semuaGambar.push({element: imgTambah, width: 100, height: 100});
+
+  // Fungsi untuk animasi bergerak
+  function animateGambar(gambarObj) {
+    const {element, width, height} = gambarObj;
+
+    function move() {
+      const {x, y} = getRandomPosition(600, 600, width, height);
+      const rotateDeg = Math.random() * 360;
+      const duration = 3000 + Math.random() * 2000; // durasi pergerakan
+
+      element.style.transition = `all ${duration}ms ease-in-out`;
+      element.style.left = x + 'px';
+      element.style.top = y + 'px';
+      element.style.transform = `rotate(${rotateDeg}deg)`;
+
+      // Setelah selesai, ulangi lagi
+      setTimeout(move, duration);
+    }
+    move();
+  }
+
+  // Mulai animasi semua gambar
+  semuaGambar.forEach(g => {
+    // Posisi awal acak
+    const {x, y} = getRandomPosition(600, 600, g.width, g.height);
+    const rotateDeg = Math.random() * 360;
+    g.element.style.left = x + 'px';
+    g.element.style.top = y + 'px';
+    g.element.style.transform = `rotate(${rotateDeg}deg)`;
+    // Mulai bergerak berulang
+    animateGambar(g);
+  });
 </script>
 </body>
 </html>
