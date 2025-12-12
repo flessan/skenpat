@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Foto Bertumpuk Acak</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+  }
+  .stack-container {
+    position: relative;
+    width: 600px; /* sesuaikan ukuran frame */
+    height: 600px;
+    margin: 50px auto;
+    border: 1px solid #ccc;
+  }
+  .image {
+    position: absolute;
+    width: 100px; /* ukuran gambar, bisa disesuaikan */
+    height: auto;
+  }
+</style>
+</head>
+<body>
+<div class="stack-container" id="container"></div>
+
+<script>
+  const container = document.getElementById('container');
+  const imageUrl = "https://imgpx.com/en/iFLrRlceURqs.png";
+  const jumlahGambar = 20; // jumlah gambar yang ingin ditampilkan
+
+  // Fungsi untuk generate posisi acak dalam container
+  function getRandomPosition(maxWidth, maxHeight, imgWidth, imgHeight) {
+    const x = Math.random() * (maxWidth - imgWidth);
+    const y = Math.random() * (maxHeight - imgHeight);
+    return { x, y };
+  }
+
+  // Generate gambar dengan posisi acak
+  for (let i = 0; i < jumlahGambar; i++) {
+    const img = document.createElement('img');
+    img.src = imageUrl;
+    img.className = 'image';
+
+    // Ukuran gambar
+    const imgWidth = 100;
+    const imgHeight = 100; // sesuai ukuran CSS
+
+    // Posisi acak
+    const { x, y } = getRandomPosition(600, 600, imgWidth, imgHeight);
+
+    // Rotasi acak
+    const rotateDeg = Math.random() * 360;
+
+    // Terapkan posisi dan rotasi
+    img.style.left = x + 'px';
+    img.style.top = y + 'px';
+    img.style.transform = `rotate(${rotateDeg}deg)`;
+    img.style.opacity = 0.8; // opsional, untuk efek transparan
+
+    container.appendChild(img);
+  }
+</script>
+</body>
+</html>
