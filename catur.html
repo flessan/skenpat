@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-title" content="Chess Clock Pro">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#0f0f0f">
-    <title>Modern Chess Clock Pro</title>
+    <title>Skenpat-Clock-Chess</title>
     <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ2hlc3MgQ2xvY2sgUHJvIiwic2hvcnRfbmFtZSI6IkNoZXNzIENsb2NrIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZjBmMGYiLCJ0aGVtZV9jb2xvciI6IiMwZjBmMGYiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMjQgMjQnJTNFJTNDcGF0aCBmaWxsPSclMjNmNDY5MDAnIGQ9J00xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHMzLjU5LTggOC04IDggMy41OSA4IDgtMy41OSA4LTggOHonLyUzRSUzQ3BhdGggZmlsbD0nJTIzZjQ2OTAwJyBkPSdNMTIuNSA3SDExdjZsNS4yNSAzLjE1Ljc1LTEuMjMtNC41LTIuNzJWNHonLyUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFzayJ9XX0=">
     <style>
         :root {
@@ -736,10 +736,10 @@
     <div class="app">
         <div class="header">
             <div class="logo">
-                <span>⏱️</span> Chess Clock Pro
+                <span>⏱️</span>
             </div>
             <div class="header-buttons">
-                <button class="header-btn" id="themeToggle">🌙</button>
+                <button class="header-btn" id="themeToggle">/\</button>
                 <button class="header-btn" id="fullscreenToggle">⛶</button>
             </div>
         </div>
@@ -770,7 +770,7 @@
 
         <div class="start" id="start">
             <div class="start-panel">
-                <h1>⏱️ Skenpat-Chess</h1>
+                <h1>⏱️</h1>
                 
                 <div class="tabs">
                     <button class="tab active" data-tab="game">Game</button>
@@ -803,6 +803,7 @@
                         <span>min</span>
                         <input type="number" id="customIncrement" placeholder="Inc" min="0" max="60" value="0">
                         <span>sec</span>
+                        <p></br>
                         <button class="menu-btn primary" id="customStartBtn">▶️ Start</button>
                     </div>
                 </div>
@@ -1483,7 +1484,7 @@
                     document.documentElement.style.setProperty('--player-bg', '#1a1a1a');
                     document.documentElement.style.setProperty('--secondary', '#2a2a2a');
                     document.documentElement.style.setProperty('--tertiary', '#1e1e1e');
-                    this.elements.themeToggle.textContent = '🌙';
+                    this.elements.themeToggle.textContent = 'mlm';
                 } else {
                     document.documentElement.style.setProperty('--bg', '#f5f5f5');
                     document.documentElement.style.setProperty('--player-bg', '#ffffff');
@@ -1491,7 +1492,7 @@
                     document.documentElement.style.setProperty('--tertiary', '#f0f0f0');
                     document.documentElement.style.setProperty('--text', '#333333');
                     document.documentElement.style.setProperty('--border', '#cccccc');
-                    this.elements.themeToggle.textContent = '☀️';
+                    this.elements.themeToggle.textContent = 'pgi';
                 }
             }
 
