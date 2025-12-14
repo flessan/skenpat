@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Chess Clock Pro">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0f0f0f">
     <title>Modern Chess Clock Pro</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQ2hlc3MgQ2xvY2sgUHJvIiwic2hvcnRfbmFtZSI6IkNoZXNzIENsb2NrIiwic3RhcnRfdXJsIjoiLiIsImRpc3BsYXkiOiJzdGFuZGFsb25lIiwiYmFja2dyb3VuZF9jb2xvciI6IiMwZjBmMGYiLCJ0aGVtZV9jb2xvciI6IiMwZjBmMGYiLCJvcmllbnRhdGlvbiI6InBvcnRyYWl0IiwiaWNvbnMiOlt7InNyYyI6ImRhdGE6aW1hZ2Uvc3ZnK3htbCwlM0NzdmcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnJyB2aWV3Qm94PScwIDAgMjQgMjQnJTNFJTNDcGF0aCBmaWxsPSclMjNmNDY5MDAnIGQ9J00xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHMzLjU5LTggOC04IDggMy41OSA4IDgtMy41OSA4LTggOHonLyUzRSUzQ3BhdGggZmlsbD0nJTIzZjQ2OTAwJyBkPSdNMTIuNSA3SDExdjZsNS4yNSAzLjE1Ljc1LTEuMjMtNC41LTIuNzJWN3onLyUzRSUzQy9zdmclM0UiLCJzaXplcyI6IjE5MngxOTIiLCJ0eXBlIjoiaW1hZ2Uvc3ZnK3htbCIsInB1cnBvc2UiOiJhbnkgbWFzayJ9XX0=">
     <style>
         :root {
             --bg: #0f0f0f;
@@ -16,6 +22,9 @@
             --danger: #ef4444;
             --accent: #F46900;
             --panel-bg: rgba(26, 26, 26, 0.95);
+            --touch-size: 50px; /* Minimum touch target size */
+            --frame-bg: #0a0a0a;
+            --frame-border: #222;
         }
 
         * {
@@ -33,12 +42,31 @@
             overflow: hidden;
             touch-action: manipulation;
             will-change: transform;
+            position: fixed; /* Prevents scrolling on iOS */
+            width: 100%;
         }
 
         .app {
             height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            width: 100%;
+        }
+
+        .game-frame {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            background: var(--frame-bg);
+            border: 3px solid var(--frame-border);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .clocks {
@@ -46,6 +74,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
+            width: 100%;
         }
 
         .player {
@@ -58,6 +87,8 @@
             transition: background-color 0.3s, transform 0.1s;
             cursor: pointer;
             will-change: background-color, transform;
+            width: 100%;
+            min-height: 40vh; /* Ensure minimum height for touch */
         }
 
         .player:active {
@@ -83,12 +114,13 @@
         }
 
         .time {
-            font-size: min(20vw, 140px);
+            font-size: min(20vw, 120px);
             font-weight: 200;
             font-family: ui-monospace, 'SF Mono', Monaco, monospace;
             letter-spacing: -0.05em;
             line-height: 1;
             transition: color 0.3s;
+            user-select: none; /* Prevent text selection on mobile */
         }
 
         /* Upside down time for top player */
@@ -186,6 +218,11 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
+            min-height: var(--touch-size);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .preset:hover {
@@ -202,44 +239,78 @@
             font-weight: 400;
         }
 
-        .controls {
-            position: fixed;
-            bottom: 376px;
+        .custom-time {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .custom-time input {
+            width: 80px;
+            padding: 10px;
+            margin: 0 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .custom-time label {
+            margin-right: 10px;
+        }
+
+        .menu-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .menu-btn {
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid transparent;
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-btn:hover {
+            border-color: var(--accent);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .menu-btn.primary {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .menu-btn.primary:hover {
+            background: #e55a00;
+            border-color: #e55a00;
+        }
+
+        .in-game-menu {
+            position: absolute;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            gap: 50px;
             z-index: 50;
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .controls.visible {
+        .in-game-menu.visible {
             opacity: 1;
-        }
-
-        .btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(0,0,0,0.8);
-            color: var(--text);
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn:hover {
-            transform: scale(1.1);
-            background: rgba(0,0,0,0.9);
-        }
-
-        .btn.danger {
-            background: var(--danger);
         }
 
         .game-over {
@@ -268,6 +339,7 @@
             transform: scale(0.9);
             transition: transform 0.3s;
             backdrop-filter: blur(10px);
+            max-width: 90%;
         }
 
         .game-over.active .game-over-content {
@@ -290,6 +362,7 @@
             cursor: pointer;
             margin: 5px;
             transition: all 0.2s;
+            min-height: var(--touch-size);
         }
 
         .game-over button:hover {
@@ -323,6 +396,8 @@
             transform: scale(0.9);
             transition: transform 0.3s;
             backdrop-filter: blur(10px);
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .settings.active .settings-panel {
@@ -350,6 +425,8 @@
             border-radius: 30px;
             cursor: pointer;
             transition: background 0.3s;
+            min-width: 60px;
+            min-height: 30px;
         }
 
         .toggle.active {
@@ -370,51 +447,6 @@
 
         .toggle.active::after {
             transform: translateX(30px);
-        }
-
-        .custom-time {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .custom-time input {
-            width: 80px;
-            padding: 10px;
-            margin: 0 10px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: white;
-            font-size: 16px;
-        }
-
-        .custom-time label {
-            margin-right: 10px;
-        }
-
-        .settings-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(0,0,0,0.5);
-            color: var(--text);
-            font-size: 18px;
-            cursor: pointer;
-            transition: all 0.2s;
-            z-index: 60;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .settings-btn:hover {
-            background: rgba(0,0,0,0.8);
-            transform: scale(1.1);
         }
 
         .shortcuts {
@@ -457,37 +489,121 @@
             50% { opacity: 0.8; }
         }
 
-        @media (max-width: 600px) {
+        /* Mobile-specific styles */
+        @media (max-width: 768px) {
             .presets {
                 grid-template-columns: 1fr;
             }
             
             .time {
-                font-size: min(25vw, 120px);
+                font-size: min(25vw, 100px);
             }
             
-            .controls {
-                gap: 20px;
+            .settings-panel {
+                padding: 20px;
+            }
+            
+            .game-over-content {
+                padding: 20px;
+            }
+            
+            .start-panel {
+                padding: 20px;
+            }
+
+            .game-frame {
+                width: 95%;
+                margin: 10px auto;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .time {
+                font-size: min(30vw, 80px);
+            }
+            
+            .info {
+                font-size: 14px;
+            }
+            
+            .info.moves, .info.increment {
+                font-size: 12px;
+            }
+            
+            .shortcuts {
+                display: none; /* Hide on small mobile */
+            }
+
+            .menu-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .menu-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Very small mobile devices */
+        @media (max-width: 320px) {
+            .time {
+                font-size: min(35vw, 70px);
+            }
+            
+            .preset {
+                padding: 15px;
+                font-size: 18px;
+            }
+        }
+
+        /* Landscape orientation */
+        @media (orientation: landscape) and (max-height: 500px) {
+            .start-panel {
+                padding: 20px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            
+            .settings-panel {
+                max-height: 90vh;
+            }
+            
+            .time {
+                font-size: min(15vh, 80px);
+            }
+            
+            .game-frame {
+                margin: 10px auto;
+                height: 90vh;
             }
         }
     </style>
 </head>
 <body>
     <div class="app">
-        <div class="clocks">
-            <div class="player top" data-player="1">
-                <div class="info name">Player 1</div>
-                <div class="time">10:00</div>
-                <div class="info moves">0 moves</div>
-                <div class="info increment">+0s</div>
-                <div class="start-hint" id="topHint">Tap to start</div>
+        <div class="game-frame">
+            <div class="clocks">
+                <div class="player top" data-player="1">
+                    <div class="info name">Player 1</div>
+                    <div class="time">10:00</div>
+                    <div class="info moves">0 moves</div>
+                    <div class="info increment">+0s</div>
+                    <div class="start-hint" id="topHint">Tap to start</div>
+                </div>
+                <div class="player bottom" data-player="2">
+                    <div class="info name">Player 2</div>
+                    <div class="time">10:00</div>
+                    <div class="info moves">0 moves</div>
+                    <div class="info increment">+0s</div>
+                    <div class="start-hint" id="bottomHint">Tap to start</div>
+                </div>
             </div>
-            <div class="player bottom" data-player="2">
-                <div class="info name">Player 2</div>
-                <div class="time">10:00</div>
-                <div class="info moves">0 moves</div>
-                <div class="info increment">+0s</div>
-                <div class="start-hint" id="bottomHint">Tap to start</div>
+            <div class="in-game-menu" id="inGameMenu">
+                <button class="menu-btn" id="mainMenuBtn">
+                    <span>☰</span> Menu
+                </button>
             </div>
         </div>
 
@@ -518,14 +634,20 @@
                     <span>min</span>
                     <input type="number" id="customIncrement" placeholder="Inc" min="0" max="60" value="0">
                     <span>sec</span>
-                    <button class="btn" id="customStartBtn">▶️</button>
+                    <button class="menu-btn primary" id="customStartBtn">▶️ Start</button>
+                </div>
+                <div class="menu-buttons">
+                    <button class="menu-btn" id="settingsMenuBtn">
+                        <span>⚙️</span> Settings
+                    </button>
+                    <button class="menu-btn" id="pauseMenuBtn" style="display: none;">
+                        <span>⏸️</span> Pause
+                    </button>
+                    <button class="menu-btn" id="resetMenuBtn" style="display: none;">
+                        <span>🔄</span> Reset
+                    </button>
                 </div>
             </div>
-        </div>
-
-        <div class="controls" id="controls">
-            <button class="btn" id="pauseBtn">⏸️</button>
-            <button class="btn danger" id="resetBtn">🔄</button>
         </div>
 
         <div class="game-over" id="gameOver">
@@ -564,14 +686,8 @@
                     <span>Best of (Games)</span>
                     <input type="number" id="bestOf" min="1" max="15" value="1" style="width: 60px; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid #333; border-radius: 8px; color: white;">
                 </div>
-                <button class="btn" id="closeSettingsBtn" style="margin-top: 20px; width: 100%; border-radius: 8px;">Close</button>
+                <button class="menu-btn primary" id="closeSettingsBtn" style="margin-top: 20px; width: 100%;">Close</button>
             </div>
-        </div>
-
-        <button class="settings-btn" id="settingsBtn">⚙️</button>
-        
-        <div class="shortcuts">
-            <div>Space: Start/Pause | S: Settings | R: Reset | ESC: Menu</div>
         </div>
         
         <div class="tournament-info" id="tournamentInfo" style="display: none;">
@@ -612,14 +728,15 @@
                 // Cache DOM elements
                 this.elements = {
                     start: document.getElementById('start'),
-                    controls: document.getElementById('controls'),
+                    inGameMenu: document.getElementById('inGameMenu'),
                     gameOver: document.getElementById('gameOver'),
                     winner: document.getElementById('winner'),
                     gameStats: document.getElementById('gameStats'),
-                    pauseBtn: document.getElementById('pauseBtn'),
-                    resetBtn: document.getElementById('resetBtn'),
+                    mainMenuBtn: document.getElementById('mainMenuBtn'),
                     settings: document.getElementById('settings'),
-                    settingsBtn: document.getElementById('settingsBtn'),
+                    settingsMenuBtn: document.getElementById('settingsMenuBtn'),
+                    pauseMenuBtn: document.getElementById('pauseMenuBtn'),
+                    resetMenuBtn: document.getElementById('resetMenuBtn'),
                     closeSettingsBtn: document.getElementById('closeSettingsBtn'),
                     soundToggle: document.getElementById('soundToggle'),
                     vibrationToggle: document.getElementById('vibrationToggle'),
@@ -678,12 +795,15 @@
                     this.setup(minutes * 60, inc);
                 });
 
-                // Control buttons
-                this.elements.pauseBtn.addEventListener('click', () => this.togglePause());
-                this.elements.resetBtn.addEventListener('click', () => this.reset());
+                // Main menu button
+                this.elements.mainMenuBtn.addEventListener('click', () => this.showStart());
+
+                // Menu buttons
+                this.elements.settingsMenuBtn.addEventListener('click', () => this.showSettings());
+                this.elements.pauseMenuBtn.addEventListener('click', () => this.togglePause());
+                this.elements.resetMenuBtn.addEventListener('click', () => this.reset());
 
                 // Settings
-                this.elements.settingsBtn.addEventListener('click', () => this.showSettings());
                 this.elements.closeSettingsBtn.addEventListener('click', () => this.hideSettings());
 
                 // Settings toggles
@@ -707,6 +827,44 @@
                         this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                     }
                 }, { once: true, passive: true });
+
+                // Prevent scrolling on mobile
+                document.addEventListener('touchmove', (e) => {
+                    if (this.state.running) {
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+
+                // Handle orientation changes
+                window.addEventListener('orientationchange', () => {
+                    setTimeout(() => {
+                        // Adjust UI after orientation change
+                        this.updateDisplay();
+                    }, 100);
+                });
+
+                // Install service worker for PWA functionality
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('data:text/javascript,' + encodeURIComponent(`
+                        self.addEventListener('install', (event) => {
+                            self.skipWaiting();
+                        });
+                        
+                        self.addEventListener('activate', (event) => {
+                            event.waitUntil(clients.claim());
+                        });
+                        
+                        self.addEventListener('fetch', (event) => {
+                            event.respondWith(
+                                caches.match(event.request).then(response => {
+                                    return response || fetch(event.request);
+                                })
+                            );
+                        });
+                    `)).catch(() => {
+                        // Service worker registration failed
+                    });
+                }
             }
 
             handleTap(e) {
@@ -766,7 +924,7 @@
 
                 // UI updates
                 this.elements.start.classList.add('hidden');
-                this.elements.controls.classList.add('visible');
+                this.elements.inGameMenu.classList.add('visible');
                 this.elements.gameOver.classList.remove('active');
                 this.hideSettings();
 
@@ -799,6 +957,10 @@
 
                 // Set active player
                 this.setActive(player);
+
+                // Show pause and reset buttons in menu
+                this.elements.pauseMenuBtn.style.display = 'flex';
+                this.elements.resetMenuBtn.style.display = 'flex';
 
                 // Start animation loop
                 requestAnimationFrame(this.update);
@@ -851,7 +1013,8 @@
 
             togglePause() {
                 this.state.paused = !this.state.paused;
-                this.elements.pauseBtn.textContent = this.state.paused ? '▶️' : '⏸️';
+                this.elements.pauseMenuBtn.innerHTML = this.state.paused ? 
+                    '<span>▶️</span> Resume' : '<span>⏸️</span> Pause';
 
                 if (!this.state.paused) {
                     this.state.lastTime = performance.now();
@@ -881,7 +1044,9 @@
                 // Update UI
                 this.elements.players.forEach(el => el.classList.remove('active'));
                 this.updateDisplay();
-                this.elements.pauseBtn.textContent = '⏸️';
+                
+                // Reset pause button text
+                this.elements.pauseMenuBtn.innerHTML = '<span>⏸️</span> Pause';
 
                 // Show hints
                 this.elements.topHint.style.display = 'block';
@@ -961,10 +1126,14 @@
 
             showStart() {
                 this.elements.start.classList.remove('hidden');
-                this.elements.controls.classList.remove('visible');
+                this.elements.inGameMenu.classList.remove('visible');
                 this.elements.gameOver.classList.remove('active');
                 this.state.running = false;
                 this.state.started = false;
+                
+                // Hide pause and reset buttons when returning to menu
+                this.elements.pauseMenuBtn.style.display = 'none';
+                this.elements.resetMenuBtn.style.display = 'none';
             }
 
             showSettings() {
