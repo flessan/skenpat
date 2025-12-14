@@ -1,19 +1,21 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chess Clock - Ultra Fast</title>
+    <title>Modern Chess Clock Pro</title>
     <style>
         :root {
-            --bg: #0a0a0a;
+            --bg: #0f0f0f;
             --player-bg: #1a1a1a;
-            --active-1: #1e40af;
-            --active-2: #b91c1c;
+            --active-1: #3b82f6;
+            --active-2: #ef4444;
             --text: #ffffff;
             --border: #333;
             --warning: #f59e0b;
             --danger: #ef4444;
+            --accent: #F46900;
+            --panel-bg: rgba(26, 26, 26, 0.95);
         }
 
         * {
@@ -53,7 +55,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            transition: background-color 0.2s, transform 0.1s;
+            transition: background-color 0.3s, transform 0.1s;
             cursor: pointer;
             will-change: background-color, transform;
         }
@@ -89,6 +91,11 @@
             transition: color 0.3s;
         }
 
+        /* Upside down time for top player */
+        .player.top .time {
+            transform: rotate(180deg);
+        }
+
         .time.warning {
             color: var(--warning);
             animation: pulse 1s infinite;
@@ -116,6 +123,13 @@
             opacity: 0.6;
         }
 
+        .info.increment {
+            top: 20px;
+            right: 20px;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
         .start {
             position: fixed;
             inset: 0;
@@ -134,7 +148,7 @@
         }
 
         .start-panel {
-            background: var(--player-bg);
+            background: var(--panel-bg);
             padding: 40px;
             border-radius: 20px;
             width: 90%;
@@ -142,6 +156,7 @@
             text-align: center;
             transform: translateY(0);
             transition: transform 0.3s;
+            backdrop-filter: blur(10px);
         }
 
         .start.hidden .start-panel {
@@ -151,7 +166,7 @@
         .start h1 {
             font-size: 32px;
             margin-bottom: 30px;
-            color: var(--active-1);
+            color: var(--accent);
         }
 
         .presets {
@@ -163,7 +178,7 @@
 
         .preset {
             padding: 20px;
-            background: var(--bg);
+            background: rgba(255,255,255,0.05);
             border: 2px solid transparent;
             border-radius: 12px;
             color: var(--text);
@@ -174,8 +189,9 @@
         }
 
         .preset:hover {
-            border-color: var(--active-1);
+            border-color: var(--accent);
             transform: translateY(-2px);
+            background: rgba(255,255,255,0.1);
         }
 
         .preset span {
@@ -192,7 +208,7 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 305px;
+            gap: 50px;
             z-index: 50;
             opacity: 0;
             transition: opacity 0.3s;
@@ -245,12 +261,13 @@
         }
 
         .game-over-content {
-            background: var(--player-bg);
+            background: var(--panel-bg);
             padding: 40px;
             border-radius: 20px;
             text-align: center;
             transform: scale(0.9);
             transition: transform 0.3s;
+            backdrop-filter: blur(10px);
         }
 
         .game-over.active .game-over-content {
@@ -260,12 +277,12 @@
         .game-over h2 {
             font-size: 36px;
             margin-bottom: 20px;
-            color: var(--active-1);
+            color: var(--accent);
         }
 
         .game-over button {
             padding: 12px 30px;
-            background: var(--active-1);
+            background: var(--accent);
             border: none;
             color: white;
             border-radius: 8px;
@@ -279,9 +296,165 @@
             transform: translateY(-2px);
         }
 
+        .settings {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 150;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .settings.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .settings-panel {
+            background: var(--panel-bg);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .settings.active .settings-panel {
+            transform: scale(1);
+        }
+
+        .settings h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            color: var(--accent);
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #333;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle.active {
+            background: var(--accent);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 26px;
+            height: 26px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .toggle.active::after {
+            transform: translateX(30px);
+        }
+
+        .custom-time {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .custom-time input {
+            width: 80px;
+            padding: 10px;
+            margin: 0 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+        }
+
+        .custom-time label {
+            margin-right: 10px;
+        }
+
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0,0,0,0.5);
+            color: var(--text);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn:hover {
+            background: rgba(0,0,0,0.8);
+            transform: scale(1.1);
+        }
+
+        .shortcuts {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            font-size: 12px;
+            opacity: 0.5;
+            z-index: 60;
+        }
+
+        .tournament-info {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 16px;
+            opacity: 0.8;
+            z-index: 60;
+        }
+
+        .start-hint {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            opacity: 0.7;
+            text-align: center;
+            pointer-events: none;
+            animation: fadeInOut 2s infinite;
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.7; }
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
         }
 
         @media (max-width: 600px) {
@@ -292,6 +465,10 @@
             .time {
                 font-size: min(25vw, 120px);
             }
+            
+            .controls {
+                gap: 20px;
+            }
         }
     </style>
 </head>
@@ -299,37 +476,49 @@
     <div class="app">
         <div class="clocks">
             <div class="player top" data-player="1">
-                <div class="info name">Pemain 1</div>
+                <div class="info name">Player 1</div>
                 <div class="time">10:00</div>
-                <div class="info moves">0 langkah</div>
+                <div class="info moves">0 moves</div>
+                <div class="info increment">+0s</div>
+                <div class="start-hint" id="topHint">Tap to start</div>
             </div>
             <div class="player bottom" data-player="2">
-                <div class="info name">Pemain 2</div>
+                <div class="info name">Player 2</div>
                 <div class="time">10:00</div>
-                <div class="info moves">0 langkah</div>
+                <div class="info moves">0 moves</div>
+                <div class="info increment">+0s</div>
+                <div class="start-hint" id="bottomHint">Tap to start</div>
             </div>
         </div>
 
         <div class="start" id="start">
             <div class="start-panel">
-                <h1>⏱️ Chess Clock</h1>
+                <h1>⏱️ Skenpat-Chess</h1>
                 <div class="presets">
-                    <button class="preset" data-time="180" data-inc="0">
-                        3+0
-                        <span>Blitz Cepat</span>
-                    </button>
-                    <button class="preset" data-time="300" data-inc="0">
-                        5+0
-                        <span>Blitz</span>
+                    <button class="preset" data-time="120" data-inc="1">
+                        2+1
+                        <span>Bullet</span>
                     </button>
                     <button class="preset" data-time="600" data-inc="0">
                         10+0
                         <span>Rapid</span>
                     </button>
-                    <button class="preset" data-time="600" data-inc="5">
-                        10+5
-                        <span>Rapid + Increment</span>
+                    <button class="preset" data-time="180" data-inc="0">
+                        3+0
+                        <span>Blitz</span>
                     </button>
+                    <button class="preset" data-time="1800" data-inc="0">
+                        30+0
+                        <span>Classical</span>
+                    </button>
+                </div>
+                <div class="custom-time">
+                    <label>Custom:</label>
+                    <input type="number" id="customMinutes" placeholder="Min" min="1" max="180" value="10">
+                    <span>min</span>
+                    <input type="number" id="customIncrement" placeholder="Inc" min="0" max="60" value="0">
+                    <span>sec</span>
+                    <button class="btn" id="customStartBtn">▶️</button>
                 </div>
             </div>
         </div>
@@ -341,26 +530,83 @@
 
         <div class="game-over" id="gameOver">
             <div class="game-over-content">
-                <h2 id="winner">Pemain 1 Menang!</h2>
-                <button onclick="game.newGame()">Main Lagi</button>
+                <h2 id="winner">Player 1 Wins!</h2>
+                <div id="gameStats"></div>
+                <button onclick="game.newGame()">Play Again</button>
                 <button onclick="game.showStart()">Menu</button>
             </div>
+        </div>
+
+        <div class="settings" id="settings">
+            <div class="settings-panel">
+                <h2>⚙️ Settings</h2>
+                <div class="setting-item">
+                    <span>Sound Effects</span>
+                    <div class="toggle active" id="soundToggle"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Vibration</span>
+                    <div class="toggle active" id="vibrationToggle"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Show Move Counter</span>
+                    <div class="toggle active" id="movesToggle"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Show Increment</span>
+                    <div class="toggle active" id="incrementToggle"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Tournament Mode</span>
+                    <div class="toggle" id="tournamentToggle"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Best of (Games)</span>
+                    <input type="number" id="bestOf" min="1" max="15" value="1" style="width: 60px; padding: 5px; background: rgba(255,255,255,0.1); border: 1px solid #333; border-radius: 8px; color: white;">
+                </div>
+                <button class="btn" id="closeSettingsBtn" style="margin-top: 20px; width: 100%; border-radius: 8px;">Close</button>
+            </div>
+        </div>
+
+        <button class="settings-btn" id="settingsBtn">⚙️</button>
+        
+        <div class="shortcuts">
+            <div>Space: Start/Pause | S: Settings | R: Reset | ESC: Menu</div>
+        </div>
+        
+        <div class="tournament-info" id="tournamentInfo" style="display: none;">
+            <div id="tournamentScore"></div>
         </div>
     </div>
 
     <script>
-        // Ultra-optimized Chess Clock
+        // Modern Chess Clock Pro
         class ChessClock {
             constructor() {
                 // State
                 this.state = {
                     running: false,
                     paused: false,
+                    started: false, // New state to track if game has been started
                     current: 1,
                     p1: { time: 600, moves: 0 },
                     p2: { time: 600, moves: 0 },
                     inc: 0,
-                    lastTime: 0
+                    lastTime: 0,
+                    settings: {
+                        sound: true,
+                        vibration: true,
+                        showMoves: true,
+                        showIncrement: true,
+                        tournament: false,
+                        bestOf: 1
+                    },
+                    tournament: {
+                        games: [],
+                        currentGame: 0,
+                        p1Score: 0,
+                        p2Score: 0
+                    }
                 };
 
                 // Cache DOM elements
@@ -369,11 +615,29 @@
                     controls: document.getElementById('controls'),
                     gameOver: document.getElementById('gameOver'),
                     winner: document.getElementById('winner'),
+                    gameStats: document.getElementById('gameStats'),
                     pauseBtn: document.getElementById('pauseBtn'),
                     resetBtn: document.getElementById('resetBtn'),
+                    settings: document.getElementById('settings'),
+                    settingsBtn: document.getElementById('settingsBtn'),
+                    closeSettingsBtn: document.getElementById('closeSettingsBtn'),
+                    soundToggle: document.getElementById('soundToggle'),
+                    vibrationToggle: document.getElementById('vibrationToggle'),
+                    movesToggle: document.getElementById('movesToggle'),
+                    incrementToggle: document.getElementById('incrementToggle'),
+                    tournamentToggle: document.getElementById('tournamentToggle'),
+                    bestOf: document.getElementById('bestOf'),
+                    customMinutes: document.getElementById('customMinutes'),
+                    customIncrement: document.getElementById('customIncrement'),
+                    customStartBtn: document.getElementById('customStartBtn'),
                     players: document.querySelectorAll('.player'),
                     times: document.querySelectorAll('.time'),
-                    moves: document.querySelectorAll('.info.moves')
+                    moves: document.querySelectorAll('.info.moves'),
+                    increments: document.querySelectorAll('.info.increment'),
+                    tournamentInfo: document.getElementById('tournamentInfo'),
+                    tournamentScore: document.getElementById('tournamentScore'),
+                    topHint: document.getElementById('topHint'),
+                    bottomHint: document.getElementById('bottomHint')
                 };
 
                 // Audio context for sounds
@@ -403,13 +667,39 @@
                     if (preset) {
                         const time = parseInt(preset.dataset.time);
                         const inc = parseInt(preset.dataset.inc);
-                        this.start(time, inc);
+                        this.setup(time, inc);
                     }
                 }, { passive: true });
+
+                // Custom time button
+                this.elements.customStartBtn.addEventListener('click', () => {
+                    const minutes = parseInt(this.elements.customMinutes.value) || 10;
+                    const inc = parseInt(this.elements.customIncrement.value) || 0;
+                    this.setup(minutes * 60, inc);
+                });
 
                 // Control buttons
                 this.elements.pauseBtn.addEventListener('click', () => this.togglePause());
                 this.elements.resetBtn.addEventListener('click', () => this.reset());
+
+                // Settings
+                this.elements.settingsBtn.addEventListener('click', () => this.showSettings());
+                this.elements.closeSettingsBtn.addEventListener('click', () => this.hideSettings());
+
+                // Settings toggles
+                this.elements.soundToggle.addEventListener('click', () => this.toggleSetting('sound'));
+                this.elements.vibrationToggle.addEventListener('click', () => this.toggleSetting('vibration'));
+                this.elements.movesToggle.addEventListener('click', () => this.toggleSetting('showMoves'));
+                this.elements.incrementToggle.addEventListener('click', () => this.toggleSetting('showIncrement'));
+                this.elements.tournamentToggle.addEventListener('click', () => this.toggleSetting('tournament'));
+                
+                // Best of input
+                this.elements.bestOf.addEventListener('change', (e) => {
+                    this.state.settings.bestOf = parseInt(e.target.value) || 1;
+                    if (this.state.settings.tournament) {
+                        this.updateTournamentInfo();
+                    }
+                });
 
                 // Initialize audio on first interaction
                 document.addEventListener('touchstart', () => {
@@ -423,48 +713,94 @@
                 if (this.state.running && !this.state.paused) {
                     // Any tap switches turns
                     this.switchTurn();
+                } else if (!this.state.started) {
+                    // Check if a player area was tapped to start the game
+                    const player = e.target.closest('.player');
+                    if (player) {
+                        const playerNum = parseInt(player.dataset.player);
+                        this.startGame(playerNum);
+                    }
                 }
             }
 
             handleKey(e) {
-                switch(e.key) {
+                switch(e.key.toLowerCase()) {
                     case ' ':
                         e.preventDefault();
-                        if (!this.state.running) {
-                            this.start(600, 0);
-                        } else {
+                        if (!this.state.started) {
+                            this.startGame(1); // Default to player 1 starting
+                        } else if (this.state.running) {
                             this.togglePause();
                         }
                         break;
-                    case 'Escape':
+                    case 's':
+                        e.preventDefault();
+                        this.showSettings();
+                        break;
+                    case 'r':
+                        e.preventDefault();
+                        if (this.state.started) {
+                            this.reset();
+                        }
+                        break;
+                    case 'escape':
+                        e.preventDefault();
                         this.showStart();
                         break;
                 }
             }
 
-            start(time, inc) {
-                // Reset state
+            setup(time, inc) {
+                // Reset state with new time settings
                 this.state = {
-                    running: true,
+                    ...this.state,
+                    running: false,
                     paused: false,
+                    started: false, // Game is set up but not started yet
                     current: 1,
                     p1: { time, moves: 0 },
                     p2: { time, moves: 0 },
                     inc,
-                    lastTime: performance.now()
+                    lastTime: 0
                 };
 
                 // UI updates
                 this.elements.start.classList.add('hidden');
                 this.elements.controls.classList.add('visible');
                 this.elements.gameOver.classList.remove('active');
+                this.hideSettings();
 
-                // Set active player
-                this.setActive(1);
+                // Clear active players
+                this.elements.players.forEach(el => el.classList.remove('active'));
+
+                // Update display
                 this.updateDisplay();
 
-                // Start animation loop
+                // Show hints
+                this.elements.topHint.style.display = 'block';
+                this.elements.bottomHint.style.display = 'block';
+
+                // Update tournament info if needed
+                if (this.state.settings.tournament) {
+                    this.updateTournamentInfo();
+                }
+            }
+
+            startGame(player) {
+                // Set which player starts
+                this.state.current = player;
+                this.state.started = true;
+                this.state.running = true;
                 this.state.lastTime = performance.now();
+
+                // Hide hints
+                this.elements.topHint.style.display = 'none';
+                this.elements.bottomHint.style.display = 'none';
+
+                // Set active player
+                this.setActive(player);
+
+                // Start animation loop
                 requestAnimationFrame(this.update);
 
                 // Play sound
@@ -510,7 +846,7 @@
                 this.playSound(this.sounds.move);
 
                 // Vibrate if available
-                if (navigator.vibrate) navigator.vibrate(50);
+                if (this.state.settings.vibration && navigator.vibrate) navigator.vibrate(50);
             }
 
             togglePause() {
@@ -532,33 +868,93 @@
 
                 // Reset state
                 this.state = {
-                    running: true,
+                    ...this.state,
+                    running: false,
                     paused: false,
+                    started: false, // Reset to not started
                     current: 1,
                     p1: { time, moves: 0 },
                     p2: { time, moves: 0 },
-                    inc: this.state.inc,
-                    lastTime: performance.now()
+                    lastTime: 0
                 };
 
                 // Update UI
-                this.setActive(1);
+                this.elements.players.forEach(el => el.classList.remove('active'));
                 this.updateDisplay();
                 this.elements.pauseBtn.textContent = '⏸️';
 
-                // Restart
-                requestAnimationFrame(this.update);
+                // Show hints
+                this.elements.topHint.style.display = 'block';
+                this.elements.bottomHint.style.display = 'block';
+
+                // Don't restart automatically - wait for user to tap
                 this.playSound(this.sounds.move);
             }
 
             endGame(winner) {
                 this.state.running = false;
-                this.elements.winner.textContent = `Pemain ${winner} Menang!`;
+                
+                // Update tournament stats if needed
+                if (this.state.settings.tournament) {
+                    if (winner === 1) {
+                        this.state.tournament.p1Score++;
+                    } else {
+                        this.state.tournament.p2Score++;
+                    }
+                    
+                    this.state.tournament.currentGame++;
+                    
+                    // Check if tournament is over
+                    const gamesToWin = Math.ceil(this.state.settings.bestOf / 2);
+                    if (this.state.tournament.p1Score >= gamesToWin || 
+                        this.state.tournament.p2Score >= gamesToWin ||
+                        this.state.tournament.currentGame >= this.state.settings.bestOf) {
+                        // Tournament is over
+                        const tournamentWinner = this.state.tournament.p1Score > this.state.tournament.p2Score ? 1 : 2;
+                        this.elements.winner.textContent = `Player ${tournamentWinner} Wins Tournament!`;
+                        this.elements.gameStats.innerHTML = `
+                            <p>Final Score: ${this.state.tournament.p1Score} - ${this.state.tournament.p2Score}</p>
+                            <p>Games Played: ${this.state.tournament.currentGame}</p>
+                        `;
+                    } else {
+                        // Continue tournament
+                        this.elements.winner.textContent = `Player ${winner} Wins Game ${this.state.tournament.currentGame}!`;
+                        this.elements.gameStats.innerHTML = `
+                            <p>Current Score: ${this.state.tournament.p1Score} - ${this.state.tournament.p2Score}</p>
+                            <p>Game ${this.state.tournament.currentGame} of ${this.state.settings.bestOf}</p>
+                        `;
+                    }
+                } else {
+                    // Regular game
+                    this.elements.winner.textContent = `Player ${winner} Wins!`;
+                    this.elements.gameStats.innerHTML = `
+                        <p>Total Moves: ${this.state.p1.moves + this.state.p2.moves}</p>
+                        <p>Player 1 Moves: ${this.state.p1.moves}</p>
+                        <p>Player 2 Moves: ${this.state.p2.moves}</p>
+                    `;
+                }
+                
                 this.elements.gameOver.classList.add('active');
                 this.playSound(this.sounds.end, 500);
             }
 
             newGame() {
+                if (this.state.settings.tournament) {
+                    // Check if tournament is over
+                    const gamesToWin = Math.ceil(this.state.settings.bestOf / 2);
+                    if (this.state.tournament.p1Score >= gamesToWin || 
+                        this.state.tournament.p2Score >= gamesToWin ||
+                        this.state.tournament.currentGame >= this.state.settings.bestOf) {
+                        // Start new tournament
+                        this.state.tournament = {
+                            games: [],
+                            currentGame: 0,
+                            p1Score: 0,
+                            p2Score: 0
+                        };
+                    }
+                }
+                
                 this.elements.gameOver.classList.remove('active');
                 this.reset();
             }
@@ -568,6 +964,53 @@
                 this.elements.controls.classList.remove('visible');
                 this.elements.gameOver.classList.remove('active');
                 this.state.running = false;
+                this.state.started = false;
+            }
+
+            showSettings() {
+                this.elements.settings.classList.add('active');
+            }
+
+            hideSettings() {
+                this.elements.settings.classList.remove('active');
+            }
+
+            toggleSetting(setting) {
+                this.state.settings[setting] = !this.state.settings[setting];
+                
+                // Update UI
+                switch(setting) {
+                    case 'sound':
+                        this.elements.soundToggle.classList.toggle('active');
+                        break;
+                    case 'vibration':
+                        this.elements.vibrationToggle.classList.toggle('active');
+                        break;
+                    case 'showMoves':
+                        this.elements.movesToggle.classList.toggle('active');
+                        this.elements.moves.forEach(el => {
+                            el.style.display = this.state.settings.showMoves ? 'block' : 'none';
+                        });
+                        break;
+                    case 'showIncrement':
+                        this.elements.incrementToggle.classList.toggle('active');
+                        this.elements.increments.forEach(el => {
+                            el.style.display = this.state.settings.showIncrement ? 'block' : 'none';
+                        });
+                        break;
+                    case 'tournament':
+                        this.elements.tournamentToggle.classList.toggle('active');
+                        this.elements.tournamentInfo.style.display = this.state.settings.tournament ? 'block' : 'none';
+                        if (this.state.settings.tournament) {
+                            this.updateTournamentInfo();
+                        }
+                        break;
+                }
+            }
+
+            updateTournamentInfo() {
+                this.elements.tournamentScore.textContent = 
+                    `Best of ${this.state.settings.bestOf} | Score: ${this.state.tournament.p1Score} - ${this.state.tournament.p2Score}`;
             }
 
             setActive(player) {
@@ -584,8 +1027,13 @@
                 ];
 
                 const moves = [
-                    `${this.state.p1.moves} langkah`,
-                    `${this.state.p2.moves} langkah`
+                    `${this.state.p1.moves} moves`,
+                    `${this.state.p2.moves} moves`
+                ];
+
+                const increments = [
+                    `+${this.state.inc}s`,
+                    `+${this.state.inc}s`
                 ];
 
                 // Update times
@@ -606,6 +1054,13 @@
                 // Update moves
                 this.elements.moves.forEach((el, i) => {
                     el.textContent = moves[i];
+                    el.style.display = this.state.settings.showMoves ? 'block' : 'none';
+                });
+
+                // Update increments
+                this.elements.increments.forEach((el, i) => {
+                    el.textContent = increments[i];
+                    el.style.display = this.state.settings.showIncrement ? 'block' : 'none';
                 });
             }
 
@@ -616,7 +1071,7 @@
             }
 
             playSound(freq, duration = 100) {
-                if (!this.audioCtx) return;
+                if (!this.state.settings.sound || !this.audioCtx) return;
 
                 const osc = this.audioCtx.createOscillator();
                 const gain = this.audioCtx.createGain();
