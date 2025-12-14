@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Chess Clock - Ultra Fast</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --player-bg: #1a1a1a;
+            --active-1: #1e40af;
+            --active-2: #b91c1c;
+            --text: #ffffff;
+            --border: #333;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            overflow: hidden;
+            touch-action: manipulation;
+            will-change: transform;
+        }
+
+        .app {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .clocks {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .player {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: background-color 0.2s, transform 0.1s;
+            cursor: pointer;
+            will-change: background-color, transform;
+        }
+
+        .player:active {
+            transform: scale(0.98);
+        }
+
+        .player.top {
+            background: var(--player-bg);
+            border-bottom: 2px solid var(--border);
+        }
+
+        .player.bottom {
+            background: var(--player-bg);
+            border-top: 2px solid var(--border);
+        }
+
+        .player.active.top {
+            background: var(--active-1);
+        }
+
+        .player.active.bottom {
+            background: var(--active-2);
+        }
+
+        .time {
+            font-size: min(20vw, 140px);
+            font-weight: 200;
+            font-family: ui-monospace, 'SF Mono', Monaco, monospace;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .time.warning {
+            color: var(--warning);
+            animation: pulse 1s infinite;
+        }
+
+        .time.danger {
+            color: var(--danger);
+            animation: pulse 0.5s infinite;
+        }
+
+        .info {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        .info.name {
+            top: 20px;
+        }
+
+        .info.moves {
+            bottom: 20px;
+            font-size: 16px;
+            opacity: 0.6;
+        }
+
+        .start {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 0.3s;
+        }
+
+        .start.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .start-panel {
+            background: var(--player-bg);
+            padding: 40px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s;
+        }
+
+        .start.hidden .start-panel {
+            transform: translateY(20px);
+        }
+
+        .start h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: var(--active-1);
+        }
+
+        .presets {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .preset {
+            padding: 20px;
+            background: var(--bg);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset:hover {
+            border-color: var(--active-1);
+            transform: translateY(-2px);
+        }
+
+        .preset span {
+            display: block;
+            font-size: 14px;
+            opacity: 0.7;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 376px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 305px;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .controls.visible {
+            opacity: 1;
+        }
+
+        .btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(0,0,0,0.8);
+            color: var(--text);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            background: rgba(0,0,0,0.9);
+        }
+
+        .btn.danger {
+            background: var(--danger);
+        }
+
+        .game-over {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .game-over.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .game-over-content {
+            background: var(--player-bg);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .game-over.active .game-over-content {
+            transform: scale(1);
+        }
+
+        .game-over h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--active-1);
+        }
+
+        .game-over button {
+            padding: 12px 30px;
+            background: var(--active-1);
+            border: none;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.2s;
+        }
+
+        .game-over button:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @media (max-width: 600px) {
+            .presets {
+                grid-template-columns: 1fr;
+            }
+            
+            .time {
+                font-size: min(25vw, 120px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="clocks">
+            <div class="player top" data-player="1">
+                <div class="info name">Pemain 1</div>
+                <div class="time">10:00</div>
+                <div class="info moves">0 langkah</div>
+            </div>
+            <div class="player bottom" data-player="2">
+                <div class="info name">Pemain 2</div>
+                <div class="time">10:00</div>
+                <div class="info moves">0 langkah</div>
+            </div>
+        </div>
+
+        <div class="start" id="start">
+            <div class="start-panel">
+                <h1>⏱️ Chess Clock</h1>
+                <div class="presets">
+                    <button class="preset" data-time="180" data-inc="0">
+                        3+0
+                        <span>Blitz Cepat</span>
+                    </button>
+                    <button class="preset" data-time="300" data-inc="0">
+                        5+0
+                        <span>Blitz</span>
+                    </button>
+                    <button class="preset" data-time="600" data-inc="0">
+                        10+0
+                        <span>Rapid</span>
+                    </button>
+                    <button class="preset" data-time="600" data-inc="5">
+                        10+5
+                        <span>Rapid + Increment</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls" id="controls">
+            <button class="btn" id="pauseBtn">⏸️</button>
+            <button class="btn danger" id="resetBtn">🔄</button>
+        </div>
+
+        <div class="game-over" id="gameOver">
+            <div class="game-over-content">
+                <h2 id="winner">Pemain 1 Menang!</h2>
+                <button onclick="game.newGame()">Main Lagi</button>
+                <button onclick="game.showStart()">Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ultra-optimized Chess Clock
+        class ChessClock {
+            constructor() {
+                // State
+                this.state = {
+                    running: false,
+                    paused: false,
+                    current: 1,
+                    p1: { time: 600, moves: 0 },
+                    p2: { time: 600, moves: 0 },
+                    inc: 0,
+                    lastTime: 0
+                };
+
+                // Cache DOM elements
+                this.elements = {
+                    start: document.getElementById('start'),
+                    controls: document.getElementById('controls'),
+                    gameOver: document.getElementById('gameOver'),
+                    winner: document.getElementById('winner'),
+                    pauseBtn: document.getElementById('pauseBtn'),
+                    resetBtn: document.getElementById('resetBtn'),
+                    players: document.querySelectorAll('.player'),
+                    times: document.querySelectorAll('.time'),
+                    moves: document.querySelectorAll('.info.moves')
+                };
+
+                // Audio context for sounds
+                this.audioCtx = null;
+                this.sounds = {
+                    move: 800,
+                    warning: 400,
+                    end: 300
+                };
+
+                // Bind methods
+                this.update = this.update.bind(this);
+                this.handleTap = this.handleTap.bind(this);
+
+                // Initialize
+                this.init();
+            }
+
+            init() {
+                // Event delegation for optimal performance
+                document.addEventListener('click', this.handleTap, { passive: true });
+                document.addEventListener('keydown', this.handleKey.bind(this));
+
+                // Preset buttons
+                this.elements.start.addEventListener('click', (e) => {
+                    const preset = e.target.closest('.preset');
+                    if (preset) {
+                        const time = parseInt(preset.dataset.time);
+                        const inc = parseInt(preset.dataset.inc);
+                        this.start(time, inc);
+                    }
+                }, { passive: true });
+
+                // Control buttons
+                this.elements.pauseBtn.addEventListener('click', () => this.togglePause());
+                this.elements.resetBtn.addEventListener('click', () => this.reset());
+
+                // Initialize audio on first interaction
+                document.addEventListener('touchstart', () => {
+                    if (!this.audioCtx) {
+                        this.audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                }, { once: true, passive: true });
+            }
+
+            handleTap(e) {
+                if (this.state.running && !this.state.paused) {
+                    // Any tap switches turns
+                    this.switchTurn();
+                }
+            }
+
+            handleKey(e) {
+                switch(e.key) {
+                    case ' ':
+                        e.preventDefault();
+                        if (!this.state.running) {
+                            this.start(600, 0);
+                        } else {
+                            this.togglePause();
+                        }
+                        break;
+                    case 'Escape':
+                        this.showStart();
+                        break;
+                }
+            }
+
+            start(time, inc) {
+                // Reset state
+                this.state = {
+                    running: true,
+                    paused: false,
+                    current: 1,
+                    p1: { time, moves: 0 },
+                    p2: { time, moves: 0 },
+                    inc,
+                    lastTime: performance.now()
+                };
+
+                // UI updates
+                this.elements.start.classList.add('hidden');
+                this.elements.controls.classList.add('visible');
+                this.elements.gameOver.classList.remove('active');
+
+                // Set active player
+                this.setActive(1);
+                this.updateDisplay();
+
+                // Start animation loop
+                this.state.lastTime = performance.now();
+                requestAnimationFrame(this.update);
+
+                // Play sound
+                this.playSound(this.sounds.move);
+            }
+
+            update(timestamp) {
+                if (!this.state.running || this.state.paused) return;
+
+                // Calculate delta time
+                const delta = (timestamp - this.state.lastTime) / 1000;
+                this.state.lastTime = timestamp;
+
+                // Update current player time
+                const current = this.state.current === 1 ? this.state.p1 : this.state.p2;
+                current.time -= delta;
+
+                // Check for game over
+                if (current.time <= 0) {
+                    current.time = 0;
+                    this.endGame(this.state.current === 1 ? 2 : 1);
+                    return;
+                }
+
+                // Update display
+                this.updateDisplay();
+
+                // Continue loop
+                requestAnimationFrame(this.update);
+            }
+
+            switchTurn() {
+                // Add increment
+                const current = this.state.current === 1 ? this.state.p1 : this.state.p2;
+                current.time += this.state.inc;
+                current.moves++;
+
+                // Switch player
+                this.state.current = this.state.current === 1 ? 2 : 1;
+                this.setActive(this.state.current);
+
+                // Play sound
+                this.playSound(this.sounds.move);
+
+                // Vibrate if available
+                if (navigator.vibrate) navigator.vibrate(50);
+            }
+
+            togglePause() {
+                this.state.paused = !this.state.paused;
+                this.elements.pauseBtn.textContent = this.state.paused ? '▶️' : '⏸️';
+
+                if (!this.state.paused) {
+                    this.state.lastTime = performance.now();
+                    requestAnimationFrame(this.update);
+                }
+
+                this.playSound(this.sounds.move);
+            }
+
+            reset() {
+                // Get current time settings
+                const time = this.state.p1.time + this.state.p2.time > 0 ? 
+                    Math.max(this.state.p1.time, this.state.p2.time) : 600;
+
+                // Reset state
+                this.state = {
+                    running: true,
+                    paused: false,
+                    current: 1,
+                    p1: { time, moves: 0 },
+                    p2: { time, moves: 0 },
+                    inc: this.state.inc,
+                    lastTime: performance.now()
+                };
+
+                // Update UI
+                this.setActive(1);
+                this.updateDisplay();
+                this.elements.pauseBtn.textContent = '⏸️';
+
+                // Restart
+                requestAnimationFrame(this.update);
+                this.playSound(this.sounds.move);
+            }
+
+            endGame(winner) {
+                this.state.running = false;
+                this.elements.winner.textContent = `Pemain ${winner} Menang!`;
+                this.elements.gameOver.classList.add('active');
+                this.playSound(this.sounds.end, 500);
+            }
+
+            newGame() {
+                this.elements.gameOver.classList.remove('active');
+                this.reset();
+            }
+
+            showStart() {
+                this.elements.start.classList.remove('hidden');
+                this.elements.controls.classList.remove('visible');
+                this.elements.gameOver.classList.remove('active');
+                this.state.running = false;
+            }
+
+            setActive(player) {
+                this.elements.players.forEach((el, i) => {
+                    el.classList.toggle('active', i === player - 1);
+                });
+            }
+
+            updateDisplay() {
+                // Batch DOM updates
+                const times = [
+                    this.formatTime(this.state.p1.time),
+                    this.formatTime(this.state.p2.time)
+                ];
+
+                const moves = [
+                    `${this.state.p1.moves} langkah`,
+                    `${this.state.p2.moves} langkah`
+                ];
+
+                // Update times
+                this.elements.times.forEach((el, i) => {
+                    el.textContent = times[i];
+                    
+                    // Warning states
+                    const time = i === 0 ? this.state.p1.time : this.state.p2.time;
+                    el.classList.toggle('warning', time > 0 && time <= 30);
+                    el.classList.toggle('danger', time > 0 && time <= 10);
+
+                    // Warning sound
+                    if (time > 0 && time <= 10 && Math.floor(time) !== Math.floor(time + 0.016)) {
+                        this.playSound(this.sounds.warning, 50);
+                    }
+                });
+
+                // Update moves
+                this.elements.moves.forEach((el, i) => {
+                    el.textContent = moves[i];
+                });
+            }
+
+            formatTime(seconds) {
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            playSound(freq, duration = 100) {
+                if (!this.audioCtx) return;
+
+                const osc = this.audioCtx.createOscillator();
+                const gain = this.audioCtx.createGain();
+
+                osc.connect(gain);
+                gain.connect(this.audioCtx.destination);
+
+                osc.frequency.value = freq;
+                osc.type = 'sine';
+
+                gain.gain.setValueAtTime(0.3, this.audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, this.audioCtx.currentTime + duration / 1000);
+
+                osc.start(this.audioCtx.currentTime);
+                osc.stop(this.audioCtx.currentTime + duration / 1000);
+            }
+        }
+
+        // Initialize game
+        const game = new ChessClock();
+    </script>
+</body>
+</html>
