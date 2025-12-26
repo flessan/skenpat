@@ -1,7 +1,7 @@
 {
-  "name": "Skenpat SMKN 4 Banjarmasin",
+  "name": "Skenpat OSIS SMKN 4 Banjarmasin",
   "short_name": "Skenpat",
-  "description": "Website tak resmi SMKN 4 Banjarmasin",
+  "description": "Website resmi OSIS SMKN 4 Banjarmasin",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0a",

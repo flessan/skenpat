@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,7 +8,8 @@
 
   <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
 
   <style>
     :root {
@@ -54,16 +56,16 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
+      background:
         radial-gradient(circle at 20% 50%, rgba(222, 104, 5, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 80% 80%, rgba(111, 185, 255, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 40% 20%, rgba(222, 104, 5, 0.05) 0%, transparent 50%);
       z-index: -1;
     }
 
-    a { 
-      text-decoration: none; 
-      color: inherit; 
+    a {
+      text-decoration: none;
+      color: inherit;
       transition: var(--transition);
     }
 
@@ -75,14 +77,14 @@
       flex-direction: column;
       align-items: center;
     }
-    
+
     .app {
       width: 100%;
       max-width: var(--container-max-width);
       padding: 1rem;
       margin: 0 auto;
     }
-    
+
     /* Content wrapper for centering content on larger screens */
     .content-wrapper {
       max-width: var(--content-max-width);
@@ -100,7 +102,7 @@
       overflow: hidden;
       z-index: -1;
     }
-    
+
     .particle {
       position: absolute;
       background: var(--primary-color);
@@ -108,18 +110,21 @@
       opacity: 0.1;
       animation: float 15s infinite linear;
     }
-    
+
     @keyframes float {
       0% {
         transform: translateY(100vh) translateX(0) scale(0);
         opacity: 0;
       }
+
       10% {
         opacity: 0.1;
       }
+
       90% {
         opacity: 0.1;
       }
+
       100% {
         transform: translateY(-100vh) translateX(100px) scale(1);
         opacity: 0;
@@ -132,7 +137,7 @@
       margin: 2rem 0 3rem;
       position: relative;
     }
-    
+
     .header::after {
       content: '';
       position: absolute;
@@ -144,7 +149,7 @@
       background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
       border-radius: 2px;
     }
-    
+
     .header h1 {
       font-size: 2.8rem;
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--accent-color));
@@ -157,16 +162,17 @@
       letter-spacing: -1px;
       animation: glow 3s infinite alternate;
     }
-    
+
     @keyframes glow {
       from {
         filter: drop-shadow(0 0 5px rgba(222, 104, 5, 0.5));
       }
+
       to {
         filter: drop-shadow(0 0 15px rgba(222, 104, 5, 0.8));
       }
     }
-    
+
     .subtitle {
       font-size: 1.15rem;
       color: var(--text-muted);
@@ -199,7 +205,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .main-menu-btn::before {
       content: '';
       position: absolute;
@@ -210,11 +216,11 @@
       background: rgba(255, 255, 255, 0.2);
       transition: var(--transition);
     }
-    
+
     .main-menu-btn:hover::before {
       left: 100%;
     }
-    
+
     .main-menu-btn:hover {
       transform: translateY(-5px);
       box-shadow: 0 15px 30px rgba(222, 104, 5, 0.4);
@@ -239,30 +245,30 @@
       transform: translateY(30px);
       animation: fadeInUp 0.6s forwards;
     }
-    
+
     @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-    
+
     .jurusan-card:nth-child(1) {
       animation-delay: 0.1s;
     }
-    
+
     .jurusan-card:nth-child(2) {
       animation-delay: 0.2s;
     }
-    
+
     .jurusan-card:nth-child(3) {
       animation-delay: 0.3s;
     }
-    
+
     .jurusan-card:nth-child(4) {
       animation-delay: 0.4s;
     }
-    
+
     .jurusan-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
@@ -275,7 +281,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .jurusan-header::before {
       content: '';
       position: absolute;
@@ -286,7 +292,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
     }
-    
+
     .jurusan-header::after {
       content: '';
       position: absolute;
@@ -307,7 +313,7 @@
       position: relative;
       z-index: 1;
     }
-    
+
     .jurusan-header h2 i {
       font-size: 1.4rem;
     }
@@ -336,7 +342,7 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .mapel-link::before {
       content: '';
       position: absolute;
@@ -347,11 +353,11 @@
       background: linear-gradient(90deg, rgba(222, 104, 5, 0.2), transparent);
       transition: var(--transition);
     }
-    
+
     .mapel-link:hover::before {
       width: 100%;
     }
-    
+
     .mapel-link:hover {
       background: rgba(42, 42, 42, 0.7);
       transform: translateX(8px);
@@ -373,7 +379,7 @@
       flex-shrink: 0;
       transition: var(--transition);
     }
-    
+
     .mapel-link:hover .mapel-icon {
       background: rgba(222, 104, 5, 0.25);
       transform: scale(1.1);
@@ -393,11 +399,11 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
       backdrop-filter: blur(5px);
     }
-    
+
     .footer-note p {
       margin-bottom: 15px;
     }
-    
+
     .footer-note p:last-child {
       margin-bottom: 0;
       margin-top: 15px;
@@ -412,7 +418,7 @@
       position: relative;
       transition: var(--transition);
     }
-    
+
     .footer-note a::after {
       content: '';
       position: absolute;
@@ -423,11 +429,11 @@
       background: var(--primary-color);
       transition: var(--transition);
     }
-    
+
     .footer-note a:hover::after {
       width: 100%;
     }
-    
+
     .footer-note a:hover {
       color: var(--secondary-color);
     }
@@ -446,12 +452,12 @@
       z-index: 1000;
       transition: opacity 0.5s, visibility 0.5s;
     }
-    
+
     .loader.hidden {
       opacity: 0;
       visibility: hidden;
     }
-    
+
     .loader-circle {
       width: 60px;
       height: 60px;
@@ -460,7 +466,7 @@
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
-    
+
     @keyframes spin {
       to {
         transform: rotate(360deg);
@@ -472,118 +478,118 @@
       .header h1 {
         font-size: 2.5rem;
       }
-      
+
       .schedule-grid {
         grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 20px;
       }
     }
-    
+
     @media (max-width: 768px) {
       .header h1 {
         font-size: 2.2rem;
       }
-      
+
       .schedule-grid {
         grid-template-columns: 1fr;
         gap: 20px;
       }
-      
+
       .jurusan-header {
         padding: 18px 20px;
       }
-      
+
       .jurusan-header h2 {
         font-size: 1.3rem;
       }
-      
+
       .jurusan-content {
         padding: 20px;
       }
-      
+
       .mapel-link {
         padding: 14px 16px;
       }
     }
-    
+
     @media (max-width: 480px) {
       .header h1 {
         font-size: 2rem;
       }
-      
+
       .subtitle {
         font-size: 1rem;
       }
-      
+
       .main-menu-btn {
         padding: 14px 24px;
         font-size: 1rem;
       }
-      
+
       .jurusan-header {
         padding: 16px 18px;
       }
-      
+
       .jurusan-header h2 {
         font-size: 1.2rem;
       }
-      
+
       .jurusan-content {
         padding: 18px;
       }
-      
+
       .mapel-link {
         padding: 12px 14px;
       }
-      
+
       .mapel-icon {
         width: 36px;
         height: 36px;
         font-size: 1.2rem;
         margin-right: 12px;
       }
-      
+
       .footer-note {
         padding: 20px;
         font-size: 0.9rem;
       }
     }
-    
+
     /* Desktop specific styles */
     @media (min-width: 1200px) {
       .app {
         padding: 2rem;
       }
-      
+
       .header {
         margin: 3rem 0 4rem;
       }
-      
+
       .header h1 {
         font-size: 3.2rem;
       }
-      
+
       .schedule-grid {
         grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
         gap: 30px;
       }
-      
+
       .jurusan-header {
         padding: 25px 28px;
       }
-      
+
       .jurusan-header h2 {
         font-size: 1.6rem;
       }
-      
+
       .jurusan-content {
         padding: 28px;
       }
-      
+
       .mapel-link {
         padding: 18px 20px;
       }
-      
+
       .mapel-icon {
         width: 44px;
         height: 44px;
@@ -593,6 +599,7 @@
     }
   </style>
 </head>
+
 <body>
   <!-- Loading Screen -->
   <div class="loader" id="loader">
@@ -653,7 +660,7 @@
               </div>
             </div>
           </div>
-      
+
           <div class="jurusan-card">
             <div class="jurusan-header">
               <h2><i class="fa-solid fa-palette"></i> Seni</h2>
@@ -686,10 +693,10 @@
         <div class="footer-note">
           <p>Jadwal dapat berubah sewaktu-waktu. Silakan periksa secara berkala.</p>
           <div>
-            <a href="/inf">Kebijakan Privasi</a> | 
+            <a href="/inf">Kebijakan Privasi</a> |
             <a href="https://flessan.pages.dev">Sebuah Portofolio</a>
           </div>
-          <p>&copy; 2025 Unofficial Pages for SMKN4BJM</p>
+          <p>&copy; 2026 Skenpat OSIS SMKN4BJM</p>
         </div>
       </div>
     </div>
@@ -700,70 +707,71 @@
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
       const particleCount = 20;
-      
+
       for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
-        
+
         // Random size between 3px and 8px
         const size = Math.random() * 5 + 3;
         particle.style.width = `${size}px`;
         particle.style.height = `${size}px`;
-        
+
         // Random position
         particle.style.left = `${Math.random() * 100}%`;
-        
+
         // Random animation duration between 10s and 20s
         const duration = Math.random() * 10 + 10;
         particle.style.animationDuration = `${duration}s`;
-        
+
         // Random delay
         particle.style.animationDelay = `${Math.random() * 5}s`;
-        
+
         particlesContainer.appendChild(particle);
       }
     }
-    
+
     // Hide loader when page is loaded
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
       setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
       }, 500);
     });
-    
+
     // Initialize particles
     createParticles();
-    
+
     // Add ripple effect to buttons
     document.querySelectorAll('.main-menu-btn, .mapel-link').forEach(button => {
-      button.addEventListener('click', function(e) {
+      button.addEventListener('click', function (e) {
         const ripple = document.createElement('span');
         const rect = this.getBoundingClientRect();
         const size = Math.max(rect.width, rect.height);
         const x = e.clientX - rect.left - size / 2;
         const y = e.clientY - rect.top - size / 2;
-        
+
         ripple.style.width = ripple.style.height = size + 'px';
         ripple.style.left = x + 'px';
         ripple.style.top = y + 'px';
         ripple.classList.add('ripple');
-        
+
         this.appendChild(ripple);
-        
+
         setTimeout(() => {
           ripple.remove();
         }, 600);
       });
     });
   </script>
-  
+
   <style>
     /* Ripple effect */
-    .main-menu-btn, .mapel-link {
+    .main-menu-btn,
+    .mapel-link {
       position: relative;
       overflow: hidden;
     }
-    
+
     .ripple {
       position: absolute;
       border-radius: 50%;
@@ -771,7 +779,7 @@
       transform: scale(0);
       animation: ripple-animation 0.6s ease-out;
     }
-    
+
     @keyframes ripple-animation {
       to {
         transform: scale(4);
@@ -780,4 +788,5 @@
     }
   </style>
 </body>
+
 </html>
